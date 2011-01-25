@@ -1,0 +1,458 @@
+\documentclass[a4paper]{article}
+
+\makeatletter
+\def\sbverb{\makeatletter\def\verbatim@font{\usefont{T1}{lmtt}{sb}{n}}\makeatother}
+\def\bverb{\makeatletter\def\verbatim@font{\usefont{T1}{lmtt}{b}{n}}\makeatother}
+\def\LMvtt@scale{1.12}
+\def\LMtt@scale{1.12}
+\makeatother
+
+\sbverb
+
+\usepackage{shortvrb}
+\MakeShortVerb{\|}
+
+\usepackage{amsmath}
+\usepackage[hscale=0.7,vscale=0.7]{geometry}
+
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+
+\usepackage[nomath,lighttt,variablett]{lmodern}
+
+\renewcommand{\familydefault}{\ttdefault}
+
+\usepackage[alldelims,symbolmax,eulergreek,mathaccents]{mathastext}
+
+\MathastextDeclareVersion{lmvtt}{T1}{lmvtt}{m}{n}
+\MathastextDeclareVersion{lmvttmedium}{T1}{lmvtt}{sb}{n}
+\MathastextDeclareVersion{times}{T1}{ptm}{m}{n}
+\MathastextDeclareVersion{palatino}{T1}{ppl}{m}{n}
+\MathastextDeclareVersion{bookman}{T1}{pbk}{m}{n}
+\MathastextDeclareVersion{charter}{T1}{bch}{m}{n}
+\MathastextDeclareVersion{newcent}{T1}{pnc}{m}{n}
+\MathastextDeclareVersion{utopia}{T1}{put}{m}{n}
+\MathastextDeclareVersion{helvetica}{T1}{phv}{m}{n}
+\MathastextDeclareVersion{avant}{T1}{pag}{m}{n}
+\MathastextDeclareVersion{courier}{T1}{pcr}{m}{n}
+%% \MathastextDeclareVersion{symb}{U}{psy}{m}{n}
+%% \MathastextDeclareVersion{euler}{U}{zeur}{m}{n}
+
+\linespread{1.12}
+\begin{document}
+
+\title{The |mathastext| package}
+\author{Jean-François B. \\ 2589111+jfbu@users.noreply.github.com}
+\date{January 25, 2011}
+
+\maketitle
+
+\begin{abstract}
+   The |mathastext| package\footnote{This documentation describes
+   |mathastext| version 1.0 and was last revised on 2011/01/25.}
+   propagates the document {\em text} font to
+   {\em mathematical} mode, for the letters of the Latin
+   alphabet and, optionally, some further ASCII-127
+   characters. The idea is to produce handouts or research
+   papers with a less book-like typography than what is
+   typical of standard \TeX\ with the Computer Modern
+   fonts. Hopefully, this will force the reader to
+   concentrate more on the contents ;-). It also makes it
+   possible (for a document with simple mathematics) to use
+   a quite arbitrary font without worrying too much that it
+   does not have specially designed accompanying math
+   fonts. Also, |mathastext| provides a simple mechanism in
+   order to use many different choices of (text hence, now,
+   math) fonts in the same document (not that we recommend
+   it!).  A final aspect is that |mathastext| helps produce
+   smaller PDF files.
+\end{abstract}
+
+\section{Introduction}
+
+This document has
+|\usepackage{mathastext}| (with some options described later) in its
+preamble. Let us now typeset some mathematics.
+
+\long\def\mathA%
+{\begingroup\narrower\narrower
+    We define the quantities $X = X(\nu,n,a)$ and $Y(\nu,n,a)$ by the following
+    expressions:
+  \begin{align}
+      X &:= \frac{g_{\nu+1}}{h_{\nu+1}} = \frac1a \frac{e_\nu}{f_\nu}\;,\\
+      Y &:= - \frac1a \frac{c^{\nu+1}_n}{d^{\nu+1}_n} = - \frac{c_1^\nu}{d^\nu_1}\;.
+      \end{align}
+From Proposition 2.7.1 we have 
+$\mu_\nu = \frac{2a^{\frac12}}{1 - a^2}\left(-ah_{\nu+1} c_1^\nu  + g_{\nu+1} d_1^\nu
+  \right)$ and using
+the first two relations in Proposition 5.9.5 gives:
+\begin{equation}
+  \mu_\nu = \frac{2n a}{1 - a^2} \frac{-h_{\nu+1} c_n^{\nu+1} + g_{\nu+1}
+    d_n^{\nu+1}}{h_{\nu+1} d_n^{\nu+1} - g_{\nu+1} c_n^{\nu+1}} = \frac{2n
+    a}{1 - a^2} \frac{X+aY}{1+aXY}\;.
+\end{equation}\endgroup}
+
+%\let\mathA\relax
+\mathA
+
+The text font of the present document is the variable-width typewriter face
+from Latin Modern (in its ``light'' variant): the same font is used in
+mathematical mode for the Latin letters, so that the distinction between the
+text and the equations is blurred out. This will shock some, but as a
+mathematician I consider the text itself to be also an equation. So, I never
+quite adhered to all this business of using oblique or italic letters in
+inline or displayed mathematics.\footnote{originally, {\bfseries everything}
+  was oblique, as mathematics was handwritten. Why should we use upright
+  letters to say ``group'' and oblique letters for an element \textit{g} of
+  the group \textit{G}? admittedly in French mathematical typography capital
+  Roman letters are upright, but I want also the lowercase to follow suit.}
+
+The option |eulergreek| was passed to |mathastext| to use the Euler font from
+the A.M.S. There is a similar option |symbolgreek| to use the Postscript
+Symbol font (included in the core \LaTeX2e\ distribution) to typeset the Greek
+letters.  Both are upright. If no option is passed the Greek letters will be
+in the mathematical ``letters'' font (by default Computer Modern), and they
+will be slanted,\footnote{but see the mention of the |fourier| package
+  \textit{infra}.} which typically is not suitable for documents using
+|mathastext| (they will also generally look very thin comparatively to the
+text font).
+
+
+Another thing to point out is that the subscript sizes have been dramatically
+increased, so that the text looks almost as if it had been written on a
+typewriter (an extremist user would use the \LaTeX\ command
+|\DeclareMathSizes| to let subscripts have the same size as the main text
+font, we chose a middle-ground between this extreme and the default of
+\LaTeX). The option |defaultmathsizes| tells the package not to apply any
+changes to  the
+\LaTeX\ defaults.
+
+\MathastextVersion{lmvttmedium}
+
+The package provides a simple mechanism, using the \LaTeX\ ``math versions'',
+to change the design of the  mathematics in the same document.\footnote{the
+  present document also illustrates how quickly one gets a headache if one
+  tries to read a document with multiple font changes\dots} For example, we
+made in the preamble the declaration:\\
+\hbox to \hsize{\hss |\MathastextDeclareVersion{lmvttmedium}{T1}{lmvtt}{sb}{n}|\hss}\\
+If we now issue the command |\MathastextVersion{lmvttmedium}| the looks of
+mathematics change:
+
+\long\def\mathB{\begingroup\narrower\narrower Similarly from 8.2.8 and 1.8.2, 
+      $\mu_{\nu+1} = \frac{2a^{\frac12}}{1-a^2}\left(- h_{\nu+1} c_1^\nu + a
+        g_{\nu+1} d_1^\nu \right)$ which gives using Proposition 3.1.4 and
+      Definition 1.5.9:
+      \begin{equation}
+        \mu_{\nu+1} = \frac{2n
+          a}{1 - a^2} \frac{aX+Y}{1+aXY}\;.
+      \end{equation}\endgroup}
+
+%\let\mathB\relax
+\mathB
+
+\noindent Let us try the more radical |\MathastextVersion[utopia]{utopia}|. The ``utopia'' math version was defined in the preamble via\\
+\hbox to \hsize{\hss |\MathastextDeclareVersion{utopia}{T1}{put}{m}{n}|\hss}
+
+\MathastextVersion[utopia]{utopia}
+
+\mathB
+
+\noindent 
+The optional argument to |\MathastextVersion| tells it to change also the text
+font. While we are at considering the Utopia font, let us mention that it would have been better however to use the |fourier|
+package\footnote{of \textsc{Michel~Bovani}.}, which has an upright Greek alphabet which
+would look better here in combination with the utopia font than the Euler
+font. So, there is also the possibility to put in the preamble:
+\begin{verbatim}
+\usepackage[upright]{fourier}
+\usepackage{mathastext}
+\end{verbatim}
+in order to gain access to the Greek letters via the |fourier| package. 
+  If we now want to keep |utopia| as text font and
+foolishly typeset our mathematics
+in \hbox{\MathastextVersion[avant]{avant}Avant Garde}, we
+certainly can using
+ |\MathastextVersion{avant}|:\\
+\MathastextVersion{avant}
+
+\mathB
+
+\noindent Why stop here? we issue a 
+|\MathastextVersion[courier]{avant}|:
+
+\MathastextVersion[courier]{avant}
+
+\mathB
+
+\hyphenchar\font=45 We note that the Greek letters from the Euler font look a
+bit small compared to \hbox{\MathastextVersion[avant]{avant}Avant Garde
+  letters}. The
+command\\
+\hbox to \hsize{\hss |\MathastextEulerScale{1.1}|\hss} in the preamble would
+have scaled the Euler font to be 10\%\ larger than its nominal size. This is a
+preamble-only command and we didn't use it here as we started with the Latin
+Modern font |lmvtt|.\footnote{%
+It is in fact |lmvtt| itself that we have scaled to
+112\%\ of nominal size. |mathastext| provides no command for this,
+  one has to include in the preamble a suitably modified |t1lmvtt.fd| file, on
+  the model of what one sees for example in |t1phv.fd| from the \LaTeX2e\ core
+  package |psnfss|.} 
+The |mathastext| package loads the Euler font via the
+|uzeur.fd| font definition file from the |eulervm| package\footnote{of
+  \textsc{Walter~Schmidt}.} and this makes a scaling mechanism available (the
+package is not loaded but the file |uzeur.fd| must be accessible to
+\LaTeX). A similar command |\MathastextSymbolScale| is also provided (no
+specific package needed). The Euler font has the advantage compared to
+Symbol to have a bold version: {\boldmath$\alpha\beta\gamma$}.
+
+\bverb
+
+\hbox to \hsize{\hss |\MathastextVersion[charter]{lmvttmedium}|\hss}\par
+
+\MathastextVersion[charter]{lmvttmedium}
+
+\medskip
+
+\mathB
+
+
+
+The package |mathastext| can be loaded with the option |basic|. The |basic|
+option tells the package to limit its scope to the Latin letters and to the
+digits. Without this option the default is to treat also
+the characters:\DeleteShortVerb{\|}\\
+\centerline{text: !\,?\,*\,,\,.\,:\,;\,+\,-\,=\,(\,)\,[\,]\,/\,\#\,\$\,\%\,\&\,<\,>\,|\,\{\,\}\,\char92}
+Due to their non-availability in the OT1-encoding (apart from typewriter
+fonts), the characters {<\,>\,|\,\{\,\} and \char92} \MakeShortVerb{\|} need to be
+specifically requested via the option |alldelims|. In the present document we
+used the option |symbolmax| so that in fact the characters listed above (apart
+from
+\#\,\$\,\%\,\& and \char92\,) are typeset in mathematical mode using the Symbol font:\\
+\DeleteShortVerb{\|}
+\centerline{math: $!\,?\,*\,,\,.\,:\,;\,+\,-\,=\,(\,)\,[\,]\,/\,\#\,\$\,\%\,\&\,<\,>\,|\,\{\,\}\,\backslash$}
+\MakeShortVerb{\|}
+Besides the option |basic| which cancels
+consideration of all these characters, various subsets can be excluded, via
+the options |noequal|, |noplusnominus|,
+|noexclam|, |nospecials|, |nodigits|,  |noparenthesis|, |nopunctuation|, |noasterisk|.
+
+
+Regarding the Greek letters, we already mentioned |symbolgreek| and
+|eulergreek|, and there is also |selfGreek| which is provided for OT1-fonts
+which have the capital Greek letters.
+
+Other self-explanatory options are |symboldigits| and |eulerdigits|.
+
+The option |mathaccents| tells |mathastext| to also pick up the mathematical
+accents from the text font; the package makes a choice between OT1 and T1 slot
+positions: if not all fonts declared to |mathastext| are OT1-encoded, then the
+T1-positions are assumed. A similar approach is taken for |\imath| and
+|\jmath| (commands |\inodot| and |\jnodot| are defined to use the text font,
+and the identification with |\imath| and |\jmath| can be prevented via the
+option |\defaultimath|).
+
+
+There is also the issue of the |\vec| accent. As it looks awful on upright
+letters (its arrowhead is slanted, and it is shifted to the right), the
+default is to take the glyph from the mathematical font provided by the
+|fourier| package: $\vec\imath, \vec\jmath, \vec k$ (it is not needed to load
+the |fourier| package for this). The option |defaultvec| tells |mathastext|
+not to overwrite the standard |\vec|. Furthermore the package always makes available a ``poor man'''s
+|\pmvec|: $\pmvec\imath, \pmvec\jmath, \pmvec k$.
+
+
+\newcommand\ttprint[1]{|\char92#1|~$\csname #1\endcsname$}
+
+The option |symbolre| 
+\sbverb
+gives access to the three symbols \ttprint{Re}, \ttprint{Im},
+\ttprint{DotTriangle}, 
+\bverb
+and the option |symbolmisc| to the following list:\par
+\sbverb
+{\narrower\narrower
+\noindent{\ttprint{prod}}\ 
+{\ttprint{sum}}\ 
+{\ttprint{implies}}\ 
+{\ttprint{impliedby}}\ 
+{\ttprint{iff}}\ 
+{\ttprint{shortiff}}\ 
+{\ttprint{to}}\ 
+{\ttprint{longto}}
+{\ttprint{mapsto}}\ 
+{\ttprint{longmapsto}}\ 
+%
+{\ttprint{aleph}}\ 
+{\ttprint{inftypsy}}\ 
+{\ttprint{emptyset}}\ 
+{\ttprint{surd}}\ 
+{\ttprint{nabla}}\ 
+{\ttprint{angle}}\ 
+{\ttprint{forall}}\ 
+{\ttprint{exists}}\ 
+{\ttprint{neg}}\ 
+{\ttprint{clubsuit}}\ 
+{\ttprint{diamondsuit}}\ 
+{\ttprint{heartsuit}}\ 
+{\ttprint{spadesuit}}\ 
+{\ttprint{smallint}}\ 
+{\ttprint{wedge}}\ 
+{\ttprint{vee}}\ 
+{\ttprint{cap}}\ 
+{\ttprint{cup}}\ 
+{\ttprint{bullet}}\ 
+{\ttprint{div}}\ 
+{\ttprint{otimes}}\ 
+{\ttprint{oplus}}\ 
+{\ttprint{pm}}\ 
+{\ttprint{ast}}\ 
+{\ttprint{times}}\ 
+{\ttprint{proptopsy}}\ 
+{\ttprint{mid}}\ 
+{\ttprint{leq}}\ 
+{\ttprint{geq}}\ 
+{\ttprint{approx}}\ 
+{\ttprint{supset}}\ 
+{\ttprint{subset}}\ 
+{\ttprint{supseteq}}\ 
+{\ttprint{subseteq}}\ 
+{\ttprint{in}}\ 
+{\ttprint{sim}}\ 
+{\ttprint{cong}}\ 
+{\ttprint{perp}}\ 
+{\ttprint{equiv}}\ 
+{\ttprint{notin}}\ 
+{\ttprint{langle}}\ 
+{\ttprint{rangle}}
+\par}
+\bverb
+
+\noindent The idea of the |symbolmisc| option (together with |alldelims|) is
+to (perhaps) reduce for documents with simple mathematics the number of fonts
+used. The $\inftypsy$ symbol is small (presumably as it is designed already at
+script-size) compared to the default $\infty$, so we gave it another name and
+there is the possibility to do |\renewcommand{\infty}{\inftypsy}|.\footnote{The user can also
+  give a try to
+  {\usefont{T1}{lmtt}{b}{n}\char92renewcommand\{\char92int\}\{\char92smallint\}}.}
+
+\hbox to \hsize{\hss|\MathastextVersion[lmvtt]{normal}|\hss}
+
+\MathastextVersion[lmvtt]{normal}
+\sbverb
+\section{Usage}
+
+\subsection{Basic}
+
+One adds |\usepackage{mathastext}| after the other font-related |\usepackage|: this will set up the Latin letters and digits (and further
+characters, as described \textit{supra}) to be typeset with the document text
+font also in mathematical mode.  The command |\Mathastext| can be issued
+anywhere in the preamble to reinitialize |mathsastext| if the
+|\encodingdefault|, |\familydefault|, |\seriesdefault|, or
+|\shapedefault| has been changed. Alternatively one can use:\\
+\hbox to \hsize{\hss|\MathastextWillUse{<enc>}{<fam>}{<ser>}{<sh>}|\hss}\\
+It is also possible to use one or more of the commands
+|\Mathastextencoding{<enc>}|, |\Mathastextfamily{<fam>}|,
+|\Mathastextseries{<ser>}|, |\Mathastextshape{<sh>}|, followed by a mandatory
+|\Mathastext| command (which has no argument).
+
+The command |\Mathastextboldvariant{<var>}| specifies the series (b,bx,sb,
+etc\dots) to be used by
+|\mathbf|, and after |\boldmath|.
+
+\subsection{Using math versions}
+
+\LaTeX\ has two mathematical versions: |normal| and |bold|. The command\\
+\hbox to \hsize{\hss|\MathastextDeclareVersion{}{}{}{}|\hss} 
+allows to declare arbitrarily many (well
+in practice not more than a dozen or so distinct) |versions|. As an example, let us reproduce here
+the declarations from this document:
+\begin{verbatim}
+\MathastextDeclareVersion{lmvtt}{T1}{lmvtt}{m}{n}
+\MathastextDeclareVersion{lmvttmedium}{T1}{lmvtt}{sb}{n}
+\MathastextDeclareVersion{times}{T1}{ptm}{m}{n}
+\MathastextDeclareVersion{palatino}{T1}{ppl}{m}{n}
+\MathastextDeclareVersion{bookman}{T1}{pbk}{m}{n}
+\MathastextDeclareVersion{charter}{T1}{bch}{m}{n}
+\MathastextDeclareVersion{newcent}{T1}{pnc}{m}{n}
+\MathastextDeclareVersion{utopia}{T1}{futs}{m}{n}
+\MathastextDeclareVersion{helvetica}{T1}{phv}{m}{n}
+\MathastextDeclareVersion{avant}{T1}{pag}{m}{n}
+\MathastextDeclareVersion{courier}{T1}{pcr}{m}{n}
+\end{verbatim}
+These commands have to be issued in the preamble of the document. Then in the
+body of the document one uses the standard \LaTeX\ command
+|\mathversion{}|. For example after |\mathversion{bookman}|, the Bookman font
+will be used for letters and digits in mathematics.\footnote{This mechanism is
+  mainly provided to allow some context dependent design changes, for example
+  for the statements of theorems or definitions.}
+
+Alternatively one can use |\MathastextVersion{bookman}| which is exactly the
+same thing, except that it allows an optional argument which  enforces also a
+change of the text font. This has been described above.
+
+\subsection{Package options}
+
+\begingroup
+\parindent0pt
+
+|basic|: only letters and digits. The default is to also change the font for
+!\,?\,*\,,\,.\,:\,;\,+\,-\,=\,(\,)\,[\,]\,/\,\#\,\$\,\%\,\&. Various options
+exclude some subsets: |noexclam|\  !\,?\  |noasterisk|\ *\  |nopunct|\ ,\,.\,:\,;\  
+|noplusnominus|\ +\,- |noequal|\ =\  |noparenthesis|\, (\,)\,[\,]\,/
+\  |nospecials|\ \#\,\$\,\%\,\& and |nodigits|. The |alldelims| option (not suitable for
+OT1-encoding) adds the characters \DeleteShortVerb{\|} <\,>\,|\,\{\,\}\,$\backslash$
+\MakeShortVerb{\|} to the default list.\par
+
+\medskip
+
+|symbolgreek|, |symboldigits|: to let Greek letters (digits) use the Symbol
+font. |eulergreek|, |eulerdigits|: to let Greek letters (digits) use the Euler
+font.
+
+\medskip
+
+
+|mathaccents|: accents $\acute{a}\,
+\grave a\,
+\ddot a\,
+\tilde a\,
+\bar a\,
+\breve a\,
+\check a\,
+\hat a\,
+\dot a\,
+\mathring a$ will use the text font.
+
+\medskip
+
+|symbolre| and |symbolmisc| instruct to use the Symbol font for some
+miscellaneous symbols (described \textit{supra}). The option |symbol|
+combines |symbolre|, |symbolgreek| and |symbolmisc|. The option |symbolmax|
+extends |symbol| as it will also typeset all characters described above (others than letters and digits)
+in the Symbol font (except the specials \#\,\$\,\%\,\& and the backslash $\backslash$).
+
+\medskip
+\endgroup
+The package defines commands |\Mathnormal|, |\Mathrm|, and |\Mathbf|, and it
+will 
+overwrite |\mathnormal|, |\mathrm|, |\mathbf| except if the options
+|defaultnormal|, |defaultrm|, or |defaultbf| are passed.
+The package defines |\inodot| and |\jnodot|\footnote{but the $\jnodot$ glyph
+   is often unavailable in non-\TeX\ fonts.} and it will overwrite |\imath|
+and |\jmath| except if option |defaultimath| is passed.
+
+The remaining options |selfGreek| (only
+suitable for OT1-encoded fonts), |defaultvec|, and |defaultmathsizes| have
+been described before.
+
+\medskip All the options passed to the package apply globally to all math
+versions (if any) declared by |\MathastextDeclareVersion|.  The commands (only
+for the preamble) |\MathastextSymbolScale{<x>}| and
+|\MathastextEulerScale{<x>}| will scale the respective fonts by factor <x>.
+
+We used\\
+\hbox to \hsize{\hss
+  |\usepackage[alldelims,symbolmax,eulergreek,mathaccents]{mathastext}|\hss}\\
+in the preamble of the \TeX\ source of this file.
+\end{document}
+
