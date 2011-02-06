@@ -1,12 +1,11 @@
 % \iffalse meta-comment
-%    Time-stamp: <01-02-2011 10:35:07 CET JF>
+%    Time-stamp: <06-02-2011 23:43:34 CET JF>
 %    File `mathastext.dtx'
 %    
 %    Copyright (C) 2011 by Jean-Francois B.
 %   
 %    Please report errors to 2589111+jfbu@users.noreply.github.com
-%    Documentation is also in `mathastext-doc.pdf' 
-%    available at
+%    Illustrative examples available at
 %        mathastext.html
 %    
 %    This file be distributed and/or modified under the
@@ -21,7 +20,7 @@
 % \iffalse
 %<*dtx>    
 \ProvidesFile{mathastext.dtx}
-             [2011/02/01 1.1 Use the text font in simple mathematics]
+             [2011/02/06 1.11 Use the text font in simple mathematics]
 %</dtx>
 % 
 %<*driver>
@@ -34,6 +33,82 @@
 \setlength{\textwidth}{360pt}
 \setlength{\oddsidemargin}{46pt}
 \setlength{\marginparwidth}{100pt}
+%% glyphs from the Symbol font
+\DeclareSymbolFont{mtpsymbol}{U}{psy}{m}{n}
+\makeatletter
+  \DeclareFontFamily{U}{psy}{}
+  \DeclareFontShape{U}{psy}{m}{n}{<-> psyr}{}
+\let\prod\undefined
+\DeclareMathSymbol{\prod}{\mathop}{mtpsymbol}{213}
+\let\sum\undefined
+\DeclareMathSymbol{\sum}{\mathop}{mtpsymbol}{229}
+\DeclareMathSymbol{\mt@implies}{\mathrel}{mtpsymbol}{222}
+\DeclareRobustCommand{\implies}{\;\mt@implies\;}
+\DeclareMathSymbol{\mt@impliedby}{\mathrel}{mtpsymbol}{220}
+\DeclareRobustCommand{\impliedby}{\;\mt@impliedby\;}
+\DeclareRobustCommand{\iff}{\;\mt@impliedby\mathrel{\mkern-3mu}\mt@implies\;}
+\DeclareMathSymbol{\mt@iff}{\mathrel}{mtpsymbol}{219}
+\DeclareRobustCommand{\shortiff}{\;\mt@iff\;}
+\DeclareMathSymbol{\mt@to}{\mathrel}{mtpsymbol}{174}
+\DeclareMathSymbol{\mt@trait}{\mathrel}{mtpsymbol}{190}
+\DeclareRobustCommand\to{\mt@to}
+\DeclareRobustCommand\longto{\mkern2mu\mt@trait\mathrel{\mkern-10mu}\mt@to}
+\DeclareRobustCommand\mapsto{\mapstochar\mathrel{\mkern0.2mu}\mt@to}
+\DeclareRobustCommand\longmapsto{%
+\mapstochar\mathrel{\mkern2mu}\mt@trait\mathrel{\mkern-10mu}\mt@to}
+\makeatother
+%%
+\DeclareMathSymbol{\aleph}{\mathord}{mtpsymbol}{192}
+\DeclareMathSymbol{\inftypsy}{\mathord}{mtpsymbol}{165} 
+\DeclareMathSymbol{\emptyset}{\mathord}{mtpsymbol}{198}
+\let\varnothing\emptyset
+\DeclareMathSymbol{\nabla}{\mathord}{mtpsymbol}{209}
+\DeclareMathSymbol{\surd}{\mathop}{mtpsymbol}{214}
+\let\angle\undefined
+\DeclareMathSymbol{\angle}{\mathord}{mtpsymbol}{208}
+\DeclareMathSymbol{\forall}{\mathord}{mtpsymbol}{34}
+\DeclareMathSymbol{\exists}{\mathord}{mtpsymbol}{36}
+\DeclareMathSymbol{\neg}{\mathord}{mtpsymbol}{216}
+\DeclareMathSymbol{\clubsuit}{\mathord}{mtpsymbol}{167}
+\DeclareMathSymbol{\diamondsuit}{\mathord}{mtpsymbol}{168}
+\DeclareMathSymbol{\heartsuit}{\mathord}{mtpsymbol}{169}
+\DeclareMathSymbol{\spadesuit}{\mathord}{mtpsymbol}{170}
+\DeclareMathSymbol{\smallint}{\mathop}{mtpsymbol}{242}
+\DeclareMathSymbol{\wedge}{\mathbin}{mtpsymbol}{217}
+\DeclareMathSymbol{\vee}{\mathbin}{mtpsymbol}{218}
+\DeclareMathSymbol{\cap}{\mathbin}{mtpsymbol}{199}
+\DeclareMathSymbol{\cup}{\mathbin}{mtpsymbol}{200}
+\DeclareMathSymbol{\bullet}{\mathbin}{mtpsymbol}{183}
+\DeclareMathSymbol{\div}{\mathbin}{mtpsymbol}{184}
+\DeclareMathSymbol{\otimes}{\mathbin}{mtpsymbol}{196}
+\DeclareMathSymbol{\oplus}{\mathbin}{mtpsymbol}{197}
+\DeclareMathSymbol{\pm}{\mathbin}{mtpsymbol}{177}
+\DeclareMathSymbol{\ast}{\mathbin}{mtpsymbol}{42}
+\DeclareMathSymbol{\times}{\mathbin}{mtpsymbol}{180}
+\DeclareMathSymbol{\proptopsy}{\mathrel}{mtpsymbol}{181}
+\DeclareMathSymbol{\mid}{\mathrel}{mtpsymbol}{124} 
+\DeclareMathSymbol{\leq}{\mathrel}{mtpsymbol}{163}
+\DeclareMathSymbol{\geq}{\mathrel}{mtpsymbol}{179}
+\DeclareMathSymbol{\approx}{\mathrel}{mtpsymbol}{187}
+\DeclareMathSymbol{\supset}{\mathrel}{mtpsymbol}{201}
+\DeclareMathSymbol{\subset}{\mathrel}{mtpsymbol}{204}
+\DeclareMathSymbol{\supseteq}{\mathrel}{mtpsymbol}{202}
+\DeclareMathSymbol{\subseteq}{\mathrel}{mtpsymbol}{205}
+\DeclareMathSymbol{\in}{\mathrel}{mtpsymbol}{206}
+\DeclareMathSymbol{\sim}{\mathrel}{mtpsymbol}{126}
+\let\cong\undefined
+\DeclareMathSymbol{\cong}{\mathrel}{mtpsymbol}{64} 
+\DeclareMathSymbol{\perp}{\mathrel}{mtpsymbol}{94}
+\DeclareMathSymbol{\equiv}{\mathrel}{mtpsymbol}{186}
+\let\notin\undefined
+\DeclareMathSymbol{\notin}{\mathrel}{mtpsymbol}{207}
+\DeclareMathDelimiter{\rangle}
+   {\mathclose}{mtpsymbol}{241}{largesymbols}{"0B}
+\DeclareMathDelimiter{\langle}
+   {\mathopen}{mtpsymbol}{225}{largesymbols}{"0A}
+\DeclareMathSymbol{\Re}{\mathord}{mtpsymbol}{"C2}
+\DeclareMathSymbol{\Im}{\mathord}{mtpsymbol}{"C1}
+\DeclareMathSymbol{\DotTriangle}{\mathord}{mtpsymbol}{92}
 %\RecordChanges
 %\OnlyDescription
 \begin{document}
@@ -41,8 +116,36 @@
 \end{document}
 %</driver>
 % \fi
-%
-% \changes{1.0}{2011/01/25}{Initial version.}
+% \changes{1.11}{2011/02/06}{
+%    * bugs from version 1.1 have been fixed. 
+%         * Among them the non correct behavior when
+%         eulergreek and one of the symbol options were used
+%         at the same time. 
+%         * Also the macro \cs{Mathastext} did not
+%         contrarily to what was said in the docs pick up
+%         the font defaults at the time of it being used in
+%         the preamble. 
+%         * the endash option provoked an error when used
+%         with XeTeX or LuaTeX.
+%    * for brevity sake long macro names starting with
+%    \cs{Mathastext\cdots} now exist in the form
+%    \cs{MT\cdots} 
+%    * the |endash| option is made default, as well as the
+%    |alldelims| option. A new |symboldelimiters| option
+%    specifies to use the Symbol font for characters others
+%    then letters and digits. 
+%    * the \cs{fouriervec} command must be explicitely
+%    requested by the |fouriervec| option
+%    * the command \cs{Mathastext} now accepts an optional
+%    argument which, if present, makes \cs{Mathastext} acts
+%    as \cs{MathastextDeclareVersion} with the current font
+%    defaults, the optional argument giving the name of the
+%    version. This mechanism allows to use |mathastext| with
+%    unicode fonts (XeTeX or LuaTeX with |fontspec|)
+%    * |mathastext| is more clever for the dotless i and j
+%    and the hbar with respect to encoding problems; and it
+%    knows also their Unicode locations.
+%    }
 %
 % \changes{1.1}{2011/02/01}{
 %   * option |italic|: this is the main change for the user. Internally we now
@@ -85,7 +188,8 @@
 %        goes really against the initial design goals, and adds
 %        complications, I did not do it.}
 %
-% 
+% \changes{1.0}{2011/01/25}{Initial version.}
+%
 % \GetFileInfo{mathastext.dtx}
 %
 % \begin{center}
@@ -128,29 +232,56 @@
 %    days. Don't ask me if this helped, I have long since opted for a
 %    positive attitude in life.
 %    
-%    The package |mathastext| is less extreme, but retains the
-%    idea of using inside mathematics the same font as is used for
-%    text for the letters of the Latin alphabet and the digits. By
+%    The package |mathastext| is less extreme, but retains
+%    the idea of using inside mathematics the same font as
+%    is used for text for the letters of the Latin
+%    alphabet and the digits:\\
+%    \centerline{abcdefghijklmnopqrstuvwxyz}
+%    \centerline{ABCDEFGHIJKLMNOPQRSTUVWXYZ}
+%    \centerline{0123456789} By
 %    default the text font will also be used for:\\
-%    \centerline{!\,?\,*\,,\,.\,:\,;\,+\,-\,=\,(\,)\,[\,]\,/\,\#\,%
-%    \$\,\%\,\&}
-%    and with the option |alldelims| also for:\\
 %    \DeleteShortVerb{\|}
-%    \centerline{$\mathord{<}\,\mathord{>}\,\mathord{|}$\,\{\,\}
-%    and $\backslash$} \MakeShortVerb{\|} Introducing this option
-%    was made necessary by the absence of these characters in
-%    OT1-encoded fonts (except for mono-width fonts). It is
-%    suitable for most other text font encodings, such as T1.
+%    \centerline{!\,?\,*\,,\,.\,:\,;\,+\,\textendash\,=\,(\,)\,[\,]\,/\,\#\,%
+%    \$\,\%\,\&\,$\mathord{<}\,\mathord{>}\,\mathord{|}$\,\{\,\}
+%    and $\backslash$} If the package detects at the time of
+%    being loaded that the default encoding is OT1, it takes
+%    out from the list
+%    $\mathord{<}\,\mathord{>}\,\mathord{|}$\,\{\,\} and
+%    $\backslash$.  \MakeShortVerb{\|} The option
+%    |alldelims| can force re-integration in case one uses a
+%    fixed-width OT1 font.
 %
-%    \subsection{Letters and digits}
+%    The commands \cs{mathnormal}, \cs{mathrm} and
+%    \cs{mathbf} are modified but nothing is changed to
+%    \cs{mathit} and the other math alphabet commands which
+%    will use the default math fonts, not the text font.
 %
-%    In the initial version |1.0|, we had the same shape both for
-%    letters and digits, either the one given by \cs{shapedefault}
-%    at the time of loading the package, or another one specified
-%    by the user, and this was deliberate. This gives a very
-%    uniform look to the document, so that one has to make an
-%    effort and read it with attention, I explained above why I
-%    did this on purpose.
+%    A very short list of further glyphs will be also picked
+%    up in or constructed from the text font: the dotless i
+%    and j, the hbar and the math accents. By default the
+%    en-dash \textendash{} is used for the minus sign and
+%    not the hyphen character -. Version |1.11| brings a
+%    better compatibility with a Unicode setting (assuming
+%    that |fontspec| is made use of), but the scope of
+%    |mathastext| does not include directly input 
+%    letters with diacritics \'e, \`a, \"o in math
+%    mode. Users of Xe\TeX{} are advised to look at the much
+%    more sophisticated and encompassing |mathspec| package.
+%
+%    Even when typesetting simple mathematics, some glyphs
+%    may have to be taken from the default math fonts, for
+%    example the prime $\prime$. 
+%
+%    \subsection{The italic option}
+%
+%    In the initial version |1.0|, the package gave the same
+%    shape to both letters and digits, either the one given
+%    by \cs{shapedefault} at the time of loading the
+%    package, or another one specified by the user, and this
+%    was deliberate. This gives a very uniform look to the
+%    document, so that one has to make an effort and read it
+%    with attention, I explained above why I did this on
+%    purpose.
 %
 %    Nevertheless, soon after I posted the package to CTAN, I was overwhelmed
 %    by numerous\footnote{this means ``more then one.''} questions\footnote{I
@@ -158,7 +289,7 @@
 %    their kind remarks (chronological order).}  on how to have
 %    the letters be in italic shape. 
 %
-%    The new version |1.1| provides precisely this feature. The
+%    The version |1.1| provided precisely this feature. The
 %    default is still, as in version |1.0|, for everything to be
 %    in upright shape, but it suffices to pass to the package the
 %    option |italic|. There is now also an option |frenchmath| to
@@ -167,22 +298,24 @@
 %
 %    \subsection{Greek letters}
 %
-%    Regarding the Greek letters: the default (lowercase) ones from
-%    Computer Modern are slanted, hence, if the |italic| option
-%    just mentioned was not made use of, they will not mix well
-%    with upright letters (also the Computer Modern typefaces are
-%    very light in comparison to many text fonts). So there are
-%    options to take these glyphs either from the Euler font or
-%    from the Postscript Symbol font. Both are included in all
+%    Regarding the Greek letters: the default (lowercase)
+%    ones from Computer Modern are slanted, hence, if the
+%    |italic| option just mentioned is not made use of, they
+%    will not mix well with upright letters (besides, the
+%    Computer Modern typefaces are very light in comparison
+%    to many text fonts). So there are options to take these
+%    glyphs either from the Euler font or from the
+%    Postscript Symbol font. Both are included in all
 %    \LaTeX{} distributions. Although no package loading is
-%    necessary for the user, nor done internally by |mathastext|,
-%    the file |uzeur.fd| from the |eulervm| package must be
-%    accessible to \LaTeX{} as it provides a mechanism to scale by
-%    an arbitrary factor the Euler font. For the Postscript Symbol
-%    font (which is included in the basic \LaTeX{} distribution),
-%    |mathastext| does internally what is necessary, so that in
-%    both cases commands are provided so that the user can scale
-%    the font with respect to nominal size. 
+%    necessary for the user, nor done internally by
+%    |mathastext|, the file |uzeur.fd| from the |eulervm|
+%    package must be accessible to \LaTeX{} as it provides a
+%    mechanism to scale by an arbitrary factor the Euler
+%    font. For the Postscript Symbol font (which is included
+%    in the basic \LaTeX{} distribution), |mathastext| does
+%    internally what is necessary, so that in both cases
+%    commands are provided so that the user can scale the
+%    font with respect to nominal size.
 %
 %    Of course, it is also possible to access upright Greek
 %    letters via loading first specific packages providing math
@@ -194,33 +327,99 @@
 %
 %    \LaTeX{} has two math versions (|normal| and |bold|):
 %    |mathastext| provides a straightforward mechanism to define
-%    many more. Once declared in the preamble, these versions can
-%    now be activated by a package provided command which adds to
-%    the default \cs{mathversion} an optional argument which will
-%    result in changing the text font. In the spirit of the
-%    package the mandatory and optional arguments should be
-%    identical, but the user can make an arbitrary
-%    specification. For example this allows to use some font in
-%    medium series for the text and at the same time the same font
-%    in semi-bold series for the mathematics. Also the encoding
+%    many more. The encodings of the various |mathastext|-defined versions
 %    can be arbitrary; but as |mathastext| decides at the time
 %    when it is loaded where to look for things like the en-dash,
 %    or the dotless i and j, or the math accents, which are
 %    encoding-dependent, there are obviously some limitations to
-%    the use of these things in more than one math version.
+%    the use of these things in more than one math
+%    version. Here is an example of how this goes:
+%    \begin{verbatim}
+%    \usepackage[T1]{fontenc}
+%    \usepackage{mathastext}
+%    % Latin Modern Typewriter Proportional
+%    \MTDeclareVersion{lmvtt}{T1}{lmvtt}{m}{n}
+%    % Baskervald, letters in italics
+%    \MTDeclareVersion[it]{baskervald}{T1}{ybv}{m}{n}
+%    % Bold Helvetica, digits and operator names slanted 
+%    % and letters (in math mode only) upright
+%    \MTDeclareVersion[n]{helvetica}{T1}{phv}{b}{sl}
+%    \begin{document}
+%    \MTVersion{helvetica}
+%    Hello $world!$.
+%    \MTVersion[lmvtt]{baskervald}
+%    Here lmvtt but $here\ baskervald$.
+%    \MTVersion{normal}
+%    Default font when loading mathastext, $in\ math\ also$.
+%    \end{document}
+%    \end{verbatim}
+%    Other ways to achieve the same result:
+%    \begin{verbatim}
+%    \usepackage[T1]{fontenc}
+%    \usepackage{mathastext}
+%    \renewcommand{\rmdefault}{lmvtt}
+%    \Mathastext[lmvtt]
+%    \renewcommand{\rmdefault}{ybv}
+%    \MTlettershape{it}
+%    \Mathastext[baskervald]
+%    \renewcommand{\shapedefault}{sl}
+%    \renewcommand{\rmdefault}{phv}
+%    \renewcommand{\mddefault}{b}
+%    \MTlettershape{n}
+%    \Mathastext[helvetica]
+%    \begin{document}
+%    \MTVersion{helvetica}
+%    Hello $world!$.
+%    \MTVersion[lmvtt]{baskervald}
+%    Here lmvtt but $here\ baskervald$.
+%    \MTVersion{normal}
+%    Default font when loading mathastext, $in\ math\ also$.
+%    \end{document}
+%    \end{verbatim}
+%    Unicode encoded fonts can also be accomodated. Here is
+%    an example (a bit schizophrenic) for a Xe\TeX{} or
+%    Lua\LaTeX{} user. Of course |mathastext|'s facilities
+%    are very meager to specify a math font, as basically
+%    they are quasi-limited to a subset of the 32-127 ascii
+%    range:\footnote{see the introduction describing the
+%    initial goals of this package.} the much more powerful
+%    and sophisticated package |mathspec| is recommended to
+%    Xe\TeX{} users.
+%    \begin{verbatim}
+%    \usepackage[no-math]{fontspec}
+%    \setmainfont{comfortaa}
+%    \usepackage{mathastext}  % the normal version uses Comfortaa
+%    \setmainfont{TeX Gyre Pagella}
+%    \Mathastext[pagella]     % the pagella version uses Pagella
+%    \MTDeclareVersion{times}{T1}{ptm}{m}{n} 
+%              %  this is a T1-times. Do not try to use this
+%              %  command for a Unicode font, use rather the
+%              %  \setmainfont command of |fontspec|,
+%              %  followed by \Mathastext
+%    \setmainfont{TeX Gyre Schola}
+%    \Mathastext[schola] % and unicode TeX Gyre Schola
+%    \begin{document}
+%    \MTVersion{pagella}
+%    This is in TeX Gyre Pagella $and\ this\ also$ (unicode font).
+%    \MTVersion{times}
+%    Now we are in URW Times, $here\ also$ (T1 encoded font).
+%    \MTVersion[normal]{schola}
+%    Text in Unicode Comfortaa and $math\ in\ Unicode\ Schola$.
+%    \end{document}
+%    \end{verbatim}
+%    
 %    
 %    For basic use one does not need to worry about the purely
 %    optional mechanism of math versions: to use the package, one
 %    only needs loading it (the default font at the time of
 %    loading the package will become the font used in
-%    mathematics), with some options. We describe a few here, the
-%    complete list is given in a later section.
+%    mathematics). Users of Xe\TeX{} and
+%    Lua\LaTeX{} will need to have loaded the package |fontspec|,
+%    \emph{with option} |no-math|, and \emph{before} |mathastext|.
 %
 %    \subsection{Main options}
 %    \begin{description}
-%    \item[{\tt italic, frenchmath:}] was described above (new in |1.1|).
-%    \item[{\tt endash:}] the minus sign is represented in mathematics mode by
-%      the en-dash glyph from the text font (new in |1.1|).
+%    \item[{\tt italic, frenchmath:}] were described above (new in |1.1|).
 %    \item[{\tt symbolgreek:}] the Greek letters will be taken from the
 %      Postscript Symbol font.
 %    \item[{\tt eulergreek:}] the Greek letters will be taken from the Euler
@@ -242,43 +441,92 @@
 %
 %    \subsection{Miscellaneous}
 %
-%    The definition of \cs{hbar} inherited from default \LaTeX{}
-%    will in our context make use of the |h| of the current math
-%    font (so for us, it is also the text font, perhaps in italic
-%    shape), but the bar accross the |h| will come from the
-%    original default math font for letters (usually |cmmi|), and
-%    furthermore its placement on the |h| can be odd-looking. So
-%    we redefine \cs{hbar} to use only the text font (and this
-%    will be aware of the |italic| option). Our construction does
-%    not always give an optimal result, so an option |nohbar|
-%    deactivates it (many font-related packages like |amsfonts|
-%    have their own \cs{hbar}, but in the spirit of minimizing
-%    font requirements, I felt compelled to try to do
-%    something). There is no \cs{hslash} provided by the package,
-%    though.
+%    \begin{description}
+%    \item[the en-dash as minus sign:] 
+%      Very often the - character from the text font does
+%      not give a good minus sign. So by default, the
+%      package uses the en-dash sign \textendash{}. In
+%      version |1.11| of the package this should work in all
+%      encodings, including Unicode (it is then assumed that
+%      |fontspec| has been loaded). It is not necessary
+%      anymore to pass the option |endash|, rather there is
+%      |noendash| to deactivate it.
 %
-%    The default \cs{vec} accent is not appropriate for upright
-%    letters, so the |mathastext| provides a \cs{fouriervec} which
-%    takes its glyph in a Fourier font, and an Ersatz \cs{pmvec}
-%    is provided which is reasonably good looking on upright
-%    letters and works with the \cs{rightarrow} glyph. Contrarily
-%    to version |1.0|, the default \cs{vec} is not overwritten
-%    with \cs{fouriervec}.
 %
-%    The \cs{mathnormal}, \cs{mathrm}, and \cs{mathbf} are
-%    modified to use the text font (or the arbitrarily specified
-%    font for a math version), and behave as in standard
-%    \LaTeX{}. But we provide a new \cs{mathnormalbold}, to access
-%    the bold letters while maintaining their italic shape (or
-%    whatever shape has been specified for them) in case of the
-%    |italic| option. Other math alphabet changing commands are
-%    \cs{MathEulerBold}, \cs{MathEuler} and \cs{MathPSymbol}. Note
-%    though that it is not possible to use too many of such
-%    commands in the same document, due to some limitations of
-%    \LaTeX{}. Declaring them does not seem to be a problem, and I
-%    will welcome any information by knowledgeable people.
+%    \item[hbar:] The definition of \cs{hbar} inherited from
+%      default \LaTeX{} will in our context make use of the
+%      |h| of the current math font (so for us, it is also
+%      the text font, perhaps in italic shape), but the bar
+%      accross the |h| will come from the original default
+%      math font for letters (usually |cmmi|), and
+%      furthermore its placement on the |h| can be
+%      odd-looking. So we redefine \cs{hbar} to use only the
+%      text font (and this will be aware of the |italic|
+%      option). Our construction does not always give an
+%      optimal result (and is limited to OT1 and T1
+%      encodings), so an option |nohbar| deactivates
+%      it. There is no \cs{hslash} provided by the package,
+%      though. With version |1.11| and a Unicode font the
+%      package tries to get the \cs{hbar} directly as a
+%      glyph from the font.
 %
-%  \section{Commands provided by the package}    
+%
+%    \item[dotless i and j:] By default the package redefines
+%      \cs{i} and \cs{j} to give the dotless i and j (if it
+%      exists at all), \emph{also in math mode,} in the text
+%      font. Will overwrite the default commands \cs{imath}
+%      and \cs{jmath}. In version |1.11| of the package this
+%      should work in all encodings, including Unicode (it
+%      is then assumed that |fontspec| has been loaded, and
+%      of course that the glyphs are indeed in the font).
+%
+%
+%    \item[vec accent:] The default \cs{vec} accent is not
+%      appropriate for upright letters, so  |mathastext|
+%      provides a \cs{fouriervec} which takes its glyph in a
+%      Fourier font, and an Ersatz \cs{pmvec} 
+%      which is reasonably good looking on upright letters
+%      and works with the \cs{rightarrow} glyph. Contrarily
+%      to version |1.0|, the default \cs{vec} is not
+%      overwritten with \cs{fouriervec}. And contrarily to
+%      version |1.1|, one now needs to pass the option
+%      |fouriervec| to have the math accent \cs{fouriervec}
+%      defined by the package.
+%
+%
+%    \item[math alphabets:] The \cs{mathnormal}, \cs{mathrm}, and \cs{mathbf} are
+%      modified to use the text font (or the arbitrarily
+%      specified font for a math version), and behave as in
+%      standard \LaTeX{}. But we provide a new
+%      \cs{mathnormalbold}, to access the bold letters while
+%      maintaining their italic shape (or whatever shape has
+%      been specified for them) in case of the |italic|
+%      option. Other math alphabet changing commands are
+%      \cs{MathEulerBold}, \cs{MathEuler} and
+%      \cs{MathPSymbol}. Note though that it is not possible
+%      to use too many of such commands in the same
+%      document, due to some limitations of
+%      \LaTeX{}. Declaring them does not seem to be a
+%      problem, and I will welcome any information by
+%      knowledgeable people.
+%
+%    \item[math accents:]  an option |mathaccents| is
+%    provided to pick up the accents in math mode from the
+%    text font, but this is only for either an OT1-compatible or a
+%    T1-encoded font.
+%  
+%    \end{description}
+%
+%    Regarding the encoding-dependent glyphs: the en-dash,
+%    the dotless i and j, the math accents, the hbar, are
+%    encoding dependent and the relevant decisions are made
+%    by |mathastext| at the time it is loaded. So you can
+%    use math versions with different encodings but,
+%    regarding these characters only those with the same
+%    encoding as the normal math version will display them
+%    correctly. 
+%
+%  \section{Commands}    
 %    
 %    \subsection{Preamble-only commands}
 %    Nothing is necessary besides loading |mathastext|, possibly
@@ -286,28 +534,48 @@
 %    enhancements to the basic use of the package.
 %    \begin{itemize}
 %    \item |\Mathastext|: reinitializes |mathastext| according to the current
-%      defaults of encoding, family, series and shape. It can also be preceded
-%      optionally by one or more of |\Mathastextencoding|\marg{enc},
-%      |\Mathastextfamily|\marg{fam}, |\Mathastextseries|\marg{ser},
-%      |\Mathastextshape|\marg{sh}, and, new with version |1.1|,
-%      |\Mathastextlettershape|\marg{sh}. For example valid values are,
-%      respectively,  \meta{T1}, \meta{phv}, \meta{m}, \meta{n}, and
-%      \meta{it}: this is the Helvetica font in T1-encoding, regular (medium)
-%      series, upright shape, and the letters will be in italic shape. 
-%    \item |\MathastextWillUse|\oarg{ltsh}\marg{enc}\marg{fam}\marg{ser}\marg{sh}: tells
-%      |mathastext| to use the font with the specified encoding, family,
-%      series, and shape for the letters and digits (and all other afflicted
-%      characters) in math mode. The optional argument \meta{ltsh} specifies a
-%      shape for the letters, for example \cs{itdefault}, or directly
-%      \meta{it} or \meta{sc}. 
+%      defaults of encoding, family, series and shape.
+%      \begin{itemize}
+%      \item It can also be preceded optionally by one or
+%        more of\footnote{these commands exist also with
+%        long names: \texttt{\char92Mathastextencoding},
+%        etc\dots{} The same applies to the other commands
+%        mentioned in this section.}
+%      |\MTencoding|\marg{enc},
+%        |\MTfamily|\marg{fam},
+%        |\MTseries|\marg{ser},
+%        |\MTshape|\marg{sh}, and, new with version
+%        |1.1|, |\MTlettershape|\marg{sh}. For
+%        example valid values are, respectively, \meta{T1},
+%        \meta{phv}, \meta{m}, \meta{n}, and \meta{it}: this
+%        is the Helvetica font in T1-encoding, regular
+%        (medium) series, upright shape, and the letters
+%        will be in italic shape.
+%      \item with version |1.11| \cs{Mathastext} accepts an
+%      optional argument, which will serve as a name to
+%      designate the corresponding math version. Without
+%      optional argument \cs{Mathastext} redefines the default
+%      normal and bold versions. This argument, being
+%      optional, must be enclosed within square brackets.
+%      \end{itemize}
+%      \item
+%        |\MTWillUse|\oarg{ltsh}\marg{enc}\marg{fam}\marg{ser}\marg{sh}:
+%        tells |mathastext| to use the font with the
+%        specified encoding, family, series, and shape for
+%        the letters and digits (and all other afflicted
+%        characters) in math mode. The optional argument
+%        \meta{ltsh} specifies a shape for the letters, for
+%        example \cs{itdefault}, or directly \meta{it} or
+%        \meta{sc}.
+%      
 %    \item
-%      |\MathastextDeclareVersion|\oarg{ltsh}\marg{name}\marg{enc}\marg{fam}\marg{ser}\marg{sh}:
+%      |\MTDeclareVersion|\oarg{ltsh}\marg{name}\marg{enc}\marg{fam}\marg{ser}\marg{sh}:
 %      declares that the document will have access to the font
 %      with the specified characteristics, under the version name
 %      \meta{name}. For
 %      example:\\
 %      \hbox
-%      to\hsize{\hss|\MathastextDeclareVersion[sc]{palatino}{T1}{ppl}{b}{sl}|\hss}
+%      to\hsize{\hss|\MTDeclareVersion[sc]{palatino}{T1}{ppl}{b}{sl}|\hss}
 %      declares under the name |palatino| a version where
 %      mathematics will be typset using the Palatino font in
 %      T1-encoding, bold, slanted, and the letters will in fact be
@@ -320,38 +588,43 @@
 %      commands to specify the shape of letters, or the \cs{itdefault}
 %      of the time of loading the package.}  else letters will
 %      have the same shape as used for digits and operator-names.
-%    \item |\Mathastextboldvariant|\marg{var}: when used before |\Mathastext|,
+%    \item |\MTboldvariant|\marg{var}: when used before |\Mathastext|,
 %    specifies which bold
 %      (|b|,|sb|,|bx|,\dots) to be used by \cs{mathbf} (and
 %      \cs{boldmath}). Default is the \cs{bfdefault} at the time of
 %      loading |mathastext|. When used before the declaration
 %      of a version, decides the way \cs{mathbf} will act in this version.
-%    \item |\MathastextEulerScale|\marg{factor}: scales the Euler font by
+%    \item |\MTEulerScale|\marg{factor}: scales the Euler font by
 %      \meta{factor}.
-%    \item |\MathastextSymbolScale|\marg{factor}: scales the Symbol font by
+%    \item |\MTSymbolScale|\marg{factor}: scales the Symbol font by
 %      \meta{factor}.
 %    \end{itemize}
 %
 %    \subsection{Body Text and Math commands}
 %
 %    \begin{itemize}
-%    \item |\MathastextVersion|\oarg{nametext}\marg{namemath}: changes the
-%      math font, and optionally also the text font. This is to be used like
-%      the \LaTeXe{} command \cs{mathversion}, outside of mathematics mode. If
-%      no optional argument is given then is equivalent to
-%      \cs{mathversion}\marg{nameversion}.
+%    \item |\MTVersion|\oarg{nametext}\marg{namemath}: in
+%      the absence of the optional argument changes
+%      simultaneously (the behavior changed in version
+%      |1.11|) the text and the math font to be the font
+%      corresponding to the version \meta{namemath}. If
+%      there is an optional argument then the text font will
+%      use \meta{nametext} and the math mode will use \meta{namemath}. To
+%      change only the math font, use the \LaTeX{} command
+%      \cs{mathversion}.
 %    \end{itemize}
 %    All further commands are for math mode only.
 %    \begin{itemize}
-%    \item \cs{hbar}: this is constructed (in a way compatible
-%      with the |italic| option) from the |h| letter and the
-%      \={ } accent from the |mathastext| font (as the
-%      package only really knows about OT1 and T1 encodings,
-%      \cs{hbar} might not be correct in other encodings). Note
-%      that \cs{mathrm}|{\hbar}| and \cs{mathbf}|{\hbar}| should
-%      work and that \cs{hbar} does scale in subscripts and exponents.
+%    \item \cs{hbar}: this is constructed
+%      (in a way compatible with the |italic| option) from
+%      the |h| letter and the \={ } accent from the
+%      |mathastext| font. Note that \cs{mathrm}|{\hbar}| and
+%      \cs{mathbf}|{\hbar}| should work and that \cs{hbar}
+%      does scale in subscripts and exponents. Only for T1
+%      and OT1 encodings.
 %    \item |\fouriervec|: this is a |\vec| accent taken from the Fourier font;
-%    the |fourier| package need not be loaded.
+%    the |fourier| package need not be loaded. Active only
+%    if option |fouriervec|.
 %    \item |\pmvec|: this provides a poor man \cs{vec} accent command, for
 %    upright letters. It uses the right arrow. Does not change
 %    size in subscripts and exponents.
@@ -359,8 +632,13 @@
 %      original \cs{mathnormal}, \cs{mathrm}, \cs{mathbf}. By default, the
 %      originals are also overwritten by the new commands.
 %    \item |\mathnormalbold|: a bold version of \cs{mathnormal}.
-%    \item |\inodot|, |\jnodot|: the corresponding glyphs in the
-%    chosen font. By default, will overwrite |\imath| and |\jmath|.
+%    \item |\inodot|, |\jnodot|: the corresponding glyphs in
+%      the chosen font for math mode. By default, will
+%      overwrite |\imath| and |\jmath|. With version |1.11|
+%      by default |\i| and |\j| work also in math mode and
+%      give then |\inodot|, resp. |\jnodot|. This should work for
+%      all 8bit-encodings having these glyphs, and 
+%      also in Unicode.
 %    \item |\MathEuler|, |\MathEulerBold|: math alphabets to access
 %    all the glyphs of the Euler font, if option |eulergreek| (or
 %    |eulerdigits|) was passed to the package.
@@ -373,20 +651,38 @@
 %      is a defined macro, as then it is assumed that a suitable package has
 %      been loaded for Greek letters. Also an \cs{omicron} control sequence is
 %      provided.
-%    \item Miscelleneous mathematical symbols are made available (or replaced)
-%    when option |symbolmisc| is passed. They are 
-%    \cs{prod}, \cs{sum}, \cs{implies}, \cs{impliedby}, \cs{iff},
-%    \cs{shortiff}, \cs{to}, \cs{longto}, \cs{mapsto}, \cs{longmapsto},
-%    \cs{aleph}, \cs{inftypsy}, \cs{emptyset}, \cs{surd}, \cs{nabla},
-%    \cs{angle}, \cs{forall}, \cs{exists}, \cs{neg}, \cs{clubsuit},
-%    \cs{diamondsuit}, \cs{heartsuit}, \cs{spadesuit}, \cs{smallint},
-%    \cs{wedge}, \cs{vee}, \cs{cap}, \cs{cup}, \cs{bullet}, \cs{div},
-%    \cs{otimes}, \cs{oplus}, \cs{pm}, \cs{ast}, \cs{times}, \cs{proptopsy},
-%    \cs{mid}, \cs{leq}, \cs{geq}, \cs{approx}, \cs{supset}, \cs{subset},
-%    \cs{supseteq}, \cs{subseteq}, \cs{in}, \cs{sim}, \cs{cong}, \cs{perp},
-%    \cs{equiv}, \cs{notin}, \cs{langle}, \cs{rangle}. And  a \cs{DotTriangle}
-%    is made available by option |symbolre| (which also overwrites \cs{Re} and
-%    \cs{Im}.)
+%    \item Miscelleneous mathematical symbols from the
+%      postscript Symbol font are made available (or
+%      replaced) when option |symbolmisc| is passed. They
+%      are \cs{prod}~$\prod$ \cs{sum}~$\sum$
+%      \cs{implies}~$\implies$ \cs{impliedby}~$\impliedby$
+%      \cs{iff}~$\iff$, \cs{shortiff}~$\shortiff$
+%      \cs{to}~$\to$ \cs{longto}~$\longto$
+%      \cs{mapsto}~$\mapsto$ \cs{longmapsto}~$\longmapsto$,
+%      \cs{aleph}~$\aleph$ \cs{inftypsy}~$\inftypsy$
+%      \cs{emptyset}~$\emptyset$ \cs{surd}~$\surd$
+%      \cs{nabla}~$\nabla$, \cs{angle}~$\angle$
+%      \cs{forall}~$\forall$ \cs{exists}~$\exists$
+%      \cs{neg}~$\neg$ \cs{clubsuit}~$\clubsuit$,
+%      \cs{diamondsuit}~$\diamondsuit$
+%      \cs{heartsuit}~$\heartsuit$
+%      \cs{spadesuit}~$\spadesuit$
+%      \cs{smallint}~$\smallint$, \cs{wedge}~$\wedge$
+%      \cs{vee}~$\vee$ \cs{cap}~$\cap$ \cs{cup}~$\cup$
+%      \cs{bullet}~$\bullet$ \cs{div}~$\div$,
+%      \cs{otimes}~$\otimes$ \cs{oplus}~$\oplus$
+%      \cs{pm}~$\pm$ \cs{ast}~$\ast$ \cs{times}~$\times$
+%      \cs{proptopsy}~$\proptopsy$, \cs{mid}~$\mid$
+%      \cs{leq}~$\leq$ \cs{geq}~$\geq$ \cs{approx}~$\approx$
+%      \cs{supset}~$\supset$ \cs{subset}~$\subset$,
+%      \cs{supseteq}~$\supseteq$ \cs{subseteq}~$\subseteq$
+%      \cs{in}~$\in$ \cs{sim}~$\sim$ \cs{cong}~$\cong$
+%      \cs{perp}~$\perp$, \cs{equiv}~$\equiv$
+%      \cs{notin}~$\notin$ \cs{langle}~$\langle$
+%      \cs{rangle}~$\rangle$. And a
+%      \cs{DotTriangle}~$\DotTriangle$ is made available by
+%      option |symbolre| (which overwrites \cs{Re} and
+%      \cs{Im}: $\Re,\Im$).
 %    \end{itemize}
 %
 %  \section{Complete list of options}
@@ -399,18 +695,40 @@
 %   and operator names. In general this means that they will be upright.
 %  \item |endash|, |emdash|: use the text font en-dash \textendash\ or even
 %  the em-dash \textemdash\ (but this seems crazy) for the minus sign
-%  rather than {}-{}.
+%  rather than {}-{}. |endash| option is default for the package.
+% \item |noendash|: the minus sign will be the - from the
+% text font, not the en-dash \textendash.
 % \item |nohbar|: prevents |mathastext| from defining its own
 %   \cs{hbar}.
-%  \item |alldelims|: \DeleteShortVerb{\|} besides the default
-%    !\,?\,*\,,\,.\,:\,;\,+\,-\,=\,(\,)\,[\,]\,/\,\#\,\$\,\%\,\& treat also
-%    $\mathord{<}\,\mathord{>}\,\mathord{|}$\, \{\,\} and $\backslash$.\MakeShortVerb{\|} Not suitable for
-%    OT1-encoding.
-%  \item excluding options: |noexclam|\ !\,?\ |noasterisk|\ *\ |nopunct|\
-%    ,\,.\,:\,;\ |noplus|, |nominus|, |noplusnominus|\ +\,- |noequal|\ =\ |noparenthesis|\,
-%    (\,)\,[\,]\,/ \ |nospecials|\ \#\,\$\,\%\,\& and |nodigits|.
+% \item |nolessnomore|: besides
+%   !\,?\,*\,,\,.\,:\,;\,+\,-\,=\,(\,)\,[\,]\,/\,\#\,\$\,\%\,\&
+%   |mathastext| treats also \DeleteShortVerb{\|}
+%   $\mathord{<}\,\mathord{>}\,\mathord{|}$\, \{\,\} and
+%   $\backslash$.\MakeShortVerb{\|} Use this option to not
+%   do it. The option |nolessnomore| is activated by default
+%   in case of OT1-encoding.
+%  \item further excluding options: |noexclam|\ !\,?\
+%    |noasterisk|\ *\ |nopunct|\ ,\,.\,:\,;\ |noplus|,
+%    |nominus|, |noplusnominus|\ +\,\textendash{} |noequal|\ =\
+%    |noparenthesis|\, (\,)\,[\,]\,/ \ |nospecials|\
+%    \#\,\$\,\%\,\& and |nodigits|.
+%  \item |alldelims|: true by default, means that the
+%    characters excluded by |nolessnomore| are
+%    treated. Use this option in case of a mono-width
+%    OT1-encoded font.
 %  \item |symbolgreek|, |symboldigits|: to let Greek letters (digits) use the
 %    Symbol font.
+%  \item |symbolre|: replaces \cs{Re} and \cs{Im} by the
+%  Symbol glyphs $\Re, \Im$ and defines a
+%    \cs{DotTriangle} command ($\DotTriangle$).
+%  \item |symbolmisc|: takes quite a few glyphs, including logical arrows,
+%    product and sum signs from Symbol. They are listed \emph{supra}.. You may
+%    also consider \cs{renewcommand}|{\int}{\smallint}| to maximize still more
+%    the use of the Symbol font.
+%  \item |symboldelimiters|: the characters apart from
+%  letters and digits will be taken from the Symbol font. 
+%  \item |symbol|: combines |symbolgreek|, |symbolre|, and |symbolmisc|.
+%  \item |symbolmax|: combines |symbol| and |symboldelimiters|.
 %  \item |eulergreek|, |eulerdigits|: to let Greek letters (digits) use the
 %    Euler font.
 %  \item |selfGreek|: this is for a font which has the capital Greek
@@ -419,18 +737,12 @@
 %    accents. As in vanilla \LaTeX{}, they are taken from the font
 %    for the digits and \cs{log}-like names. Obey the alphabet
 %    changing commands. Will work only for T1 or OT1-compatible encodings.
-%  \item |symbolre|: replaces \cs{Re} and \cs{Im} by Symbol glyphs and defines a
-%    \cs{DotTriangle} command.
-%  \item |symbolmisc|: takes quite a few glyphs, including logical arrows,
-%    product and sum signs from Symbol. They are listed \emph{supra}.. You may
-%    also consider \cs{renewcommand}|{\int}{\smallint}| to maximize still more
-%    the use of the Symbol font.
-%  \item |symbol|: combines |symbolgreek|, |symbolre|, and |symbolmisc|.
-%  \item |symbolmax|: same as |symbol| and furthermore the characters listed
-%    above are also taken from the Symbol font.
-%  \item |defaultrm|, |defaultbf|, |defaulnormal|, |defaultimath|:
-%    self-explanatory.
-%  \item |defaultmathsizes|: has been described \emph{supra}.
+%  \item |defaultrm|, |defaultbf|, |defaulnormal|: do not
+%  overwrite the default \cs{mathrm}, \cs{mathbf}, \cs{mathnormal}.
+%  \item |defaultimath|: do not overwrite \cs{imath} and
+%  \cs{jmath}, do not extend \cs{i} and \cs{j} to math mode use.
+%  \item |defaultmathsizes|: do not change the \LaTeX{} defaults.
+%  \item |fouriervec|: provides a \cs{fouriervec} command.
 %  \end{itemize}
 %
 % \StopEventually{}
@@ -441,7 +753,7 @@
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesFile{mathastext.sty}
-         [2011/02/01 1.1 Use the text font in simple mathematics]
+         [2011/02/06 1.11 Use the text font in simple mathematics]
 %    \end{macrocode}
 % We turn off the official loggings as we intend to write our owns
 %    \begin{macrocode}
@@ -455,6 +767,27 @@
 \let\@font@warning\m@stext@warning}
 \mt@font@info@off
 %    \end{macrocode}
+%   \begin{macro}{\m@stextenc}
+%   \begin{macro}{\m@stextfam}
+%   \begin{macro}{\m@stextser}
+%   \begin{macro}{\m@stextsh}
+%   \begin{macro}{\m@stextbold}
+%   \begin{macro}{\m@stextshletter}
+%     Internal variables. Will be redefined with \cs{def} later.
+%    \begin{macrocode}
+  \edef\m@stextenc{\encodingdefault}
+  \edef\m@stextfam{\familydefault}
+  \edef\m@stextser{\seriesdefault}
+  \edef\m@stextsh{\shapedefault}
+  \edef\m@stextbold{\bfdefault}
+  \edef\m@stextshletter{\shapedefault}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
 % A number of ifs for treating (some among) the options
 %    \begin{macrocode}
 \newif\ifmt@need@euler\mt@need@eulerfalse
@@ -464,21 +797,33 @@
 \newif\ifmt@defaultbf\mt@defaultbffalse
 \newif\ifmt@defaultsizes\mt@defaultsizesfalse
 \newif\ifmt@twelve\mt@twelvefalse
-\newif\ifmt@endash\mt@endashfalse
+%% new behavior in v1.11:
+\newif\ifmt@endash\mt@endashtrue  
 \newif\ifmt@emdash\mt@emdashfalse
 \def\mt@oti{OT1}\def\mt@ti{T1}
+\def\mt@eui{EU1}\def\mt@euii{EU2}
+\newif\ifmt@alldelims
+\ifx\mt@oti\m@stextenc\mt@alldelimsfalse\else\mt@alldelimstrue\fi 
 %    \end{macrocode}
 % The options:
 %    \begin{macrocode}
-\DeclareOption{noparenthesis}{\let\mtno@paren\@empty}
-\DeclareOption{nopunctuation}{\let\mtno@punct\@empty}
-%% new in v1.1:
+%% new or modified in v1.11:
+\DeclareOption{fouriervec}{\let\mt@fouriervec\@empty}
+\DeclareOption{nolessnomore}{\mt@alldelimsfalse}
 \DeclareOption{endash}{\mt@endashtrue}
 \DeclareOption{emdash}{\mt@emdashtrue}
+\DeclareOption{noendash}{\mt@endashfalse}
+\DeclareOption{symboldelimiters}{\mt@need@symboltrue
+                    \let\mt@symboldelimiters\@empty}
+%% new in v1.1:
+\DeclareOption{italic}{\let\mt@italic\@empty\edef\m@stextshletter{\itdefault}}
+\DeclareOption{frenchmath}{\let\mt@frenchmath\@empty}
 \DeclareOption{noplus}{\let\mtno@plus\@empty}
 \DeclareOption{nominus}{\let\mtno@minus\@empty}
 \DeclareOption{nohbar}{\let\mtno@hbar\@empty}
 %%
+\DeclareOption{noparenthesis}{\let\mtno@paren\@empty}
+\DeclareOption{nopunctuation}{\let\mtno@punct\@empty}
 \DeclareOption{noplusnominus}{\ExecuteOptions{noplus,nominus}}
 \DeclareOption{noequal}{\let\mtno@equal\@empty}
 \DeclareOption{noexclam}{\let\mtno@exclam\@empty}
@@ -488,7 +833,7 @@
 nopunctuation,noplusnominus,noequal,noexclam,nospecials}}
 \DeclareOption{nodigits}{\let\mtno@digits\@empty}
 \DeclareOption{defaultimath}{\let\mt@defaultimath\@empty}
-\DeclareOption{alldelims}{\let\mt@alldelims\@empty}
+\DeclareOption{alldelims}{\mt@alldelimstrue}
 \DeclareOption{mathaccents}{\let\mt@mathaccents\@empty}
 \DeclareOption{selfGreek}{\let\mt@selfGreek\@empty}
 \DeclareOption{selfgreek}{\let\mt@selfGreek\@empty}
@@ -501,8 +846,7 @@ nopunctuation,noplusnominus,noequal,noexclam,nospecials}}
 \DeclareOption{symbolmisc}{\mt@need@symboltrue
     \let\mt@symbolmisc\@empty}
 \DeclareOption{symbol}{\ExecuteOptions{symbolgreek,symbolmisc,symbolre}}
-\DeclareOption{symbolmax}{\ExecuteOptions{symbolgreek,symbolmisc,symbolre}
-    \let\mt@symbolmax\@empty}
+\DeclareOption{symbolmax}{\ExecuteOptions{symbol,symboldelimiters}}
 \DeclareOption{eulerdigits}{\mt@need@eulertrue\let\mt@eulerdigits\@empty}
 \DeclareOption{eulergreek}{\mt@need@eulertrue\let\mt@eulergreek\@empty}
 \DeclareOption{defaultnormal}{\mt@defaultnormaltrue}
@@ -515,11 +859,6 @@ nopunctuation,noplusnominus,noequal,noexclam,nospecials}}
 %    \begin{macrocode}
 \DeclareOption{defaultmathsizes}{\mt@defaultsizestrue}
 \DeclareOption{12pt}{\mt@twelvetrue}
-%% deprecated in v1.1, rather a command \fouriervec is provided
-%% \DeclareOption{defaultvec}{\mt@defaultvectrue}
-%% new in v1.1
-\DeclareOption{italic}{\let\mt@italic\@empty}
-\DeclareOption{frenchmath}{\let\mt@frenchmath\@empty}
 \DeclareOption*{\PackageWarning{mathastext}{Unknown option `\CurrentOption'}}
 \ProcessOptions\relax
 %    \end{macrocode}
@@ -534,34 +873,14 @@ nopunctuation,noplusnominus,noequal,noexclam,nospecials}}
 % \begin{macro}{\fouriervec}
 % The glyph is taken from the Fourier font of Michel~\textsc{Bovani}.
 %    \begin{macrocode}
+\ifx\mt@fouriervec\@empty
   \DeclareFontEncoding{FML}{}{}
   \DeclareFontSubstitution{FML}{futm}{m}{it}
-  \DeclareSymbolFont{mtjustepourvec}{FML}{futm}{m}{it}
-  \SetSymbolFont{mtjustepourvec}{bold}{FML}{futm}{b}{it}
-  \DeclareMathAccent{\fouriervec}{\mathord}{mtjustepourvec}{"7E}
+  \DeclareSymbolFont{mtfourierpourvec}{FML}{futm}{m}{it}
+  \SetSymbolFont{mtfourierpourvec}{bold}{FML}{futm}{b}{it}
+  \DeclareMathAccent{\fouriervec}{\mathord}{mtfourierpourvec}{"7E}
+\fi
 %    \end{macrocode}
-% \end{macro}
-%   \begin{macro}{\m@stextenc}
-%   \begin{macro}{\m@stextfam}
-%   \begin{macro}{\m@stextser}
-%   \begin{macro}{\m@stextsh}
-%   \begin{macro}{\m@stextbold}
-%   \begin{macro}{\m@stextshletter}
-% Internal variables.
-%    \begin{macrocode}
-  \edef\m@stextenc{\encodingdefault}
-  \edef\m@stextfam{\familydefault}
-  \edef\m@stextser{\seriesdefault}
-  \edef\m@stextsh{\shapedefault}
-  \edef\m@stextbold{\bfdefault}
-  \edef\m@stextshletter{\shapedefault}
-  \ifx\mt@italic\@empty\edef\m@stextshletter{\itdefault}\fi
-%    \end{macrocode}
-% \end{macro}
-% \end{macro}
-% \end{macro}
-% \end{macro}
-% \end{macro}
 % \end{macro}
 % \begin{macro}{mtoperatorfont}
 % Declaration of the current default font as our math font.
@@ -581,11 +900,20 @@ nopunctuation,noplusnominus,noequal,noexclam,nospecials}}
 \DeclareSymbolFontAlphabet{\Mathnormal}{mtletterfont}
 \DeclareSymbolFontAlphabet{\Mathrm}{mtoperatorfont}
 %    \end{macrocode}
+% Our internal variables redefined without expansion. They will get expanded
+% inside the \cs{Mathastext} macro.
+%    \begin{macrocode}
+  \def\m@stextenc{\encodingdefault}
+  \def\m@stextfam{\familydefault}
+  \def\m@stextser{\seriesdefault}
+  \def\m@stextsh{\shapedefault}
+  \def\m@stextbold{\bfdefault}
+  \def\m@stextshletter{\shapedefault}
+  \ifx\mt@italic\@empty\def\m@stextshletter{\itdefault}\fi
+%    \end{macrocode}
 % \end{macro}
 % \begin{macro}{mteulervm}
 % \begin{macro}{\MathEuler}
-% In v1.0 this was called \cs{MathastextEuler}
-%
 % In case we need the Euler font, we declare it here. It will use
 % |uzeur.fd| from the |eulervm| package of Walter~\textsc{Schmidt}
 %    \begin{macrocode}
@@ -594,31 +922,35 @@ nopunctuation,noplusnominus,noequal,noexclam,nospecials}}
 \DeclareSymbolFontAlphabet{\MathEuler}{mteulervm}
 %% \SetSymbolFont{mteulervm}{bold}{U}{zeur}{\m@stextbold}{n}
 \fi
-\newcommand\MathastextEulerScale[1]{\edef\zeu@Scale{#1}}
+\newcommand\MTEulerScale[1]{\edef\zeu@Scale{#1}}
+\let\MathastextEulerScale\MTEulerScale
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
 % In the end, I moved the bold stuff to \cs{Mathastext} as the user may want
-% his choice of |boldvariant| to have effect on the Euler font, but anyhow
-% |b=bx| for |uzeur.fd|, so this is pour la beaut\'e de l'Art (well it is
-% also possible to use \cs{Mathastextboldvariant} to specify |m| for
-% example). 
+% his choice of |boldvariant| to have effect on the Euler font (it is
+% possible to use \cs{Mathastextboldvariant}|{m}|). 
 % 
-% \LaTeXe{} has a strange initial configuration where the capital Greek
-% letters are of type |mathalpha|, but the lower Greek letters of type
-% |mathord|, so that \cs{mathbf} does not act on them, although lowercase Greek
-% letters and latin letters are from the same font. This is because \cs{mathbf}
-% is set up to be like a bold version of \cs{mathrm}, and \cs{mathrm} uses the
-% `operators' font, by default |cmr|, where there are no lowercase greek
-% letters. This set-up is ok for the Capital Greek letters which are together
-% with the latin letters in both |cmmi| and |cmr|.
+% \LaTeXe{} has a strange initial configuration where the
+% capital Greek letters are of type |mathalpha|, but the
+% lower Greek letters of type |mathord|, so that \cs{mathbf}
+% does not act on them, although lowercase Greek letters and
+% Latin letters are from the same font. This is because
+% \cs{mathbf} is set up to be like a bold version of
+% \cs{mathrm}, and \cs{mathrm} uses the `operators' font, by
+% default |cmr|, where there are no lowercase greek
+% letters. This set-up is ok for the Capital Greek letters
+% which are together with the Latin letters in both |cmmi|
+% and |cmr|.
 %
-% The package eulervm sets also the lowercase Greek letters to be of type
-% |mathalpha|, the default \cs{mathbf} and \cs{mathrm} will act wierdly on
-% them, but a new \cs{mathbold} is defined which will use the bold series of
-% the Euler roman font, it gives something coherent for Latin and Greek
-% \emph{lowercase} letters, and this is possible because the same font contains
-% upright forms for them all.
+% The package eulervm sets also the lowercase Greek letters
+% to be of type |mathalpha|, the default \cs{mathbf} and
+% \cs{mathrm} will act wierdly on them, but a new
+% \cs{mathbold} is defined which will use the bold series of
+% the Euler roman font, it gives something coherent for
+% Latin and Greek \emph{lowercase} letters, and this is
+% possible because the same font contains upright forms for
+% them all.
 %
 % Here in |mathastext|, Latin letters and Greek letters (lower and
 % upper case) must be assumed to come from two different fonts, as
@@ -631,9 +963,10 @@ nopunctuation,noplusnominus,noequal,noexclam,nospecials}}
 % at this time |30-01-2011 09:42:27 CET| I decided I would not try
 % to implement it here. I prefer to respect the default things.
 %
-% Here I followed the simpler idea of the |eulervm| package and
-% defined \cs{MathEuler} and \cs{MathEulerBold} alphabet commands
-% (the |eulervm| package does this only for the bold font).
+% I follow the simpler idea of the |eulervm| package and
+% define \cs{MathEuler} and \cs{MathEulerBold} alphabet
+% commands (the |eulervm| package does this only for the
+% bold font).
 % \begin{macro}{mtpsymbol}
 % \begin{macro}{\MathPSymbol}
 % In case we need the Symbol font, we declare it here. The macro
@@ -646,23 +979,26 @@ nopunctuation,noplusnominus,noequal,noexclam,nospecials}}
 %% \SetSymbolFont{mtpsymbol}{bold}{U}{psy}{\m@stextbold}{n} 
  \DeclareSymbolFontAlphabet{\MathPSymbol}{mtpsymbol}
 \fi
-\newcommand\MathastextSymbolScale[1]{\edef\psy@scale{#1}}
+\newcommand\MTSymbolScale[1]{\edef\psy@scale{#1}}
+\let\MathastextSymbolScale\MTSymbolScale
 %    \end{macrocode}
-% In v1.0 this was called \cs{MathastextSymbol}. I did not choose
-% \cs{MathSymbol} as this name may be defined somewhere for another thing.
+% In v1.0 the math alphabet was called \cs{MathastextSymbol}. I did not
+% choose the name \cs{MathSymbol} as this name may be
+% defined somewhere for another thing.
 % \end{macro}
-% There is no bold for the postscript Symbol font distributed with the
-% \LaTeXe{} |psnffs|. In v1.0 I included some code ready for an
-% eventual bold, one never knows which might come in an update to the |psnfss|
-% package, but, if this day arrives, I or someone else shall simply upgrade
-% the package.
+% There is no bold for the postscript Symbol font
+% distributed with the \LaTeXe{} |psnffs|. In v1.0 I
+% included some code ready for an eventual bold, one never
+% knows which might come in an update to the |psnfss|
+% package, but, if this day arrives, I or someone else shall
+% simply upgrade the package.
 % \end{macro}
-% \begin{macro}{\Mathastextencoding}
-% \begin{macro}{\Mathastextfamily}
-% \begin{macro}{\Mathastextseries}
-% \begin{macro}{\Mathastextshape}
-% \begin{macro}{\Mathastextboldvariant}
-% \begin{macro}{\Mathastextlettershape}
+% \begin{macro}{\MTencoding}
+% \begin{macro}{\MTfamily}
+% \begin{macro}{\MTseries}
+% \begin{macro}{\MTshape}
+% \begin{macro}{\MTboldvariant}
+% \begin{macro}{\MTlettershape}
 % We declare some public macros to modify our private internals, and we will
 % use them also ourself.
 %
@@ -671,13 +1007,23 @@ nopunctuation,noplusnominus,noequal,noexclam,nospecials}}
 % fonts but this is really not the spirit of the package, already making
 % italic letters easy for the user was only made possible by a moment of
 % weakness of the package author.
+%
+% In version 1.11 I fix bugs in the way this was all set
+% up. I change the macro names for brevity sake.
 %    \begin{macrocode}
-\DeclareRobustCommand\Mathastextencoding[1]{\edef\m@stextenc{#1}}
-\DeclareRobustCommand\Mathastextfamily[1]{\edef\m@stextfam{#1}}
-\DeclareRobustCommand\Mathastextseries[1]{\edef\m@stextser{#1}}
-\DeclareRobustCommand\Mathastextshape[1]{\edef\m@stextsh{#1}}
-\DeclareRobustCommand\Mathastextboldvariant[1]{\edef\m@stextbold{#1}}
-\DeclareRobustCommand\Mathastextlettershape[1]{\edef\m@stextshletter{#1}}
+\DeclareRobustCommand\MTencoding[1]{\def\m@stextenc{#1}}
+\DeclareRobustCommand\MTfamily[1]{\def\m@stextfam{#1}}
+\DeclareRobustCommand\MTseries[1]{\def\m@stextser{#1}}
+\DeclareRobustCommand\MTshape[1]{\def\m@stextsh{#1}
+  \ifx\mt@italic\@empty\else\def\m@stextshletter{#1}\fi}
+\DeclareRobustCommand\MTboldvariant[1]{\def\m@stextbold{#1}}
+\DeclareRobustCommand\MTlettershape[1]{\def\m@stextshletter{#1}}
+\let\Mathastextencoding\MTencoding
+\let\Mathastextfamily\MTfamily
+\let\Mathastextseries\MTseries
+\let\Mathastextshape\MTshape
+\let\Mathastextboldvariant\MTboldvariant
+\let\Mathastextlettershape\MTlettershape
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
@@ -685,17 +1031,23 @@ nopunctuation,noplusnominus,noequal,noexclam,nospecials}}
 % \end{macro}
 % \end{macro}
 % \end{macro}
-%  \begin{macro}{\MathastextWillUse}
+%  \begin{macro}{\MTWillUse}
 % This is a preamble-only command, it can be called more than once, only the
 % latest call counts.
 %    \begin{macrocode}
-\DeclareRobustCommand\MathastextWillUse[5][\@empty]{
- \ifx\@empty#1\else\Mathastextlettershape{#1}\fi
-  \Mathastextencoding{#2}
-  \Mathastextfamily{#3}
-  \Mathastextseries{#4}
-  \Mathastextshape{#5}
+\DeclareRobustCommand\MTWillUse[5][\@empty]{
+  \MTencoding{#2}
+  \MTfamily{#3}
+  \MTseries{#4}
+  \MTshape{#5}
+  \ifx\@empty#1 
+  \else 
+%% we check if optional argument was [],  this does not detect [ ]
+  \def\mt@empty{}\def\mt@tmp{#1}
+   \ifx\mt@empty\mt@tmp\else\MTlettershape{#1}\fi
+  \fi
   \Mathastext}
+\let\MathastextWillUse\MTWillUse
 %    \end{macrocode}
 % \end{macro}
 %  \begin{macro}{\Mathastext}
@@ -706,8 +1058,9 @@ nopunctuation,noplusnominus,noequal,noexclam,nospecials}}
 %    |mtletterfont| is for letters, and the |mtoperatorfont| for digits and
 %    log-like operator names. The default is that both are upright.
 %    \begin{macrocode}
-\DeclareRobustCommand\Mathastext{
+\DeclareRobustCommand\Mathastext[1][\@empty]{
   \mt@font@info@off
+\ifx\@empty#1 % no optional argument 
   \edef\mt@encoding@normal{\m@stextenc}
   \edef\mt@family@normal{\m@stextfam}
   \edef\mt@series@normal{\m@stextser}
@@ -762,22 +1115,96 @@ nopunctuation,noplusnominus,noequal,noexclam,nospecials}}
 % using \cs{Mathastextboldvariant}|{m}|.
 %    \begin{macrocode}
  \ifmt@need@euler
-    \SetSymbolFont{mteulervm}{bold}{U}{zeur}{\m@stextbold}{n}
-    \DeclareMathAlphabet{\MathEulerBold}{U}{zeur}{\m@stextbold}{n}
+    \SetSymbolFont{mteulervm}{bold}{U}{zeur}{\mt@boldvariant@normal}{n}
+    \DeclareMathAlphabet{\MathEulerBold}{U}{zeur}{\mt@boldvariant@normal}{n}
  \fi
 %    \end{macrocode}
 % \end{macro}
 %    \begin{macrocode}
- \ifmt@need@symbol\SetSymbolFont{mtpsymbol}{bold}{U}{psy}{\m@stextbold}{n}\fi
-  \typeout{** Latin letters in math versions normal (resp. bold) are now^^J%
+ \ifmt@need@symbol\SetSymbolFont{mtpsymbol}{bold}
+                     {U}{psy}{\mt@boldvariant@normal}{n}\fi
+  \typeout{** Latin letters in math versions normal (resp. bold) are now\MessageBreak
     ** set up to use the fonts 
-\mt@encoding@normal/\mt@family@normal/\mt@series@normal(\m@stextbold)/\mt@ltshape@normal}
+\mt@encoding@normal/\mt@family@normal/\mt@series@normal%
+(\mt@boldvariant@normal)/\mt@ltshape@normal}
 \ifx\mtno@digits\@empty\else
   \typeout{** Other characters (digits, ...) and
-    \protect\log-like names will be^^J%
+    \protect\log-like names will be\MessageBreak
 ** typeset with the \expandafter`\mt@shape@normal' shape.}
+ \fi
+\else % optional argument, then we rather do DeclareVersion
+ \edef\mt@tmp{#1}\def\mt@empty{}
+ \ifx\mt@tmp\mt@empty
+    \Mathastext  % no infinite loop!
+  \else
+    \MTDeclareVersion[\m@stextshletter]{#1}
+         {\m@stextenc}{\m@stextfam}{\m@stextser}{\m@stextsh}
+ \fi
 \fi
+\mt@font@info@on
 }
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\MTDeclareVersion}
+% The \cs{MTDeclareVersion} command is to be used in the preamble to
+% declare a math version. I refrained from providing a more complicated one
+% which would also specify a choice of series for the Euler and Symbol font:
+% anyhow Symbol only has the medium series, and Euler has medium and bold, so
+% what is lacking is the possibility to create a version with a bold
+% Euler. There is already one such version: the default |bold| one. And there
+% is always the possibility to add to the preamble 
+% \cs{SetSymbolFont}|{mteulervm}||{version}||{U}{zeur}{bx}{n}| if one
+% wants to have a math version with bold Euler characters.
+%
+% For version 1.1 we add an optional parameter specifying the shape to be used
+% for letters: most users will want `it' (thus going contrary to the
+% philosophy which motivated me writing this package!). If the package option
+% `italic' was passed, `it' is the default.
+%    \begin{macrocode}
+\DeclareRobustCommand\MTDeclareVersion[6][\@empty]{
+  \mt@font@info@off
+  \edef\mt@tmp{#2}
+  \DeclareMathVersion{\mt@tmp}
+  \expandafter\edef\csname mt@encoding@\mt@tmp\endcsname{#3}
+  \expandafter\edef\csname mt@family@\mt@tmp\endcsname{#4}
+  \expandafter\edef\csname mt@series@\mt@tmp\endcsname{#5}
+  \expandafter\edef\csname mt@shape@\mt@tmp\endcsname{#6}
+  \expandafter\edef\csname mt@boldvariant@\mt@tmp\endcsname{\m@stextbold}
+  \newif\ifmt@reallynoopt\mt@reallynoopttrue
+    \ifx\@empty#1
+    \else % we check nevertheless for [] situation, will not work with [ ]
+       \def\mt@@tmp{#1}\def\mt@empty{}
+       \ifx\mt@@tmp\mt@empty\else\mt@reallynooptfalse\fi
+    \fi
+  \ifmt@reallynoopt
+    \ifx\mt@italic\@empty
+      \SetSymbolFont{mtletterfont}{#2}{#3}{#4}{#5}{\m@stextshletter}
+    \typeout{** Latin letters in math version `#2' will use the font
+    #3/#4/#5/\m@stextshletter\MessageBreak    
+    ** Other characters (digits, ...) and \protect\log-like names 
+                    will be in `#6' shape.}
+      \expandafter\def\csname mt@ltshape\mt@tmp\endcsname{\m@stextshletter}
+    \else
+      \SetSymbolFont{mtletterfont}{#2}{#3}{#4}{#5}{#6}
+    \typeout{** Latin letters in math version `#2' will use the fonts
+    #3/#4/#5(\m@stextbold)/#6}
+      \expandafter\edef\csname mt@ltshape\mt@tmp\endcsname{#6}
+    \fi
+  \else
+      \SetSymbolFont{mtletterfont}{#2}{#3}{#4}{#5}{#1}
+    \typeout{** Latin letters in math version `#2' will use the font
+    #3/#4/#5/#1\MessageBreak
+    ** Other characters (digits, ...) and \protect\log-like names will be in `#6' shape.}
+      \expandafter\edef\csname mt@ltshape\mt@tmp\endcsname{#1}
+  \fi
+  \SetMathAlphabet{\Mathbf}{#2}{#3}{#4}{\m@stextbold}{#6}
+  \SetSymbolFont{mtoperatorfont}{#2}{#3}{#4}{#5}{#6}
+  \ifmt@need@euler
+      \SetMathAlphabet{\MathEulerBold}{#2}{U}{zeur}{\m@stextbold}{n}
+  \fi
+  \mt@font@info@on
+}
+\let\MathastextDeclareVersion\MTDeclareVersion
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\operator@font}
@@ -819,81 +1246,32 @@ nopunctuation,noplusnominus,noequal,noexclam,nospecials}}
 % We write appropriate messages to the terminal and the log.
 %    \begin{macrocode}
 \ifx\mt@symbolgreek\@empty
-\typeout{** Greek letters will use the PostScript Symbol font. Use^^J%
+\typeout{** Greek letters will use the PostScript Symbol font. Use\MessageBreak
 ** \protect\MathastextSymbolScale{factor} to scale the font by <factor>.}
 \fi
 \ifx\mt@eulergreek\@empty
-\typeout{** Greek letters will use the Euler font. Use^^J%
+\typeout{** Greek letters will use the Euler font. Use\MessageBreak
 ** \protect\MathastextEulerScale{factor} to scale the font by <factor>.}
 \fi
 \ifx\mt@selfGreek\@empty
-\typeout{** Capital Greek letters from the fonts declared for latin letters:^^J% 
+\typeout{** Capital Greek letters from the fonts declared for latin letters:\MessageBreak 
 ** only for OT1 or compatible encodings; glyphs may be unavailable.}
 \fi
 %    \end{macrocode}
-% \begin{macro}{\MathastextDeclareVersion}
-% The \cs{MathastextDeclareVersion} command is to be used in the preamble to
-% declare a math version. I refrained from providing a more complicated one
-% which would also specify a choice of series for the Euler and Symbol font:
-% anyhow Symbol only has the medium series, and Euler has medium and bold, so
-% what is lacking is the possibility to create a version with a bold
-% Euler. There is already one such version: the default |bold| one. And there
-% is always the possibility to add to the preamble 
-% \cs{SetSymbolFont}|{mteulervm}||{version}||{U}{zeur}{bx}{n}| if one
-% wants to have a math version with bold Euler characters.
-%
-% For version 1.1 we add an optional parameter specifying the shape to be used
-% for letters: most users will want `it' (thus going contrary to the
-% philosophy which motivated me writing this package!). If the package option
-% `italic' was passed, `it' is the default.
-%    \begin{macrocode}
-\DeclareRobustCommand\MathastextDeclareVersion[6][\@empty]{
-  \mt@font@info@off
-  \DeclareMathVersion{#2}
-  \edef\mt@tmp{@#2}
-  \expandafter\edef\csname mt@encoding\mt@tmp\endcsname{#3}
-  \expandafter\edef\csname mt@family\mt@tmp\endcsname{#4}
-  \expandafter\edef\csname mt@series\mt@tmp\endcsname{#5}
-  \expandafter\edef\csname mt@shape\mt@tmp\endcsname{#6}
-  \expandafter\edef\csname mt@boldvariant\mt@tmp\endcsname{\m@stextbold}
-  \ifx\@empty#1 
-    \ifx\mt@italic\@empty
-      \SetSymbolFont{mtletterfont}{#2}{#3}{#4}{#5}{\m@stextshletter}
-    \typeout{** Latin letters in math version `#2' will use the font
-    #3/#4/#5/\m@stextshletter^^J%    
-    ** Other characters (digits, ...) and \protect\log-like names 
-                    will be in `#6' shape.}
-      \expandafter\def\csname mt@ltshape\mt@tmp\endcsname{\m@stextshletter}
-    \else
-      \SetSymbolFont{mtletterfont}{#2}{#3}{#4}{#5}{#6}
-    \typeout{** Latin letters in math version `#2' will use the fonts
-    #3/#4/#5(\m@stextbold)/#6}
-      \expandafter\edef\csname mt@ltshape\mt@tmp\endcsname{#6}
-    \fi
-  \else
-      \SetSymbolFont{mtletterfont}{#2}{#3}{#4}{#5}{#1}
-    \typeout{** Latin letters in math version `#2' will use the font
-    #3/#4/#5/#1^^J%
-    ** Other characters (digits, ...) and \protect\log-like names will be in `#6' shape.}
-      \expandafter\edef\csname mt@ltshape\mt@tmp\endcsname{#1}
-  \fi
-  \SetMathAlphabet{\Mathbf}{#2}{#3}{#4}{\m@stextbold}{#6}
-  \SetSymbolFont{mtoperatorfont}{#2}{#3}{#4}{#5}{#6}
-  \ifmt@need@euler
-      \SetMathAlphabet{\MathEulerBold}{#2}{U}{zeur}{\m@stextbold}{n}
-  \fi
-  \mt@font@info@on
-}
-%    \end{macrocode}
-% \end{macro}
-% \begin{macro}{\MathastextVersion}
+% \begin{macro}{\MTVersion}
 % This is a wrapper around \LaTeX{}'s \cs{mathversion}: here we have an
 % optional argument allowing a quick and easy change of the text font.
 %    \begin{macrocode}
-\DeclareRobustCommand\MathastextVersion[2][\@empty]{%
+\DeclareRobustCommand\MTVersion[2][\@empty]{%
     \mathversion{#2}%
-    \edef\mt@tmp{@#1}%
-    \ifx\@empty#1\else%
+    \ifx\@empty#1% no optional argument
+        \edef\mt@tmp{@#2}
+    \else% we check nevertheless for [] situation, will not work with [ ]
+       \def\mt@@tmp{#1}\def\mt@empty{}%
+       \ifx\mt@@tmp\mt@empty\edef\mt@tmp{@#2}%
+       \else\edef\mt@tmp{@#1}%
+       \fi%
+    \fi%
     \usefont{\csname mt@encoding\mt@tmp\endcsname}%
         {\csname mt@family\mt@tmp\endcsname}%
         {\csname mt@series\mt@tmp\endcsname}%
@@ -907,8 +1285,8 @@ nopunctuation,noplusnominus,noequal,noexclam,nospecials}}
     \edef\mt@@shape{\csname mt@shape\mt@tmp\endcsname}%
 \renewcommand{\updefault}{\mt@@shape}%
     \edef\mt@@boldvariant{\csname mt@boldvariant\mt@tmp\endcsname}%
-\renewcommand{\bfdefault}{\mt@@boldvariant}%
-\fi}
+\renewcommand{\bfdefault}{\mt@@boldvariant}}
+\let\MathastextVersion\MTVersion
 %    \end{macrocode}
 % \end{macro}
 % At last we now change the font for the letters of the latin alphabet. 
@@ -989,19 +1367,21 @@ nopunctuation,noplusnominus,noequal,noexclam,nospecials}}
 \DeclareMathSymbol{9}{\mathalpha}{\mt@font@tbu}{`9}
 \fi
 %    \end{macrocode}
-% When |symbolmax| is passed as an option, we use the Symbol font
-% also for the printable characters other than letters and
-% digits. The character @ has been left out.
+% When |symboldelimiters| is passed as an option, we use the
+% Symbol font for the printable characters other than
+% letters and digits. The character @ has been left out.
 %    \begin{macrocode}
-\ifx\mt@symbolmax\@empty 
+\ifx\mt@symboldelimiters\@empty 
 \def\mt@font@tbu{mtpsymbol}
 \else
 \def\mt@font@tbu{mtoperatorfont}
 \fi
+%%
 \ifx\mtno@exclam\@empty\else
 \DeclareMathSymbol{!}{\mathclose}{\mt@font@tbu}{"21}
 \DeclareMathSymbol{?}{\mathclose}{\mt@font@tbu}{"3F}
 \fi
+%%
 \ifx\mtno@ast\@empty\else
 \DeclareMathSymbol{*}{\mathalpha}{\mt@font@tbu}{"2A} 
 \fi
@@ -1041,25 +1421,40 @@ nopunctuation,noplusnominus,noequal,noexclam,nospecials}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\endash}
-%   2011/01/29, v1.1 Producing this next piece of code was not a
-%   piece of cake for a novice like myself!  I got some LaTeX
-%   internal info from ltoutenc.dtx. However this will only work
-%   in the math versions with the same encoding as defined by
-%   default.
+%   2011/01/29, v1.1 Producing this next piece of code was
+%   not a piece of cake for a novice like myself!  I got
+%   some LaTeX internal info from ltoutenc.dtx. However this
+%   will only work in the math versions having the same
+%   encoding as defined by default.
+%   2011/02/05, v1.11. Compatibility with Unicode (via
+%   fontspec encodings EU1 and EU2)
 %    \begin{macrocode}
+\edef\mt@enc{\m@stextenc}
 \ifmt@endash
-\edef\@tmpa{\m@stextenc}
-\DeclareMathSymbol{-}{\mathbin}{mtoperatorfont}
-{\expandafter\the\expandafter\csname\@tmpa\string\textendash\endcsname}
+\ifx\mt@enc\mt@eui % xetex
+  \XeTeXmathcode`\-="2 "\the\symmtoperatorfont "2013 \relax
+\else
+\ifx\mt@enc\mt@euii % luatex
+   \luatexUmathcode`\-="2 "\the\symmtoperatorfont "2013 \relax
+\else % assume 8bit encoding
+   \DeclareMathSymbol{-}{\mathbin}{mtoperatorfont}
+{\expandafter\the\expandafter\csname\mt@enc\string\textendash\endcsname}
+\fi\fi
 \else
 %    \end{macrocode}
 % \end{macro}
 % 2011/01/29, v1.1 This |emdash| has possibly almost no interest. 
 %    \begin{macrocode}
 \ifmt@emdash
-\edef\@tmpa{\m@stextenc}
-\DeclareMathSymbol{-}{\mathbin}{mtoperatorfont}
-{\expandafter\the\expandafter\csname\@tmpa\string\textemdash\endcsname}
+\ifx\mt@enc\mt@eui % xetex
+  \XeTeXmathcode`\-="2 "\the\symmtoperatorfont "2014 \relax
+\else
+\ifx\mt@enc\mt@euii % luatex
+   \luatexUmathcode`\-="2 "\the\symmtoperatorfont "2014 \relax
+\else
+ \DeclareMathSymbol{-}{\mathbin}{mtoperatorfont}
+{\expandafter\the\expandafter\csname\mt@enc\string\textemdash\endcsname}
+\fi\fi
 \else
 \DeclareMathSymbol{-}{\mathbin}{\mt@font@tbu}{"2D}
 \fi\fi\fi
@@ -1085,14 +1480,20 @@ nopunctuation,noplusnominus,noequal,noexclam,nospecials}}
 %    \begin{macrocode}
 \def\mathrlap{\mathpalette\mathrlapinternal}
 \def\mathrlapinternal#1#2{\rlap{$\mathsurround=0pt#1{#2}$}}
-\ifx\mt@ti\m@stextenc
+\ifx\mt@ti\mt@enc
     \DeclareMathAccent{\mt@ltbar}{\mathalpha}{mtletterfont}{9}
   \else
     \DeclareMathAccent{\mt@ltbar}{\mathalpha}{mtletterfont}{22}
 \fi
 \ifx\mtno@hbar\@empty\else
+\ifx\mt@enc\mt@eui % xetex
+  \XeTeXmathchardef\hbar="7 "\the\symmtoperatorfont "0127 \relax 
+\else
+\ifx\mt@enc\mt@euii % luatex
+   \luatexUmathchardef\hbar="7 "\the\symmtoperatorfont "0127 \relax %% or 210F?
+\else % assume 8bit encoding
   \def\hbar{\mathrlap{\mt@ltbar{\ }}h}
-\fi
+\fi\fi\fi
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
@@ -1132,13 +1533,13 @@ nopunctuation,noplusnominus,noequal,noexclam,nospecials}}
 % \end{macro}
 % \begin{macro}{alldelims}
 %    \begin{macrocode}
-\ifx\mt@alldelims\@empty
-  \ifx\mt@symbolmax\@empty\else
-  \ifx\mt@ti\m@stextenc\else
-  \typeout{** mathastext: `alldelims'. Characters <,>,{,},| will be assumed
-       to^^J% 
-      ** be located as in ascii. True for T1 fonts or OT1 fixed-width fonts.}
-   \fi\fi
+\ifmt@alldelims
+%%   \ifx\mt@symboldelimiters\@empty\else
+%%   \ifx\mt@ti\mt@enc\else
+%%   \typeout{** mathastext: `alldelims'. Characters <,>,{,},| will be assumed
+%%        to\MessageBreak 
+%%       ** be located as in ascii. True for T1 fonts or OT1 fixed-width fonts.}
+%%    \fi\fi
 \DeclareMathDelimiter{<}{\mathopen}{\mt@font@tbu}{"3C}{largesymbols}{"0A}
 \DeclareMathDelimiter{>}{\mathclose}{\mt@font@tbu}{"3E}{largesymbols}{"0B}
 \DeclareMathSymbol{<}{\mathrel}{\mt@font@tbu}{"3C}
@@ -1236,7 +1637,7 @@ nopunctuation,noplusnominus,noequal,noexclam,nospecials}}
 \DeclareMathSymbol{\otimes}{\mathbin}{mtpsymbol}{196}
 \DeclareMathSymbol{\oplus}{\mathbin}{mtpsymbol}{197}
 \DeclareMathSymbol{\pm}{\mathbin}{mtpsymbol}{177}
-\DeclareMathSymbol{*}{\mathbin}{mtpsymbol}{42} 
+%%\DeclareMathSymbol{*}{\mathbin}{mtpsymbol}{42} 
 \DeclareMathSymbol{\ast}{\mathbin}{mtpsymbol}{42}
 \DeclareMathSymbol{\times}{\mathbin}{mtpsymbol}{180}
 \DeclareMathSymbol{\proptopsy}{\mathrel}{mtpsymbol}{181}
@@ -1285,6 +1686,9 @@ nopunctuation,noplusnominus,noequal,noexclam,nospecials}}
 % which I didn't know about when writing up the version |1.0| of
 % the present package. The goals of |mathastext| are much more
 % restricted than those achieved by |mathspec|.
+% 
+% v1.11 I correct some bugs on how eulergreek and
+% symbolgreek interacted.
 %    \begin{macrocode}
 \def\mt@font@tbu{operators}
 \let\mt@mathord\mathord
@@ -1301,6 +1705,8 @@ nopunctuation,noplusnominus,noequal,noexclam,nospecials}}
 \ifx\mt@font@tbu\mt@tmp\else 
 %    \end{macrocode}
 %  \cs{digamma} either undefined or defined and *greek option
+% v1.11: I correct the bug with Symbol preempting capital
+% Greek letters
 %    \begin{macrocode}
 \DeclareMathSymbol{\Digamma}{\mt@mathord}{\mt@font@tbu}{"46}
 \DeclareMathSymbol{\Alpha}{\mt@mathord}{\mt@font@tbu}{"41}
@@ -1316,12 +1722,18 @@ nopunctuation,noplusnominus,noequal,noexclam,nospecials}}
 \DeclareMathSymbol{\Rho}{\mt@mathord}{\mt@font@tbu}{"50}
 \DeclareMathSymbol{\Tau}{\mt@mathord}{\mt@font@tbu}{"54}
 \DeclareMathSymbol{\Chi}{\mt@mathord}{\mt@font@tbu}{"58}
-%% we now treat the other capital Greek letters
+%    \end{macrocode}
+%  When we in fact do use Symbol, we will have to correct \cs{Rho} and
+%  \cs{Chi} and \cs{Digamma} which is non-existent in fact (no F
+%  in Symbol, F codes a \cs{Phi}).
+%    \begin{macrocode}
 \ifx\mt@symbolgreek\@empty
+    \ifx\mt@eulergreek\@empty\else
+    \ifx\mt@selfGreek\@empty\else
 %% attention le P de Symbol est un \Pi pas un \Rho
-\DeclareMathSymbol{\Rho}{\mt@mathord}{\mt@font@tbu}{"52}
+\DeclareMathSymbol{\Rho}{\mathord}{mtpsymbol}{"52}
 %% attention le X de Symbol est un \Xi pas un \Chi
-\DeclareMathSymbol{\Chi}{\mt@mathord}{\mt@font@tbu}{"43}
+\DeclareMathSymbol{\Chi}{\mathord}{mtpsymbol}{"43}
 %% attention le F de Symbol est un \Phi. Il n'y a pas de \Digamma
 \let\Digamma\undefined
 \DeclareMathSymbol{\Gamma}{\mathord}{mtpsymbol}{"47}
@@ -1335,10 +1747,12 @@ nopunctuation,noplusnominus,noequal,noexclam,nospecials}}
 \DeclareMathSymbol{\Phi}{\mathord}{mtpsymbol}{"46}
 \DeclareMathSymbol{\Psi}{\mathord}{mtpsymbol}{"59}
 \DeclareMathSymbol{\Omega}{\mathord}{mtpsymbol}{"57}
-\else 
+    \fi\fi 
+\else
 %    \end{macrocode}
-% \cs{digamma} not defined, or defined and either eulergreek or selfgreek. We
-% assume the capital Greek letters to be as in OT1.
+% not symbolgreek, perhaps eulergreek, selfgreek, or none
+% but then \cs{digamma} is not defined. We assume the non
+% Latin-looking capital Greek letters to be as in OT1.
 %    \begin{macrocode}
 \DeclareMathSymbol\Gamma    {\mathalpha}{\mt@font@tbu}{"00}
 \DeclareMathSymbol\Delta    {\mathalpha}{\mt@font@tbu}{"01}
@@ -1446,32 +1860,42 @@ nopunctuation,noplusnominus,noequal,noexclam,nospecials}}
 %   used \cs{i} and \cs{j} from the text font the problem would be with the
 %   fontsize, if in scriptstyle. The amsmath \cs{text} would do the trick.
 %    \begin{macrocode}
-\ifx\m@stextenc\mt@oti
-\DeclareMathSymbol{\inodot}{\mathalpha}{mtletterfont}{16} 
-\DeclareMathSymbol{\jnodot}{\mathalpha}{mtletterfont}{17} 
+\ifx\mt@enc\mt@eui % xetex
+  \XeTeXmathchardef\inodot="7 "\the\symmtletterfont "0131 \relax
+  \XeTeXmathchardef\jnodot="7 "\the\symmtletterfont "0237 \relax
 \else
-%% assumed to be as in T1
-\DeclareMathSymbol{\inodot}{\mathalpha}{mtletterfont}{25} 
-\DeclareMathSymbol{\jnodot}{\mathalpha}{mtletterfont}{26} 
-\fi
+\ifx\mt@enc\mt@euii % luatex
+   \luatexUmathchardef\inodot="7 "\the\symmtletterfont "0131 \relax
+   \luatexUmathchardef\jnodot="7 "\the\symmtletterfont "0237 \relax
+\else % assume 8bit encoding
+   \DeclareMathSymbol{\inodot}{\mathalpha}{mtletterfont}
+{\expandafter\the\expandafter\csname\mt@enc\string\i\endcsname}
+   \DeclareMathSymbol{\jnodot}{\mathalpha}{mtletterfont}
+{\expandafter\the\expandafter\csname\mt@enc\string\j\endcsname}
+\fi\fi
 \ifx\mt@defaultimath\@empty\else
     \renewcommand{\imath}{\inodot}
-    \renewcommand{\jmath}{\jnodot} 
+    \renewcommand{\jmath}{\jnodot}
+    \let\mt@oldi\i \let\mt@oldj\j
+    \DeclareRobustCommand{\i}{\ifmmode\inodot\else\mt@oldi\fi}
+    \DeclareRobustCommand{\j}{\ifmmode\jnodot\else\mt@oldj\fi}
 \fi
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
 % \begin{macro}{math accents}
-%   I don't know how to get from the encoding to the slot positions of the
-%   accents (apart from going to look at all possible encodings .{}def files
-%   and putting this info here).  In standard \LaTeX{}, the mathaccents are
-%   taken from the `operators' font. So we do the same here. Of course there
-%   is the problem that the user can define math versions with different
-%   encodings. Here I take T1 if it was the default at the time of
-%   loading the package, else OT1.
+%   I don't know how to get from the encoding to the slot
+%   positions of the accents (apart from going to look at
+%   all possible encodings definition files and putting this
+%   info here).  In standard \LaTeX{}, the mathaccents are
+%   taken from the `operators' font. So we do the same
+%   here. Of course there is the problem that the user can
+%   define math versions with different encodings. Here I
+%   take T1 if it was the default at the time of loading the
+%   package, else OT1.
 %    \begin{macrocode}
 \ifx\mt@mathaccents\@empty 
-\ifx\mt@ti\m@stextenc
+\ifx\mt@ti\mt@enc
 \DeclareMathAccent{\acute}{\mathalpha}{mtoperatorfont}{1}
 \DeclareMathAccent{\grave}{\mathalpha}{mtoperatorfont}{0}
 \DeclareMathAccent{\ddot}{\mathalpha}{mtoperatorfont}{4}
@@ -1493,8 +1917,8 @@ nopunctuation,noplusnominus,noequal,noexclam,nospecials}}
 \DeclareMathAccent{\hat}{\mathalpha}{mtoperatorfont}{94}
 \DeclareMathAccent{\dot}{\mathalpha}{mtoperatorfont}{95}
 \DeclareMathAccent{\mathring}{\mathalpha}{mtoperatorfont}{23}
-\ifx\mt@oti\m@stextenc\else
-  \typeout{** mathastext: `mathaccents'; accents have been assumed to be^^J%
+\ifx\mt@oti\mt@enc\else
+  \typeout{** mathastext: `mathaccents'; accents have been assumed to be\MessageBreak
   ** as in OT1 encoding.}
 \fi\fi\fi
 %    \end{macrocode}
@@ -1529,7 +1953,7 @@ nopunctuation,noplusnominus,noequal,noexclam,nospecials}}
 \DeclareMathSizes{\@xxvpt}{\@xxvpt}{\@xxpt}{\@xviipt}
 \DeclareMathSizes{\@xxxpt}{\@xxxpt}{\@xxvpt}{\@xxpt}
 \DeclareMathSizes{\@xxxvipt}{\@xxxvipt}{\@xxxpt}{\@xxvpt}
-\typeout{** mathastext has declared larger sizes for subscripts.^^J%
+\typeout{** mathastext has declared larger sizes for subscripts.\MessageBreak
 ** To keep LaTeX defaults, use option `defaultmathsizes'.}
 \fi
 %    \end{macrocode}
@@ -1573,6 +1997,6 @@ nopunctuation,noplusnominus,noequal,noexclam,nospecials}}
 %</dtx>
 % \fi
 %
-% \CheckSum{1960}
+% \CheckSum{2232}
 % \Finale
 \endinput
