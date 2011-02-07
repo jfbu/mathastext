@@ -1,4 +1,4 @@
-This README file is for version 1.11, 2011/02/06
+This README file is for version 1.12, 2011/02/07
 of the package `mathastext' for LaTeX2e
 
 Copyright (C) 2011 by Jean-Francois B..
@@ -15,20 +15,22 @@ The latest version of this license is in
 and version 1.3 or later is part of all distributions of
 LaTeX version 2003/12/01 or later.
 
-THIS IS VERSION 1.11 (2011/02/06)
+THIS IS VERSION 1.12 (2011/02/07)
 
-MAIN CHANGES FROM VERSION 1.1:
+MAIN CHANGES FROM PREVIOUS VERSIONS:
 
-   *  various bugs have been corrected
+   *  various bugs have been corrected.
 
-   *  the endash and alldelims options are active by default
+   *  the endash and alldelims options are active by default.
 
-   *  the en-dash and dotless i and j are now compatible with
-      all encodings, including Unicode
+   *  the package is more Unicode aware.
 
    *  the \Mathastext command has been improved to
       facilitate the mechanism of math versions also when
-      using XeTeX or LuaTeX with package fontspec.
+      using XeTeX or LuaTeX (with package fontspec.) 
+
+   *  the en-dash and dotless i and j now work with all
+      encodings, Unicode inclusive.
 
 USAGE
 
