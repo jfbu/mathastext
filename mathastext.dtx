@@ -1,5 +1,5 @@
 % \iffalse meta-comment
-%    Time-stamp: <07-02-2011 22:16:42 CET JF>
+%    Time-stamp: <09-02-2011 23:34:54 CET JF>
 %    File `mathastext.dtx'
 %    
 %    Copyright (C) 2011 by Jean-Francois B.
@@ -20,7 +20,7 @@
 % \iffalse
 %<*dtx>    
 \ProvidesFile{mathastext.dtx}
-             [2011/02/07 1.12 Use the text font in simple mathematics]
+             [2011/02/09 1.12b Use the text font in simple mathematics]
 %</dtx>
 % 
 %<*driver>
@@ -110,12 +110,21 @@
 \DeclareMathSymbol{\Im}{\mathord}{mtpsymbol}{"C1}
 \DeclareMathSymbol{\DotTriangle}{\mathord}{mtpsymbol}{92}
 %\RecordChanges
-%\OnlyDescription
+\OnlyDescription
 \begin{document}
  \DocInput{mathastext.dtx}
 \end{document}
 %</driver>
 % \fi
+%
+% \changes{1.12b}{2011/02/09}{
+%    * a completely stupid bug regarding uppercase Greek is
+%    corrected
+%    * I take this opportunity to add LY1 as supported
+%    encoding for math accents 
+%    * and I correct an  orthographical mistake in the
+%    README
+%    }
 %
 % \changes{1.12}{2011/02/07}{
 %    * annoying silly bug in 1.11 about using \cs{MessageBreak} in
@@ -466,12 +475,12 @@
 %      odd-looking. So we redefine \cs{hbar} to use only the
 %      text font (and this will be aware of the |italic|
 %      option). Our construction does not always give an
-%      optimal result (and is limited to OT1 and T1
-%      encodings), so an option |nohbar| deactivates
-%      it. There is no \cs{hslash} provided by the package,
-%      though. The version |1.12| of the package when
-%      dealing with a Unicode font tries to get the
-%      \cs{hbar} directly as a glyph from the font.
+%      optimal result (and its scope is limited to the OT1,
+%      LY1 and T1 encodings), so an option |nohbar|
+%      deactivates it. There is no \cs{hslash} provided by
+%      the package, though. The version |1.12| of the
+%      package when dealing with a Unicode font tries to get
+%      the \cs{hbar} directly as a glyph from the font.
 %
 %
 %    \item[dotless i and j:] By default the package redefines
@@ -488,7 +497,7 @@
 %    and the dotless i and j, the package expects to detect
 %    either the EU1 encoding for XeTeX{} or the EU2 encoding
 %    for Lua\LaTeX{} (this will be true if |fontspec| was
-%    loaded), or either the OT1 or the T1 encoding, else it
+%    loaded), or one of OT1, LY1 or T1, else it
 %    will renounce and not attempt to access the en-dash or the
 %    dotless i and j glyphs. With \LaTeX{} and Pdf\LaTeX{},
 %    there is no such limitation and all 8bit-encodings
@@ -528,10 +537,10 @@
 %      problem, and I will welcome any information by
 %      knowledgeable people.
 %
-%    \item[math accents:]  an option |mathaccents| is
-%    provided to pick up the accents in math mode from the
-%    text font, but this is only for either an OT1-compatible or a
-%    T1-encoded font.
+%    \item[math accents:] an option |mathaccents| is
+%      provided to pick up the accents in math mode from the
+%      text font, but the package knows only T1, LY1 or
+%      OT1-compatible encodings.
 %  
 %    \end{description}
 %
@@ -638,7 +647,7 @@
 %      |mathastext| font. Note that \cs{mathrm}|{\hbar}| and
 %      \cs{mathbf}|{\hbar}| should work and that \cs{hbar}
 %      does scale in subscripts and exponents. Only for T1
-%      and OT1 encodings.
+%      and OT1 (or LY1) encodings.
 %    \item |\fouriervec|: this is a |\vec| accent taken from the Fourier font;
 %    the |fourier| package need not be loaded. Active only
 %    if option |fouriervec|.
@@ -660,13 +669,15 @@
 %    all the glyphs of the Euler font, if option |eulergreek| (or
 %    |eulerdigits|) was passed to the package.
 %    \item |\MathPSymbol|: math alphabet to access the Symbol font.
-%    \item Capital Greek letters: macro names \cs{Digamma}, \cs{Alpha},
-%      \cs{Beta}, \cs{Epsilon}, \cs{Zeta}, \cs{Eta}, \cs{Iota}, \cs{Kappa},
-%      \cs{Mu}, \cs{Nu}, \cs{Omicron}, \cs{Rho}, \cs{Tau}, \cs{Chi} are
-%      provided for the capital Greek letters which look like their Latin
-%      counterparts. This is not done if the package detects that |\digamma|
-%      is a defined macro, as then it is assumed that a suitable package has
-%      been loaded for Greek letters. Also an \cs{omicron} control sequence is
+%    \item Capital Greek letters: macro names \cs{Digamma},
+%      \cs{Alpha}, \cs{Beta}, \cs{Epsilon}, \cs{Zeta},
+%      \cs{Eta}, \cs{Iota}, \cs{Kappa}, \cs{Mu}, \cs{Nu},
+%      \cs{Omicron}, \cs{Rho}, \cs{Tau}, \cs{Chi} are
+%      provided for the capital Greek letters which look
+%      like their Latin counterparts, when one of the
+%      options |symbolgreek| (no \cs{Digamma} for Symbol),
+%      |eulergreek| or |selfGreek| was passed to the
+%      package. Also an \cs{omicron} control sequence is
 %      provided.
 %    \item Miscelleneous mathematical symbols from the
 %      postscript Symbol font are made available (or
@@ -753,7 +764,7 @@
 %  \item |mathaccents|: use the text font also for the math
 %    accents. As in vanilla \LaTeX{}, they are taken from the font
 %    for the digits and \cs{log}-like names. Obey the alphabet
-%    changing commands. Will work only for T1 or OT1-compatible encodings.
+%    changing commands. Will work only for T1, LY1, or OT1-compatible encodings.
 %  \item |defaultrm|, |defaultbf|, |defaulnormal|: do not
 %  overwrite the default \cs{mathrm}, \cs{mathbf}, \cs{mathnormal}.
 %  \item |defaultimath|: do not overwrite \cs{imath} and
@@ -761,6 +772,9 @@
 %  \item |defaultmathsizes|: do not change the \LaTeX{} defaults.
 %  \item |fouriervec|: provides a \cs{fouriervec} command.
 %  \end{itemize}
+%
+% Thanks to Kevin~\textsc{Klement}, Tariq~\textsc{Perwez}
+% and Ricard~\textsc{Torres} for bug reports and feature requests.
 %
 % \StopEventually{}
 %
@@ -770,7 +784,7 @@
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesFile{mathastext.sty}
-         [2011/02/07 1.12 Use the text font in simple mathematics]
+         [2011/02/09 1.12b Use the text font in simple mathematics]
 %    \end{macrocode}
 % I copied these macros from the |iftex| package of Vafa~\textsc{Khalighi}.
 % Perhaps I should rather require the package? 
@@ -839,6 +853,8 @@
 \def\mt@eui{EU1}\def\mt@euii{EU2}
 \newif\ifmt@alldelims
 \ifx\mt@oti\m@stextenc\mt@alldelimsfalse\else\mt@alldelimstrue\fi 
+%% new in v1.12b:
+\def\mt@lyi{LY1}
 %    \end{macrocode}
 % The options:
 %    \begin{macrocode}
@@ -1482,12 +1498,14 @@ noplusnominus,noequal,noexclam,noasterisk,nospecials,nolessnomore}}
 \ifx\mt@enc\mt@oti % OT1
    \DeclareMathSymbol{-}{\mathbin}{mtoperatorfont}{123}
 \else
-% make sure we do have neither xetex nor luatex
+\ifx\mt@enc\mt@lyi % LY1
+   \DeclareMathSymbol{-}{\mathbin}{mtoperatorfont}{150}
+\else % make sure we have neither xetex nor luatex
    \ifXeTeX\mt@failedtrue\else\ifLuaTeX\mt@failedtrue\else
    \DeclareMathSymbol{-}{\mathbin}{mtoperatorfont}
 {\expandafter\the\expandafter\csname\mt@enc\string\textendash\endcsname}
    \fi\fi
-\fi\fi\fi\fi}
+\fi\fi\fi\fi\fi}
 \def\do@the@emdashstuff{\edef\mt@enc{\m@stextenc}
 \ifx\mt@enc\mt@eui % xetex+fontspec
   \XeTeXmathcode`\-="2 "\the\symmtoperatorfont "2014 \relax
@@ -1500,12 +1518,15 @@ noplusnominus,noequal,noexclam,noasterisk,nospecials,nolessnomore}}
 \else
 \ifx\mt@enc\mt@oti % OT1
    \DeclareMathSymbol{-}{\mathbin}{mtoperatorfont}{124}
-\else % make sure we do not have xetex or luatex
+\else
+\ifx\mt@enc\mt@lyi % LY1
+   \DeclareMathSymbol{-}{\mathbin}{mtoperatorfont}{151}
+\else % make sure we have neither xetex nor luatex
    \ifXeTeX\mt@failedtrue\else\ifLuaTeX\mt@failedtrue\else
    \DeclareMathSymbol{-}{\mathbin}{mtoperatorfont}
 {\expandafter\the\expandafter\csname\mt@enc\string\textemdash\endcsname}
    \fi\fi
-\fi\fi\fi\fi}
+\fi\fi\fi\fi\fi}
 \ifx\mtno@minus\@empty\else
 \mt@failedfalse
 \ifmt@endash\do@the@endashstuff\else
@@ -1747,26 +1768,30 @@ noplusnominus,noequal,noexclam,noasterisk,nospecials,nolessnomore}}
 % 
 % v1.11 I correct some bugs on how eulergreek and
 % symbolgreek interacted.
+%
+% v.12b I introduced another very stupid bug (regarding
+% uppercase Greek) in v1.1. This is corrected here. All this
+% business of checking for \cs{digamma} was truly stupid as
+% some package might well have defined the font for Greek
+% without having defined \cs{digamma}, I don't know what
+% crossed my dumb mind when I committed this insane code and
+% started redefining uppercase Greek, and it is even worse
+% than that as I was redefining not only relatively benign
+% things such as \cs{Alpha} but also \cs{Phi} etc\dots
+% 
 %    \begin{macrocode}
-\def\mt@font@tbu{operators}
-\let\mt@mathord\mathord
-\ifx\digamma\undefined\else\def\mt@font@tbu{1}\fi
+\newif\ifmt@dogreek\mt@dogreektrue
+\let\mt@mathord\mathalpha
 \ifx\mt@selfGreek\@empty \def\mt@font@tbu{mtoperatorfont}
-                         \let\mt@mathord\mathalpha 
     \else
 \ifx\mt@eulergreek\@empty \def\mt@font@tbu{mteulervm} 
-                         \let\mt@mathord\mathalpha 
     \else
 \ifx\mt@symbolgreek\@empty \def\mt@font@tbu{mtpsymbol}
+                           \let\mt@mathord\mathord
+    \else
+  \mt@dogreekfalse
 \fi\fi\fi
-\def\mt@tmp{1}
-\ifx\mt@font@tbu\mt@tmp\else 
-%    \end{macrocode}
-%  \cs{digamma} either undefined or defined and *greek option
-% v1.11: I correct the bug with Symbol preempting capital
-% Greek letters
-%    \begin{macrocode}
-\DeclareMathSymbol{\Digamma}{\mt@mathord}{\mt@font@tbu}{"46}
+\ifmt@dogreek
 \DeclareMathSymbol{\Alpha}{\mt@mathord}{\mt@font@tbu}{"41}
 \DeclareMathSymbol{\Beta}{\mt@mathord}{\mt@font@tbu}{"42}
 \DeclareMathSymbol{\Epsilon}{\mt@mathord}{\mt@font@tbu}{"45}
@@ -1781,19 +1806,19 @@ noplusnominus,noequal,noexclam,noasterisk,nospecials,nolessnomore}}
 \DeclareMathSymbol{\Tau}{\mt@mathord}{\mt@font@tbu}{"54}
 \DeclareMathSymbol{\Chi}{\mt@mathord}{\mt@font@tbu}{"58}
 %    \end{macrocode}
-%  When we in fact do use Symbol, we will have to correct \cs{Rho} and
-%  \cs{Chi} and \cs{Digamma} which is non-existent in fact (no F
+%  When we in fact use Symbol, we  have to correct \cs{Rho} and
+%  \cs{Chi}. And \cs{Digamma} is non-existent in fact (no F
 %  in Symbol, F codes a \cs{Phi}).
 %    \begin{macrocode}
-\ifx\mt@symbolgreek\@empty
-    \ifx\mt@eulergreek\@empty\else
-    \ifx\mt@selfGreek\@empty\else
+\ifx\mt@mathord\mathord
+%    \end{macrocode}
+%  symbolgreek but neither eulergreek nor selfGreek
+%    \begin{macrocode}
 %% attention le P de Symbol est un \Pi pas un \Rho
 \DeclareMathSymbol{\Rho}{\mathord}{mtpsymbol}{"52}
 %% attention le X de Symbol est un \Xi pas un \Chi
 \DeclareMathSymbol{\Chi}{\mathord}{mtpsymbol}{"43}
 %% attention le F de Symbol est un \Phi. Il n'y a pas de \Digamma
-\let\Digamma\undefined
 \DeclareMathSymbol{\Gamma}{\mathord}{mtpsymbol}{"47}
 \DeclareMathSymbol{\Delta}{\mathord}{mtpsymbol}{"44}
 \DeclareMathSymbol{\Theta}{\mathord}{mtpsymbol}{"51}
@@ -1805,13 +1830,11 @@ noplusnominus,noequal,noexclam,noasterisk,nospecials,nolessnomore}}
 \DeclareMathSymbol{\Phi}{\mathord}{mtpsymbol}{"46}
 \DeclareMathSymbol{\Psi}{\mathord}{mtpsymbol}{"59}
 \DeclareMathSymbol{\Omega}{\mathord}{mtpsymbol}{"57}
-    \fi\fi 
 \else
 %    \end{macrocode}
-% not symbolgreek, perhaps eulergreek, selfgreek, or none
-% but then \cs{digamma} is not defined. We assume the non
-% Latin-looking capital Greek letters to be as in OT1.
+%  not symbolgreek but eulergreek or selfGreek or both
 %    \begin{macrocode}
+\DeclareMathSymbol{\Digamma}{\mathalpha}{\mt@font@tbu}{"46}
 \DeclareMathSymbol\Gamma    {\mathalpha}{\mt@font@tbu}{"00}
 \DeclareMathSymbol\Delta    {\mathalpha}{\mt@font@tbu}{"01}
 \DeclareMathSymbol\Theta    {\mathalpha}{\mt@font@tbu}{"02}
@@ -1838,9 +1861,10 @@ noplusnominus,noequal,noexclam,noasterisk,nospecials,nolessnomore}}
 % The lower case Greek letters in default \LaTeX{} are of type |mathord|. If
 % we use the Euler font it is perhaps better to have them be of type
 % |mathalpha|
+% 
+% v1.12b: I define \cs{omicron} only if (eulergreek or
+% symbolgreek) OR it was not defined
 %    \begin{macrocode}
-\let\omicron\undefined
-\newcommand\omicron{\mt@saved@mathnormal{o}}
 \ifx\mt@eulergreek\@empty
 \DeclareMathSymbol{\alpha}  {\mathalpha}{mteulervm}{"0B}
 \DeclareMathSymbol{\beta}   {\mathalpha}{mteulervm}{"0C}
@@ -1856,7 +1880,8 @@ noplusnominus,noequal,noexclam,noasterisk,nospecials,nolessnomore}}
 \DeclareMathSymbol{\mu}     {\mathalpha}{mteulervm}{"16}
 \DeclareMathSymbol{\nu}     {\mathalpha}{mteulervm}{"17}
 \DeclareMathSymbol{\xi}     {\mathalpha}{mteulervm}{"18}
-\renewcommand\omicron{\MathEuler{o}}
+\let\omicron\undefined
+\DeclareMathSymbol{\omicron}{\mathalpha}{mteulervm}{"6F}
 \DeclareMathSymbol{\pi}     {\mathalpha}{mteulervm}{"19}
 \DeclareMathSymbol{\rho}    {\mathalpha}{mteulervm}{"1A}
 \DeclareMathSymbol{\sigma}  {\mathalpha}{mteulervm}{"1B}
@@ -1891,7 +1916,8 @@ noplusnominus,noequal,noexclam,noasterisk,nospecials,nolessnomore}}
 \DeclareMathSymbol{\mu}{\mathord}{mtpsymbol}{"6D}
 \DeclareMathSymbol{\nu}{\mathord}{mtpsymbol}{"6E}
 \DeclareMathSymbol{\xi}{\mathord}{mtpsymbol}{"78}
-\renewcommand\omicron{\mathord{\MathPSymbol{o}}}
+\let\omicron\undefined
+\DeclareMathSymbol{\omicron}{\mathord}{mtpsymbol}{"6F}
 \DeclareMathSymbol{\pi}{\mathord}{mtpsymbol}{"70}
 \DeclareMathSymbol{\rho}{\mathord}{mtpsymbol}{"72}
 \DeclareMathSymbol{\sigma}{\mathord}{mtpsymbol}{"73}
@@ -1909,6 +1935,9 @@ noplusnominus,noequal,noexclam,noasterisk,nospecials,nolessnomore}}
 \DeclareMathSymbol{\varphi}{\mathord}{mtpsymbol}{"6A}
 \DeclareMathSymbol{\partial}{\mathord}{mtpsymbol}{"B6}
 \DeclareMathSymbol{\wp}{\mathord}{mtpsymbol}{"C3}
+\else
+\ifx\omicron\undefined
+\newcommand{\omicron}{\mt@saved@mathnormal{o}}\fi
 \fi\fi
 %    \end{macrocode}
 % \end{macro}
@@ -1935,13 +1964,17 @@ noplusnominus,noequal,noexclam,noasterisk,nospecials,nolessnomore}}
    \DeclareMathSymbol{\inodot}{\mathalpha}{mtletterfont}{16}
    \DeclareMathSymbol{\jnodot}{\mathalpha}{mtletterfont}{17}
 \else
+\ifx\mt@enc\mt@lyi % LY1
+   \DeclareMathSymbol{\inodot}{\mathalpha}{mtletterfont}{16}
+   \DeclareMathSymbol{\jnodot}{\mathalpha}{mtletterfont}{17}
+\else
    \ifXeTeX\mt@goonfalse\else\ifLuaTeX\mt@goonfalse\else
    \DeclareMathSymbol{\inodot}{\mathalpha}{mtletterfont}
 {\expandafter\the\expandafter\csname\mt@enc\string\i\endcsname}
    \DeclareMathSymbol{\jnodot}{\mathalpha}{mtletterfont}
 {\expandafter\the\expandafter\csname\mt@enc\string\j\endcsname}
    \fi\fi
-\fi\fi\fi\fi
+\fi\fi\fi\fi\fi
 \ifx\mt@defaultimath\@empty\else
   \ifmt@goon
     \renewcommand{\imath}{\inodot}
@@ -1964,6 +1997,7 @@ noplusnominus,noequal,noexclam,noasterisk,nospecials,nolessnomore}}
 %   define math versions with different encodings. Here I
 %   take T1 if it was the default at the time of loading the
 %   package, else OT1.
+%   v1.12b: I add LY1 which is quasi like OT1
 %    \begin{macrocode}
 \edef\mt@enc{\m@stextenc} %% rather one too many than sorry 
 \ifx\mt@mathaccents\@empty 
@@ -1978,7 +2012,7 @@ noplusnominus,noequal,noexclam,noasterisk,nospecials,nolessnomore}}
 \DeclareMathAccent{\hat}{\mathalpha}{mtoperatorfont}{2}
 \DeclareMathAccent{\dot}{\mathalpha}{mtoperatorfont}{10}
 \DeclareMathAccent{\mathring}{\mathalpha}{mtoperatorfont}{6}
-\else
+\else 
 \DeclareMathAccent{\acute}{\mathalpha}{mtoperatorfont}{19}
 \DeclareMathAccent{\grave}{\mathalpha}{mtoperatorfont}{18}
 \DeclareMathAccent{\ddot}{\mathalpha}{mtoperatorfont}{127}
@@ -1989,10 +2023,15 @@ noplusnominus,noequal,noexclam,noasterisk,nospecials,nolessnomore}}
 \DeclareMathAccent{\hat}{\mathalpha}{mtoperatorfont}{94}
 \DeclareMathAccent{\dot}{\mathalpha}{mtoperatorfont}{95}
 \DeclareMathAccent{\mathring}{\mathalpha}{mtoperatorfont}{23}
-\ifx\mt@oti\mt@enc\else
-  \typeout{** mathastext: `mathaccents'; accents have been assumed to be^^J%
-  ** as in OT1 encoding.}
-\fi\fi\fi
+  \ifx\mt@lyi\mt@enc   % LY1 encoding
+    \DeclareMathAccent{\dot}{\mathalpha}{mtoperatorfont}{5}
+  \else
+     \ifx\mt@oti\mt@enc\else
+      \typeout{** mathastext: math accents have been assumed to be^^J%
+        ** as in OT1 encoding.}
+      \fi
+   \fi
+\fi\fi
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{Math sizes}
@@ -2069,6 +2108,6 @@ noplusnominus,noequal,noexclam,noasterisk,nospecials,nolessnomore}}
 %</dtx>
 % \fi
 %
-% \CheckSum{2370}
+% \CheckSum{2387}
 % \Finale
 \endinput
