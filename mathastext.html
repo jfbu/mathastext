@@ -1,152 +1,122 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html lang="fr">
-<!-- Time-stamp: <29-01-2011 10:56:27 CET JF> -->
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <head>
-   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-   <META NAME="robots" CONTENT="index, follow">
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <meta name="robots" content="index, follow">
    <title>mathastext</title>
-<STYLE type="text/css">
+<style type="text/css">
 .toc{list-style:none;}
-.title{margin:auto;text-align:center}
+.title{margin:auto;text-align:center;}
 .center{text-align:center;margin-left:auto;margin-right:auto;}
+.fighead{text-align:center;margin-left:auto;margin-right:auto;font-weight:bold;}
 .flushleft{text-align:left;margin-left:0ex;margin-right:auto;}
 .flushright{text-align:right;margin-left:auto;margin-right:0ex;}
 DIV TABLE{margin-left:inherit;margin-right:inherit;}
-PRE{text-align:left;margin-left:0ex;margin-right:auto;}
 BLOCKQUOTE{margin-left:4ex;margin-right:4ex;text-align:left;}
-.part{margin:auto;text-align:center}
-</STYLE>
+.part{margin:auto;text-align:center;}
+.intro{margin-left:15%;margin-right:15%;}
+.central{margin-left:25%;margin-right:25%;}
+</style>
 </head>
 
 <body>
-A LaTeX package: <b>mathastext</b> (date: 2011/01/25 - initial version).<br>
-Copyright &copy; 2011, Jean-Fran&ccedil;ois B..<br>
+ 
+<div style="font-size:90%">
+This web page was last revised on March 12, 2011 at &lt;10:19:26 CET&gt;.
+</div>
 
-This web page has been last revised on 2011/01/29.
+<br>
+<br>
 
+<div class="center">A LaTeX package: <b>mathastext</b><br>
+Copyright © 2011, Jean-François B..</div>
+
+
+<div class="center">
+ <table align="center" border="0" width="85%" cellpadding="5">
+
+<tbody><tr><td width="0" align="center"><img src="Riemann1859.png" alt="Riemann1859.png"></td>
+
+<td><p><b>mathastext</b> is a package to allow to use the text font also in
+mathematics mode, thus giving a very unified look to the produced document.
+As a side-effect it alleviates somewhat the problem of the scarcity of free
+math fonts for TeX typesetting. Do not use it though if you hope to achieve
+optimal typographical results: the package originates in some (even worse)
+macros I had been using many years ago to produce handouts as if done on a
+typewriter, or better said, to produce documents with a somewhat rough, but
+unified look, done by a real human and meaning to convey some message to real
+humans. The hope was to <b>coerce</b> the reader into making a real effort at
+assimilating the <b>entirety</b> of the material, text and math, not knowing
+in advance which piece would prove to be more important than the others. In a
+well-crafted mathematical document, every single part is as important as any
+other one, or, rather, it is up to the reader to uncover the web of links
+between atoms.</p>
+<div style="font-size:90%">
+The example on the left uses:</div>
+<pre style="font-size:90%">\usepackage[T1]{fontenc}
+\usepackage[german]{babel}
+\usepackage[variablett,lighttt]{lmodern}
+\renewcommand{\familydefault}{\ttdefault}
+\usepackage[eulergreek]{mathastext}
+\MathastextEulerScale{0.92}
+</pre>
+</td>
+</tr></tbody></table></div>
+
+<center>
+<table width="500" border="0" cellpadding="10">
+<tbody><tr><td>
+Current (recommended) version <b>(1.13)</b>:<br>
+This version has been uploaded to CTAN on March 12, 2011.
 <ul>
-<li> <a href="mathastext-README.txt" >README</a></li>
-<li> <a href="mathastext-doc.pdf">PDF Documentation</a></li>
-<li><a href="mathastext.sty">mathastext.sty</a></li>
-<li> Documented <a href="mathastext.dtx">source</a> (dtx file), and in <a href="mathastext.pdf">pdf</a></li>
-<li> <a href="mathastext.ins">ins file</a></li>
-</ul
-
-
-<BLOCKQUOTE CLASS="figure">
-<BR>
-<BR>
-<BR>
-<DIV CLASS="center">Figure 1: <A NAME="fig:CM"></A>URW Zapf Chancery</DIV><BR>
-<BR>
-<DIV CLASS="center">
- <table align="center"border="1" cellpadding="15"><tr><td width="0" align="center"><img src="showcase/chancery-31.png"></td></tr></table></DIV>
-<BR>
-<DIV CLASS="center">
- <table align="center"border="1" cellpadding="15"><tr><td width="0" align="center"><img src="showcase/chancery-32.png"></td></tr></table></DIV>
-</BLOCKQUOTE>
-
-<BLOCKQUOTE CLASS="figure">
-<BR>
-<BR>
-<BR>
-<DIV CLASS="center">Figure 2: <A NAME="fig:CM"></A>French Cursive</DIV><BR>
-<BR>
-<DIV CLASS="center">
- <table align="center"border="1" cellpadding="15"><tr><td width="0" align="center"><img src="showcase/frcursive-31.png"></td></tr></table></DIV>
-<BR>
-<DIV CLASS="center">
- <table align="center"border="1" cellpadding="15"><tr><td width="0" align="center"><img src="showcase/frcursive-32.png"></td></tr></table></DIV>
-</BLOCKQUOTE>
-
-<BLOCKQUOTE CLASS="figure">
-<BR>
-<BR>
-<BR>
-<DIV CLASS="center">Figure 3: <A NAME="fig:CM"></A>Auriocus Kalligraphicus</DIV><BR>
-<BR>
-<DIV CLASS="center">
- <table align="center"border="1" cellpadding="15"><tr><td width="0" align="center"><img src="showcase/auriocus-31.png"></td></tr></table></DIV>
-<BR>
-<DIV CLASS="center">
- <table align="center"border="1" cellpadding="15"><tr><td width="0" align="center"><img src="showcase/auriocus-32.png"></td></tr></table></DIV>
-</BLOCKQUOTE>
-
-<BLOCKQUOTE CLASS="figure">
-<BR>
-<BR>
-<BR>
-<DIV CLASS="center">Figure 4: <A NAME="fig:CM"></A>Skeetch</DIV><BR>
-<BR>
-<DIV CLASS="center">
- <table align="center"border="1" cellpadding="15"><tr><td width="0" align="center"><img src="showcase/skeetch-31.png"></td></tr></table></DIV>
-<BR>
-<DIV CLASS="center">
- <table align="center"border="1" cellpadding="15"><tr><td width="0" align="center"><img src="showcase/skeetch-32.png"></td></tr></table></DIV>
-</BLOCKQUOTE>
-
-<BLOCKQUOTE CLASS="figure">
-<BR>
-<BR>
-<BR>
-<DIV CLASS="center">Figure 5: <A NAME="fig:CM"></A>URW Avant Garde</DIV><BR>
-<BR>
-<DIV CLASS="center">
- <table align="center"border="1" cellpadding="15"><tr><td width="0" align="center"><img src="showcase/avant-31.png"></td></tr></table></DIV>
-<BR>
-<DIV CLASS="center">
- <table align="center"border="1" cellpadding="15"><tr><td width="0" align="center"><img src="showcase/avant-32.png"></td></tr></table></DIV>
-</BLOCKQUOTE>
-
-<BLOCKQUOTE CLASS="figure">
-<BR>
-<BR>
-<BR>
-<DIV CLASS="center">Figure 6: <A NAME="fig:CM"></A>Fourier Utopia</DIV><BR>
-<BR>
-<DIV CLASS="center">
- <table align="center"border="1" cellpadding="15"><tr><td width="0" align="center"><img src="showcase/fourier-31.png"></td></tr></table></DIV>
-<BR>
-<DIV CLASS="center">
- <table align="center"border="1" cellpadding="15"><tr><td width="0" align="center"><img src="showcase/fourier-32.png"></td></tr></table></DIV>
-</BLOCKQUOTE>
-
-<BLOCKQUOTE CLASS="figure">
-<BR>
-<BR>
-<BR>
-<DIV CLASS="center">Figure 7: <A NAME="fig:CM"></A>Latin Modern Typewriter Proportional</DIV><BR>
-<BR>
-<DIV CLASS="center">
- <table align="center"border="1" cellpadding="15"><tr><td width="0" align="center"><img src="showcase/lmvtt-31.png"></td></tr></table></DIV>
-<BR>
-<DIV CLASS="center">
- <table align="center"border="1" cellpadding="15"><tr><td width="0" align="center"><img src="showcase/lmvtt-32.png"></td></tr></table></DIV>
-</BLOCKQUOTE>
-
-<br><br><br>
-Further examples (pdf files):
-
-<ul> Example 1: 
-<li><a href="showcase/chancery-1.pdf">URW Zapf Chancery</a></li> 
-<li><a href="showcase/frcursive-1.pdf">French Cursive</a></li>
-<li><a href="showcase/auriocus-1.pdf">Auriocus Kalligraphicus</a></li>
-<li><a href="showcase/skeetch-1.pdf">Skeetch</a></li>
-<li><a href="showcase/avant-1.pdf">URW Avant Garde</a></li>
-<li><a href="showcase/fourier-1.pdf">Fourier Utopia</a></li>
-<li><a href="showcase/lmvtt-1.pdf">Latin Modern Typewriter Proportional</a></li>
+<li> <a href="v113/README">README</a></li>
+<li> Download from a <a href="http://mirrors.ctan.org/help/Catalogue/entries/mathastext.html">CTAN
+location</a></li>
+<li> <a href="v113/mathastext.pdf">PDF Documentation</a></li>
+<li> <a href="v113/mathastext.sty">mathastext.sty</a> (version <b>1.13</b>)</li>
+<li> Documented <a href="v113/mathastext.dtx">source</a> (dtx file)</li>
+<li> <a href="v113/mathastext.ins">ins file</a></li>
+<li> <a href="showcase.html#v10">version 1.0</a> (<a href="v10/mathastext-doc.pdf">PDF Documentation</a>)</li>
 </ul>
+<a href="showcase.html">Examples</a> (be patient, page weighs circa 1,3 Mo; 29
+examples as png images and also as
+pdf files and 21 additional examples as pdf files)
+</td></tr></tbody></table>
+</center>
 
-<ul> Example 2: 
-<li><a href="showcase/chancery-2.pdf">URW Zapf Chancery</a></li> 
-<li><a href="showcase/frcursive-2.pdf">French Cursive</a></li>
-<li><a href="showcase/auriocus-2.pdf">Auriocus Kalligraphicus</a></li>
-<li><a href="showcase/skeetch-2.pdf">Skeetch</a></li>
-<li><a href="showcase/avant-2.pdf">URW Avant Garde</a></li>
-<li><a href="showcase/fourier-2.pdf">Fourier Utopia</a></li>
-<li><a href="showcase/lmvtt-2.pdf">Latin Modern Typewriter Proportional</a></li>
+<div class="intro">
+<ul>
+<li><u>Using mathastext with Unicode fonts</u>: <b>mathastext</b> can be used
+with the XeTeX and LuaTeX engines and Unicode fonts. It is recommended to load
+first the <b>fontspec</b> package, with its option <i>no-math</i>. As in this
+example:
+<pre>\usepackage[no-math]{fontspec}
+\setmainfont{TeX Gyre Bonum}
+\usepackage{mathastext}
+</pre>
+</li>
+<!--<li>To users of earlier versions: please note that the options <i>endash</i>
+and <i>alldelims</i> are now active by default (but option <i>alldelims</i> is
+automatically de-activated if the encoding is detected to be OT1).<br><br>
+</li>
+-->
+<li>Known limitations and bugs: 
+<ul>
+<li>Some characters from fonts having complex ligature rules may not
+display correctly in math mode (here is an <a href="showcase.html#fc">example</a>).</li>
+<li>All versions prior to 1.12b were afflicted more or less severely by various
+bugs, so users are strongly advised to upgrade to the current version. 
+</li>
 </ul>
+</li>
+</ul>
+</div>
 
-</body> 
-</html>
+
+<p>
+    <a href="http://validator.w3.org/check?uri=referer"><img style="border:0;width:88px;height:31px" src="valid-html401-blue.png" alt="Valid HTML 4.01 Transitional"></a>
+</p>
+
+ 
+
+
+</body></html>

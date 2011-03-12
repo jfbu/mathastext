@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+<!-- Time-stamp: <12-03-2011 10:02:08 CET JF> -->
+
+<head>
+   <link rel="shortcut icon" type="image/png" href="zeta32.png">
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <META NAME="robots" CONTENT="index, follow">
+   <title>a mathastext preamble</title>
+<STYLE type="text/css">
+body {
+	margin-left : 15% ;
+	margin-right : 25% ;
+	margin-top : 1em ;
+	margin-bottom : 1em ;
+}
+</STYLE>
+</head>
+
+
+<body>
+
+<p>Back to the
+to <a href="showcase.html">examples</a> page.</p>
+
+<p>
+This is the part of the preamble setting up the <a href="mathastext.html">mathastext</a> math
+versions for
+the <a href="showcase/RiemannZeta.pdf">special example</a>.
+</p>
+
+<p>
+As some packages set up math fonts or math symbols, they interfere
+with mathastext, and it turned out to be necessary in some instances to not use
+</p>
+
+<pre>
+\usepackage{fontpackage}
+</pre>
+
+but rather the simpler:
+
+<pre>
+\renewcommand{\rmdefault}{texfontname}
+</pre>
+
+<p>
+The texfontname can be found from looking at what mathastext writes to the log
+file of a first pass done with loading the font package. Determining which
+font packages interfere too much with mathastext is a bit of a trial and error
+process, although advanced LaTeX users can just examine fontpackage.sty to get
+an a priori opinion.
+</p>
+
+<p>
+Inside the source, the \MTversion{name_of_version} command allows to
+change simultaneously text and math fonts, and one can use also the
+\MTversion[text]{math} form to use distinct fonts for text and math.
+</p>
+
+<pre>
+\documentclass[a5paper]{article}
+\usepackage{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[german]{babel}
+
+\usepackage[symbolgreek]{mathastext}
+\MathastextSymbolScale{0.92}
+
+%%\usepackage{tpslifonts}
+\renewcommand{\rmdefault}{lcmss}
+\Mathastext[slitex]
+
+\usepackage{palatino}
+\Mathastext[palatino]
+
+\usepackage{newcent}
+\Mathastext[schoolbook]
+
+\usepackage{times}
+\Mathastext[times]
+
+\usepackage[variablett,nomath]{lmodern}
+\MTfamily{\ttdefault}
+\Mathastext[lmvtt]
+
+\MTseries{bx}
+\Mathastext[lmvttbold]
+
+\MTseries{\seriesdefault}
+\MTfamily{\familydefault}
+
+%%\usepackage{baskervald}
+\renewcommand{\rmdefault}{ybv}
+\Mathastext[baskervald]
+
+%%\usepackage[lf]{electrum}
+\renewcommand{\rmdefault}{yes}
+\Mathastext[electrum]
+
+%%\usepackage{fourier}
+\renewcommand{\rmdefault}{futs}
+\Mathastext[fourier]
+
+\usepackage{aurical}
+\renewcommand{\rmdefault}{AuriocusKalligraphicus}
+\Mathastext[auriocus]
+
+\usepackage[default]{comfortaa}
+\Mathastext[comfortaa]
+\renewcommand{\familydefault}{\rmdefault}
+
+\usepackage[scaled]{helvet}
+\renewcommand{\rmdefault}{phv}
+\Mathastext[helvetica]
+
+\usepackage[default]{frcursive}
+\Mathastext[frcursive]
+
+\linespread{1.2}
+</pre>
+
+</body>
+
+</html>
