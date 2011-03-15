@@ -31,7 +31,7 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesFile{mathastext.sty}
-         [2011/03/11 1.13 Use the text font in simple mathematics]
+         [2011/03/15 1.13b Use the text font in simple mathematics]
 \newif\ifXeTeX
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname XeTeXinterchartoks\endcsname\relax
@@ -692,10 +692,14 @@ noplusnominus,noequal,noexclam,noasterisk,nospecials,nolessnomore}}
 \mathchar\expandafter"\ms@tmp\relax\else\char"26\relax\fi}
 \fi
 \ifmt@symbolmisc
-\let\prod\undefined
-\DeclareMathSymbol{\prod}{\mathop}{mtpsymbol}{213}
-\let\sum\undefined
-\DeclareMathSymbol{\sum}{\mathop}{mtpsymbol}{229}
+\let\mst@prod\prod
+\let\defaultprod\prod
+\DeclareMathSymbol{\prodpsy}{\mathop}{mtpsymbol}{213}
+\renewcommand{\prod}{\ifinner\prodpsy\else\mst@prod\fi}
+\let\mst@sum\sum
+\let\defaultsum\sum
+\DeclareMathSymbol{\sumpsy}{\mathop}{mtpsymbol}{229}
+\renewcommand{\sum}{\ifinner\sumpsy\else\mst@sum\fi}
 \DeclareMathSymbol{\mt@implies}{\mathrel}{mtpsymbol}{222}
 \DeclareRobustCommand{\implies}{\;\mt@implies\;}
 \DeclareMathSymbol{\mt@impliedby}{\mathrel}{mtpsymbol}{220}
