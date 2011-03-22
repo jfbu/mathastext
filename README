@@ -1,80 +1,76 @@
-        +-------------------------------------------+
-        +              mathastext 1.13b             +
-        + `Use the text font in simple mathematics' +
-        +                                           +
-        +             2589111+jfbu@users.noreply.github.com             +
-        +-------------------------------------------+
-
-This is the README file for the LaTeX2e package `mathastext',
-version 1.13b, 2011/03/15
-
-Copyright (C) 2011 by Jean-Francois B..
-
-	The files of this package may be distributed and/or modified
-	under the conditions of the LaTeX Project Public License,
-	either version 1.3 of this license or (at your option) any
-	later version.
-
-	The latest version of this license is in
-	  http://www.latex-project.org/lppl.txt
-	and version 1.3 or later is part of all distributions of
-	LaTeX version 2003/12/01 or later.
+    +-------------------------------------------+
+    +                mathastext                 +
+    +                                           +
+    + `Use the text font in simple mathematics' +
+    +             v1.14 2011/03/22              +
+    +             2589111+jfbu@users.noreply.github.com             +
+    +-------------------------------------------+
 
 
-                        INSTALLATION
+                    INSTALLATION
 
 Run latex on mathastext.ins to create mathastext.sty from
-mathastext.dtx and put it where LaTeX can find it.
-
-To generate documentation, including the commented source code, run
-latex on mathastext.dtx
-
-Numerous examples of use are available at 
-
-           mathsastext.html
+mathastext.dtx and put mathastext.sty where LaTeX can find
+it. To generate documentation, including the commented
+source code, run latex on mathastext.dtx
 
 
-                            USAGE
-
-              \usepackage[options]{mathastext}
-              after other font related packages
+                        USAGE
 
 main options: 
    italic, LGRgreek, eulergreek, symbolgreek, defaultmathsizes
 
-This will make the document use the main text font also in
-mathematics mode. With the `italic' option, the Latin letters use
-the italic shape in math mode. Digits and log-like operator names
-will be upright (if the text font is upright). So one can now
-typeset documents (containing simple mathematics formulas) with a
-quite arbitrary TeX text font, without worrying too much that nobody
-ever designed accompanying math fonts.
+          \usepackage[options]{mathastext}
+          after other font related packages
 
-If the text font is also available in LGR encoding, then the option
-LGRgreek will pick up the Greek letters from the text font in that
-encoding. It is also possible to use either the Euler of the
-Postscript Symbol font for Greek letters, and they can be scaled by
-an arbitrary factor to let them fit better with the document text
-font.
+The document will then use the main text font also in
+mathematics mode. Use the `italic' option to have the Latin
+letters in math mode be in italics. Digits and log-like
+operator names (pre-defined as well as user-defined) will be
+upright (if the text font is upright). So one can now
+typeset documents (containing simple mathematics formulas)
+with a quite arbitrary TeX text font, without worrying too
+much that nobody ever designed accompanying math fonts.
 
-As mathastext by default only modifies the font for Latin letters
-and typographical characters, almost all in the 32-127 ascii range,
-it is possible to let other packages take care of setting up the
-math fonts, in particular for the Greek letters (but they should be
-loaded before mathastext).
+For documents needing Greek letters the following is
+possible:
+    + use the default set-up at the time of loading the
+      package (no option necessary),
+    + LGRgreek: use the document text font in LGR encoding
+      (further options specify the shape of the lowercase
+      and uppercase Greek glyphs),  
+    + eulergreek: use the Euler font for the Greek letters,
+    + symbolgreek: use the Postscript Symbol font for the
+      Greek letters.
 
-Additionally mathastext provides a simple interface to use different
-fonts in the same document, be it for math or text (not that we
-recommend abusing it!).
+Commands are provided to scale the Euler and Symbol fonts by
+an arbitrary factor to let them fit better with the document
+text font. 
 
-Using mathastext without the `italic' option usually reduces the
-size of the final PDF file. The option `symbolmax' will get quite a
-few mathematicals glyph from the postscript Symbol font included in
-all LaTeX distributions, so that for documents with simple
-mathematics, the default math fonts might be completely
-avoided. This sometimes leads to smaller PDF files.
+Additionally mathastext provides a simple interface to use
+different fonts in the same document, be it for math or text
+(not that we recommend abusing it!).
+
+Using mathastext without the `italic' option usually reduces
+the size of the final PDF file. The option `symbolmax' will
+get quite a few mathematical glyphs from the postscript
+Symbol font included in all LaTeX distributions, so that for
+documents with simple mathematics, the default math fonts
+may be completely avoided. This sometimes leads to smaller
+PDF files.
+
+Read the PDF documentation for more.
+
+Examples available at mathsastext.html
 
 CHANGE LOG
+
+1.14
+
+   *  mathastext now modifies also the math alphabets \mathit,
+      \mathsf and \mathtt, thus making it a quite generic
+      complete manner to adapt the math configuration to fonts
+      provided with no math support.
 
 1.13b
 
@@ -103,4 +99,17 @@ CHANGE LOG
 
    *  the en-dash and dotless i and j now work with all
       encodings, Unicode inclusive.
+
+Copyright (C) 2011 by Jean-Francois B..
+
+	The files of this package may be distributed and/or modified
+	under the conditions of the LaTeX Project Public License,
+	either version 1.3 of this license or (at your option) any
+	later version.
+
+	The latest version of this license is in
+	  http://www.latex-project.org/lppl.txt
+	and version 1.3 or later is part of all distributions of
+	LaTeX version 2003/12/01 or later.
+
 

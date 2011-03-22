@@ -10,7 +10,7 @@
 %%     Copyright (C) 2011 by Jean-Francois B.
 %% 
 %%     Please report errors to 2589111+jfbu@users.noreply.github.com
-%%     Numerous examples at
+%%     Many examples available here:
 %%        mathastext.html
 %% 
 %%     This file may be distributed and/or modified under the
@@ -30,8 +30,8 @@
 %%     of the distribution.
 %% 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesFile{mathastext.sty}
-         [2011/03/15 1.13b Use the text font in simple mathematics]
+\ProvidesPackage{mathastext}
+         [2011/03/22 v1.14 Use the text font in simple mathematics]
 \newif\ifXeTeX
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname XeTeXinterchartoks\endcsname\relax
@@ -141,6 +141,14 @@ noplusnominus,noequal,noexclam,noasterisk,nospecials,nolessnomore}}
 \DeclareOption{defaultrm}{\mt@defaultrmtrue}
 \newif\ifmt@defaultbf
 \DeclareOption{defaultbf}{\mt@defaultbftrue}
+\newif\ifmt@defaultit
+\DeclareOption{defaultit}{\mt@defaultittrue}
+\newif\ifmt@defaultsf
+\DeclareOption{defaultsf}{\mt@defaultsftrue}
+\newif\ifmt@defaulttt
+\DeclareOption{defaulttt}{\mt@defaulttttrue}
+\DeclareOption{defaultalphabets}{\ExecuteOptions{defaultnormal,defaultrm,%
+defaultbf,defaultit,defaultsf,defaulttt}}
 \newif\ifmt@defaultsizes\DeclareOption{defaultmathsizes}{\mt@defaultsizestrue}
 \newif\ifmt@twelve\DeclareOption{12pt}{\mt@twelvetrue}
 \newif\ifmt@fouriervec\DeclareOption{fouriervec}{\mt@fouriervectrue}
@@ -242,6 +250,9 @@ noplusnominus,noequal,noexclam,noasterisk,nospecials,nolessnomore}}
   \edef\mt@series@normal{\m@stextser}
   \edef\mt@shape@normal{\m@stextsh}
   \edef\mt@ltshape@normal{\m@stextshletter}
+  \edef\mt@itdefault@normal{\itdefault}
+  \edef\mt@sfdefault@normal{\sfdefault}
+  \edef\mt@ttdefault@normal{\ttdefault}
   \edef\mt@boldvariant@normal{\m@stextbold}
   \edef\mt@encoding@bold{\m@stextenc}
   \edef\mt@family@bold{\m@stextfam}
@@ -249,6 +260,9 @@ noplusnominus,noequal,noexclam,noasterisk,nospecials,nolessnomore}}
   \edef\mt@shape@bold{\m@stextsh}
   \edef\mt@ltshape@bold{\m@stextshletter}
   \edef\mt@boldvariant@bold{\m@stextbold}
+  \edef\mt@itdefault@bold{\itdefault}
+  \edef\mt@sfdefault@bold{\sfdefault}
+  \edef\mt@ttdefault@bold{\ttdefault}
 %%
    \SetSymbolFont{mtletterfont}{normal}{\mt@encoding@normal}
                                        {\mt@family@normal}
@@ -270,6 +284,30 @@ noplusnominus,noequal,noexclam,noasterisk,nospecials,nolessnomore}}
                                  {\mt@family@bold}
                                  {\mt@series@bold}
                                  {\mt@shape@bold}
+   \DeclareMathAlphabet{\Mathit}  {\mt@encoding@normal}
+                                 {\mt@family@normal}
+                                 {\mt@series@normal}
+                                 {\mt@itdefault@normal}
+   \DeclareMathAlphabet{\Mathsf}  {\mt@encoding@normal}
+                                 {\mt@sfdefault@normal}
+                                 {\mt@series@normal}
+                                 {\mt@shape@normal}
+   \DeclareMathAlphabet{\Mathtt}  {\mt@encoding@normal}
+                                 {\mt@ttdefault@normal}
+                                 {\mt@series@normal}
+                                 {\mt@shape@normal}
+   \SetMathAlphabet{\Mathit}{bold}{\mt@encoding@normal}
+                                 {\mt@family@normal}
+                                 {\mt@series@bold}
+                                 {\mt@itdefault@bold}
+   \SetMathAlphabet{\Mathsf}{bold}{\mt@encoding@normal}
+                                 {\mt@sfdefault@bold}
+                                 {\mt@series@bold}
+                                 {\mt@shape@normal}
+   \SetMathAlphabet{\Mathtt}{bold}{\mt@encoding@normal}
+                                 {\mt@ttdefault@bold}
+                                 {\mt@series@bold}
+                                 {\mt@shape@normal}
   \DeclareMathAlphabet{\mathnormalbold}  {\mt@encoding@bold}
                                  {\mt@family@bold}
                                  {\mt@series@bold}
@@ -342,6 +380,9 @@ noplusnominus,noequal,noexclam,noasterisk,nospecials,nolessnomore}}
   \expandafter\edef\csname mt@series@\mt@version\endcsname{#5}
   \expandafter\edef\csname mt@shape@\mt@version\endcsname{#6}
   \expandafter\edef\csname mt@boldvariant@\mt@version\endcsname{\m@stextbold}
+  \expandafter\edef\csname mt@itdefault@\mt@version\endcsname{\itdefault}
+  \expandafter\edef\csname mt@sfdefault@\mt@version\endcsname{\sfdefault}
+  \expandafter\edef\csname mt@ttdefault@\mt@version\endcsname{\ttdefault}
   \newif\ifmt@reallynoopt\mt@reallynoopttrue
     \ifx\@empty#1
     \else % we check nevertheless for [] situation, will not work with [ ]
@@ -370,7 +411,10 @@ noplusnominus,noequal,noexclam,noasterisk,nospecials,nolessnomore}}
     names will be in `#6' shape.}
       \expandafter\edef\csname mt@ltshape@\mt@version\endcsname{#1}
   \fi
-  \SetMathAlphabet{\Mathbf}{#2}{#3}{#4}{\m@stextbold}{#6}
+   \SetMathAlphabet{\Mathbf}{#2}{#3}{#4}{\m@stextbold}{#6}
+   \SetMathAlphabet{\Mathit}{#2}{#3}{#4}{#5}{\itdefault}
+   \SetMathAlphabet{\Mathsf}{#2}{#3}{\sfdefault}{#5}{#6}
+   \SetMathAlphabet{\Mathtt}{#2}{#3}{\ttdefault}{#5}{#6}
   \SetSymbolFont{mtoperatorfont}{#2}{#3}{#4}{#5}{#6}
   \ifmt@needeuler
       \SetMathAlphabet{\MathEulerBold}{#2}{U}{zeur}{\m@stextbold}{n}
@@ -419,6 +463,9 @@ noplusnominus,noequal,noexclam,noasterisk,nospecials,nolessnomore}}
 \ifmt@defaultnormal\else\renewcommand{\mathnormal}{\Mathnormal}\fi
 \ifmt@defaultrm\else\renewcommand{\mathrm}{\Mathrm}\fi
 \ifmt@defaultbf\else\renewcommand{\mathbf}{\Mathbf}\fi
+\ifmt@defaultit\else\renewcommand{\mathit}{\Mathit}\fi
+\ifmt@defaultsf\else\renewcommand{\mathsf}{\Mathsf}\fi
+\ifmt@defaulttt\else\renewcommand{\mathtt}{\Mathtt}\fi
 %% \ifmt@LGRgreek
 %%     \typeout{** Greek letters will use the font
 %%     LGR/\mt@family@normal/\mt@series@normal/\mt@ltshape@normal}
@@ -460,7 +507,13 @@ noplusnominus,noequal,noexclam,noasterisk,nospecials,nolessnomore}}
     \edef\mt@@shape{\csname mt@shape@\mt@tmp\endcsname}%
 \renewcommand{\updefault}{\mt@@shape}%
     \edef\mt@@boldvariant{\csname mt@boldvariant@\mt@tmp\endcsname}%
-\renewcommand{\bfdefault}{\mt@@boldvariant}}
+\renewcommand{\bfdefault}{\mt@@boldvariant}%
+    \edef\mt@@itdefault{\csname mt@itdefault@\mt@tmp\endcsname}%
+\renewcommand{\itdefault}{\mt@@itdefault}%
+    \edef\mt@@sfdefault{\csname mt@sfdefault@\mt@tmp\endcsname}%
+\renewcommand{\sfdefault}{\mt@@sfdefault}%
+    \edef\mt@@ttdefault{\csname mt@ttdefault@\mt@tmp\endcsname}%
+\renewcommand{\ttdefault}{\mt@@ttdefault}}%
 \let\MathastextVersion\MTVersion
 \let\Mathastextversion\MTVersion
 \let\MTversion\MTVersion
