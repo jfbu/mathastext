@@ -31,7 +31,7 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{mathastext}
-         [2011/04/03 v1.14b Use the text font in simple mathematics]
+         [2011/04/04 v1.14c Use the text font in simple mathematics]
 \newif\ifXeTeX
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname XeTeXinterchartoks\endcsname\relax
@@ -178,6 +178,12 @@ defaultbf,defaultit,defaultsf,defaulttt}}
        {\m@t@enc}{\m@t@fam}{\m@t@ser}{\m@t@ltsh}
 \DeclareSymbolFontAlphabet{\Mathnormal}{mtletterfont}
 \DeclareSymbolFontAlphabet{\Mathrm}{mtoperatorfont}
+   \DeclareMathAlphabet{\Mathbf}{\m@t@enc}{\m@t@fam}{\m@t@bold}{\m@t@opsh}
+   \DeclareMathAlphabet{\Mathit}{\m@t@enc}{\m@t@fam}{\m@t@ser}{\itdefault}
+   \DeclareMathAlphabet{\Mathsf}{\m@t@enc}{\sfdefault}{\m@t@ser}{\m@t@opsh}
+   \DeclareMathAlphabet{\Mathtt}{\m@t@enc}{\ttdefault}{\m@t@ser}{\m@t@opsh}
+   \DeclareMathAlphabet{\mathnormalbold}
+                          {\m@t@enc}{\m@t@fam}{\m@t@bold}{\m@t@ltsh}
   \def\m@t@greek@lsh{\m@t@ltsh} %% default behavior
   \def\m@t@greek@ush{\m@t@opsh}
     \ifmt@itgreek\def\m@t@greek@lsh{\itdefault}
@@ -209,6 +215,7 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 \ifmt@needeuler
 \DeclareSymbolFont{mteulervm}{U}{zeur}{m}{n}
 \DeclareSymbolFontAlphabet{\MathEuler}{mteulervm}
+\DeclareMathAlphabet{\MathEulerBold}{U}{zeur}{\m@t@bold}{n}
 \fi
 \newcommand\MTEulerScale[1]{\edef\zeu@Scale{#1}}
 \let\MathastextEulerScale\MTEulerScale
@@ -294,41 +301,52 @@ defaultbf,defaultit,defaultsf,defaulttt}}
                                        {\mt@family@bold}
                                        {\mt@series@bold}
                                        {\mt@shape@bold}
-   \DeclareMathAlphabet{\Mathbf}  {\mt@encoding@bold}
-                                 {\mt@family@bold}
+   \SetMathAlphabet{\Mathbf}{normal}{\mt@encoding@normal}
+                                 {\mt@family@normal}
                                  {\mt@series@bold}
-                                 {\mt@shape@bold}
-   \DeclareMathAlphabet{\Mathit}  {\mt@encoding@normal}
+                                 {\mt@shape@normal}
+   \SetMathAlphabet{\Mathit}{normal}{\mt@encoding@normal}
                                  {\mt@family@normal}
                                  {\mt@series@normal}
                                  {\mt@itdefault@normal}
-   \DeclareMathAlphabet{\Mathsf}  {\mt@encoding@normal}
+   \SetMathAlphabet{\Mathsf}{normal}{\mt@encoding@normal}
                                  {\mt@sfdefault@normal}
                                  {\mt@series@normal}
                                  {\mt@shape@normal}
-   \DeclareMathAlphabet{\Mathtt}  {\mt@encoding@normal}
+   \SetMathAlphabet{\Mathtt}{normal}{\mt@encoding@normal}
                                  {\mt@ttdefault@normal}
                                  {\mt@series@normal}
                                  {\mt@shape@normal}
-   \SetMathAlphabet{\Mathit}{bold}{\mt@encoding@normal}
-                                 {\mt@family@normal}
-                                 {\mt@series@bold}
-                                 {\mt@itdefault@bold}
-   \SetMathAlphabet{\Mathsf}{bold}{\mt@encoding@normal}
-                                 {\mt@sfdefault@bold}
-                                 {\mt@series@bold}
-                                 {\mt@shape@normal}
-   \SetMathAlphabet{\Mathtt}{bold}{\mt@encoding@normal}
-                                 {\mt@ttdefault@bold}
-                                 {\mt@series@bold}
-                                 {\mt@shape@normal}
-  \DeclareMathAlphabet{\mathnormalbold}  {\mt@encoding@bold}
+   \SetMathAlphabet{\Mathbf}{bold}{\mt@encoding@bold}
                                  {\mt@family@bold}
                                  {\mt@series@bold}
+                                 {\mt@shape@bold}
+   \SetMathAlphabet{\Mathit}{bold}{\mt@encoding@bold}
+                                 {\mt@family@bold}
+                                 {\mt@series@bold}
+                                 {\mt@itdefault@bold}
+   \SetMathAlphabet{\Mathsf}{bold}{\mt@encoding@bold}
+                                 {\mt@sfdefault@bold}
+                                 {\mt@series@bold}
+                                 {\mt@shape@bold}
+   \SetMathAlphabet{\Mathtt}{bold}{\mt@encoding@bold}
+                                 {\mt@ttdefault@bold}
+                                 {\mt@series@bold}
+                                 {\mt@shape@bold}
+   \SetMathAlphabet{\mathnormalbold}{normal}{\mt@encoding@normal}
+                                 {\mt@family@normal}
+                                 {\mt@boldvariant@normal}
+                                 {\mt@ltshape@normal}
+   \SetMathAlphabet{\mathnormalbold}{bold}{\mt@encoding@bold}
+                                 {\mt@family@bold}
+                                 {\mt@boldvariant@bold}
                                  {\mt@ltshape@bold}
  \ifmt@needeuler
     \SetSymbolFont{mteulervm}{bold}{U}{zeur}{\mt@boldvariant@normal}{n}
-    \DeclareMathAlphabet{\MathEulerBold}{U}{zeur}{\mt@boldvariant@normal}{n}
+    \SetMathAlphabet{\MathEulerBold}{normal}
+               {U}{zeur}{\mt@boldvariant@normal}{n}
+    \SetMathAlphabet{\MathEulerBold}{bold}
+               {U}{zeur}{\mt@boldvariant@normal}{n}
  \fi
  \ifmt@needsymbol\SetSymbolFont{mtpsymbol}{bold}
                      {U}{psy}{\mt@boldvariant@normal}{n}
@@ -413,7 +431,9 @@ defaultbf,defaultit,defaultsf,defaulttt}}
    \SetMathAlphabet{\Mathit}{#2}{#3}{#4}{#5}{\itdefault}
    \SetMathAlphabet{\Mathsf}{#2}{#3}{\sfdefault}{#5}{#6}
    \SetMathAlphabet{\Mathtt}{#2}{#3}{\ttdefault}{#5}{#6}
-  \SetSymbolFont{mtoperatorfont}{#2}{#3}{#4}{#5}{#6}
+   \SetMathAlphabet{\mathnormalbold}{#2}{#3}{#4}{\m@t@bold}
+                                 {\csname mt@ltshape@\mt@version\endcsname}
+   \SetSymbolFont{mtoperatorfont}{#2}{#3}{#4}{#5}{#6}
   \ifmt@needeuler
       \SetMathAlphabet{\MathEulerBold}{#2}{U}{zeur}{\m@t@bold}{n}
   \fi

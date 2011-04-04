@@ -2,7 +2,7 @@
     +                mathastext                 +
     +                                           +
     + `Use the text font in simple mathematics' +
-    +             v1.14b 2011/04/03              +
+    +             v1.14c 2011/04/04             +
     +             2589111+jfbu@users.noreply.github.com             +
     +-------------------------------------------+
 
@@ -64,6 +64,15 @@ Read the PDF documentation for more.
 Examples available at mathsastext.html
 
 CHANGE LOG
+
+1.14c
+
+   *  A bug is fixed: the \Mathastext macro reinitializes
+      the fonts in the normal and bold math versions, but it
+      also erroneously redeclared the math alphabet changing
+      commands which could have been set up in previously
+      defined math versions (via earlier calls to
+      \Mathastext[version_name]).
 
 1.14b
 

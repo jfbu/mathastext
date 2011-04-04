@@ -1,6 +1,6 @@
 % \iffalse
 %<*dtx>
-\ProvidesFile{mathastext.dtx}[2011/04/03 v1.14b ]
+\ProvidesFile{mathastext.dtx}[2011/04/04 v1.14c ]
 %</dtx>
 % \fi
 % \iffalse meta-comment
@@ -22,7 +22,8 @@
 % \fi 
 % \iffalse
 %<*driver>
-\documentclass[a4paper]{ltxdoc}
+\documentclass[a4paper]{ltxdoc} % suppress the a4paper option if you print on
+                                % US letter !
 \usepackage[hscale=0.6]{geometry}
 \usepackage[colorlinks=true,%
 linkcolor={blue},%
@@ -282,7 +283,7 @@ pdfstartview=FitH,pdfpagemode=UseNone]{hyperref}
 %      letters of default \TeX{}. It does nothing for the lowercase Greek
 %      letters. The encoding used in the document does not have to be
 %      OT1.\footnote{contrarily to the previous versions of the package,
-%      |v1.14b| will not assume that the encoding is OT1-compatible, it will
+%      |v1.14c| will not assume that the encoding is OT1-compatible, it will
 %      directly load the OT1-encoded version of the font.}
 %    \end{description}
 %
@@ -932,7 +933,7 @@ pdfstartview=FitH,pdfpagemode=UseNone]{hyperref}
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{mathastext}
-         [2011/04/03 v1.14b Use the text font in simple mathematics]
+         [2011/04/04 v1.14c Use the text font in simple mathematics]
 %    \end{macrocode}
 % I copied these macros from the |iftex| package of Vafa~\textsc{Khalighi}.
 % Perhaps I should rather require the package? 
@@ -1134,9 +1135,33 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 %    \begin{macrocode}
 \DeclareSymbolFont{mtletterfont}
        {\m@t@enc}{\m@t@fam}{\m@t@ser}{\m@t@ltsh}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{Math alphabets}
+% We follow the standard \LaTeX{} behavior for \cs{mathbf}, which is to pick up
+% the bold series of the roman font (digits and operator names). 
+%    \begin{macrocode}
 \DeclareSymbolFontAlphabet{\Mathnormal}{mtletterfont}
 \DeclareSymbolFontAlphabet{\Mathrm}{mtoperatorfont}
 %    \end{macrocode}
+% Prior to version 1.14c the following declarations were inside the
+% \cs{Mathastext} macro, but this was a bug because if the user placed a call
+% to the macro after having defined math versions (using
+% \cs{Mathastext[versionname]}) the math alphabets were reinitialized in all
+% previously declared math versions.
+%    \begin{macrocode}
+   \DeclareMathAlphabet{\Mathbf}{\m@t@enc}{\m@t@fam}{\m@t@bold}{\m@t@opsh}
+   \DeclareMathAlphabet{\Mathit}{\m@t@enc}{\m@t@fam}{\m@t@ser}{\itdefault}
+   \DeclareMathAlphabet{\Mathsf}{\m@t@enc}{\sfdefault}{\m@t@ser}{\m@t@opsh}
+   \DeclareMathAlphabet{\Mathtt}{\m@t@enc}{\ttdefault}{\m@t@ser}{\m@t@opsh}
+%    \end{macrocode}
+% \begin{macro}{\mathnormalbold}
+% We add a new Alphabet changing macro to standard \LaTeX{}
+%    \begin{macrocode}
+   \DeclareMathAlphabet{\mathnormalbold}
+                          {\m@t@enc}{\m@t@fam}{\m@t@bold}{\m@t@ltsh}
+%    \end{macrocode}
+% \end{macro}
 % \end{macro}
 % \begin{macro}{LGRgreek}
 % \begin{macro}{selfGreek}
@@ -1197,23 +1222,18 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 % \end{macro}
 % \begin{macro}{mteulervm}
 % \begin{macro}{\MathEuler}
+% \begin{macro}{\MathEulerBold}
 % In case we need the Euler font, we declare it here. It will use
 % |uzeur.fd| from the |eulervm| package of Walter~\textsc{Schmidt}
 %    \begin{macrocode}
 \ifmt@needeuler
 \DeclareSymbolFont{mteulervm}{U}{zeur}{m}{n}
 \DeclareSymbolFontAlphabet{\MathEuler}{mteulervm}
+\DeclareMathAlphabet{\MathEulerBold}{U}{zeur}{\m@t@bold}{n}
 \fi
 \newcommand\MTEulerScale[1]{\edef\zeu@Scale{#1}}
 \let\MathastextEulerScale\MTEulerScale
 %    \end{macrocode}
-% \end{macro}
-% \end{macro}
-% In the end, I moved the bold stuff to \cs{Mathastext} as
-% the user may want his choice of |boldvariant| to have
-% effect on the Euler font (it is possible to use
-% \cs{Mathastextboldvariant}|{m}|).
-% 
 % \LaTeXe{} has a strange initial configuration where the
 % capital Greek letters are of type |mathalpha|, but the
 % lower Greek letters of type |mathord|, so that \cs{mathbf}
@@ -1247,10 +1267,13 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 % would not try to implement it here. I prefer to respect
 % the default things.
 %
-% I follow the simpler idea of the |eulervm| package and
-% define \cs{MathEuler} and \cs{MathEulerBold} alphabet
+% I followed the simpler idea of the |eulervm| package and
+% defineed \cs{MathEuler} and \cs{MathEulerBold} alphabet
 % commands (the |eulervm| package does this only for the
 % bold font).
+% \end{macro}
+% \end{macro}
+% \end{macro}
 % \begin{macro}{mtpsymbol}
 % \begin{macro}{\MathPSymbol}
 % In case we need the Symbol font, we declare it here. The macro
@@ -1397,57 +1420,59 @@ defaultbf,defaultit,defaultsf,defaulttt}}
                                        {\mt@family@bold}
                                        {\mt@series@bold}
                                        {\mt@shape@bold}
-%    \end{macrocode}
-% \begin{macro}{\Mathbf}
-% We follow the standard \LaTeX{} behavior for \cs{mathbf}, which is to pick up
-% the bold series of the roman font (digits and operator names). 
-%    \begin{macrocode}
-   \DeclareMathAlphabet{\Mathbf}  {\mt@encoding@bold}
-                                 {\mt@family@bold}
+   \SetMathAlphabet{\Mathbf}{normal}{\mt@encoding@normal}
+                                 {\mt@family@normal}
                                  {\mt@series@bold}
-                                 {\mt@shape@bold}
-   \DeclareMathAlphabet{\Mathit}  {\mt@encoding@normal}
+                                 {\mt@shape@normal}
+   \SetMathAlphabet{\Mathit}{normal}{\mt@encoding@normal}
                                  {\mt@family@normal}
                                  {\mt@series@normal}
                                  {\mt@itdefault@normal}
-   \DeclareMathAlphabet{\Mathsf}  {\mt@encoding@normal}
+   \SetMathAlphabet{\Mathsf}{normal}{\mt@encoding@normal}
                                  {\mt@sfdefault@normal}
                                  {\mt@series@normal}
                                  {\mt@shape@normal}
-   \DeclareMathAlphabet{\Mathtt}  {\mt@encoding@normal}
+   \SetMathAlphabet{\Mathtt}{normal}{\mt@encoding@normal}
                                  {\mt@ttdefault@normal}
                                  {\mt@series@normal}
                                  {\mt@shape@normal}
-   \SetMathAlphabet{\Mathit}{bold}{\mt@encoding@normal}
-                                 {\mt@family@normal}
-                                 {\mt@series@bold}
-                                 {\mt@itdefault@bold}
-   \SetMathAlphabet{\Mathsf}{bold}{\mt@encoding@normal}
-                                 {\mt@sfdefault@bold}
-                                 {\mt@series@bold}
-                                 {\mt@shape@normal}
-   \SetMathAlphabet{\Mathtt}{bold}{\mt@encoding@normal}
-                                 {\mt@ttdefault@bold}
-                                 {\mt@series@bold}
-                                 {\mt@shape@normal}
-%    \end{macrocode}
-% \end{macro}
-% \begin{macro}{\mathnormalbold}
-% We add a new Alphabet changing macro to standard \LaTeX{}
-%    \begin{macrocode}
-  \DeclareMathAlphabet{\mathnormalbold}  {\mt@encoding@bold}
+   \SetMathAlphabet{\Mathbf}{bold}{\mt@encoding@bold}
                                  {\mt@family@bold}
                                  {\mt@series@bold}
+                                 {\mt@shape@bold}
+   \SetMathAlphabet{\Mathit}{bold}{\mt@encoding@bold}
+                                 {\mt@family@bold}
+                                 {\mt@series@bold}
+                                 {\mt@itdefault@bold}
+   \SetMathAlphabet{\Mathsf}{bold}{\mt@encoding@bold}
+                                 {\mt@sfdefault@bold}
+                                 {\mt@series@bold}
+                                 {\mt@shape@bold}
+   \SetMathAlphabet{\Mathtt}{bold}{\mt@encoding@bold}
+                                 {\mt@ttdefault@bold}
+                                 {\mt@series@bold}
+                                 {\mt@shape@bold}
+   \SetMathAlphabet{\mathnormalbold}{normal}{\mt@encoding@normal}
+                                 {\mt@family@normal}
+                                 {\mt@boldvariant@normal}
+                                 {\mt@ltshape@normal}
+   \SetMathAlphabet{\mathnormalbold}{bold}{\mt@encoding@bold}
+                                 {\mt@family@bold}
+                                 {\mt@boldvariant@bold}
                                  {\mt@ltshape@bold}
 %    \end{macrocode}
-% \end{macro}
 % \begin{macro}{\MathEulerBold}
-% We define it here as we leave open the possibility for the
-% user to type \cs{Mathastextboldvariant}|{m}|.
+%   v1.14c: We reset |mteulervm| and \cs{MathEulerBold} here as the variant
+%   for bold may have been changed by the user via 
+%   \cs{Mathastextboldvariant}|{m}|; and we should keep this local to math
+%   versions. 
 %    \begin{macrocode}
  \ifmt@needeuler
     \SetSymbolFont{mteulervm}{bold}{U}{zeur}{\mt@boldvariant@normal}{n}
-    \DeclareMathAlphabet{\MathEulerBold}{U}{zeur}{\mt@boldvariant@normal}{n}
+    \SetMathAlphabet{\MathEulerBold}{normal}
+               {U}{zeur}{\mt@boldvariant@normal}{n}
+    \SetMathAlphabet{\MathEulerBold}{bold}
+               {U}{zeur}{\mt@boldvariant@normal}{n}
  \fi
 %    \end{macrocode}
 % \end{macro}
@@ -1560,7 +1585,9 @@ defaultbf,defaultit,defaultsf,defaulttt}}
    \SetMathAlphabet{\Mathit}{#2}{#3}{#4}{#5}{\itdefault}
    \SetMathAlphabet{\Mathsf}{#2}{#3}{\sfdefault}{#5}{#6}
    \SetMathAlphabet{\Mathtt}{#2}{#3}{\ttdefault}{#5}{#6}
-  \SetSymbolFont{mtoperatorfont}{#2}{#3}{#4}{#5}{#6}
+   \SetMathAlphabet{\mathnormalbold}{#2}{#3}{#4}{\m@t@bold}
+                                 {\csname mt@ltshape@\mt@version\endcsname}
+   \SetSymbolFont{mtoperatorfont}{#2}{#3}{#4}{#5}{#6}
   \ifmt@needeuler
       \SetMathAlphabet{\MathEulerBold}{#2}{U}{zeur}{\m@t@bold}{n}
   \fi
@@ -1629,10 +1656,10 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 % \begin{macro}{\mathnormal}
 % \begin{macro}{\mathrm}
 % \begin{macro}{\mathbf}
-% We redefine the normal, rm and bf alphabets. In version 1.1 we
-% follow the standard: normal gives the font for letters, rm gives
-% the font for digits and log-like names, bf for the bold series
-% of the font for digits and log-like names. 
+% \begin{macro}{\mathit}
+% \begin{macro}{\mathsf}
+% \begin{macro}{\mathtt}
+%   We redefine the default normal, rm, bf, it, sf, and tt alphabets.
 %
 % We will access by default (if no option is passed for
 % Greek) the \cs{omicron} via \cs{mathnormal}. So we save it
@@ -1651,6 +1678,9 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 \ifmt@defaultsf\else\renewcommand{\mathsf}{\Mathsf}\fi
 \ifmt@defaulttt\else\renewcommand{\mathtt}{\Mathtt}\fi
 %    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
 % \end{macro}
 % \end{macro}
 % \end{macro}
@@ -2686,7 +2716,7 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 %    \cs{mathbf})
 % }
 %
-% {1.14b}{2011/04/02}
+% {1.14b}{2011/04/03}
 %     {
 %     + a bug with \texttt{\char92\char35}, \texttt{\char92\char36},
 %    \texttt{\char92\char37} and \texttt{\char92\char38} in math mode,
@@ -2700,8 +2730,19 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 %     + also the dtx file was a bit strangely done, so I tried to improve
 %    this 
 % }
+%
+% {1.14c}{2011/04/04}
+%    {
+%    + A bug is fixed: the \Mathastext macro reinitializes
+%    the fonts in the normal and bold math versions, but it
+%    also erroneously redeclared the math alphabet changing
+%    commands which could have been set up in previously
+%    defined math versions (via earlier calls to
+%    \Mathastext[version_name]).  
+% }
+%
 % \fi
-% \CheckSum{2816}
+% \CheckSum{2870}
 % \Finale
 %\iffalse
 %<*dtx>     
