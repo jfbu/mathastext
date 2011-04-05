@@ -1,5 +1,5 @@
 % \iffalse meta-comment
-%    Time-stamp: <12-03-2011 10:58:48 CET JF>
+%    Time-stamp: <15-03-2011 23:11:35 CET JF>
 %    File `mathastext.dtx'
 %    
 %    Copyright (C) 2011 by Jean-Francois B.
@@ -21,29 +21,26 @@
 % \iffalse
 %<*dtx>    
 \ProvidesFile{mathastext.dtx}
-             [2011/03/11 1.13 Use the text font in simple mathematics]
+             [2011/03/15 1.13b Use the text font in simple mathematics]
 %</dtx>
 % 
 %<*driver>
-\documentclass[a4paper]{ltxdoc}
-\setlength{\topmargin}{0pt} 
-\setlength{\headsep}{12pt}
-\setlength{\headheight}{10pt}
-\setlength{\textheight}{600pt}
-\setlength{\footskip}{34pt}
-\setlength{\textwidth}{360pt}
-\setlength{\oddsidemargin}{46pt}
-\setlength{\marginparwidth}{100pt}
+\documentclass{ltxdoc}
+\usepackage[hscale=0.6]{geometry}
 %% The Symbol font will be used in the text
 \DeclareSymbolFont{mtpsymbol}{U}{psy}{m}{n}
 \makeatletter
   \DeclareFontFamily{U}{psy}{}
   \DeclareFontShape{U}{psy}{m}{n}{<-> psyr}{}
 %% the following is taken from the package itself
-\let\prod\undefined
-\DeclareMathSymbol{\prod}{\mathop}{mtpsymbol}{213}
-\let\sum\undefined
-\DeclareMathSymbol{\sum}{\mathop}{mtpsymbol}{229}
+\let\mst@prod\prod
+\let\defaultprod\prod
+\DeclareMathSymbol{\prodpsy}{\mathop}{mtpsymbol}{213}
+\renewcommand{\prod}{\ifinner\prodpsy\else\mst@prod\fi}
+\let\mst@sum\sum
+\let\defaultsum\sum
+\DeclareMathSymbol{\sumpsy}{\mathop}{mtpsymbol}{229}
+\renewcommand{\sum}{\ifinner\sumpsy\else\mst@sum\fi}
 \DeclareMathSymbol{\mt@implies}{\mathrel}{mtpsymbol}{222}
 \DeclareRobustCommand{\implies}{\;\mt@implies\;}
 \DeclareMathSymbol{\mt@impliedby}{\mathrel}{mtpsymbol}{220}
@@ -118,6 +115,11 @@
 \end{document}
 %</driver>
 % \fi
+% \changes{1.13b}{2011/03/15}{
+%    * I modify the way the \cs{prod} and \cs{sum} are defined when the option
+%    symbolmisc is used. So now, in display math we revert to the default
+%    large symbols.
+%    }
 % \changes{1.13}{2011/03/11}{
 %    * option LGRgreek: for fonts also available in LGR-encoding
 %    * internal changes: systematic use of `if' conditionals
@@ -306,14 +308,14 @@
 %    packages which have a much wider scope than
 %    |mathastext|.
 %
-%    Even when typesetting simple mathematics, some glyphs
-%    (almost) must be taken from the default math fonts: in
-%    particular the prime ${}'$ for derivatives, as the text
-%    font {}'{} is not, as a rule, a satisfying
-%    alternative. Also, the package does nothing special
-%    regarding the large math symbols (except for $\prod$
-%    and $\sum$ whose ``non-large'' versions may be taken
-%    from the Symbol Font).
+%    Even when typesetting simple mathematics, some glyphs (almost) must be
+%    taken from the default math fonts: in particular the prime ${}'$ for
+%    derivatives, as the text font {}'{} is not, as a rule, a satisfying
+%    alternative. Also, the package does nothing regarding the large math
+%    symbols (except for $\defaultprod$ and
+%    $\defaultsum$ in inline math who, like here:
+%    $\prod\sum$, will be taken from the Symbol Font if option |symbolmisc| is
+%    passed to the package).
 %
 %    \subsection{The italic option}
 %
@@ -810,38 +812,41 @@
 %      \cs{let}\cs{varepsilon}$=$\cs{epsilon}, etc\dots,
 %      when only the `variant' form of the letter was used
 %      therein.
-%    \item Miscelleneous mathematical symbols from the
-%      postscript Symbol font are made available (or
-%      replaced) when option |symbolmisc| is passed. They
-%      are \cs{prod}~$\prod$ \cs{sum}~$\sum$
-%      \cs{implies}~$\implies$ \cs{impliedby}~$\impliedby$
-%      \cs{iff}~$\iff$, \cs{shortiff}~$\shortiff$
-%      \cs{to}~$\to$ \cs{longto}~$\longto$
+%    \item Miscelleneous mathematical symbols from the postscript Symbol font
+%      are made available (or replaced) when option |symbolmisc| is
+%      passed. They are \cs{prod}~$\prod$ \cs{sum}~$\sum$
+%      \cs{implies}~$\implies$ \cs{impliedby}~$\impliedby$ \cs{iff}~$\iff$,
+%      \cs{shortiff}~$\shortiff$ \cs{to}~$\to$ \cs{longto}~$\longto$
 %      \cs{mapsto}~$\mapsto$ \cs{longmapsto}~$\longmapsto$,
-%      \cs{aleph}~$\aleph$ \cs{inftypsy}~$\inftypsy$
-%      \cs{emptyset}~$\emptyset$ \cs{surd}~$\surd$
-%      \cs{nabla}~$\nabla$, \cs{angle}~$\angle$
-%      \cs{forall}~$\forall$ \cs{exists}~$\exists$
-%      \cs{neg}~$\neg$ \cs{clubsuit}~$\clubsuit$,
-%      \cs{diamondsuit}~$\diamondsuit$
-%      \cs{heartsuit}~$\heartsuit$
-%      \cs{spadesuit}~$\spadesuit$
-%      \cs{smallint}~$\smallint$, \cs{wedge}~$\wedge$
-%      \cs{vee}~$\vee$ \cs{cap}~$\cap$ \cs{cup}~$\cup$
-%      \cs{bullet}~$\bullet$ \cs{div}~$\div$,
-%      \cs{otimes}~$\otimes$ \cs{oplus}~$\oplus$
-%      \cs{pm}~$\pm$ \cs{ast}~$\ast$ \cs{times}~$\times$
-%      \cs{proptopsy}~$\proptopsy$, \cs{mid}~$\mid$
+%      \cs{aleph}~$\aleph$ \cs{inftypsy}~$\inftypsy$ \cs{emptyset}~$\emptyset$
+%      \cs{surd}~$\surd$ \cs{nabla}~$\nabla$, \cs{angle}~$\angle$
+%      \cs{forall}~$\forall$ \cs{exists}~$\exists$ \cs{neg}~$\neg$
+%      \cs{clubsuit}~$\clubsuit$, \cs{diamondsuit}~$\diamondsuit$
+%      \cs{heartsuit}~$\heartsuit$ \cs{spadesuit}~$\spadesuit$
+%      \cs{smallint}~$\smallint$, \cs{wedge}~$\wedge$ \cs{vee}~$\vee$
+%      \cs{cap}~$\cap$ \cs{cup}~$\cup$ \cs{bullet}~$\bullet$ \cs{div}~$\div$,
+%      \cs{otimes}~$\otimes$ \cs{oplus}~$\oplus$ \cs{pm}~$\pm$ \cs{ast}~$\ast$
+%      \cs{times}~$\times$ \cs{proptopsy}~$\proptopsy$, \cs{mid}~$\mid$
 %      \cs{leq}~$\leq$ \cs{geq}~$\geq$ \cs{approx}~$\approx$
-%      \cs{supset}~$\supset$ \cs{subset}~$\subset$,
-%      \cs{supseteq}~$\supseteq$ \cs{subseteq}~$\subseteq$
-%      \cs{in}~$\in$ \cs{sim}~$\sim$ \cs{cong}~$\cong$
-%      \cs{perp}~$\perp$, \cs{equiv}~$\equiv$
-%      \cs{notin}~$\notin$ \cs{langle}~$\langle$
-%      \cs{rangle}~$\rangle$. And a
-%      \cs{DotTriangle}~$\DotTriangle$ is made available by
-%      option |symbolre| (which overwrites \cs{Re} and
-%      \cs{Im}: $\Re,\Im$).
+%      \cs{supset}~$\supset$ \cs{subset}~$\subset$, \cs{supseteq}~$\supseteq$
+%      \cs{subseteq}~$\subseteq$ \cs{in}~$\in$ \cs{sim}~$\sim$
+%      \cs{cong}~$\cong$ \cs{perp}~$\perp$, \cs{equiv}~$\equiv$
+%      \cs{notin}~$\notin$ \cs{langle}~$\langle$ \cs{rangle}~$\rangle$. And a
+%      \cs{DotTriangle}~$\DotTriangle$ is made available by option |symbolre|
+%      (which overwrites \cs{Re} and \cs{Im}: $\Re,\Im$). The \cs{inftypsy}
+%      and \cs{proptopsy} have these names to leave up to the user the choice
+%      to replace (or no) with them the original (larger) \cs{infty}
+%      $\infty$ and \cs{propto} $\propto$. 
+%
+%      Regarding the \cs{prod} and \cs{sum} commands: they will use the Symbol
+%      glyphs $\prod\sum$ in inline math, but in display math will revert to
+%      the Computer Modern ones (or whatever is set up by other
+%      packages) : \[\prod\sum\] The package provides \cs{prodpsy} and
+%      \cs{sumpsy}: if one really wants in all situations the Symbol glyphs,
+%      one can do \cs{let}\cs{prod}\cs{prodpsy} and
+%      \cs{let}\cs{sum}\cs{sumpsy}. Also \cs{defaultprod} and \cs{defaultsum}
+%      will refer to the \cs{prod} and \cs{sum} before redefinition by the
+%      package.
 %    \end{itemize}
 %
 %  \section{Complete list of options}
@@ -870,7 +875,7 @@
 %   do it. The option |nolessnomore| is activated by default
 %   in case of OT1-encoding.
 %  \item further excluding options: |noexclam|\ !\,?\
-%    |noasterisk|\ *\ |nopunct|\ ,\,.\,:\,;\ |noplus|,
+%    |noasterisk|\ *\ |nopunctuation|\ ,\,.\,:\,;\ |noplus|,
 %    |nominus|, |noplusnominus|\ +\,\textendash{} |noequal|\ =\
 %    |noparenthesis|\, (\,)\,[\,]\,/ \ |nospecials|\
 %    \#\,\$\,\%\,\& and |nodigits|.
@@ -925,7 +930,7 @@
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesFile{mathastext.sty}
-         [2011/03/11 1.13 Use the text font in simple mathematics]
+         [2011/03/15 1.13b Use the text font in simple mathematics]
 %    \end{macrocode}
 % I copied these macros from the |iftex| package of Vafa~\textsc{Khalighi}.
 % Perhaps I should rather require the package? 
@@ -2004,12 +2009,30 @@ noplusnominus,noequal,noexclam,noasterisk,nospecials,nolessnomore}}
 % manner \cs{Longrightarrow} etc\dots{} as the = sign from Symbol does not
 % combine easily with the logical arrows, well, I could have done some box
 % manipulations, but well, life is finite.
+% \begin{macro}{\prod}
+% \begin{macro}{\sum}
+%   v1.13b: I correct the brutal re-definitions of \cs{prod} and \cs{sum} from
+%   the earlier versions of the package; most of the time the Symbol glyphs do
+%   appear to be too small in display mode. The new redefinitions do have some
+%   defects: |$\displaystyle\prod_1^2$| changes the position of limits but not
+%   the glyph itself, and |$$\textstyle\prod_1^2$$| change the limits but
+%   switches to the CM inline math glyph. So I tried\\
+%   |\renewcommand{\prod}{\mathchoice{\mst@prod}{\prodpsy}{\prodpsy}{\prodpsy}}|\\
+%   but this did not go well with subscripts and exponents. 
 %    \begin{macrocode}
 \ifmt@symbolmisc   
-\let\prod\undefined
-\DeclareMathSymbol{\prod}{\mathop}{mtpsymbol}{213}
-\let\sum\undefined
-\DeclareMathSymbol{\sum}{\mathop}{mtpsymbol}{229}
+\let\mst@prod\prod
+\let\defaultprod\prod
+\DeclareMathSymbol{\prodpsy}{\mathop}{mtpsymbol}{213}
+\renewcommand{\prod}{\ifinner\prodpsy\else\mst@prod\fi}
+\let\mst@sum\sum
+\let\defaultsum\sum
+\DeclareMathSymbol{\sumpsy}{\mathop}{mtpsymbol}{229}
+\renewcommand{\sum}{\ifinner\sumpsy\else\mst@sum\fi}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%    \begin{macrocode}
 \DeclareMathSymbol{\mt@implies}{\mathrel}{mtpsymbol}{222}
 \DeclareRobustCommand{\implies}{\;\mt@implies\;}
 \DeclareMathSymbol{\mt@impliedby}{\mathrel}{mtpsymbol}{220}
@@ -2500,6 +2523,6 @@ noplusnominus,noequal,noexclam,noasterisk,nospecials,nolessnomore}}
 %</dtx>
 % \fi
 %
-% \CheckSum{2757}
+% \CheckSum{2777}
 % \Finale
 \endinput

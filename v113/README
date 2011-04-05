@@ -1,12 +1,12 @@
         +-------------------------------------------+
-        +              mathastext 1.13              +
+        +              mathastext 1.13b             +
         + `Use the text font in simple mathematics' +
         +                                           +
         +             2589111+jfbu@users.noreply.github.com             +
         +-------------------------------------------+
 
 This is the README file for the LaTeX2e package `mathastext',
-version 1.13, 2011/03/11
+version 1.13b, 2011/03/15
 
 Copyright (C) 2011 by Jean-Francois B..
 
@@ -75,6 +75,12 @@ mathematics, the default math fonts might be completely
 avoided. This sometimes leads to smaller PDF files.
 
 CHANGE LOG
+
+1.13b
+
+   *  when the Symbol font is used for \prod and \sum this 
+      will be only for inline math; display math will use the
+      default glyphs 
 
 1.13
 

@@ -1,0 +1,92 @@
+This README file is for version 1.11, 2011/02/06
+of the package `mathastext' for LaTeX2e
+
+Copyright (C) 2011 by Jean-Francois B..
+
+Please report errors to 2589111+jfbu@users.noreply.github.com
+
+Files `mathastext.dtx' and this README may be distributed
+and/or modified under the conditions of the LaTeX Project
+Public License, either version 1.3 of this license or (at
+your option) any later version.
+
+The latest version of this license is in
+  http://www.latex-project.org/lppl.txt
+and version 1.3 or later is part of all distributions of
+LaTeX version 2003/12/01 or later.
+
+THIS IS VERSION 1.11 (2011/02/06)
+
+MAIN CHANGES FROM VERSION 1.1:
+
+   *  various bugs have been corrected
+
+   *  the endash and alldelims options are active by default
+
+   *  the en-dash and dotless i and j are now compatible with
+      all encodings, including Unicode
+
+   *  the \Mathastext command has been improved to
+      facilitate the mechanism of math versions also when
+      using XeTeX or LuaTeX with package fontspec.
+
+USAGE
+
+Include in the preamble 
+
+\usepackage{mathastext}
+
+after other font related packages. This will make your
+document use the main text font also in mathematics
+mode. The default is that the letters in text and math mode
+have the same shape but option `italic' will make the
+letters use the italic shape in math mode. Digits and
+log-like operator names will be upright (if the text font is
+upright). So one can now typeset documents (containing
+simple mathematics formulas) with a quite arbitrary TeX text
+font, without worrying too much that nobody ever designed
+accompanying math fonts.
+
+Options are provided to pick up the Greek letters from
+either the Euler or the Symbol font, and they can be scaled
+by an arbitrary factor to let them fit with the document
+text font. It is also possible to have other packages set up
+the fonts for Greek letters, as mathastext by default only
+modify the font for Latin letters and typographical
+characters.
+
+The goal (somewhat altered by the `italic' option) was to
+make documents with the difference between math and text
+blurred out, so that the reader would be forced to
+concentrate more on the contents: text AND math. There is no
+reason to use another font for math: as the text is also an
+equation in its own way, everything should be given equal
+weight. For example, the package gives results corresponding
+to that goal when used with typewriter fonts (possibly of
+variable width like Latin Modern Typewriter
+Proportional). It also gives interesting results for
+calligraphical fonts.
+
+Another feature is that mathastext provides a simple
+interface to use many different fonts in the same document,
+be it for math or text (not that we recommend abusing it!).
+
+Using mathastext without the `italic' option usually reduces
+the size of the final PDF file. The option `symbolmax' will
+get quite a few mathematicals glyph from the postscript
+Symbol font included in all LaTeX distributions, so that for
+documents with simple mathematics, the default math fonts
+might be completely avoided. This sometimes leads to smaller
+PDF files.
+
+INSTALLATION
+
+Run latex on mathastext.ins to create mathastext.sty from
+mathastext.dtx and put it where LaTeX can find it.
+
+To generate documentation, including the commented source
+code, run latex on mathastext.dtx 
+
+Illustrative examples are available at 
+mathsastext.html
+

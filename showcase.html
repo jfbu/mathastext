@@ -1,0 +1,1286 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+<!-- Time-stamp: <05-04-2011 22:21:58 CEST JF> -->
+
+<head>
+<link rel="shortcut icon" type="image/png" href="zeta32.png">
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <META NAME="robots" CONTENT="index, follow">
+   <title>mathastext examples</title>
+<STYLE type="text/css">
+.toc{list-style:none;}
+.title{margin:auto;text-align:center;}
+.center{text-align:center;margin-left:auto;margin-right:auto;}
+.fighead{text-align:center;margin-left:auto;margin-right:auto;font-weight:bold;}
+.flushleft{text-align:left;margin-left:0ex;margin-right:auto;}
+.flushright{text-align:right;margin-left:auto;margin-right:0ex;}
+DIV TABLE{margin-left:inherit;margin-right:inherit;}
+BLOCKQUOTE{margin-left:2ex;margin-right:4ex;text-align:left;}
+.part{margin:auto;text-align:center;}
+.intro{margin-left:15%;margin-right:15%;}
+.central{margin-left:25%;margin-right:25%;}
+</STYLE>
+</head>
+
+<body>
+<DIV style="font-size:90%" id="top">
+This web page was last revised on Tuesday, 5 April 2011 at
+<14:57:04 CEST>.<br>
+Be patient, the page with its embedded png images weighs (circa, as I have
+long since lost the count...) 2,4 Mo! 
+</DIV>
+
+<br>
+<br>
+
+<DIV CLASS="center">A LaTeX package: <b>mathastext</b><br>
+Copyright &copy; 2011, Jean-Fran&ccedil;ois B..</DIV>
+
+
+<DIV class="intro">
+<p><b>mathastext</b> is a package to allow to use the text font also in
+mathematics mode, thus giving a very unified look to the produced document.
+As a side-effect it alleviates somewhat the problem of the scarcity of free
+math fonts for TeX typesetting . . . (back to <a href="mathastext.html">mathastext.html</a>).</p>
+<p>Download from a <a href="http://mirrors.ctan.org/help/Catalogue/entries/mathastext.html">CTAN
+location</a></p>
+</DIV>
+
+
+
+<DIV class="center">
+<table>
+<tr><th>Examples:<br>png images in this page...</th>
+<th><br>...and as pdf 1.4 files</th>
+<th>Further examples<br>(pdf 1.4 files)</th>
+</tr>
+<tr>
+<td>
+<div style="font-size:90%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(latex+dvipng)</div>
+</td>
+<td>
+<div style="font-size:90%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(pdflatex)</div>
+</td>
+<td>
+<div style="font-size:90%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(latex+dvips+gs)</div>
+</td>
+</tr>
+<tr>
+<td>
+<ol>
+<li><A HREF="#lm1">Latin Modern Typewriter Proportional</a></li>
+<li><A HREF="#fut">Fourier Utopia</a></li>
+<li><A HREF="#droidserif">Droid Serif</a></li>
+<li><A HREF="#droidsans">Droid Sans</a></li>
+<li><A HREF="#nc1">New Century Schoolbook</a></li>
+<li><A HREF="#fc">French Cursive</a></li>
+<li><A HREF="#ak">Auriocus Kalligraphicus</a></li>
+<li><A HREF="#sk">Skeetch</a></li>
+<li><A HREF="#ag">Avant Garde</a></li>
+<li><A HREF="#zpc">Zapf Chancery</a></li>
+<li><A HREF="#bod">GFS Bodoni</a></li>
+<li><A HREF="#pal">Palatino</a></li>
+<li><A HREF="#nc2">New Century Schoolbook</a></li>
+<li><A HREF="#caa">Comfortaa</a></li>
+<li><A HREF="#neo">GFS NeoHellenic</a></li>
+<li><A HREF="#sli">SliTeX</a></li>
+<li><A HREF="#atp">Antykwa Półtawskiego</a></li>
+<li><A HREF="#bsk">Baskervald ADF</A></li>
+<li><A HREF="#lib">Libertine</a></li>
+<li><A HREF="#bio">Biolinum</a></li>
+<li><A HREF="#libris">Libris ADF</A></li>
+<li><A HREF="#vk1">Vollkorn</a></li>
+<li><A HREF="#bsx">BrushScriptX-Italic</a></li>
+<li><A HREF="#vk2">Vollkorn</a></li>
+<li><A HREF="#lm2">Latin Modern Typewriter Proportional</a></li>
+<li><A HREF="#elc">Electrum ADF</A></li>
+<li><A HREF="#ptm">Times</a></li>
+<li><A HREF="#phv">Helvetica</a></li>
+<li><A HREF="#epi">Epigrafica</a></li>
+<li><A HREF="#ven">Venturis ADF</A></li>
+<li><A HREF="#rom">Romande ADF</a></li>
+<li><A HREF="#did">GFS Didot</A></li>
+<li><A HREF="#droidserifb">Droid Serif</a></li>
+<li><A HREF="#droidsansb">Droid Sans</a></li>
+</ol>
+</td>
+<td>
+<ol>
+<li><a href="showcase/lmvtt-3.pdf">pdf</a></li>
+<li><a href="showcase/fourier-3.pdf">pdf</a></li>
+<li><a href="showcase/droidserif-3.pdf">pdf</a></li>
+<li><a href="showcase/droidsans-3.pdf">pdf</a></li>
+<li><a href="showcase/newcent-3.pdf">pdf</a></li>
+<li><a href="showcase/frcursive-3.pdf">pdf</a></li>
+<li><a href="showcase/auriocus-3.pdf">pdf</a></li>
+<li><a href="showcase/skeetch-3.pdf">pdf</a></li>
+<li><a href="showcase/avant-3.pdf">pdf</a></li>
+<li><a href="showcase/chancery-3.pdf">pdf</a></li>
+<li><a href="showcase/bodoni-4.pdf">pdf</a></li>
+<li><a href="showcase/palatino-4.pdf">pdf</a></li>
+<li><a href="showcase/newcent-4.pdf">pdf</a></li>
+<li><a href="showcase/comfortaa-4.pdf">pdf</a></li>
+<li><a href="showcase/neohellenic-4.pdf">pdf</a></li>
+<li><a href="showcase/slitex-4.pdf">pdf</a></li>
+<li><a href="showcase/antpolt-4.pdf">pdf</a></li>
+<li><a href="showcase/baskervald-4.pdf">pdf</a></li>
+<li><a href="showcase/libertine-4.pdf">pdf</a></li>
+<li><a href="showcase/biolinum-4.pdf">pdf</a></li>
+<li><a href="showcase/libris-4.pdf">pdf</a></li>
+<li><a href="showcase/vollkorn-4.pdf">pdf</a></li>
+<li><a href="showcase/brushscriptX-4.pdf">pdf</a></li>
+<li><a href="showcase/vollkorn-3.pdf">pdf</a></li>
+<li><a href="showcase/lmvtt-4.pdf">pdf</a></li>
+<li><a href="showcase/electrum-4.pdf">pdf</a></li>
+<li><a href="showcase/times-4.pdf">pdf</a></li>
+<li><a href="showcase/helvetica-4.pdf">pdf</a></li>
+<li><a href="showcase/epigrafica-4.pdf">pdf</a></li>
+<li><a href="showcase/venturis-ADF-4.pdf">pdf</a></li>
+<li><a href="showcase/romande-4.pdf">pdf</a></li>
+<li><a href="showcase/gfsdidot-4.pdf">pdf</a></li>
+<li><a href="showcase/droidserif-4.pdf">pdf</a></li>
+<li><a href="showcase/droidsans-4.pdf">pdf</a></li>
+</ol>
+</td>
+<td>
+<ol start="35">
+<li><a href="showcase/chancery-1.pdf">Zapf Chancery</a></li> 
+<li><a href="showcase/frcursive-1.pdf">French Cursive</a> (see
+the <a href="#fc"><b>warning</b></a>)</li>
+<li><a href="showcase/auriocus-1.pdf">Auriocus Kalligraphicus</a></li>
+<li><a href="showcase/skeetch-1.pdf">Skeetch</a></li>
+<li><a href="showcase/avant-1.pdf">Avant Garde</a></li>
+<li><a href="showcase/fourier-1.pdf">Fourier Utopia</a></li>
+<li><a href="showcase/lmvtt-1.pdf">Latin Modern Typewriter Proportional</a></li>
+<li><a href="showcase/chancery-2.pdf">Zapf Chancery</a></li> 
+<li><a href="showcase/frcursive-2.pdf">French Cursive</a> (see
+the <a href="#fc"><b>warning</b></a>)</li>
+<li><a href="showcase/auriocus-2.pdf">Auriocus Kalligraphicus</a></li>
+<li><a href="showcase/skeetch-2.pdf">Skeetch</a></li>
+<li><a href="showcase/avant-2.pdf">Avant Garde</a></li>
+<li><a href="showcase/fourier-2.pdf">Fourier Utopia</a></li>
+<li><a href="showcase/lmvtt-2.pdf">Latin Modern Typewriter Proportional</a></li>
+<li><a href="agreglogexp.pdf">French Cursive</a> (see the <a href="#fc"><b>warning</b></a>)</li>
+<li><a href="agreglagrange.pdf">Latin Modern Typewriter Proportional</a></li>
+<li><a href="agregexpcomplexenombrepi.pdf">Electrum</a></li>
+<li><a href="agregnormeslp.pdf">Latin Modern Typewriter Proportional</a></li> 
+<li><a href="agregpolend.pdf">Latin Modern Typewriter Proportional</a></li> 
+<li><a href="agregcorpsgalois.pdf">New Century Schoolbook</a></li>
+<li><a href="agreggraminegalite.pdf">Droid Serif and Sans</a>
+(cf. <a href="#grineg">explanations below</a>)</li>
+<li><a href="showcase/gram-libertine.pdf">Libertine and Biolinum</a>
+(cf. <a href="#grlib">explanations below</a>)</li>
+<li><a href="showcase/gram-txvtt.pdf">TX Typewriter</a>
+(cf. <a href="#txvtt">explanations below</a>)<br><br><br></li>
+<li><a href="showcase/RiemannZeta.pdf">Special example</a></li>
+</ol>
+</td></tr>
+</table>
+</DIV>
+
+<DIV class="intro">
+<p>
+All fonts are freely available
+(the <a href="http://www.tug.dk/FontCatalogue/">LaTeX Font Catalogue</a> is a
+very useful resource), most of them being already included in the standard TeX
+distributions or downloadable as ready-made packages from CTAN.  In one
+instance (<a href="http://friedrichalthausen.de/?page_id=411">Vollkorn</a>)
+the fonts were available as ttf files, and were installed using
+the <a href="http://mirrors.ctan.org/help/Catalogue/entries/otfinst.html">otfinst</a>
+script.</p>
+
+<p> The png images were produced by dvipng. The accompanying pdf files (PDF version
+1.4) were produced by pdflatex.</p>
+
+<p> The examples numbered 24-34 illustrate the <b>italic</b> option of the
+package. However, italic letters in math mode, from fonts not specially
+adapted to the TeX placement algorithms, sometimes lead to problems (letters
+too close to parentheses, ...). This is one reason why most examples here are
+with upright letters. The other reason being that the author believes that
+using upright letters in math mode is esthetically more pleasing. There is no
+reason to have such a contrast as currently practiced (and made perennal by
+widespread use of the default TeX set-up for three decades) between the text
+and the formulas, because the text is a formula in its own right (and vice
+versa). </p>
+
+<p>Regarding the large mathematical symbols (sums, products, integrals),
+nothing is done by the package. Eight among the examples with png images in
+this page use the Fourier-GUTenberg fonts, six use PX or TX Fonts and the
+others use the default Computer Modern fonts.</p>
+
+<p><b>mathastext</b> can accomodate many math-as-text-fonts in the same
+document. This is illustrated by this (very
+special...) <a href="showcase/RiemannZeta.pdf">example</a>. The preamble of
+the LaTeX source is <a href="RiemannZetaPreamble.html"> here</a>.</p>
+
+
+<br><br>
+<DIV CLASS="fighead">Various possibilities for the Greek letters</DIV>
+
+<p> The Greek letters can be either set up by other packages (such as eulervm,
+fourier, txfonts, pxfonts, kpfonts, ... in brief, any package setting up math fonts) or
+decided by an option passed to <b>mathastext</b>: LGRgreek, symbolgreek,
+eulergreek, selfGreek (this one only for the eleven uppercase Greek letters from
+OT1-encoding).</p>
+
+<p> In the examples presented here, the Greek letters in math mode
+may be:
+<ul> 
+<li> from the text font itself, using the  <b>LGRgreek</b> package option: Droid Serif
+(<a HREF="#droidserif">short</a> and <a HREF="#droidserifb">long</a>), Droid
+Sans (<a HREF="#droidsans">short</a>
+and <a HREF="#droidsansb">long</a>), <a HREF="#caa">Comfortaa</a>, <a HREF="#bod">GFS
+Bodoni</a>, <a HREF="#did">GFS Didot</a> and <a HREF="#neo">GFS
+NeoHellenic</a>,</li>
+<li> from the Linux-Libertine (or Biolinum) font with the help of
+the <a href="http://mirrors.ctan.org/help/Catalogue/entries/libgreek.html">libgreek</a>
+package by the author (used here only for the  <a HREF="#lib">Libertine</a>
+and <a HREF="#bio">Biolinum</a> examples, but can be used with any other
+text font of course), </li>
+<li> from the Fourier-GUTenberg fonts (this uses \usepackage{fourier} or \usepackage[upright]{fourier}),</li>
+<li> from the PX/TX fonts (this uses \usepackage{pxfonts} or
+\usepackage{txfonts}; and in the <a HREF="#atp">Antykwa Półtawskiego</a>
+and <a HREF="#vk1">Vollkorn</a> cases use
+has been made of the
+author's <a href="http://mirrors.ctan.org/help/Catalogue/entries/txgreeks.html">txgreeks</a>
+package to get the Greek letters
+from the TX fonts in upright shape),</li>
+<li> from the Symbol font (option <b>symbolgreek</b>),</li>
+<li> from the Euler font (option <b>eulergreek</b>),</li>
+<li> or finally from the Computer Modern fonts (the default).</li>
+</ul>
+
+<DIV CLASS="center">
+ <table align="center" border="1" cellpadding="15"><tr><td width="0" align="center"><img src="showcase/comparegrec1.png" alt="comparegrec1.png"></td></tr></table></DIV>
+
+<p> On each line lowercase and uppercase Greek letters are taken from the same
+    font. But as TeX defaults to upright uppercase and italic lowercase,
+    typically this will also be the default set-up when loading a package
+    providing math fonts (for example \usepackage{fourier}), except of course
+    for Euler and Symbol which do not exist in slanted shape. The author's
+    packages <a href="http://mirrors.ctan.org/help/Catalogue/entries/libgreek.html">libgreek</a>, <a href="http://mirrors.ctan.org/help/Catalogue/entries/txgreeks.html">txgreeks</a>,
+    and <a href="http://mirrors.ctan.org/help/Catalogue/entries/pxgreeks.html">pxgreeks</a>
+    facilitate the shape selection when using, respectively,
+    Libertine/Biolinum or the TX/PX fonts.</p>
+
+    <ul>
+    <li> We only show the `var' letters available in the default CM fonts
+      (some of the fonts displayed have further `var' letters).</li>
+    <li> The glyphs \varrho and \varsigma are missing from Euler;
+      and \varepsilon and \varrho are missing from Symbol.</li>
+    <li> Depending on the font, \epsilon may be `curly' and \varepsilon
+      `straight' or vice versa. And similarly for \phi vs \varphi.</li>
+    <li> Not shown is the glyph for \omicron: the macro is not defined in
+      default TeX (one is supposed to just type o) and additionally some
+      math fonts providing upright Greek letters do not make provision for an
+      upright \omicron (supposed to be taken from the Roman font via
+      \mathrm{o}, I guess).</li>
+    </ul>
+ 
+
+<p>When a text font is also available in LGR encoding it provides Greek letters
+(by definition! and of course this encoding is for typesetting the Modern
+and Ancient Greek languages, with many diacritics). But apart from the
+\varsigma this encoding does not give (I think) the `var' variants present
+in the default TeX font cmmi. Here is an example with the Droid fonts.</p>
+
+
+<DIV CLASS="center">
+ <table align="center" border="1" cellpadding="15"><tr><td width="0"
+ align="center"><img src="showcase/comparegrec2.png"
+ alt="comparegrec2.png"></td></tr></table></DIV>
+
+<p>To conclude, a table with these fonts in Bold series. There is no Bold for
+the Symbol font included in TeX distributions, and the Biolinum Font does not seem to
+have bold lowercase glyphs for the Greek letters (perhaps this is a problem
+with the version I have on my computer).</p>
+
+<DIV CLASS="center">
+ <table align="center" border="1" cellpadding="15"><tr><td width="0"
+ align="center"><img src="showcase/comparegrec3.png"
+ alt="comparegrec3.png"></td></tr></table></DIV>
+
+
+<p>A <a href="showcase/comparegrec.pdf">PDF</a> file including the
+above figures and text.</p>
+
+
+</DIV>
+
+<BLOCKQUOTE CLASS="figure" id="lm1">
+<BR>
+<BR>
+<BR>
+<DIV CLASS="fighead">Latin Modern Typewriter
+Proportional (Euler Greek)</DIV><BR>
+<DIV class="central">
+This example uses:
+<pre>
+\usepackage[T1]{fontenc}
+\usepackage[nomath,lighttt]{lmodern}
+\renewcommand{\rmdefault}{lmvtt}
+\usepackage[eulergreek]{mathastext}
+\MathastextEulerScale{0.92}
+</pre>
+Typeset with mathastext 1.12b
+(2011/02/09). <a href="showcase/lmvtt-3.pdf">pdf</a><br>
+Note: t1lmvtt.fd had to be modified 
+a bit, as there are some typos affecting the `light' variant part.
+</DIV>
+<BR><BR>
+<DIV CLASS="center">
+ <table align="center" border="1" cellpadding="15"><tr><td width="0" align="center"><img src="showcase/lmvtt-31.png" alt="lmvtt-31.png"></td></tr></table></DIV>
+</BLOCKQUOTE>
+
+<BR>
+<BLOCKQUOTE CLASS="figure" id="fut">
+<BR>
+<BR>
+<BR>
+<DIV CLASS="fighead">Fourier Utopia (Fourier
+upright Greek)</DIV><BR>
+<DIV class="central">
+This example uses:
+<pre>
+\usepackage[T1]{fontenc}
+\usepackage[upright]{fourier}
+\usepackage{mathastext}
+</pre>
+Typeset with mathastext 1.12b (2011/02/09). <a href="showcase/fourier-3.pdf">pdf</a>
+</DIV>
+<BR>
+<BR>
+<DIV CLASS="center">
+ <table align="center" border="1" cellpadding="15"><tr><td width="0" align="center"><img src="showcase/fourier-31.png" alt="fourier-31.png"></td></tr></table></DIV>
+</BLOCKQUOTE>
+
+<BR>
+<BLOCKQUOTE CLASS="figure" id="droidserif">
+<BR>
+<BR>
+<BR>
+<DIV CLASS="fighead">Droid Serif</DIV><BR>
+<DIV class="central">
+This example uses:
+<pre>
+\usepackage[T1]{fontenc}
+\usepackage[default]{droidserif}
+\usepackage[LGRgreek]{mathastext}
+\let\varepsilon\epsilon
+</pre>
+Typeset with mathastext 1.13 (2011/03/11). <a href="showcase/droidserif-3.pdf">pdf</a>
+</DIV>
+<BR><BR>
+<DIV CLASS="center">
+ <table align="center" border="1" cellpadding="15"><tr><td width="0" align="center"><img src="showcase/droidserif-31.png" alt="droidserif-31.png"></td></tr></table></DIV>
+</BLOCKQUOTE>
+
+<BR>
+<BLOCKQUOTE CLASS="figure" id="droidsans">
+<BR>
+<BR>
+<BR>
+<DIV CLASS="fighead">Droid Sans</DIV><BR>
+<DIV class="central">
+This example uses:
+<pre>
+\usepackage[T1]{fontenc}
+\usepackage[default]{droidsans}
+\usepackage[LGRgreek]{mathastext}
+\let\varepsilon\epsilon
+</pre>
+Typeset with mathastext 1.13 (2011/03/11). <a href="showcase/droidsans-3.pdf">pdf</a>
+</DIV>
+<BR><BR>
+<DIV CLASS="center">
+ <table align="center" border="1" cellpadding="15"><tr><td width="0" align="center"><img src="showcase/droidsans-31.png" alt="droidsans-31.png"></td></tr></table></DIV>
+</BLOCKQUOTE>
+
+<BR>
+<BLOCKQUOTE CLASS="figure" id="nc1">
+<BR>
+<BR>
+<BR>
+<DIV CLASS="fighead">New Century Schoolbook
+(Symbol Greek)</DIV><BR>
+<DIV class="central">
+This example uses:
+<pre>
+\usepackage[T1]{fontenc}
+\usepackage{newcent}
+\usepackage[symbolgreek]{mathastext}
+\linespread{1.1}
+</pre>
+Typeset with mathastext 1.12b (2011/02/09).  <a href="showcase/newcent-3.pdf">pdf</a>
+</DIV>
+<BR><BR>
+<DIV CLASS="center">
+ <table align="center" border="1" cellpadding="15"><tr><td width="0" align="center"><img src="showcase/newcent-31.png" alt="newcent-31.png"></td></tr></table></DIV>
+</BLOCKQUOTE>
+
+<BR>
+<BLOCKQUOTE CLASS="figure" id="fc">
+<BR>
+<BR>
+<BR>
+<DIV CLASS="fighead">French Cursive (Euler Greek)</DIV>
+<BLOCKQUOTE><BLOCKQUOTE>Warning: when <b>mathastext</b> is used with French
+Cursive, certain isolated letters, like the f in the example below will not
+display correctly in math mode. This is particularly notable on the letters r
+and s, which become barely legible. This happens for letters at the beginning
+of a word: in $rs$, s will be ok, but not r. If you really want to
+use <b>mathastext</b> with French Cursive, try to avoid r and s in math
+mode. If you absolutely need to use these letters at a few spots in your
+document, you can type \text{r} or rather \text{rs} in the example above (this
+requires
+amstext (or amsmath)). Also, note
+that there are no plus, no equal and no asterisk signs (at least in my copy of
+the fonts).<br> Une autre chose est que les guillemets français « et » ne sont pas aux
+emplacements corrects pour l'encodage T1, il faut donc mettre dans son
+préambule \DeclareTextSymbol{\guillemotleft}{T1}{171}
+\DeclareTextSymbol{\guillemotright}{T1}{187}. Si l'on utilise babel+frenchb
+alors les macros \og et \fg fonctionneront comme attendu.
+</BLOCKQUOTE></BLOCKQUOTE>
+<DIV class="central">
+This example uses:
+<pre>
+\usepackage[T1]{fontenc}
+\usepackage[default]{frcursive}
+\usepackage[eulergreek,noplusnominus,noequal,nohbar,%
+nolessnomore,noasterisk]{mathastext}
+</pre>
+Typeset with mathastext 1.12b (2011/02/09). <a href="showcase/frcursive-3.pdf">pdf</a>
+</DIV>
+<BR><BR>
+<DIV CLASS="center">
+ <table align="center" border="1" cellpadding="15"><tr><td width="0" align="center"><img src="showcase/frcursive-31.png" alt="frcursive-31.png"></td></tr></table></DIV>
+</BLOCKQUOTE>
+
+<BR>
+<BLOCKQUOTE CLASS="figure" id="ak">
+<BR>
+<BR>
+<BR>
+<DIV CLASS="fighead">Auriocus Kalligraphicus
+(Symbol Greek)</DIV><BR>
+<DIV class="central">
+This example uses:
+<pre>
+\usepackage[T1]{fontenc}
+\usepackage{aurical}
+\renewcommand{\rmdefault}{AuriocusKalligraphicus}
+\usepackage[symbolgreek]{mathastext}
+</pre>
+Typeset with mathastext 1.12b (2011/02/09). <a href="showcase/auriocus-3.pdf">pdf</a>
+</DIV>
+<BR><BR>
+<DIV CLASS="center">
+ <table align="center" border="1" cellpadding="15"><tr><td width="0" align="center"><img src="showcase/auriocus-31.png" alt="auriocus-31.png"></td></tr></table></DIV>
+</BLOCKQUOTE>
+
+<BR>
+<BLOCKQUOTE CLASS="figure" id="sk">
+<BR>
+<BR>
+<BR>
+<DIV CLASS="fighead">Skeetch (CM Greek)</DIV><BR>
+<DIV class="central">
+This example uses:
+<pre>
+\usepackage[T1]{fontenc}
+\DeclareFontFamily{T1}{fsk}{}
+\DeclareFontShape{T1}{fsk}{m}{n}{<->s*[1.315] fskmw8t}{}
+\renewcommand\rmdefault{fsk}
+\usepackage[noendash,defaultmathsizes,nohbar,defaultimath]{mathastext}
+</pre>
+Typeset with mathastext 1.12b (2011/02/09). <a href="showcase/skeetch-3.pdf">pdf</a>
+</DIV>
+<BR>
+<BR>
+<DIV CLASS="center">
+ <table align="center" border="1" cellpadding="15"><tr><td width="0" align="center"><img src="showcase/skeetch-31.png" alt="skeetch-31.png"></td></tr></table></DIV>
+</BLOCKQUOTE>
+
+<BR>
+<BLOCKQUOTE CLASS="figure" id="ag">
+<BR>
+<BR>
+<BR>
+<DIV CLASS="fighead">URW Avant Garde (Symbol Greek)</DIV><BR>
+<DIV class="central">
+This example uses:
+<pre>
+\usepackage[T1]{fontenc}
+\usepackage{avant}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[symbolgreek,defaultmathsizes]{mathastext}
+</pre>
+Typeset with mathastext 1.12b (2011/02/09). <a href="showcase/avant-3.pdf">pdf</a>
+</DIV>
+<BR>
+<BR>
+<DIV CLASS="center">
+ <table align="center" border="1" cellpadding="15"><tr><td width="0" align="center"><img src="showcase/avant-31.png" alt="avant-31.png"></td></tr></table></DIV>
+</BLOCKQUOTE>
+
+<BR>
+<BLOCKQUOTE CLASS="figure" id="zpc">
+<BR>
+<BR>
+<BR>
+<DIV CLASS="fighead">URW Zapf Chancery (CM Greek)</DIV><BR>
+<DIV class="central">
+This example uses:
+<pre>
+\usepackage[T1]{fontenc}
+\DeclareFontFamily{T1}{pzc}{}
+\DeclareFontShape{T1}{pzc}{mb}{it}{<->s*[1.2] pzcmi8t}{}
+\DeclareFontShape{T1}{pzc}{m}{it}{<->ssub * pzc/mb/it}{}
+\DeclareFontShape{T1}{pzc}{mb}{sl}{<->ssub * pzc/mb/it}{}
+\DeclareFontShape{T1}{pzc}{m}{sl}{<->ssub * pzc/mb/sl}{}
+\DeclareFontShape{T1}{pzc}{m}{n}{<->ssub * pzc/mb/it}{}
+\usepackage{chancery}
+\usepackage{mathastext}
+\linespread{1.05}
+\begin{document}\boldmath
+</pre>
+Typeset with mathastext 1.12b (2011/02/09). <a href="showcase/chancery-3.pdf">pdf</a>
+</DIV>
+<BR>
+<BR>
+<DIV CLASS="center">
+ <table align="center" border="1" cellpadding="15"><tr><td width="0" align="center"><img src="showcase/chancery-31.png" alt="chancery-31.png"></td></tr></table></DIV>
+</BLOCKQUOTE>
+
+<BR>
+<BLOCKQUOTE CLASS="figure" id="bod">
+<BR>
+<BR>
+<BR>
+<DIV CLASS="fighead">GFS Bodoni</DIV><BR>
+<DIV class="central">
+This example uses:
+<pre>
+\usepackage[T1]{fontenc}
+\renewcommand{\rmdefault}{bodoni}
+\usepackage[LGRgreek]{mathastext}
+\let\varphi\phi
+\linespread{1.06}
+</pre>
+Typeset with mathastext 1.14c (2011/04/04). <a href="showcase/bodoni-4.pdf">pdf</a>
+</DIV>
+<BR>
+<BR>
+<DIV CLASS="center">
+ <table align="center" border="1" cellpadding="15"><tr><td width="0" align="center"><img src="showcase/bodoni-42.png" alt="bodoni-42.png"></td><td width="0" align="center"><img src="showcase/bodoni-43.png" alt="bodoni-43.png"></td></tr></table></DIV>
+</BLOCKQUOTE>
+
+<BR>
+<BLOCKQUOTE CLASS="figure" id="pal">
+<BR>
+<BR>
+<BR>
+<DIV CLASS="fighead">Palatino (Symbol Greek)</DIV><BR>
+<DIV class="central">
+This example uses Palatino (URW++ Palladio) for text and math, and
+Symbol for the Greek letters and various mathematical symbols. The large
+mathematical symbols are the default ones.
+<pre>
+\usepackage[T1]{fontenc}
+\usepackage{palatino}
+\usepackage[symbolmax,defaultmathsizes]{mathastext}
+</pre>
+Typeset with mathastext 1.13b (2011/03/15). <a href="showcase/palatino-4.pdf">pdf</a>
+</DIV>
+<BR>
+<BR>
+<DIV CLASS="center">
+ <table align="center" border="1" cellpadding="15"><tr><td width="0" align="center"><img src="showcase/palatino-42.png" alt="palatino-42.png"></td><td width="0" align="center"><img src="showcase/palatino-43.png" alt="palatino-43.png"></td></tr></table></DIV>
+</BLOCKQUOTE>
+
+<BR>
+<BLOCKQUOTE CLASS="figure" id="nc2">
+<BR>
+<BR>
+<BR>
+<DIV CLASS="fighead">New Century Schoolbook (Symbol Greek, PX math symbols)</DIV><BR>
+<DIV class="central">
+This example uses New Century SchoolBook for the Latin
+letters and punctuation characters in text and math, Symbol for the Greek
+letters, and PX Fonts for the mathematical symbols.
+<pre>
+\usepackage[T1]{fontenc}
+\usepackage{pxfonts}
+\usepackage{newcent}
+\usepackage[symbolgreek,defaultmathsizes]{mathastext}
+\linespread{1.06}
+</pre>
+Typeset with mathastext 1.13b (2011/03/15). <a href="showcase/newcent-4.pdf">pdf</a>
+</DIV>
+<BR>
+<BR>
+<DIV CLASS="center">
+ <table align="center" border="1" cellpadding="15"><tr><td width="0" align="center"><img src="showcase/newcent-42.png" alt="newcent-42.png"></td><td width="0" align="center"><img src="showcase/newcent-43.png" alt="newcent-43.png"></td></tr></table></DIV>
+</BLOCKQUOTE>
+
+<BR>
+<BLOCKQUOTE CLASS="figure" id="caa">
+<BR>
+<BR>
+<BR>
+<DIV CLASS="fighead">Comfortaa</DIV><BR>
+<DIV class="central">
+This example uses:
+<pre>
+\usepackage[default]{comfortaa}
+\usepackage[LGRgreek,defaultmathsizes,noasterisk]{mathastext}
+\let\varphi\phi
+\linespread{1.06}
+</pre>
+Typeset with mathastext 1.13 (2011/03/11). <a href="showcase/comfortaa-4.pdf">pdf</a>
+</DIV>
+<BR>
+<BR>
+<DIV CLASS="center">
+ <table align="center" border="1" cellpadding="15"><tr><td width="0" align="center"><img src="showcase/comfortaa-42.png" alt="comfortaa-42.png"></td><td width="0" align="center"><img src="showcase/comfortaa-43.png" alt="comfortaa-43.png"></td></tr></table></DIV>
+</BLOCKQUOTE>
+
+<BR>
+<BLOCKQUOTE CLASS="figure" id="neo">
+<BR>
+<BR>
+<BR>
+<DIV CLASS="fighead">GFS NeoHellenic</DIV><BR>
+<DIV class="central">
+This example uses:
+<pre>
+\usepackage[T1]{fontenc}
+\renewcommand{\rmdefault}{neohellenic}
+\usepackage[LGRgreek]{mathastext}
+\let\varphi\phi
+\linespread{1.06}
+</pre>
+Typeset with mathastext 1.13 (2011/03/11). <a href="showcase/neohellenic-4.pdf">pdf</a>
+</DIV>
+<BR>
+<BR>
+<DIV CLASS="center">
+ <table align="center" border="1" cellpadding="15"><tr><td width="0" align="center"><img src="showcase/neohellenic-42.png" alt="neohellenic-42.png"></td><td width="0" align="center"><img src="showcase/neohellenic-43.png" alt="neohellenic-43.png"></td></tr></table></DIV>
+</BLOCKQUOTE>
+
+<BR>
+<BLOCKQUOTE CLASS="figure" id="sli">
+<BR>
+<BR>
+<BR>
+<DIV CLASS="fighead">SliTeX (Euler Greek)</DIV><BR>
+<DIV class="central">
+This example uses:
+<pre>
+\usepackage[T1]{fontenc}
+\usepackage{tpslifonts}
+\usepackage[eulergreek,defaultmathsizes]{mathastext}
+\MTEulerScale{1.06}
+\linespread{1.2}
+</pre>
+Typeset with mathastext 1.13 (2011/03/11). <a href="showcase/slitex-4.pdf">pdf</a>
+</DIV>
+<BR>
+<BR>
+<DIV CLASS="center">
+ <table align="center" border="1" cellpadding="15"><tr><td width="0" align="center"><img src="showcase/slitex-42.png" alt="slitex-42.png"></td><td width="0" align="center"><img src="showcase/slitex-43.png" alt="slitex-43.png"></td></tr></table></DIV>
+</BLOCKQUOTE>
+
+
+<BR>
+<BLOCKQUOTE CLASS="figure" id="atp">
+<BR>
+<BR>
+<BR>
+<DIV CLASS="fighead">Antykwa Półtawskiego (TX Fonts for Greek and math symbols)</DIV><BR>
+<DIV class="central">
+This example uses:
+<pre>
+\usepackage[OT4,OT1]{fontenc}
+\usepackage{txfonts}
+\usepackage[upright]{txgreeks}
+\usepackage{antpolt}
+\usepackage[defaultmathsizes,nolessnomore]{mathastext}
+</pre>
+Typeset with mathastext 1.13b (2011/03/15). <a href="showcase/antpolt-4.pdf">pdf</a>
+</DIV>
+<BR>
+<BR>
+<DIV CLASS="center">
+ <table align="center" border="1" cellpadding="15"><tr><td width="0" align="center"><img src="showcase/antpolt-42.png" alt="antpolt-42.png"></td><td width="0" align="center"><img src="showcase/antpolt-43.png" alt="antpolt-43.png"></td></tr></table></DIV>
+</BLOCKQUOTE>
+
+
+<BR>
+<BLOCKQUOTE CLASS="figure" id="bsk">
+<BR>
+<BR>
+<BR>
+<DIV CLASS="fighead">Baskervald ADF with Fourier</DIV><BR>
+<DIV class="central">
+This example uses:
+<pre>
+\usepackage[upright]{fourier}
+\usepackage{baskervald}
+\usepackage[defaultmathsizes,noasterisk]{mathastext}
+</pre>
+Typeset with mathastext 1.13 (2011/03/11). <a href="showcase/baskervald-4.pdf">pdf</a>
+</DIV>
+<BR>
+<BR>
+<DIV CLASS="center">
+ <table align="center" border="1" cellpadding="15"><tr><td width="0" align="center"><img src="showcase/baskervald-42.png" alt="baskervald-42.png"></td><td width="0" align="center"><img src="showcase/baskervald-43.png" alt="baskervald-43.png"></td></tr></table></DIV>
+</BLOCKQUOTE>
+
+<BR>
+<BLOCKQUOTE CLASS="figure" id="lib">
+<BR>
+<BR>
+<BR>
+<DIV CLASS="fighead">Libertine</DIV><BR>
+<DIV class="central">
+This example uses:
+<pre>
+\usepackage[T1]{fontenc}
+\usepackage{libertine}
+\usepackage[greek=n]{libgreek}
+\usepackage[noasterisk,defaultmathsizes]{mathastext}
+</pre>
+Typeset with mathastext 1.13 (2011/03/11). <a href="showcase/libertine-4.pdf">pdf</a>
+</DIV>
+<BR>
+<BR>
+<DIV CLASS="center">
+ <table align="center" border="1" cellpadding="15"><tr><td width="0" align="center"><img src="showcase/libertine-42.png" alt="libertine-42.png"></td><td width="0" align="center"><img src="showcase/libertine-43.png" alt="libertine-43.png"></td></tr></table></DIV>
+</BLOCKQUOTE>
+
+<BR>
+<BLOCKQUOTE CLASS="figure" id="bio">
+<BR>
+<BR>
+<BR>
+<DIV CLASS="fighead">Biolinum</DIV><BR>
+<DIV class="central">
+This example uses:
+<pre>
+\usepackage[T1]{fontenc}
+\usepackage{libertine}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[greek=n,biolinum]{libgreek}
+\usepackage[noasterisk,defaultmathsizes]{mathastext}
+</pre>
+Typeset with mathastext 1.13 (2011/03/11). <a href="showcase/biolinum-4.pdf">pdf</a>
+</DIV>
+<BR>
+<BR>
+<DIV CLASS="center">
+ <table align="center" border="1" cellpadding="15"><tr><td width="0" align="center"><img src="showcase/biolinum-42.png" alt="biolinum-42.png"></td><td width="0" align="center"><img src="showcase/biolinum-43.png" alt="biolinum-43.png"></td></tr></table></DIV>
+</BLOCKQUOTE>
+
+<BR>
+<BLOCKQUOTE CLASS="figure" id="libris">
+<BR>
+<BR>
+<BR>
+<DIV CLASS="fighead">Libris ADF with Fourier</DIV><BR>
+<DIV class="central">
+This example uses:
+<pre>
+\usepackage[T1]{fontenc}
+\usepackage[upright]{fourier}
+\usepackage{libris}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[noasterisk]{mathastext}
+</pre>
+Typeset with mathastext 1.13 (2011/03/11). <a href="showcase/libris-4.pdf">pdf</a>
+</DIV>
+<BR>
+<BR>
+<DIV CLASS="center">
+ <table align="center" border="1" cellpadding="15"><tr><td width="0" align="center"><img src="showcase/libris-42.png" alt="libris-42.png"></td><td width="0" align="center"><img src="showcase/libris-43.png" alt="libris-43.png"></td></tr></table></DIV>
+</BLOCKQUOTE>
+
+<BR>
+<BLOCKQUOTE CLASS="figure" id="vk1">
+<BR>
+<BR>
+<BR>
+<DIV CLASS="fighead">Vollkorn (TX fonts for Greek and math symbols)</DIV><BR>
+<DIV class="central">
+This example uses Vollkorn for the Latin letters and punctuation
+characters in text and math, and the TX fonts for the Greek letters (in
+upright shape) and the mathematical symbols.
+<pre>
+\usepackage[T1]{fontenc}
+\usepackage{txfonts}
+\usepackage[upright]{txgreeks}
+\usepackage{vollkorn}
+\usepackage[defaultmathsizes]{mathastext}
+</pre>
+Typeset with mathastext 1.13b (2011/03/15). <a href="showcase/vollkorn-4.pdf">pdf</a>
+</DIV>
+<BR>
+<BR>
+<DIV CLASS="center">
+ <table align="center" border="1" cellpadding="15"><tr><td width="0" align="center"><img src="showcase/vollkorn-42.png" alt="vollkorn-42.png"></td><td width="0" align="center"><img src="showcase/vollkorn-43.png" alt="vollkorn-43.png"></td></tr></table></DIV>
+</BLOCKQUOTE>
+
+
+<BR>
+<BLOCKQUOTE CLASS="figure" id="bsx">
+<BR>
+<BR>
+<BR>
+<DIV CLASS="fighead">BrushScriptX-Italic (PX math and Greek)</DIV><BR>
+<DIV class="central">
+This example uses BrushScriptX-Italic for Latin letters in text and
+math, and PX Fonts for math symbols and Greek letters.
+<pre>
+\usepackage[T1]{fontenc}
+\usepackage{pxfonts}
+%\usepackage{pbsi}
+\renewcommand{\rmdefault}{pbsi}
+\renewcommand{\mddefault}{xl}
+\renewcommand{\bfdefault}{xl}
+\usepackage[defaultmathsizes,noasterisk]{mathastext}
+\begin{document}\boldmath
+</pre>
+Typeset with mathastext 1.13 (2011/03/11). <a href="showcase/brushscriptX-4.pdf">pdf</a>
+</DIV>
+<BR>
+<BR>
+<DIV CLASS="center">
+ <table align="center" border="1" cellpadding="15"><tr><td width="0" align="center"><img src="showcase/brushscriptX-42.png" alt="brushscriptX-42.png"></td><td width="0" align="center"><img src="showcase/brushscriptX-43.png" alt="brushscriptX-43.png"></td></tr></table></DIV>
+</BLOCKQUOTE>
+
+<br><br><br>
+<DIV CLASS="center"><b>EXAMPLES WITH THE ITALIC OPTION</b></DIV>
+
+<BR>
+<BLOCKQUOTE CLASS="figure" id="vk2">
+<BR>
+<BR>
+<BR>
+<DIV CLASS="fighead">Vollkorn with Fourier</DIV><BR>
+<DIV class="central">
+This example uses:
+<pre>
+\usepackage{fourier}
+\usepackage{vollkorn}
+\usepackage[italic,nohbar]{mathastext}
+</pre>
+Typeset with mathastext 1.12b (2011/02/09). <a href="showcase/vollkorn-3.pdf">pdf</a>
+</DIV>
+<BR><BR>
+<DIV CLASS="center">
+ <table align="center" border="1" cellpadding="15"><tr><td width="0" align="center"><img src="showcase/vollkorn-31.png" alt="vollkorn-31.png"></td></tr></table></DIV>
+</BLOCKQUOTE>
+
+<BR>
+<BLOCKQUOTE CLASS="figure" id="lm2">
+<BR>
+<BR>
+<BR>
+<DIV CLASS="fighead">Latin Modern Typewriter
+Proportional (CM Greek)</DIV><BR>
+<DIV class="central">
+This example uses:
+<pre>
+\usepackage[T1]{fontenc}
+\usepackage[variablett,nomath]{lmodern}
+\renewcommand{\familydefault}{\ttdefault}
+\usepackage[frenchmath]{mathastext}
+\linespread{1.08}
+</pre>
+Typeset with mathastext 1.13 (2011/03/11). <a href="showcase/lmvtt-4.pdf">pdf</a>
+</DIV>
+<BR>
+<BR>
+<DIV CLASS="center">
+ <table align="center" border="1" cellpadding="15"><tr><td width="0" align="center"><img src="showcase/lmvtt-42.png" alt="lmvtt-42.png"></td><td width="0" align="center"><img src="showcase/lmvtt-43.png" alt="lmvtt-43.png"></td></tr></table></DIV>
+</BLOCKQUOTE>
+
+<BR>
+<BLOCKQUOTE CLASS="figure" id="elc">
+<BR>
+<BR>
+<BR>
+<DIV CLASS="fighead">Electrum ADF (CM Greek)</DIV><BR>
+<DIV class="central">
+This example uses:
+<pre>
+\usepackage[T1]{fontenc}
+\usepackage[lf]{electrum}
+\usepackage[frenchmath,defaultmathsizes,noasterisk]{mathastext}
+</pre>
+Typeset with mathastext 1.13 (2011/03/11). <a href="showcase/electrum-4.pdf">pdf</a>
+</DIV>
+<BR>
+<BR>
+<DIV CLASS="center">
+ <table align="center" border="1" cellpadding="15"><tr><td width="0" align="center"><img src="showcase/electrum-42.png" alt="electrum-42.png"></td><td width="0" align="center"><img src="showcase/electrum-43.png" alt="electrum-43.png"></td></tr></table></DIV>
+</BLOCKQUOTE>
+
+<BR>
+<BLOCKQUOTE CLASS="figure" id="ptm">
+<BR>
+<BR>
+<BR>
+<DIV CLASS="fighead">Times with Fourier</DIV><BR>
+<DIV class="central">
+This example uses:
+<pre>
+\usepackage{fourier}
+\renewcommand{\rmdefault}{ptm}
+\usepackage[italic,defaultmathsizes,noasterisk]{mathastext}
+</pre>
+Typeset with mathastext 1.13 (2011/03/11). <a href="showcase/times-4.pdf">pdf</a>
+</DIV>
+<BR>
+<BR>
+<DIV CLASS="center">
+ <table align="center" border="1" cellpadding="15"><tr><td width="0"
+ align="center"><img src="showcase/times-42.png"
+ alt="times-42.png"></td><td width="0" align="center"><img src="showcase/times-43.png" alt="times-43.png"></td></tr></table></DIV>
+</BLOCKQUOTE>
+
+<BR>
+<BLOCKQUOTE CLASS="figure" id="phv">
+<BR>
+<BR>
+<BR>
+<DIV CLASS="fighead">Helvetica with Fourier</DIV><BR>
+<DIV class="central">
+This example uses:
+<pre>
+\usepackage[T1]{fontenc}
+\usepackage[scaled]{helvet}
+\usepackage{fourier}
+\renewcommand{\rmdefault}{phv}
+\usepackage[italic,defaultmathsizes,noasterisk]{mathastext}
+</pre>
+Typeset with mathastext 1.13 (2011/03/11). <a href="showcase/helvetica-4.pdf">pdf</a>
+</DIV>
+<BR>
+<BR>
+<DIV CLASS="center">
+ <table align="center" border="1" cellpadding="15"><tr><td width="0" align="center"><img src="showcase/helvetica-42.png" alt="helvetica-42.png"></td><td width="0" align="center"><img src="showcase/helvetica-43.png" alt="helvetica-43.png"></td></tr></table></DIV>
+</BLOCKQUOTE>
+
+<BR>
+<BLOCKQUOTE CLASS="figure" id="epi">
+<BR>
+<BR>
+<BR>
+<DIV CLASS="fighead">Epigrafica</DIV><BR>
+<DIV class="central">
+This example uses Epigrafica for Latin and Greek letters. The math symbols are
+from the PX fonts (epigrafica loads the pxfonts package).
+<pre>
+\usepackage[LGR,OT1]{fontenc}
+\usepackage{epigrafica}
+\usepackage[basic,frenchmath,defaultmathsizes]{mathastext}
+</pre>
+Typeset with mathastext 1.13 (2011/03/11). <a href="showcase/epigrafica-4.pdf">pdf</a>
+</DIV>
+<BR>
+<BR>
+<DIV CLASS="center">
+ <table align="center" border="1" cellpadding="15"><tr><td width="0" align="center"><img src="showcase/epigrafica-42.png" alt="epigrafica-42.png"></td><td width="0" align="center"><img src="showcase/epigrafica-43.png" alt="epigrafica-43.png"></td></tr></table></DIV>
+</BLOCKQUOTE>
+
+<BR>
+<BLOCKQUOTE CLASS="figure" id="ven">
+<BR>
+<BR>
+<BR>
+<DIV CLASS="fighead">Venturis ADF with Fourier</DIV><BR>
+<DIV class="central">
+This example uses:
+<pre>
+\usepackage{fourier}
+\usepackage[lf]{venturis}
+\usepackage[italic,defaultmathsizes,noasterisk]{mathastext}
+</pre>
+Typeset with mathastext 1.13 (2011/03/11). <a href="showcase/venturis-ADF-4.pdf">pdf</a>
+</DIV>
+<BR>
+<BR>
+<DIV CLASS="center">
+ <table align="center" border="1" cellpadding="15"><tr><td width="0" align="center"><img src="showcase/venturis-ADF-42.png" alt="venturis-ADF-42.png"></td><td width="0" align="center"><img src="showcase/venturis-ADF-43.png" alt="venturis-ADF-43.png"></td></tr></table></DIV>
+</BLOCKQUOTE>
+
+<BR>
+<BLOCKQUOTE CLASS="figure" id="rom">
+<BR>
+<BR>
+<BR>
+<DIV CLASS="fighead">Romande ADF with Fourier</DIV><BR>
+<DIV class="central">
+This example uses:
+<pre>
+\usepackage[T1]{fontenc}
+\usepackage{fourier}
+\usepackage{romande}
+\usepackage[italic,defaultmathsizes,noasterisk]{mathastext}
+\renewcommand{\itshape}{\swashstyle}
+</pre>
+Typeset with mathastext 1.13 (2011/03/11). <a href="showcase/romande-4.pdf">pdf</a>
+</DIV>
+<BR>
+<BR>
+<DIV CLASS="center">
+ <table align="center" border="1" cellpadding="15"><tr><td width="0" align="center"><img src="showcase/romande-42.png" alt="romande-42.png"></td><td width="0" align="center"><img src="showcase/romande-43.png" alt="romande-43.png"></td></tr></table></DIV>
+</BLOCKQUOTE>
+
+<BR>
+<BLOCKQUOTE CLASS="figure" id="did">
+<BR>
+<BR>
+<BR>
+<DIV CLASS="fighead">GFS Didot</DIV><BR>
+<DIV class="central">
+This example uses:
+<pre>
+\usepackage[T1]{fontenc}
+\renewcommand\rmdefault{udidot}
+\usepackage[LGRgreek,defaultmathsizes,italic]{mathastext}
+\let\varphi\phi
+</pre>
+Typeset with mathastext 1.13 (2011/03/11). <a href="showcase/gfsdidot-4.pdf">pdf</a>
+</DIV>
+<BR>
+<BR>
+<DIV CLASS="center">
+ <table align="center" border="1" cellpadding="15"><tr><td width="0" align="center"><img src="showcase/gfsdidot-42.png" alt="gfsdidot-42.png"></td><td width="0" align="center"><img src="showcase/gfsdidot-43.png" alt="gfsdidot-43.png"></td></tr></table></DIV>
+</BLOCKQUOTE>
+
+
+
+<BR>
+<BLOCKQUOTE CLASS="figure" id="droidserifb">
+<BR>
+<BR>
+<BR>
+<DIV CLASS="fighead">Droid Serif (PX math symbols)</DIV><BR>
+<DIV class="central">
+This example uses Droid Serif for text (Latin letters) and math
+(Latin and Greek letters), and PX Fonts for math symbols.
+<pre>
+\usepackage[T1]{fontenc}
+\usepackage{pxfonts}
+\usepackage[default]{droidserif}
+\usepackage[LGRgreek,defaultmathsizes,italic,basic]{mathastext}
+\let\varphi\phi
+</pre>
+Typeset with mathastext 1.13
+(2011/03/11). <a href="showcase/droidserif-4.pdf">pdf</a><br>
+See <a href="#grineg">below</a> for an example where Droid Serif is used for
+the text and Droid Sans for the math.
+</DIV>
+<BR>
+<BR>
+<DIV CLASS="center">
+ <table align="center" border="1" cellpadding="15"><tr><td width="0" align="center"><img src="showcase/droidserif-42.png" alt="droidserif-42.png"></td><td width="0" align="center"><img src="showcase/droidserif-43.png" alt="droidserif-43.png"></td></tr></table></DIV>
+</BLOCKQUOTE>
+
+<BR>
+<BLOCKQUOTE CLASS="figure" id="droidsansb">
+<BR>
+<BR>
+<BR>
+<DIV CLASS="fighead">Droid Sans</DIV><BR>
+<DIV class="central">
+This example uses:
+<pre>
+\usepackage[T1]{fontenc}
+\usepackage[default]{droidsans}
+\usepackage[LGRgreek,defaultmathsizes,italic]{mathastext}
+\let\varphi\phi
+</pre>
+Typeset with mathastext 1.13 (2011/03/11). <a href="showcase/droidsans-4.pdf">pdf</a>
+</DIV>
+<BR>
+<BR>
+<DIV CLASS="center">
+ <table align="center" border="1" cellpadding="15"><tr><td width="0" align="center"><img src="showcase/droidsans-42.png" alt="droidsans-42.png"></td><td width="0" align="center"><img src="showcase/droidsans-43.png" alt="droidsans-43.png"></td></tr></table></DIV>
+</BLOCKQUOTE>
+
+
+<br><br><br> 
+
+Further examples (not using the `italic' option):
+<ul>
+<li>
+Text 1: 
+<ul>
+<li><a href="showcase/chancery-1.pdf">URW Zapf Chancery</a></li> 
+<li><a href="showcase/frcursive-1.pdf">French Cursive</a> (see
+the <a href="#fc"><b>warning</b></a>)</li>
+<li><a href="showcase/auriocus-1.pdf">Auriocus Kalligraphicus</a></li>
+<li><a href="showcase/skeetch-1.pdf">Skeetch</a></li>
+<li><a href="showcase/avant-1.pdf">URW Avant Garde</a></li>
+<li><a href="showcase/fourier-1.pdf">Fourier Utopia</a></li>
+<li><a href="showcase/lmvtt-1.pdf">Latin Modern Typewriter Proportional</a></li>
+</ul><br>
+</li>
+<li>
+Text 2: 
+<ul> 
+<li><a href="showcase/chancery-2.pdf">URW Zapf Chancery</a></li> 
+<li><a href="showcase/frcursive-2.pdf">French Cursive</a> (see
+the <a href="#fc"><b>warning</b></a>)</li>
+<li><a href="showcase/auriocus-2.pdf">Auriocus Kalligraphicus</a></li>
+<li><a href="showcase/skeetch-2.pdf">Skeetch</a></li>
+<li><a href="showcase/avant-2.pdf">URW Avant Garde</a></li>
+<li><a href="showcase/fourier-2.pdf">Fourier Utopia</a></li>
+<li><a href="showcase/lmvtt-2.pdf">Latin Modern Typewriter Proportional</a></li>
+</ul><br>
+</li>
+<li>
+Various:
+<ul>
+<li><a href="agreglogexp.pdf">Logarithme et exponentielle</a> (French Cursive;
+needed quite a bit of work on the source as it made extensive use of the letter r in
+mathematical mode, see the <a href="#fc"><b>warning</b></a> above)</li>
+<li><a href="agreglagrange.pdf">Formule d'inversion de Lagrange</a> (Latin
+Modern Typewriter Proportional)</li>
+<li><a href="agregexpcomplexenombrepi.pdf">Exponentielle complexe et nombre
+Pi</a> (Electrum)</li>
+<li><a href="agregnormeslp.pdf">Un exposé assez complet sur les normes lp</a> (Latin Modern Typewriter Proportional)</li> 
+<li><a href="agregpolend.pdf">Polynômes d'endomorphismes et applications</a>
+(Latin Modern Typewriter Proportional)</li> 
+<li><a href="agregcorpsgalois.pdf">Corps de Galois. Polynômes
+cyclotomiques</a> (New Century Schoolbook)</li>
+<li id="grineg"><a href="agreggraminegalite.pdf">Gramiens et Inégalités</a>. Uses Droid Serif
+for text and Droid Sans for math, 
+with PX fonts for large mathematical symbols;
+this is done with the following in the preamble:
+<pre>
+\usepackage[T1]{fontenc}
+\usepackage{pxfonts}
+\usepackage{droid}
+\renewcommand{\familydefault}{\sfdefault} % <== Droid Sans for math
+\usepackage[LGRgreek]{mathastext}         %
+\renewcommand{\familydefault}{\rmdefault} % <== Droid Serif for text
+\renewcommand{\bfseries}{\fontfamily{\sfdefault}% <== Droid Sans for section names etc...
+                         \fontseries{\bfdefault}\selectfont}
+\linespread{1.06}
+</pre></li>
+<li id="grlib"><a href="showcase/gram-libertine.pdf">Gramiens et Inégalités</a>. Same
+document, but with Libertine for text and Biolinum for Latin and Greek letters
+in math (large math symbols are from the TX fonts). The same set-up is used for <a href="agregeuclide_fibo.pdf">this</a> document.
+<pre>
+\usepackage{txfonts}
+\usepackage{libertine}
+\usepackage[style=French,biolinum]{libgreek}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[defaultmathsizes]{mathastext}
+\renewcommand{\familydefault}{\rmdefault}
+\renewcommand{\bfseries}{\fontfamily{\sfdefault}\fontseries{\bfdefault}\selectfont}
+</pre>
+</li>
+<li id="txvtt"><a href="showcase/gram-txvtt.pdf">Gramiens et
+Inégalités</a>. Again the same document but with the TX Typewriter font (and
+the TX fonts for math symbols and Greek). In
+order to allow hyphenation and variable interword spaces, a t1txvtt.fd file
+was prepared, which differs from the original t1txtt.fd in the following lines
+(naturally, all occurrences of "txtt" in the \DeclareFontShape declarations were
+replaced by "txvtt"):
+<pre>
+\DeclareFontFamily{T1}{txvtt}{\hyphenchar\font=127%
+\fontdimen2\font=0.33333\fontdimen6\font%
+\fontdimen3\font=0.16666\fontdimen6\font%
+\fontdimen4\font=0.11111\fontdimen6\font}
+</pre>
+Then, the LaTeX source of the document contains:
+<pre>
+\usepackage[T1]{fontenc}
+\usepackage{txfonts}
+\usepackage[upright]{txgreeks}
+\renewcommand{\familydefault}{\ttdefault}
+\renewcommand{\ttdefault}{txvtt}
+\usepackage{mathastext}
+\linespread{1.06}
+</pre>Another <a href="agregcycliques.pdf">document</a> uses also this,
+and, additionally, a further math version based on the TX
+Times roman font, thus illustrating the capability of the
+package to manage multiple math versions. As 80% of the
+document was copied from electronic mail with quasi no LaTeX
+markup, only minimal necessary changes were made, so
+please excuse the many instances were standard
+typographical rules are broken.</li></ul>
+</li>
+</ul>
+
+<br><br>
+Current version (1.14c):
+<ul>
+<li> <a href="v114/README" >README</a></li>
+<li> Download from a <a href="http://mirrors.ctan.org/help/Catalogue/entries/mathastext.html">CTAN
+location</a></li>
+<li> <a href="v114/mathastext.pdf">PDF Documentation</a></li>
+<li> <a href="v114/mathastext.sty">mathastext.sty</a> (version <b>1.14c</b>)</li>
+<li> Documented <a href="v114/mathastext.dtx">source</a> (dtx file)</li>
+<li> <a href="v114/mathastext.ins">ins file</a></li>
+</ul>
+
+<!--
+Current version (1.13b):
+<ul>
+<li> <a href="v113/README" >README</a></li>
+<li> Download from a <a href="http://mirrors.ctan.org/help/Catalogue/entries/mathastext.html">CTAN
+location</a></li>
+<li> <a href="v113/mathastext.pdf">PDF Documentation</a></li>
+<li> <a href="v113/mathastext.sty">mathastext.sty</a> (version <b>1.13b</b>)</li>
+<li> Documented <a href="v113/mathastext.dtx">source</a> (dtx file)</li>
+<li> <a href="v113/mathastext.ins">ins file</a></li>
+</ul>
+-->
+
+<!--
+Version 1.12b:
+This version has been uploaded to CTAN on February 9, 2011.
+<ul>
+<li> <a href="v112/README" >README</a></li>
+<li> <a href="v112/mathastext-v112.pdf">PDF Documentation</a> (including
+commented code)</li>
+<li> <a href="v112/mathastext.sty">mathastext.sty</a> (version 1.12b)</li>
+<li> Documented <a href="v112/mathastext.dtx">source</a> (dtx file)</li>
+<li> <a href="v112/mathastext.ins">ins file</a></li>
+</ul>
+-->
+
+<!--
+<DIV id="v10">
+Initial Version (1.0):<br>
+This version has been uploaded to CTAN on 2011/01/25.
+<ul>
+<li> <a href="v10/mathastext-README.txt" >README</a></li>
+<li> <a href="v10/mathastext-doc.pdf">PDF Documentation</a></li>
+<li><a href="v10/mathastext.sty">mathastext.sty</a></li>
+<li> Documented <a href="v10/mathastext.dtx">source</a> (dtx file), and in <a href="mathastext.pdf">pdf</a></li>
+<li> <a href="v10/mathastext.ins">ins file</a></li>
+</ul>
+</DIV>
+-->
+
+<p><a href="v10/mathastext-doc.pdf">PDF Documentation of the initial version.</a>
+</p>
+
+<p><a href="#top">top</a>
+</p>
+
+<p>
+    <a href="http://validator.w3.org/check?uri=referer"><img style="border:0;width:88px;height:31px"
+    src="valid-html401-blue.png"
+    alt="Valid HTML 4.01 Transitional"></a>
+</p>
+
+</body> 
+</html>

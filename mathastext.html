@@ -1,6 +1,10 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+<!-- Time-stamp: <04-04-2011 10:59:05 CEST JF> -->
+
 <head>
-   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="shortcut icon" type="image/png" href="zeta32.png">
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
    <meta name="robots" content="index, follow">
    <title>mathastext</title>
 <style type="text/css">
@@ -19,22 +23,18 @@ BLOCKQUOTE{margin-left:4ex;margin-right:4ex;text-align:left;}
 </head>
 
 <body>
- 
-<div style="font-size:90%">
-This web page was last revised on March 12, 2011 at &lt;10:19:26 CET&gt;.
-</div>
 
 <br>
 <br>
 
 <div class="center">A LaTeX package: <b>mathastext</b><br>
-Copyright © 2011, Jean-François B..</div>
+Copyright &copy; 2011, Jean-Fran&ccedil;ois B..</div>
 
 
 <div class="center">
  <table align="center" border="0" width="85%" cellpadding="5">
 
-<tbody><tr><td width="0" align="center"><img src="Riemann1859.png" alt="Riemann1859.png"></td>
+<tr><td width="0" align="center"><img src="Riemann1859.png" alt="Riemann1859.png"></td>
 
 <td><p><b>mathastext</b> is a package to allow to use the text font also in
 mathematics mode, thus giving a very unified look to the produced document.
@@ -52,7 +52,8 @@ other one, or, rather, it is up to the reader to uncover the web of links
 between atoms.</p>
 <div style="font-size:90%">
 The example on the left uses:</div>
-<pre style="font-size:90%">\usepackage[T1]{fontenc}
+<pre style="font-size:90%">
+\usepackage[T1]{fontenc}
 \usepackage[german]{babel}
 \usepackage[variablett,lighttt]{lmodern}
 \renewcommand{\familydefault}{\ttdefault}
@@ -60,36 +61,51 @@ The example on the left uses:</div>
 \MathastextEulerScale{0.92}
 </pre>
 </td>
-</tr></tbody></table></div>
+</tr></table></div>
 
 <center>
 <table width="500" border="0" cellpadding="10">
-<tbody><tr><td>
-Current (recommended) version <b>(1.13)</b>:<br>
-This version has been uploaded to CTAN on March 12, 2011.
+<tr><td>
+Current (recommended) version <b>(1.14c)</b>:<br>
+This version has been uploaded to CTAN on April 4, 2011.
 <ul>
-<li> <a href="v113/README">README</a></li>
+<li> <a href="v114/README">README</a></li>
 <li> Download from a <a href="http://mirrors.ctan.org/help/Catalogue/entries/mathastext.html">CTAN
 location</a></li>
-<li> <a href="v113/mathastext.pdf">PDF Documentation</a></li>
-<li> <a href="v113/mathastext.sty">mathastext.sty</a> (version <b>1.13</b>)</li>
-<li> Documented <a href="v113/mathastext.dtx">source</a> (dtx file)</li>
-<li> <a href="v113/mathastext.ins">ins file</a></li>
-<li> <a href="showcase.html#v10">version 1.0</a> (<a href="v10/mathastext-doc.pdf">PDF Documentation</a>)</li>
+<li> <a href="v114/mathastext.pdf">PDF Documentation</a></li>
+<li> <a href="v114/mathastext.sty">mathastext.sty</a> (version <b>1.14c</b>)</li>
+<li> Documented <a href="v114/mathastext.dtx">source</a> (dtx file)</li>
+<li> <a href="v114/mathastext.ins">ins file</a></li>
 </ul>
-<a href="showcase.html">Examples</a> (be patient, page weighs circa 1,3 Mo; 29
-examples as png images and also as
-pdf files and 21 additional examples as pdf files)
-</td></tr></tbody></table>
+<a href="showcase.html">Examples</a> (be patient, the page with its embedded png images
+weighs circa 2,4 Mo! 34
+examples as png images (and 
+pdf files) and 24 additional examples as pdf files)
+</td></tr></table>
 </center>
 
 <div class="intro">
 <ul>
-<li><u>Using mathastext with Unicode fonts</u>: <b>mathastext</b> can be used
+<li>Related packages by the
+author: 
+<ul>
+<li>
+<a href="http://mirrors.ctan.org/help/Catalogue/entries/libgreek.html">libgreek</a>
+(use the Linux Libertine or Biolinum fonts for Greek in math mode)</li>
+<li>
+<a href="http://mirrors.ctan.org/help/Catalogue/entries/pxgreeks.html">pxgreeks</a>
+(select upright/italic shape for the Greek letters from the PX
+fonts)</li>
+<li> <a href="http://mirrors.ctan.org/help/Catalogue/entries/txgreeks.html">txgreeks</a>
+(select upright/italic shape for the Greek letters from the TX fonts).</li>
+</ul><br>
+</li>
+<li>Using mathastext with Unicode fonts: <b>mathastext</b> can be used
 with the XeTeX and LuaTeX engines and Unicode fonts. It is recommended to load
 first the <b>fontspec</b> package, with its option <i>no-math</i>. As in this
 example:
-<pre>\usepackage[no-math]{fontspec}
+<pre>
+\usepackage[no-math]{fontspec}
 \setmainfont{TeX Gyre Bonum}
 \usepackage{mathastext}
 </pre>
@@ -102,12 +118,15 @@ automatically de-activated if the encoding is detected to be OT1).<br><br>
 <li>Known limitations and bugs: 
 <ul>
 <li>Some characters from fonts having complex ligature rules may not
-display correctly in math mode (here is an <a href="showcase.html#fc">example</a>).</li>
-<li>All versions prior to 1.12b were afflicted more or less severely by various
-bugs, so users are strongly advised to upgrade to the current version. 
+display correctly in math mode (here is
+an <a href="showcase.html#fc">example</a>).</li>
+<!--<li>The <i>nopunctuation</i> option is erroneously listed in the pdf documentation under the name «nopunct».</li>-->
+<li>All versions prior to 1.12b were afflicted by bugs, some being rather
+severe, so users of these versions are strongly advised to upgrade. 
 </li>
-</ul>
+</ul><br>
 </li>
+<li> PDF documentation of the <a href="v10/mathastext-doc.pdf">initial version</a></li>
 </ul>
 </div>
 
@@ -116,7 +135,5 @@ bugs, so users are strongly advised to upgrade to the current version.
     <a href="http://validator.w3.org/check?uri=referer"><img style="border:0;width:88px;height:31px" src="valid-html401-blue.png" alt="Valid HTML 4.01 Transitional"></a>
 </p>
 
- 
-
-
-</body></html>
+</body> 
+</html>
