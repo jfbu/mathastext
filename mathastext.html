@@ -1,13 +1,13 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html lang="en">
-<!-- Time-stamp: <04-04-2011 10:59:05 CEST JF> -->
+<!-- Time-stamp: <05-05-2011 11:58:37 CEST JF> -->
 
 <head>
 <link rel="shortcut icon" type="image/png" href="zeta32.png">
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-   <meta name="robots" content="index, follow">
+   <META NAME="robots" CONTENT="index, follow">
    <title>mathastext</title>
-<style type="text/css">
+<STYLE type="text/css">
 .toc{list-style:none;}
 .title{margin:auto;text-align:center;}
 .center{text-align:center;margin-left:auto;margin-right:auto;}
@@ -19,7 +19,7 @@ BLOCKQUOTE{margin-left:4ex;margin-right:4ex;text-align:left;}
 .part{margin:auto;text-align:center;}
 .intro{margin-left:15%;margin-right:15%;}
 .central{margin-left:25%;margin-right:25%;}
-</style>
+</STYLE>
 </head>
 
 <body>
@@ -27,14 +27,15 @@ BLOCKQUOTE{margin-left:4ex;margin-right:4ex;text-align:left;}
 <br>
 <br>
 
-<div class="center">A LaTeX package: <b>mathastext</b><br>
-Copyright &copy; 2011, Jean-Fran&ccedil;ois B..</div>
+<DIV CLASS="center">A LaTeX package: <b>mathastext</b><br>
+Copyright &copy; 2011, Jean-Fran&ccedil;ois B..</DIV>
 
 
-<div class="center">
- <table align="center" border="0" width="85%" cellpadding="5">
+<DIV class="center">
+ <table align="center" border="0" WIDTH="85%" cellpadding="5">
 
-<tr><td width="0" align="center"><img src="Riemann1859.png" alt="Riemann1859.png"></td>
+<tr><td width="0"
+ align="center"><img src="showcase/Riemann1859.png" alt="Riemann1859.png"></td>
 
 <td><p><b>mathastext</b> is a package to allow to use the text font also in
 mathematics mode, thus giving a very unified look to the produced document.
@@ -50,8 +51,8 @@ in advance which piece would prove to be more important than the others. In a
 well-crafted mathematical document, every single part is as important as any
 other one, or, rather, it is up to the reader to uncover the web of links
 between atoms.</p>
-<div style="font-size:90%">
-The example on the left uses:</div>
+<DIV style="font-size:90%">
+The example on the left uses:</DIV>
 <pre style="font-size:90%">
 \usepackage[T1]{fontenc}
 \usepackage[german]{babel}
@@ -61,15 +62,15 @@ The example on the left uses:</div>
 \MathastextEulerScale{0.92}
 </pre>
 </td>
-</tr></table></div>
+</tr></table></DIV>
 
-<center>
-<table width="500" border="0" cellpadding="10">
+<CENTER>
+<table WIDTH="500"  border="0" cellpadding="10">
 <tr><td>
 Current (recommended) version <b>(1.14c)</b>:<br>
 This version has been uploaded to CTAN on April 4, 2011.
 <ul>
-<li> <a href="v114/README">README</a></li>
+<li> <a href="v114/README" >README</a></li>
 <li> Download from a <a href="http://mirrors.ctan.org/help/Catalogue/entries/mathastext.html">CTAN
 location</a></li>
 <li> <a href="v114/mathastext.pdf">PDF Documentation</a></li>
@@ -82,9 +83,9 @@ weighs circa 2,4 Mo! 34
 examples as png images (and 
 pdf files) and 24 additional examples as pdf files)
 </td></tr></table>
-</center>
+</CENTER>
 
-<div class="intro">
+<DIV class="intro">
 <ul>
 <li>Related packages by the
 author: 
@@ -109,6 +110,64 @@ example:
 \setmainfont{TeX Gyre Bonum}
 \usepackage{mathastext}
 </pre>
+<ol>
+<li>The \setmainfont should always come <i>before</i>
+loading <b>mathastext</b> (else it must be followed by the \Mathastext command, or
+\Mathastext[<i>name_of_version</i>] to declare a math version; see the <a href="v114/mathastext.pdf">PDF Documentation</a>).</li>
+<li>
+Without the option <i>no-math</i> given to <b>fontspec</b>, digits and some other characters would not
+be typeset (despite loading afterwards mathastext) with the font specified by
+\setmainfont.  Without its
+option <i>no-math</i>, <b>fontspec</b> sets the \mathrm to refer to the text
+font (but <b>mathastext</b> does it also) and forces (except if some other package known to <b>fontspec</b> to deal with
+math fonts is detected) the digits to be typeset
+with CMR (or Latin Modern). So with <i>no-math</i> the first aspect is taken care
+of by mathastext itself and the second aspect is gotten rid of.  (tested
+February 2011; as things such as fontspec or LuaTeX evolve quickly this kind
+of things may unpredictably change at any time.)  </li>
+<li>The options of <b>mathastext</b> for dealing with Greek letters make
+reference to fonts in the old-fashioned 8bits TeX format (Euler font, Symbol
+font, or LGR-encoded fonts). If the Greek letters are
+to come from a Unicode font, the set-up has to be done by another package. For
+the XeLaTeX engine a convenient one is <b>mathspec</b>. For example:
+<pre>
+\usepackage{mathspec}
+\setmathsfont(Greek)[Uppercase=Regular,Lowercase=Regular]{Arial}
+\setmainfont{TeX Gyre Bonum}
+\usepackage{mathastext}
+</pre>
+and then you can type directly αβγ in math mode to have the Greek letters,
+in upright shape, from the Arial font. <b>Important</b>: <b>mathspec</b>
+automatically loads <b>fontspec</b>, with option <i>no-math</i>. Thus, this is
+a good thing for <b>mathastext</b>. Of course as <b>mathspec</b> allows to
+specify the fonts for Latin letters and Digits as well, the rationale for
+using <b>mathastext</b> then is (quasi) reduced to its capabilities to deal with
+multiple math versions (and also to the fact that it manages also most
+other characters from the Basic Latin set, besides Letters and
+Digits). (tested May 2011)
+</li>
+<li>
+The success of the <b>mathastext</b> option <i>italic</i> with a Unicode font
+depends on whether this font is provided with an italic variant: for example
+(tested on a Linux box with XeTeX)
+it works with Times New Roman but not with Arial
+Black or (tested on a Mac with LuaTeX) it works with Baskerville or Didot but not with
+American Typewriter.  (tested
+May 2011) </li>
+<li>The package <b>amsmath</b> has some problems with Unicode (or rather with
+packages aware of the Unicode context, such as <b>mathastext</b>). When
+using <b>amsmath</b> load <b>mathastext</b> (later) with option <i>noendash</i> and
+add the appropriate line below after \begin{document}:  (tested May 2011) <br>
+<pre>
+\XeTeXmathcode`\- ="2 \symmtoperatorfont "2013 \relax % if XeTeX
+\luatexUmathcode`\-="2 \symmtoperatorfont "2013 \relax % if LuaTeX
+</pre>
+Perhaps these problems of <b>amsmath</b> will auto-magically disappear with
+future versions of either amsmath, XeTeX or LuaTeX (or of packages loaded by default by the
+document classes), and this could make the above work-around superfluous.
+</li>
+</ol>
+<br>
 </li>
 <!--<li>To users of earlier versions: please note that the options <i>endash</i>
 and <i>alldelims</i> are now active by default (but option <i>alldelims</i> is
@@ -128,11 +187,13 @@ severe, so users of these versions are strongly advised to upgrade.
 </li>
 <li> PDF documentation of the <a href="v10/mathastext-doc.pdf">initial version</a></li>
 </ul>
-</div>
+</DIV>
 
 
 <p>
-    <a href="http://validator.w3.org/check?uri=referer"><img style="border:0;width:88px;height:31px" src="valid-html401-blue.png" alt="Valid HTML 4.01 Transitional"></a>
+    <a href="http://validator.w3.org/check?uri=referer"><img style="border:0;width:88px;height:31px"
+    src="valid-html401-blue.png"
+    alt="Valid HTML 4.01 Transitional"></a>
 </p>
 
 </body> 
