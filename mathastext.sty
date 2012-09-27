@@ -7,7 +7,7 @@
 %% mathastext.dtx  (with options: `package')
 %% This is a generated file.
 %% 
-%%     Copyright (C) 2011 by Jean-Francois B.
+%%     Copyright (C) 2011, 2012 by Jean-Francois B.
 %% 
 %%     Please report errors to 2589111+jfbu@users.noreply.github.com
 %%     Many examples available here:
@@ -31,7 +31,7 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{mathastext}
-         [2011/04/04 v1.14c Use the text font in simple mathematics]
+         [2012/09/26 v1.15 Use the text font in simple mathematics]
 \newif\ifXeTeX
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname XeTeXinterchartoks\endcsname\relax
@@ -63,9 +63,7 @@
   \def\m@t@ltsh{\shapedefault}  %% will be default shape for letters
 \newif\ifmt@proceed
 \newif\ifmt@failed
-\def\mt@oti{OT1}\def\mt@ti{T1}
-\def\mt@eui{EU1}\def\mt@euii{EU2}
-\def\mt@lyi{LY1}
+\def\mt@oti{OT1}\def\mt@ti{T1}\def\mt@eui{EU1}\def\mt@euii{EU2}\def\mt@lyi{LY1}
 \newif\ifmt@italic
     \DeclareOption{italic}{\mt@italictrue\def\m@t@ltsh{\itdefault}}
 \newif\ifmt@frenchmath
@@ -169,9 +167,96 @@ defaultbf,defaultit,defaultsf,defaulttt}}
     \DeclareOption{12pt}{\mt@twelvetrue}
 \newif\ifmt@fouriervec
     \DeclareOption{fouriervec}{\mt@fouriervectrue}
+\newif\ifmt@subdued
+    \DeclareOption{subdued}{\mt@subduedtrue}
 \DeclareOption*{\PackageWarning{mathastext}{Unknown option `\CurrentOption'}}
-%%
 \ProcessOptions\relax
+%%
+\ifmt@subdued
+%%
+\begingroup
+\def\install@mathalphabet#1#2{}
+%%
+\@tempcntb=\mathcode`\a
+\divide\@tempcntb by 256
+\@tempcnta\@tempcntb
+\divide\@tempcnta by 16
+\multiply\@tempcnta by 16
+\advance\@tempcntb-\@tempcnta
+%%
+\@tempcnta\z@
+\def\getanddefine@fonts#1#2{%
+\ifnum\@tempcnta=\@tempcntb
+\gdef\mt@normalmv@letter{#2}%
+\fi
+\advance\@tempcnta\@ne
+}%
+\mv@normal
+%%
+\@tempcnta\z@
+\def\getanddefine@fonts#1#2{%
+\ifnum\@tempcnta=\@tempcntb
+\gdef\mt@boldmv@letter{#2}%
+\fi
+\advance\@tempcnta\@ne
+}%
+\mv@bold
+%%
+\@tempcntb=\mathcode`\1
+\divide\@tempcntb by 256
+\@tempcnta\@tempcntb
+\divide\@tempcnta by 16
+\multiply\@tempcnta by 16
+\advance\@tempcntb-\@tempcnta
+%%
+\@tempcnta\z@
+\def\getanddefine@fonts#1#2{%
+\ifnum\@tempcnta=\@tempcntb
+\gdef\mt@normalmv@operator{#2}%
+\fi
+\advance\@tempcnta\@ne
+}%
+\mv@normal
+%%
+\@tempcnta\z@
+\def\getanddefine@fonts#1#2{%
+\ifnum\@tempcnta=\@tempcntb
+\gdef\mt@boldmv@operator{#2}%
+\fi
+\advance\@tempcnta\@ne
+}%
+\mv@bold
+%%
+\endgroup
+%%
+\edef\mt@funnyoti{\expandafter\expandafter\expandafter\@gobble\expandafter\string\csname OT1\endcsname}
+\def\mt@@debut#1/#2/#3/#4/{#1}
+\def\mt@@reste#1/#2/#3/#4/{#2/#3/#4}
+%%
+\edef\mt@tmp{\expandafter\expandafter\expandafter\@gobble\expandafter\string\mt@normalmv@operator}
+\edef\mt@debut{\expandafter\mt@@debut\mt@tmp/}
+\edef\mt@reste{\expandafter\mt@@reste\mt@tmp/}
+%%
+\edef\mt@tmp{\encodingdefault}
+\ifx\mt@debut\mt@funnyoti
+\ifx\mt@tmp\mt@oti
+\edef\mt@normalmv@operator{\expandafter\noexpand\csname T1/\mt@reste\endcsname}
+\else
+\edef\mt@normalmv@operator{\expandafter\noexpand\csname \mt@tmp/\mt@reste\endcsname}
+\fi\fi
+%%
+\edef\mt@tmp{\expandafter\expandafter\expandafter\@gobble\expandafter\string\mt@boldmv@operator}
+\edef\mt@debut{\expandafter\mt@@debut\mt@tmp/}
+\edef\mt@reste{\expandafter\mt@@reste\mt@tmp/}
+%%
+\edef\mt@tmp{\encodingdefault}
+\ifx\mt@debut\mt@funnyoti
+\ifx\mt@tmp\mt@oti
+\edef\mt@boldmv@operator{\expandafter\noexpand\csname T1/\mt@reste\endcsname}
+\else
+\edef\mt@boldmv@operator{\expandafter\noexpand\csname \mt@tmp/\mt@reste\endcsname}
+\fi\fi
+\fi % fin de \ifmt@subdued
 \DeclareSymbolFont{mtoperatorfont}
     {\m@t@enc}{\m@t@fam}{\m@t@ser}{\m@t@opsh}
 \DeclareSymbolFont{mtletterfont}
@@ -434,6 +519,7 @@ defaultbf,defaultit,defaultsf,defaulttt}}
    \SetMathAlphabet{\mathnormalbold}{#2}{#3}{#4}{\m@t@bold}
                                  {\csname mt@ltshape@\mt@version\endcsname}
    \SetSymbolFont{mtoperatorfont}{#2}{#3}{#4}{#5}{#6}
+%%   \SetSymbolFont{mtpunctandsymb}{#2}{#3}{#4}{#5}{#6}
   \ifmt@needeuler
       \SetMathAlphabet{\MathEulerBold}{#2}{U}{zeur}{\m@t@bold}{n}
   \fi
@@ -623,12 +709,11 @@ defaultbf,defaultit,defaultsf,defaulttt}}
   \mkern-7mu\smash\mt@minus@sign$}
 \fi
 \def\do@the@endashstuff{\edef\mt@tmp@enc{\encodingdefault}
-\ifx\mt@tmp@enc\mt@eui % xetex+fontspec
-  \XeTeXmathcode`\-="2 \symmtoperatorfont "2013 \relax
+  \ifx\mt@tmp@enc\mt@eui % xetex+fontspec
+  \AtBeginDocument{\XeTeXmathcode`\-="2 \symmtoperatorfont "2013 \relax}
 \else
 \ifx\mt@tmp@enc\mt@euii % luatex+fontspec
-   \luatexUmathcode`\-="2 \symmtoperatorfont "2013 \relax
-\else
+  \AtBeginDocument{\luatexUmathcode`\-="2 \symmtoperatorfont "2013 \relax}
 \ifx\mt@tmp@enc\mt@ti % T1
    \DeclareMathSymbol{-}{\mathbin}{mtoperatorfont}{21}
 \else
@@ -645,10 +730,10 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 \fi\fi\fi\fi\fi}
 \def\do@the@emdashstuff{\edef\mt@tmp@enc{\encodingdefault}
 \ifx\mt@tmp@enc\mt@eui % xetex+fontspec
-  \XeTeXmathcode`\-="2 \symmtoperatorfont "2014 \relax
+  \AtBeginDocument{\XeTeXmathcode`\-="2 \symmtoperatorfont "2014 \relax}
 \else
 \ifx\mt@tmp@enc\mt@euii % luatex+fontspec
-   \luatexUmathcode`\-="2 \symmtoperatorfont "2014 \relax
+  \AtBeginDocument{\luatexUmathcode`\-="2 \symmtoperatorfont "2014 \relax}
 \ifx\mt@tmp@enc\mt@ti % T1
    \DeclareMathSymbol{-}{\mathbin}{mtoperatorfont}{22}
 \else
@@ -673,8 +758,8 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 \fi
 %%\def\hbar{{\mathchar'26\mkern-9muh}}
 %% (original definition from latex.ltx)
-\def\mathrlap{\mathpalette\mathrlapinternal}
-\def\mathrlapinternal#1#2{\rlap{$\mathsurround=0pt#1{#2}$}}
+\def\mt@mathrlap{\mathpalette\mt@mathrlapinternal}
+\def\mt@mathrlapinternal#1#2{\rlap{$\mathsurround=0pt#1{#2}$}}
 \def\do@the@hbarstuff{\edef\mt@tmp@enc{\encodingdefault}
 \ifx\mt@tmp@enc\mt@eui % xetex and unicode font
   \XeTeXmathchardef\hbar="7 \symmtletterfont "0127 \relax
@@ -687,7 +772,7 @@ defaultbf,defaultit,defaultsf,defaulttt}}
        \else  %% assume OT1. Bad idea? Should not provoke an error anyhow
     \DeclareMathAccent{\mt@ltbar}{\mathalpha}{mtletterfont}{22}
     \fi
-    \def\hbar{\mathrlap{\mt@ltbar{\ }}h}
+    \def\hbar{\mt@mathrlap{\mt@ltbar{\ }}h}
 \fi\fi}
 \ifmt@nohbar\else\do@the@hbarstuff\fi
 \ifmt@noplus\else
@@ -721,8 +806,10 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 \DeclareMathDelimiter\vert
                  \mathord{\mt@font@tbu}{"7C}{largesymbols}{"0C}
 \DeclareMathSymbol\mid\mathrel{\mt@font@tbu}{"7C}
+\let\lbrace\undefined
 \DeclareMathDelimiter{\lbrace}
    {\mathopen}{\mt@font@tbu}{"7B}{largesymbols}{"08}
+\let\rbrace\undefined
 \DeclareMathDelimiter{\rbrace}
    {\mathclose}{\mt@font@tbu}{"7D}{largesymbols}{"09}
 \fi
@@ -1124,11 +1211,18 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 ** To keep LaTeX defaults, use option `defaultmathsizes'.}
 \fi
 \AtBeginDocument{
-  \ifmt@needsymbol
+\ifmt@needsymbol
   \DeclareFontFamily{U}{psy}{}
   \DeclareFontShape{U}{psy}{m}{n}{<->s*[\psy@scale] psyr}{}
   \fi
+\Mathastextversion{normal}
 }
+\ifmt@subdued
+\expandafter\SetSymbolFont@ \expandafter\mv@normal\mt@normalmv@letter\symmtletterfont
+\expandafter\SetSymbolFont@ \expandafter\mv@bold\mt@boldmv@letter\symmtletterfont
+\expandafter\SetSymbolFont@ \expandafter\mv@normal\mt@normalmv@operator\symmtoperatorfont
+\expandafter\SetSymbolFont@ \expandafter\mv@bold\mt@boldmv@operator\symmtoperatorfont
+\fi
 \mt@font@info@on
 \endinput
 %%
