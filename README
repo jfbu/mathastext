@@ -2,7 +2,7 @@
     +                mathastext                 +
     +                                           +
     + `Use the text font in simple mathematics' +
-    +             v1.15 2012/09/26              +
+    +             v1.15b 2012/09/27             +
     +             2589111+jfbu@users.noreply.github.com             +
     +-------------------------------------------+
 
@@ -63,6 +63,13 @@ Read the PDF documentation for more.
 Examples available at mathsastext.html
 
 CHANGE LOG
+
+1.15b
+
+   *  Corrected a `feature' of 1.15 which was backward-
+      incompatible
+
+   *  Improvements to the pdf documentation
 
 1.15
 
