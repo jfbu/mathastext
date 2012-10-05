@@ -31,7 +31,7 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{mathastext}
-         [2012/09/27 v1.15b Use the text font in simple mathematics]
+         [2012/10/05 v1.15c Use the text font in simple mathematics]
 \newif\ifXeTeX
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname XeTeXinterchartoks\endcsname\relax
@@ -54,13 +54,13 @@
 \def\mt@font@info@on{
 \let\@font@info\m@stext@info
 \let\@font@warning\m@stext@warning}
-\mt@font@info@off
   \def\m@t@enc{\encodingdefault}
   \def\m@t@fam{\familydefault}
   \def\m@t@ser{\seriesdefault}
   \def\m@t@opsh{\shapedefault}  %% will be default shape for operator names
   \def\m@t@bold{\bfdefault}
   \def\m@t@ltsh{\shapedefault}  %% will be default shape for letters
+  \edef\m@t@greekfont{\familydefault} %% new with version 1.15c
 \newif\ifmt@proceed
 \newif\ifmt@failed
 \def\mt@oti{OT1}\def\mt@ti{T1}\def\mt@eui{EU1}\def\mt@euii{EU2}\def\mt@lyi{LY1}
@@ -171,7 +171,6 @@ defaultbf,defaultit,defaultsf,defaulttt}}
     \DeclareOption{subdued}{\mt@subduedtrue}
 \DeclareOption*{\PackageWarning{mathastext}{Unknown option `\CurrentOption'}}
 \ProcessOptions\relax
-%%
 \ifmt@subdued
 %%
 \begingroup
@@ -256,7 +255,7 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 \else
 \edef\mt@boldmv@operator{\expandafter\noexpand\csname \mt@tmp/\mt@reste\endcsname}
 \fi\fi
-\fi % fin de \ifmt@subdued
+\fi % fin de ce \ifmt@subdued
 \DeclareSymbolFont{mtoperatorfont}
     {\m@t@enc}{\m@t@fam}{\m@t@ser}{\m@t@opsh}
 \DeclareSymbolFont{mtletterfont}
@@ -269,6 +268,7 @@ defaultbf,defaultit,defaultsf,defaulttt}}
    \DeclareMathAlphabet{\Mathtt}{\m@t@enc}{\ttdefault}{\m@t@ser}{\m@t@opsh}
    \DeclareMathAlphabet{\mathnormalbold}
                           {\m@t@enc}{\m@t@fam}{\m@t@bold}{\m@t@ltsh}
+\def\mt@update@greeksh{
   \def\m@t@greek@lsh{\m@t@ltsh} %% default behavior
   \def\m@t@greek@ush{\m@t@opsh}
     \ifmt@itgreek\def\m@t@greek@lsh{\itdefault}
@@ -285,7 +285,8 @@ defaultbf,defaultit,defaultsf,defaulttt}}
     \ifcase\mt@greek@select
         \or\def\m@t@greek@ush{\itdefault}
         \or\def\m@t@greek@ush{\updefault}
-    \fi
+    \fi}
+\mt@update@greeksh
 \ifmt@LGRgreek
     \DeclareFontEncoding{LGR}{}{}
     \DeclareSymbolFont{mtlgrfontlower}{LGR}
@@ -320,20 +321,32 @@ defaultbf,defaultit,defaultsf,defaulttt}}
   \SetSymbolFont{mtfourierpourvec}{bold}{FML}{futm}{b}{it}
   \DeclareMathAccent{\fouriervec}{\mathord}{mtfourierpourvec}{"7E}
 \fi
-\DeclareRobustCommand\MTencoding[1]{\def\m@t@enc{#1}}
-\DeclareRobustCommand\MTfamily[1]{\def\m@t@fam{#1}}
-\DeclareRobustCommand\MTseries[1]{\def\m@t@ser{#1}}
-\DeclareRobustCommand\MTshape[1]{\def\m@t@opsh{#1}
+\newcommand*\MTencoding[1]{\def\m@t@enc{#1}}
+\newcommand*\MTfamily[1]{\def\m@t@fam{#1}}
+\newcommand*\MTseries[1]{\def\m@t@ser{#1}}
+\newcommand*\MTshape[1]{\def\m@t@opsh{#1}
   \ifmt@italic\else\def\m@t@ltsh{#1}\fi}
-\DeclareRobustCommand\MTboldvariant[1]{\def\m@t@bold{#1}}
-\DeclareRobustCommand\MTlettershape[1]{\def\m@t@ltsh{#1}}
+\newcommand*\MTboldvariant[1]{\def\m@t@bold{#1}}
+\newcommand*\MTlettershape[1]{\def\m@t@ltsh{#1}}
 \let\Mathastextencoding\MTencoding
 \let\Mathastextfamily\MTfamily
 \let\Mathastextseries\MTseries
 \let\Mathastextshape\MTshape
 \let\Mathastextboldvariant\MTboldvariant
 \let\Mathastextlettershape\MTlettershape
-\DeclareRobustCommand\MTWillUse[5][\@empty]{
+    \newcommand\MTitgreek{%
+\mt@itgreektrue\mt@upgreekfalse\def\mt@greek@select{0}}
+    \newcommand\MTupgreek{%
+\mt@upgreektrue\mt@itgreekfalse\def\mt@greek@select{0}}
+    \newcommand\MTitGreek{\def\mt@greek@select{1}}
+    \newcommand\MTupGreek{\def\mt@greek@select{2}}
+\let\Mathastextitgreek\MTitgreek
+\let\Mathastextupgreek\MTupgreek
+\let\MathastextitGreek\MTitGreek
+\let\MathastextupGreek\MTupGreek
+    \newcommand*\MTgreekfont[1]{\def\m@t@greekfont{#1}}
+\let\Mathastextgreekfont\MTgreekfont
+\newcommand*\MTWillUse[5][\@empty]{
   \MTencoding{#2}
   \MTfamily{#3}
   \MTseries{#4}
@@ -348,9 +361,9 @@ defaultbf,defaultit,defaultsf,defaulttt}}
   \Mathastext}
 \let\MathastextWillUse\MTWillUse
 \let\Mathastextwilluse\MTWillUse
-\DeclareRobustCommand\Mathastext[1][\@empty]{
-  \mt@font@info@off
+\newcommand*\Mathastext[1][\@empty]{
 \ifx\@empty#1 % no optional argument
+  \mt@update@greeksh
   \edef\mt@encoding@normal{\m@t@enc}
   \edef\mt@family@normal{\m@t@fam}
   \edef\mt@series@normal{\m@t@ser}
@@ -440,28 +453,31 @@ defaultbf,defaultit,defaultsf,defaulttt}}
  \fi
 \ifmt@LGRgreek
    \SetSymbolFont{mtlgrfontlower}{normal}{LGR}
-            {\mt@family@normal}{\mt@series@normal}{\m@t@greek@lsh}
+            {\m@t@greekfont}{\mt@series@normal}{\m@t@greek@lsh}
    \SetSymbolFont{mtlgrfontlower}{bold}{LGR}
-            {\mt@family@bold}{\mt@boldvariant@normal}{\m@t@greek@lsh}
+            {\m@t@greekfont}{\mt@boldvariant@normal}{\m@t@greek@lsh}
    \SetSymbolFont{mtlgrfontupper}{normal}{LGR}
-            {\mt@family@normal}{\mt@series@normal}{\m@t@greek@ush}
+            {\m@t@greekfont}{\mt@series@normal}{\m@t@greek@ush}
    \SetSymbolFont{mtlgrfontupper}{bold}{LGR}
-            {\mt@family@bold}{\mt@boldvariant@bold}{\m@t@greek@ush}
+            {\m@t@greekfont}{\mt@boldvariant@bold}{\m@t@greek@ush}
  \else
 \ifmt@selfGreek
    \SetSymbolFont{mtselfGreekfont}{normal}{OT1}
-            {\mt@family@normal}{\mt@series@normal}{\m@t@greek@ush}
+            {\m@t@greekfont}{\mt@series@normal}{\m@t@greek@ush}
    \SetSymbolFont{mtselfGreekfont}{bold}{OT1}
-            {\mt@family@bold}{\mt@boldvariant@bold}{\m@t@greek@ush}
+            {\m@t@greekfont}{\mt@boldvariant@bold}{\m@t@greek@ush}
 \fi\fi
-\typeout{** Latin letters in math versions normal (resp. bold) are now^^J%
+\typeout{** Latin letters in the normal (resp. bold) math versions are now^^J%
     ** set up to use the fonts
 \mt@encoding@normal/\mt@family@normal/\mt@series@normal%
-(\mt@boldvariant@normal)/\mt@ltshape@normal}
+(\mt@boldvariant@normal)/\mt@ltshape@normal\space\ifmt@subdued(will be subdued)\fi}
+\ifmt@LGRgreek
+   \typeout{** Greek letters (\m@t@greek@lsh/\m@t@greek@ush) will use
+     LGR/\m@t@greekfont\space\ifmt@subdued(will be subdued)\fi}
+\fi
 \ifmt@nodigits\else
-  \typeout{** Other characters (digits, ...) and
-    \protect\log-like names will be^^J%
-** typeset with the \expandafter`\mt@shape@normal' shape.}
+  \typeout{** Other characters (digits, ...) and \protect\log-like names will be^^J%
+** typeset with the \mt@shape@normal\space shape.}
  \fi
 \else % optional argument, then we rather do DeclareVersion
  \edef\mt@tmp{#1}\def\mt@empty{}
@@ -472,9 +488,8 @@ defaultbf,defaultit,defaultsf,defaulttt}}
          {\m@t@enc}{\m@t@fam}{\m@t@ser}{\m@t@opsh}
  \fi
 \fi
-\mt@font@info@on
 }
-\DeclareRobustCommand\MTDeclareVersion[6][\@empty]{
+\newcommand*\MTDeclareVersion[6][\@empty]{
   \mt@font@info@off
   \edef\mt@version{#2}
   \DeclareMathVersion{\mt@version}
@@ -499,7 +514,7 @@ defaultbf,defaultit,defaultsf,defaulttt}}
     \typeout{** Latin letters in math version `#2' will use the font
     #3/#4/#5/\m@t@ltsh^^J%
     ** Other characters (digits, ...) and \protect\log-like names
-                    will be in `#6' shape.}
+                    will be in #6 shape.}
       \expandafter\edef\csname mt@ltshape@\mt@version\endcsname{\m@t@ltsh}
     \else
       \SetSymbolFont{mtletterfont}{#2}{#3}{#4}{#5}{#6}
@@ -512,7 +527,7 @@ defaultbf,defaultit,defaultsf,defaulttt}}
     \typeout{** Latin letters in math version `#2' will use the font
     #3/#4/#5/#1^^J%
     ** Other characters (digits, ...) and \protect\log-like
-    names will be in `#6' shape.}
+    names will be in #6 shape.}
       \expandafter\edef\csname mt@ltshape@\mt@version\endcsname{#1}
   \fi
    \SetMathAlphabet{\Mathbf}{#2}{#3}{#4}{\m@t@bold}{#6}
@@ -545,11 +560,26 @@ defaultbf,defaultit,defaultsf,defaulttt}}
  \ifmt@LGRgreeks
       \SetSymbolFont{mtlgrfontlower}{#2}{LGR}{#4}{#5}{\m@t@greek@lsh@loc}
       \SetSymbolFont{mtlgrfontupper}{#2}{LGR}{#4}{#5}{\m@t@greek@ush@loc}
+   \typeout{** Greek letters (\m@t@greek@lsh@loc/\m@t@greek@ush@loc) will use
+     LGR font #4}
  \else
  \ifmt@selfGreeks
       \SetSymbolFont{mtselfGreekfont}{#2}{OT1}{#4}{#5}{\m@t@greek@ush@loc}
- \fi\fi
-  \mt@font@info@on
+   \typeout{** Capital Greek letters (\m@t@greek@lsh@loc/\m@t@greek@ush@loc)
+     will use OT1 font #4}
+ \else
+ \ifmt@LGRgreek
+      \SetSymbolFont{mtlgrfontlower}{#2}{LGR}{\m@t@greekfont}{#5}{\m@t@greek@lsh@loc}
+      \SetSymbolFont{mtlgrfontupper}{#2}{LGR}{\m@t@greekfont}{#5}{\m@t@greek@ush@loc}
+   \typeout{** Greek letters (\m@t@greek@lsh@loc/\m@t@greek@ush@loc) will use
+     LGR font \m@t@greekfont}
+ \else
+ \ifmt@selfGreek
+      \SetSymbolFont{mtselfGreekfont}{#2}{OT1}{\m@t@greekfont}{#5}{\m@t@greek@ush@loc}
+   \typeout{** Capital Greek letters (\m@t@greek@lsh@loc/\m@t@greek@ush@loc)
+     will use OT1 font \m@t@greekfont}
+ \fi\fi\fi\fi
+\mt@font@info@on
 }
 \let\MathastextDeclareVersion\MTDeclareVersion
 \Mathastext
@@ -570,7 +600,7 @@ defaultbf,defaultit,defaultsf,defaulttt}}
        \typeout{** Greek letters will use the PostScript Symbol font. Use^^J%
 ** \protect\MathastextSymbolScale{<factor>} to scale the font.}
 \fi\fi
-\DeclareRobustCommand\MTVersion[2][\@empty]{%
+\newcommand*\MTVersion[2][\@empty]{%
     \mathversion{#2}%
     \ifx\@empty#1% no optional argument
         \edef\mt@tmp{#2}
@@ -586,7 +616,7 @@ defaultbf,defaultit,defaultsf,defaulttt}}
         {\csname mt@shape@\mt@tmp\endcsname}%
     \edef\m@t@@encoding{\csname mt@encoding@\mt@tmp\endcsname}%
         \renewcommand{\encodingdefault}{\m@t@@encoding}%
-%% modifications avec v1.15b
+%% some modifications for v1.15b
     \edef\m@t@@famdefault{\csname mt@family@\mt@tmp\endcsname}%
         \renewcommand{\familydefault}{\m@t@@famdefault}%
     \edef\m@t@@series{\csname mt@series@\mt@tmp\endcsname}%
@@ -603,6 +633,66 @@ defaultbf,defaultit,defaultsf,defaulttt}}
         \renewcommand{\sfdefault}{\m@t@@sfdefault}%
     \edef\m@t@@ttdefault{\csname mt@ttdefault@\mt@tmp\endcsname}%
         \renewcommand{\ttdefault}{\m@t@@ttdefault}%
+%% extending subdued to LGRgreek with v1.15c
+\ifmt@subdued
+\ifmt@LGRgreek
+\edef\mt@tmp{#2}%
+\def\mt@@tmp{normal}%
+\ifx\mt@tmp\mt@@tmp\else
+\def\mt@@tmp{bold}%
+\ifx\mt@tmp\mt@@tmp\else
+\let\Alpha\Alpha@m@t
+\let\Beta\Beta@m@t
+\let\Gamma\Gamma@m@t
+\let\Delta\Delta@m@t
+\let\Epsilon\Epsilon@m@t
+\let\Zeta\Zeta@m@t
+\let\Eta\Eta@m@t
+\let\Theta\Theta@m@t
+\let\Iota\Iota@m@t
+\let\Kappa\Kappa@m@t
+\let\Lambda\Lambda@m@t
+\let\Mu\Mu@m@t
+\let\Nu\Nu@m@t
+\let\Xi\Xi@m@t
+\let\Omicron\Omicron@m@t
+\let\Pi\Pi@m@t
+\let\Rho\Rho@m@t
+\let\Sigma\Sigma@m@t
+\let\Tau\Tau@m@t
+\let\Upsilon\Upsilon@m@t
+\let\Phi\Phi@m@t
+\let\Chi\Chi@m@t
+\let\Psi\Psi@m@t
+\let\Omega\Omega@m@t
+\let\alpha\alpha@m@t
+\let\beta\beta@m@t
+\let\gamma\gamma@m@t
+\let\delta\delta@m@t
+\let\epsilon\epsilon@m@t
+\let\zeta\zeta@m@t
+\let\eta\eta@m@t
+\let\theta\theta@m@t
+\let\iota\iota@m@t
+\let\kappa\kappa@m@t
+\let\lambda\lambda@m@t
+\let\mu\mu@m@t
+\let\nu\nu@m@t
+\let\xi\xi@m@t
+\let\omicron\omicron@m@t
+\let\pi\pi@m@t
+\let\rho\rho@m@t
+\let\varsigma\varsigma@m@t
+\let\sigma\sigma@m@t
+\let\tau\tau@m@t
+\let\upsilon\upsilon@m@t
+\let\phi\phi@m@t
+\let\chi\chi@m@t
+\let\psi\psi@m@t
+\let\omega\omega@m@t
+\let\Digamma\Digamma@m@t
+\let\digamma\digamma@m@t
+\fi\fi\fi\fi
 }
 \let\MathastextVersion\MTVersion
 \let\Mathastextversion\MTVersion
@@ -1065,58 +1155,58 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 \DeclareMathSymbol{\wp}{\mathord}{mtpsymbol}{"C3}
 \fi\fi\fi
 %%
-\ifmt@LGRgreek
-\DeclareMathSymbol{\Alpha}{\mathalpha}{mtlgrfontupper}{65}
-\DeclareMathSymbol{\Beta}{\mathalpha}{mtlgrfontupper}{66}
-\DeclareMathSymbol{\Gamma}{\mathalpha}{mtlgrfontupper}{71}
-\DeclareMathSymbol{\Delta}{\mathalpha}{mtlgrfontupper}{68}
-\DeclareMathSymbol{\Epsilon}{\mathalpha}{mtlgrfontupper}{69}
-\DeclareMathSymbol{\Zeta}{\mathalpha}{mtlgrfontupper}{90}
-\DeclareMathSymbol{\Eta}{\mathalpha}{mtlgrfontupper}{72}
-\DeclareMathSymbol{\Theta}{\mathalpha}{mtlgrfontupper}{74}
-\DeclareMathSymbol{\Iota}{\mathalpha}{mtlgrfontupper}{73}
-\DeclareMathSymbol{\Kappa}{\mathalpha}{mtlgrfontupper}{75}
-\DeclareMathSymbol{\Lambda}{\mathalpha}{mtlgrfontupper}{76}
-\DeclareMathSymbol{\Mu}{\mathalpha}{mtlgrfontupper}{77}
-\DeclareMathSymbol{\Nu}{\mathalpha}{mtlgrfontupper}{78}
-\DeclareMathSymbol{\Xi}{\mathalpha}{mtlgrfontupper}{88}
-\DeclareMathSymbol{\Omicron}{\mathalpha}{mtlgrfontupper}{79}
-\DeclareMathSymbol{\Pi}{\mathalpha}{mtlgrfontupper}{80}
-\DeclareMathSymbol{\Rho}{\mathalpha}{mtlgrfontupper}{82}
-\DeclareMathSymbol{\Sigma}{\mathalpha}{mtlgrfontupper}{83}
-\DeclareMathSymbol{\Tau}{\mathalpha}{mtlgrfontupper}{84}
-\DeclareMathSymbol{\Upsilon}{\mathalpha}{mtlgrfontupper}{85}
-\DeclareMathSymbol{\Phi}{\mathalpha}{mtlgrfontupper}{70}
-\DeclareMathSymbol{\Chi}{\mathalpha}{mtlgrfontupper}{81}
-\DeclareMathSymbol{\Psi}{\mathalpha}{mtlgrfontupper}{89}
-\DeclareMathSymbol{\Omega}{\mathalpha}{mtlgrfontupper}{87}
-\DeclareMathSymbol{\alpha}{\mathalpha}{mtlgrfontlower}{97}
-\DeclareMathSymbol{\beta}{\mathalpha}{mtlgrfontlower}{98}
-\DeclareMathSymbol{\gamma}{\mathalpha}{mtlgrfontlower}{103}
-\DeclareMathSymbol{\delta}{\mathalpha}{mtlgrfontlower}{100}
-\DeclareMathSymbol{\epsilon}{\mathalpha}{mtlgrfontlower}{101}
-\DeclareMathSymbol{\zeta}{\mathalpha}{mtlgrfontlower}{122}
-\DeclareMathSymbol{\eta}{\mathalpha}{mtlgrfontlower}{104}
-\DeclareMathSymbol{\theta}{\mathalpha}{mtlgrfontlower}{106}
-\DeclareMathSymbol{\iota}{\mathalpha}{mtlgrfontlower}{105}
-\DeclareMathSymbol{\kappa}{\mathalpha}{mtlgrfontlower}{107}
-\DeclareMathSymbol{\lambda}{\mathalpha}{mtlgrfontlower}{108}
-\DeclareMathSymbol{\mu}{\mathalpha}{mtlgrfontlower}{109}
-\DeclareMathSymbol{\nu}{\mathalpha}{mtlgrfontlower}{110}
-\DeclareMathSymbol{\xi}{\mathalpha}{mtlgrfontlower}{120}
-\DeclareMathSymbol{\omicron}{\mathalpha}{mtlgrfontlower}{111}
-\DeclareMathSymbol{\pi}{\mathalpha}{mtlgrfontlower}{112}
-\DeclareMathSymbol{\rho}{\mathalpha}{mtlgrfontlower}{114}
-\DeclareMathSymbol{\varsigma}{\mathalpha}{mtlgrfontlower}{99}
-\DeclareMathSymbol{\sigma}{\mathalpha}{mtlgrfontlower}{115}
-\DeclareMathSymbol{\tau}{\mathalpha}{mtlgrfontlower}{116}
-\DeclareMathSymbol{\upsilon}{\mathalpha}{mtlgrfontlower}{117}
-\DeclareMathSymbol{\phi}{\mathalpha}{mtlgrfontlower}{102}
-\DeclareMathSymbol{\chi}{\mathalpha}{mtlgrfontlower}{113}
-\DeclareMathSymbol{\psi}{\mathalpha}{mtlgrfontlower}{121}
-\DeclareMathSymbol{\omega}{\mathalpha}{mtlgrfontlower}{119}
-\DeclareMathSymbol{\digamma}{\mathalpha}{mtlgrfontlower}{147}
-\DeclareMathSymbol{\Digamma}{\mathalpha}{mtlgrfontlower}{195}
+\ifmt@LGRgreek % internal names for subdued implementation (1.15c)
+\DeclareMathSymbol{\Alpha@m@t}{\mathalpha}{mtlgrfontupper}{65}
+\DeclareMathSymbol{\Beta@m@t}{\mathalpha}{mtlgrfontupper}{66}
+\DeclareMathSymbol{\Gamma@m@t}{\mathalpha}{mtlgrfontupper}{71}
+\DeclareMathSymbol{\Delta@m@t}{\mathalpha}{mtlgrfontupper}{68}
+\DeclareMathSymbol{\Epsilon@m@t}{\mathalpha}{mtlgrfontupper}{69}
+\DeclareMathSymbol{\Zeta@m@t}{\mathalpha}{mtlgrfontupper}{90}
+\DeclareMathSymbol{\Eta@m@t}{\mathalpha}{mtlgrfontupper}{72}
+\DeclareMathSymbol{\Theta@m@t}{\mathalpha}{mtlgrfontupper}{74}
+\DeclareMathSymbol{\Iota@m@t}{\mathalpha}{mtlgrfontupper}{73}
+\DeclareMathSymbol{\Kappa@m@t}{\mathalpha}{mtlgrfontupper}{75}
+\DeclareMathSymbol{\Lambda@m@t}{\mathalpha}{mtlgrfontupper}{76}
+\DeclareMathSymbol{\Mu@m@t}{\mathalpha}{mtlgrfontupper}{77}
+\DeclareMathSymbol{\Nu@m@t}{\mathalpha}{mtlgrfontupper}{78}
+\DeclareMathSymbol{\Xi@m@t}{\mathalpha}{mtlgrfontupper}{88}
+\DeclareMathSymbol{\Omicron@m@t}{\mathalpha}{mtlgrfontupper}{79}
+\DeclareMathSymbol{\Pi@m@t}{\mathalpha}{mtlgrfontupper}{80}
+\DeclareMathSymbol{\Rho@m@t}{\mathalpha}{mtlgrfontupper}{82}
+\DeclareMathSymbol{\Sigma@m@t}{\mathalpha}{mtlgrfontupper}{83}
+\DeclareMathSymbol{\Tau@m@t}{\mathalpha}{mtlgrfontupper}{84}
+\DeclareMathSymbol{\Upsilon@m@t}{\mathalpha}{mtlgrfontupper}{85}
+\DeclareMathSymbol{\Phi@m@t}{\mathalpha}{mtlgrfontupper}{70}
+\DeclareMathSymbol{\Chi@m@t}{\mathalpha}{mtlgrfontupper}{81}
+\DeclareMathSymbol{\Psi@m@t}{\mathalpha}{mtlgrfontupper}{89}
+\DeclareMathSymbol{\Omega@m@t}{\mathalpha}{mtlgrfontupper}{87}
+\DeclareMathSymbol{\alpha@m@t}{\mathalpha}{mtlgrfontlower}{97}
+\DeclareMathSymbol{\beta@m@t}{\mathalpha}{mtlgrfontlower}{98}
+\DeclareMathSymbol{\gamma@m@t}{\mathalpha}{mtlgrfontlower}{103}
+\DeclareMathSymbol{\delta@m@t}{\mathalpha}{mtlgrfontlower}{100}
+\DeclareMathSymbol{\epsilon@m@t}{\mathalpha}{mtlgrfontlower}{101}
+\DeclareMathSymbol{\zeta@m@t}{\mathalpha}{mtlgrfontlower}{122}
+\DeclareMathSymbol{\eta@m@t}{\mathalpha}{mtlgrfontlower}{104}
+\DeclareMathSymbol{\theta@m@t}{\mathalpha}{mtlgrfontlower}{106}
+\DeclareMathSymbol{\iota@m@t}{\mathalpha}{mtlgrfontlower}{105}
+\DeclareMathSymbol{\kappa@m@t}{\mathalpha}{mtlgrfontlower}{107}
+\DeclareMathSymbol{\lambda@m@t}{\mathalpha}{mtlgrfontlower}{108}
+\DeclareMathSymbol{\mu@m@t}{\mathalpha}{mtlgrfontlower}{109}
+\DeclareMathSymbol{\nu@m@t}{\mathalpha}{mtlgrfontlower}{110}
+\DeclareMathSymbol{\xi@m@t}{\mathalpha}{mtlgrfontlower}{120}
+\DeclareMathSymbol{\omicron@m@t}{\mathalpha}{mtlgrfontlower}{111}
+\DeclareMathSymbol{\pi@m@t}{\mathalpha}{mtlgrfontlower}{112}
+\DeclareMathSymbol{\rho@m@t}{\mathalpha}{mtlgrfontlower}{114}
+\DeclareMathSymbol{\varsigma@m@t}{\mathalpha}{mtlgrfontlower}{99}
+\DeclareMathSymbol{\sigma@m@t}{\mathalpha}{mtlgrfontlower}{115}
+\DeclareMathSymbol{\tau@m@t}{\mathalpha}{mtlgrfontlower}{116}
+\DeclareMathSymbol{\upsilon@m@t}{\mathalpha}{mtlgrfontlower}{117}
+\DeclareMathSymbol{\phi@m@t}{\mathalpha}{mtlgrfontlower}{102}
+\DeclareMathSymbol{\chi@m@t}{\mathalpha}{mtlgrfontlower}{113}
+\DeclareMathSymbol{\psi@m@t}{\mathalpha}{mtlgrfontlower}{121}
+\DeclareMathSymbol{\omega@m@t}{\mathalpha}{mtlgrfontlower}{119}
+\DeclareMathSymbol{\digamma@m@t}{\mathalpha}{mtlgrfontlower}{147}
+\DeclareMathSymbol{\Digamma@m@t}{\mathalpha}{mtlgrfontlower}{195}
 \fi
 \edef\mt@tmp@enc{\encodingdefault}
 \mt@proceedtrue
@@ -1222,12 +1312,66 @@ defaultbf,defaultit,defaultsf,defaulttt}}
   \fi
 }
 \ifmt@subdued
+\typeout{** ...entering subdued mode...}
 \expandafter\SetSymbolFont@ \expandafter\mv@normal\mt@normalmv@letter\symmtletterfont
 \expandafter\SetSymbolFont@ \expandafter\mv@bold\mt@boldmv@letter\symmtletterfont
 \expandafter\SetSymbolFont@ \expandafter\mv@normal\mt@normalmv@operator\symmtoperatorfont
 \expandafter\SetSymbolFont@ \expandafter\mv@bold\mt@boldmv@operator\symmtoperatorfont
-\fi
-\mt@font@info@on
+\typeout{** ...done.}
+\else
+\ifmt@LGRgreek
+\let\Alpha\Alpha@m@t
+\let\Beta\Beta@m@t
+\let\Gamma\Gamma@m@t
+\let\Delta\Delta@m@t
+\let\Epsilon\Epsilon@m@t
+\let\Zeta\Zeta@m@t
+\let\Eta\Eta@m@t
+\let\Theta\Theta@m@t
+\let\Iota\Iota@m@t
+\let\Kappa\Kappa@m@t
+\let\Lambda\Lambda@m@t
+\let\Mu\Mu@m@t
+\let\Nu\Nu@m@t
+\let\Xi\Xi@m@t
+\let\Omicron\Omicron@m@t
+\let\Pi\Pi@m@t
+\let\Rho\Rho@m@t
+\let\Sigma\Sigma@m@t
+\let\Tau\Tau@m@t
+\let\Upsilon\Upsilon@m@t
+\let\Phi\Phi@m@t
+\let\Chi\Chi@m@t
+\let\Psi\Psi@m@t
+\let\Omega\Omega@m@t
+\let\alpha\alpha@m@t
+\let\beta\beta@m@t
+\let\gamma\gamma@m@t
+\let\delta\delta@m@t
+\let\epsilon\epsilon@m@t
+\let\zeta\zeta@m@t
+\let\eta\eta@m@t
+\let\theta\theta@m@t
+\let\iota\iota@m@t
+\let\kappa\kappa@m@t
+\let\lambda\lambda@m@t
+\let\mu\mu@m@t
+\let\nu\nu@m@t
+\let\xi\xi@m@t
+\let\omicron\omicron@m@t
+\let\pi\pi@m@t
+\let\rho\rho@m@t
+\let\varsigma\varsigma@m@t
+\let\sigma\sigma@m@t
+\let\tau\tau@m@t
+\let\upsilon\upsilon@m@t
+\let\phi\phi@m@t
+\let\chi\chi@m@t
+\let\psi\psi@m@t
+\let\omega\omega@m@t
+\let\Digamma\Digamma@m@t
+\let\digamma\digamma@m@t
+\fi\fi
 \endinput
 %%
 %% End of file `mathastext.sty'.

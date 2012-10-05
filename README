@@ -2,22 +2,33 @@
     +                mathastext                 +
     +                                           +
     + `Use the text font in simple mathematics' +
-    +             v1.15b 2012/09/27             +
+    +             v1.15c 2012/10/05             +
     +             2589111+jfbu@users.noreply.github.com             +
     +-------------------------------------------+
 
 
-                    INSTALLATION
+                    INTRODUCTION
 
-Run latex on mathastext.ins to create mathastext.sty from
-mathastext.dtx and put mathastext.sty where LaTeX can find
-it. To generate documentation, including the commented
-source code, run latex on mathastext.dtx
+Optimal typographical results for documents containing
+mathematical symbols can only be hoped for with math fonts
+specifically designed to match a given text typeface.
+Although the list of freely available math fonts (alongside
+the Computer Modern and AMS extension fonts) is slowly
+expanding (fourier, kpfonts, mathdesign, pxfonts, txfonts,
+and others...) it remains limited, and the situation is even
+worse with Unicode fonts (XeTeX/LuaTeX). So if you can't
+find a math font which fits well with your favorite text
+font, and wish to still be able to typeset mathematical
+documents, perhaps not of the highest typographical quality,
+but at least not subjected to obvious visual incompatibi-
+-lities between your text font and the math fonts,
+try out mathastext: it will simply use the text font also
+for the math!
 
 
                         USAGE
 
-main options: italic, subdued.
+main options: italic, subdued, defaultmathsizes, LGRgreek.
 
           \usepackage[options]{mathastext}
           after other font related packages.
@@ -38,21 +49,22 @@ main options: italic, subdued.
           only active inside such a defined math
           version. 
 
-Use the `italic' option to have the Latin letters in math
-mode be in italics, as is standard. Digits and log-like
-operator names (pre-defined as well as user-defined) will be
-in the same shape as the text font (usually this means
-upright).
+Use the `italic' option to get the Latin letters in math
+mode be in italics. Digits and log-like operator names
+(pre-defined as well as user-defined) will be in the same
+shape as the text font (usually this means upright).
 
 For documents needing Greek letters the following is
 possible:
     + no option: Greek letters defined by other packages,
-    + LGRgreek: use the document text font in LGR encoding
-      (further options specify the shape of the lowercase
-      and uppercase Greek glyphs),  
     + eulergreek: use the Euler font for the Greek letters,
     + symbolgreek: use the Postscript Symbol font for the
       Greek letters.
+    + LGRgreek: use the document text font in LGR encoding
+      Further options specify the shape of the lowercase
+      and uppercase Greek glyphs; starting with v1.15c it is
+	  possible to use multiple distinct LGR fonts in the
+	  same document. 
 
 Commands are provided to scale the Euler and Symbol fonts by
 an arbitrary factor to let them fit better with the document
@@ -60,9 +72,29 @@ text font.
 
 Read the PDF documentation for more.
 
-Examples available at mathsastext.html
+Examples available there:
+     mathsastext.html
+     showcase.html
+
+
+
+                    INSTALLATION
+
+Run latex on mathastext.ins to create mathastext.sty from
+mathastext.dtx and put mathastext.sty where LaTeX can find
+it. To generate documentation, including the commented
+source code, run latex on mathastext.dtx
+
 
 CHANGE LOG
+
+1.15c
+
+   *  It is now possible to use distinct fonts in LGR encoding
+      for the Greek letters according to the current math
+      version. 
+
+   *  Improvements to the documentation.
 
 1.15b
 
