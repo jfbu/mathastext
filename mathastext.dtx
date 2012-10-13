@@ -1,7 +1,7 @@
 % \iffalse -*- coding: iso-latin-1; -*-
 %<*dtx>
-\def\mstdocrevdate{2012/10/05}
-\ProvidesFile{mathastext.dtx}[2012/10/05 v1.15c ]
+\def\mstdocrevdate{2012/10/13}
+\ProvidesFile{mathastext.dtx}[2012/10/13 v1.15d ]
 %</dtx>
 % \fi
 % \iffalse meta-comment
@@ -25,8 +25,8 @@
 % \iffalse
 %<*driver>
 \documentclass[a4paper]{ltxdoc} 
-\OnlyDescription
-\CheckSum{3544}
+%\OnlyDescription
+\CheckSum{3673}
 \usepackage{color}\usepackage{xspace}
 \definecolor{DarkMagenta}{RGB}{139,0,139} 
 \definecolor{ChoisiJeNeSaisPlusComment}{RGB}{225,95,0}
@@ -52,10 +52,11 @@ pdfpagemode=UseOutlines,%
 }
 %%
 \usepackage[T1]{fontenc}
+\usepackage{lmodern}
 \usepackage[subdued,italic,defaultmathsizes,%
 symbolmisc,symbolre,LGRgreek]{mathastext}
-\MTupgreek\MTgreekfont{cmtt}
-\MTDeclareVersion[n]{cmvtt}{T1}{cmvtt}{m}{n}
+\MTupgreek\MTgreekfont{lmtt}
+\MTDeclareVersion[n]{lmvtt}{T1}{lmvtt}{m}{n}
 %
 \usepackage{newcent}
 \Mathastext[newcent]
@@ -66,7 +67,7 @@ symbolmisc,symbolre,LGRgreek]{mathastext}
 %
 \usepackage[scaled]{helvet}
 \renewcommand\familydefault\sfdefault
-\MTgreekfont{cmss}
+\MTgreekfont{lmss}
 \Mathastext[helvet]
 \begin{document}
 \MTversion{normal}
@@ -113,12 +114,12 @@ symbolmisc,symbolre,LGRgreek]{mathastext}
 %
 %    \subsection{Examples}
 %
-%    \mst's basic aim to is to have the same font for text and
+%    \mst's basic aim is to have the same font for text and
 %    mathematics. Here is an example with
-%    Computer Modern typewriter proportional:
+%    Latin Modern typewriter proportional:
 %
 % {\advance\leftskip.1\linewidth\advance\rightskip.1\linewidth
-%  \MTversion{cmvtt}
+%  \MTversion{lmvtt}
 % Let $(X,Y)$ be two functions of a variable $a$. If they obey  the differential
 % system  $(VI_{\nu,n})$: 
 %   \begin{align*} 
@@ -225,12 +226,12 @@ symbolmisc,symbolre,LGRgreek]{mathastext}
 %
 % \vskip\baselineskip Notice that the Greek letters also changed
 % according to the \emph{math version}: \mst has indeed some (limited)
-% capabilities to this effect (we used the |LGR| encoded fonts |cmtt|,
-% |txr| (from |txfontsb| package), and |cmss|). As an
+% capabilities to this effect (we used the |LGR| encoded fonts |lmtt|,
+% |txr| (from |txfontsb| package), and |lmss|). As an
 % aside, I mention here that for documents containing many fonts
 % |pdflatex| produces truly larger files than |dvipdfmx| which embeds
 % them in a compressed format (for this doc with the source code
-% included --- 47 pages, it is circa 700KB vs 230KB).
+% included --- 50 pages, it is circa 700KB vs 230KB).
 % 
 % \subsection{Basic use}
 %
@@ -253,11 +254,11 @@ symbolmisc,symbolre,LGRgreek]{mathastext}
 % \end{verbatim}
 %   \end{minipage}\\
 %   Throughout the entire document, all letters, digits, and punctuation signs
-%   inside math mode will then be typeset in Times\footnote{let's do as if we
+%   inside math mode will then be typeset in Times.\footnote{let's do as if we
 %   did not know the excellent |txfonts| package which employs Times for text
 %   and has a 
 %   very complete math support, including  many additional mathematical glyphs
-%   in comparison to the CM fonts.}. Here is the precise list of
+%   in comparison to the CM fonts.} Here is the precise list of
 %   characters concerned by \mst, all from the basic |ASCII| set:\\
 %   {\color{ChoisiJeNeSaisPlusComment}\bfseries
 %   \centerline{abcdefghijklmnopqrstuvwxyz}\\
@@ -281,8 +282,11 @@ symbolmisc,symbolre,LGRgreek]{mathastext}
 %   upright in operator names), as is the standardized habit. However, one
 %   should be aware that the built-in placement routines of \TeX{} in math mode
 %   expect the math italic to have some (tiny) white space around them, so that
-%   they don't ``stick'' to parentheses for example. Compare (as is done in any
-%   book on \LaTeX{}) the text italic with the math italic (here for Computer
+%   they don't ``stick'' to other symbols, such as a $\defaultprod$:
+%   compare 
+%   {\itshape if\hbox{$\mathsurround0pt\defaultprod$}} with a pure math
+%   mode $if\defaultprod$. Compare also (as is done in any
+%   book on \LaTeX{}) the text italic with the math italic (here for Latin
 %   Modern):\footnote{Text fonts are equipped with ligature rules. The French
 %   Cursive font for example has complex ligature rules and they make
 %   cohabitation with \mst somewhat difficult in
@@ -331,9 +335,9 @@ symbolmisc,symbolre,LGRgreek]{mathastext}
 %   glyphs, in |LGR| encoding (this will be mentioned in the documentation of
 %   the font package). Then option §LGRgreek§ tells \mst to pick up these Greek
 %   letters. And it is then possible to specify whether the Greek letters should
-%   be upright, or ``italic''\footnote{a more detailed discussion comes next.
+%   be upright, or ``italic''.\footnote{a more detailed discussion comes next.
 %   Note that the default CM and its replacement Latin Modern for european
-%   languages do both come with |LGR| encoded fonts.}. And if your text font is
+%   languages do both come with |LGR| encoded fonts.} And if your text font is
 %   not distributed with Greek glyphs, and does not mix well with the CM ones
 %   then there is always the possibility to load, prior to \mst, some math
 %   packages such as |fourier|, |kpfonts|, |mathdesign|, |txfonts|, \dots{}
@@ -356,9 +360,8 @@ symbolmisc,symbolre,LGRgreek]{mathastext}
 %   \begin{minipage}{.5\linewidth}
 % \begin{verbatim}
 % \usepackage[T1]{fontenc}
-% \usepackage{lmodern}
 % \usepackage[subdued,italic,defaultmathsizes]{mathastext}
-% \MTDeclareVersion[n]{cmvtt}{T1}{cmvtt}{m}{n}
+% \MTDeclareVersion[n]{lmvtt}{T1}{lmvtt}{m}{n}
 % \usepackage{newcent}
 % \Mathastext[newcent]
 % \usepackage{times}
@@ -374,7 +377,7 @@ symbolmisc,symbolre,LGRgreek]{mathastext}
 % three times the command §\Mathastext§, thus defining four
 %  |math versions|\footnote{|math versions| are discussed in the document
 %  |fntguide.pdf| 
-% from your \TeX{} distribution.}: |cmvtt|, |newcent|, |times|, and |helvet|.
+% from your \TeX{} distribution.}: |lmvtt|, |newcent|, |times|, and |helvet|.
 % The names can be taken arbitrarily (they only need to be suitable arguments to
 % the \LaTeX{} \cs{DeclareMathVersion} command which is invoked internally, so
 % no spaces in the names). Two additional math versions preexist: the |normal| and
@@ -435,7 +438,7 @@ symbolmisc,symbolre,LGRgreek]{mathastext}
 %    is used.} There is also an option §frenchmath§ to make the
 %    uppercase letters nevertheless upright, because this is the way of
 %    traditional French mathematical typography.\footnote{more precisely
-%    stated, the shape used will be \cs{shapedefault}.}
+%    stated, the value of \cs{shapedefault} is used.}
 %
 %    \subsection{The \texorpdfstring{\texttt{\color{blue}subdued}}{subdued} option}
 %
@@ -529,7 +532,7 @@ symbolmisc,symbolre,LGRgreek]{mathastext}
 %      §italic§, the option §LGRgreek§ will use these upright Greek
 %      letters if no other package has changed math mode Greek), but
 %      those in italic shape are not the same glyphs as the default
-%      Greek letters from the OML encoded font |cmmi|, and they are not
+%      Greek letters from the |OML| encoded font |cmmi|, and they are not
 %      as nice.
 %    \item[§eulergreek§:] the Greek letters will be taken from the Euler font (the
 %      document does not have to load the eulervm package, \mst directly uses
@@ -542,8 +545,7 @@ symbolmisc,symbolre,LGRgreek]{mathastext}
 %    \item[§selfGreek§:] this option concerns only the eleven Greek
 %      capitals from the |OT1|-encoding. It does nothing for the
 %      lowercase Greek letters. The encoding used in the document does
-%      not have to be |OT1|. There is also a variant §selfGreeks§ to
-%      tell \mst to do this in all math versions. 
+%      not have to be |OT1|.
 %    \end{description}
 %
 %    There is also §LGRgreeks§ which tells \mst to pick up in each math
@@ -597,7 +599,7 @@ symbolmisc,symbolre,LGRgreek]{mathastext}
 %    the shapes.
 %
 %    As mentioned already the package allows to define various ``math
-%    versions''. In the case of $eulergreek$ or $symbolgreek$ they apply
+%    versions''. In the case of §eulergreek§ or §symbolgreek§ they apply
 %    to all these versions. In the case of the options §LGRgreeks§ or
 %    §selfGreeks§ (notice the additional ``s''), each math version is
 %    assumed to have its text font available in |LGR| (or |OT1|
@@ -619,24 +621,40 @@ symbolmisc,symbolre,LGRgreek]{mathastext}
 %
 %    \subsection{Unicode engines}
 %
-%    It is recommended to the user to look at the |mathspec| package, as a far
-%    more powerful and nativally unicode-aware alternative. However, \mst has
-%    been made minimally unicode-aware and can be used with Xe\TeX{} or
-%    Lua\TeX{}.
+%    \mst has been made minimally unicode-aware and can be used with Xe\TeX{} or
+%    Lua\TeX{}, but the user is strongly advised to look first at the |mathspec|
+%    package, which is a far more powerful package designed for unicode.
 %
 %    Of course \mst is extremely far from being able to define a math
 %    font, as it applies basically only to a subset of the 32-127 ascii range,
 %    and in particular it does not know how to use a given Unicode font
 %    simultaneously for Latin and Greek letters. For this the user is strongly
 %    advised to look at |mathspec| and |unicode-math|.
+%  
+%    When using \mst with either Xe\TeX{} or Lua\TeX{} it is recommended to use
+%    the |fontspec| package. Else, some of the encoding dependent things done by
+%    \mst like using the en-dash character to get a minus sign in math mode will
+%    not be put in place. Furthermore, it is \emph{necessary} to load |fontspec|
+%    with its |no-math| option, and this \emph{must} happen before loading \mst.
+%
+%    The |amsmath| package, if used, \emph{must} be loaded before \mst. 
+%
+%    Some of the functionality of \mst is less fully realized under the
+%    Lua\TeX{} engine than it is with  Xe\TeX{}. However this should be
+%    visible only under unusual circumstances (in the presence of some other
+%    package doing things as crazy as \mst does, the §subdued§ option
+%    behavior could prove not satisfactory), and will probably be fixed in the
+%    future, if the author learns more about Lua\TeX{}.
 %    
-%    To specify math versions using unicode fonts, only use the |fontspec|
-%    \cs{setmainfont} command (with arbitrary optional features) prior to
-%    loading \mst, or after and then followed by a \cs{Mathastext}
-%    command with the name of the version in square brackets. It is possible to
-%    mix unicode fonts and classical \TeX{} fonts, but due to the handling of
-%    the minus sign in math mode (in particular), it is best to have either only
-%    unicode fonts, or only old-fashioned \TeX{} fonts in a fixed encoding (T1,
+%    To specify math versions using unicode fonts, use the
+%    |fontspec| \cs{setmainfont} command (with arbitrary optional
+%    features). This command can be issued before loading \mst,
+%    or after and then will be followed by a \cs{Mathastext}
+%    command with the name of the version in square brackets. It
+%    is possible to mix unicode fonts and classical \TeX{} fonts,
+%    but due to the handling of the minus sign in math mode (in
+%    particular), it is best to have either only unicode fonts,
+%    or only old-fashioned \TeX{} fonts in a fixed encoding (T1,
 %    or LY1 for example).
 %
 %    \textbf{Important:} |fontspec| must be loaded with its \emph{no-math}
@@ -644,10 +662,7 @@ symbolmisc,symbolre,LGRgreek]{mathastext}
 %
 %    The package was not extensively tested with unicode engines, but I include
 %    here two examples which compiled successfully with Xe\TeX{}, the first one
-%    on a Linux machine, the second one on a Mac OS X machine. The inclusion of
-%    |amsmath| and |mathtools| was just made in order to detect possible
-%    conflicts with the current version of |mathastext|. I then commented out
-%    |mathtools| because in its presence less math versions can be defined.
+%    on a Linux machine, the second one on a Mac OS X machine.
 % \begin{verbatim}
 % \documentclass{article}
 % \usepackage[hscale=0.8]{geometry}
@@ -773,6 +788,30 @@ symbolmisc,symbolre,LGRgreek]{mathastext}
 %      encodings, including Unicode (if |fontspec| has been
 %      loaded).
 %
+%    \item[amsmath:] the behavior of the \cs{DeclareMathOperator}
+%    command of |amsmath| is slightly modified by \mst. This
+%    command allows crazy things like\\ 
+%    \centerline{\cs{DeclareMathOperator}\cs{crazy}\{m.ch-in'tr/u:c\}}
+%    and then the .,-,',/ and : will be typeset  in the
+%    roman font. But the font number was hardcoded in the macro
+%    and furthermore the code of |amsmath| would cause an error
+%    with Unicode engine as soon as some Unicode code is assigned
+%    to the minus character.\footnote{To the experts: the $\sin$,
+%    $\cos$, \dots{} operator names are \emph{not} defined by |amsmath| with
+%    the help of the \cs{DeclareMathOperator} macro, hence are
+%    not the cause of an error in Xe\TeX{}/Lua\LaTeX{}. What \mst
+%    does is to let to relax the \cs{newmcodes@} macro, so it is
+%    possible to save it before loading \mst and re-establish
+%    later, if really really this is what you want.}
+%    This specific issue will perhaps be
+%    fixed by some hypothetic future release of |amsmath|, or by other
+%    packages providing patches, but I decided for a preemptive
+%    strike. As a result the declaration above will not cause an
+%    error when \cs{crazy} is used with a Unicode engine, but there
+%     are now some spacings around the punctuation characters. To
+%    avoid this use (also with \LaTeX{}):\\
+%    \centerline{\cs{DeclareMathOperator}\cs{crazy}\{m\{.\}ch\{-\}in\{'\}tr\{/\}u\{:\}c\}}
+%    Note though that the ' will appear as a prime $'$. 
 %
 %    \item[hbar:] The definition of \cs{hbar} inherited from
 %      default \LaTeX{} will in our context make use of the
@@ -814,8 +853,8 @@ symbolmisc,symbolre,LGRgreek]{mathastext}
 %
 %     \item[fontspec:] one more note to users of
 %    Xe\TeX{}/Lua\LaTeX{} with |fontspec|: it has to be
-%    loaded \emph{with the option} §no-math§, 
-%    \emph{and before} \mst.
+%    loaded {with the option} §no-math§, 
+%    {and before} \mst.
 %
 %    \item[vec accent:] The default \cs{vec} accent is not
 %      appropriate for upright letters, so  \mst
@@ -932,7 +971,7 @@ symbolmisc,symbolre,LGRgreek]{mathastext}
 %      \hbox
 %      to\hsize{\hss§\MTDeclareVersion[sc]\{palatino\}\{T1\}\{ppl\}\{b\}\{sl\}§\hss}
 %      declares under the name |palatino| a version where
-%      mathematics will be typset using the Palatino font in
+%      mathematics will be typeset using the Palatino font in
 %      T1-encoding, bold, slanted, and the letters will in fact be
 %      in caps and small caps (and bold).\footnote{I do not
 %      especially recommend to use this in real life!} When the
@@ -945,7 +984,7 @@ symbolmisc,symbolre,LGRgreek]{mathastext}
 %      have the same shape as used for digits and operator-names.
 %    \item §\MTboldvariant§\marg{var}: when used before §\Mathastext§,
 %    specifies which bold
-%      (|b|,|sb|,|bx|,\dots) to be used by \cs{mathbf} (and
+%      (|b|, |sb|, |bx|, \dots) to be used by \cs{mathbf} (and
 %      \cs{boldmath}). Default is the \cs{bfdefault} at the time of
 %      loading \mst. When used before the declaration
 %      of a version, decides the way \cs{mathbf} will act in this version.
@@ -1131,10 +1170,12 @@ symbolmisc,symbolre,LGRgreek]{mathastext}
 %    accents. As in vanilla \LaTeX{}, they are taken from the font
 %    for the digits and \cs{log}-like names. Obey the alphabet
 %    changing commands. Will work only for |T1|, |LY1|, or |OT1|-compatible encodings.
-%  \item §defaultrm§, §defaultbf§, §defaulnormal§, §defaultit§, §defaultsf§, §defaultt§, §defaultalphabets§: do not
-%  overwrite (respectively) \cs{mathrm}, \cs{mathbf},
+%  \item §defaultrm§, §defaultbf§, §defaulnormal§, §defaultit§, §defaultsf§, §defaulttt§: do not
+%  overwrite, respectively: \cs{mathrm}, \cs{mathbf},
 %  \cs{mathnormal}, \cs{mathit}, \cs{mathsf}, and
-%  \cs{mathtt}, or all.
+%  \cs{mathtt}.
+% \item §defaultalphabets§: do not change any of the math alphabets from the
+% previous item.
 %  \item §defaultimath§: do not overwrite \cs{imath} and
 %  \cs{jmath}, do not extend \cs{i} and \cs{j} to math mode use.
 %  \item §defaultmathsizes§: do not change the \LaTeX{} defaults for the sizes
@@ -1161,7 +1202,7 @@ symbolmisc,symbolre,LGRgreek]{mathastext}
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{mathastext}
-         [2012/10/05 v1.15c Use the text font in simple mathematics]
+         [2012/10/13 v1.15d Use the text font in simple mathematics]
 %    \end{macrocode}
 % I should load some package for this code which I picked up somewhere.
 %    \begin{macrocode}
@@ -1348,28 +1389,73 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 % \end{macro}
 %    \begin{macrocode}
 \ProcessOptions\relax
-\ifmt@subdued
 %    \end{macrocode}
-% \begin{macro}{subdued}
-%   The subdued code was initiated during May 2011. I returned to |mathastext|
-%   on Sep 24, 2012, and finished this piece of code giving thus version 1.15.
-%   The point is to extract the data about how are letters and operators in the
-%   normal and bold versions. Due to the reassignement dones for characters I
-%   had decided in 2011 that the OT1 encoding should be replaced by T1. However
-%   the <, >, \{, \} and \string| are protected by the alldelimsfalse so there must be
-%   some other reason.
+% \begin{macro}{\newmcodes@}
+%   1.15d: this amsmath macro causes an error in Unicode engines as soon
+%   someone assigns a Unicode mathcode to the minus sign, and also makes a
+%   \cs{DeclareMathOperator} declaration. Furthermore it hard-codes the
+%   font number 0 as being the one to be used. Moreover just putting the
+%   concerned signs -,:,.,\,' inside braces emulates the behavior.
 %    \begin{macrocode}
-%%
+\@ifpackageloaded{amsmath}
+{\let\newmcodes@\relax} % brutal, but bye bye and don't come back.
+{}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{subdued}
+%   The subdued code was initiated during May 2011. I returned to
+%   |mathastext| on Sep 24, 2012, and finished this piece of code giving
+%   thus version 1.15. The point is to extract the data about how are
+%   letters and operators in the normal and bold versions. Due to the
+%   reassignements done for characters I had decided in 2011 that the
+%   OT1 encoding should be replaced by T1. However the <, >, \{, \} and
+%   \string| are protected by the alldelimsfalse so there must be some
+%   other reason.
+%
+%   1.15d: Oct 13, 2012. The \cs{mathcode} thing has to be used with
+%   care under Unicode engines. Unfortunately the \cs{luatexUmathcode}
+%   macro is completley helpless as it is not possible to know if it
+%   will return a legacy mathcode or a Unicode mathcode. On the other
+%   hand the much saner \cs{XeTeXmathcodenum} always return a Unicode
+%   mathcode. All these complications are because we do not know what
+%   other packages did before with letters and digits. I just can not
+%   assume that they only modified math fonts number 0 and 1, they could
+%   do as mathastext does, define new math fonts. Of course it is
+%   assumed here that all digits are assigned to one and the same font,
+%   and same for letters.
+%    \begin{macrocode}
+\ifmt@subdued
 \begingroup
 \def\install@mathalphabet#1#2{}
 %%
-\@tempcntb=\mathcode`\a
+\ifXeTeX
+\@tempcntb=\XeTeXmathcodenum`\a\relax
+\divide\@tempcntb by 1024   % cela fonctionne-il en unsigned?
+\divide\@tempcntb by 1024
+\divide\@tempcntb by 16
+%% let's hope that the division is done with *unsigned* integers...
+%%
+\else
+\ifLuaTeX  
+%% if some package, rather than redefining letterfont, defines
+%% a new math font and assigns the a-z letters to it, then
+%% subdued option will reassign a-z to letterfont But
+%% as \luatexUmathcodenum returns either a legacy mathcode or a
+%% Unicode mathcode, I can not use it do get the family of a.
+%% And I don't want to spend more time on this. It seems that
+%% \luatexUmathcodenum`\a returns in default situation (due to
+%% the way the format is built on TeXLive I think) a
+%% Unicode mathcode but if some package does \mathcode`\a="61
+%% then we would be doomed if we relied on this.
+\@tempcntb=1\relax
+\else
+\@tempcntb=\mathcode`\a\relax
 \divide\@tempcntb by 256
 \@tempcnta\@tempcntb
 \divide\@tempcnta by 16
 \multiply\@tempcnta by 16
 \advance\@tempcntb-\@tempcnta
-%%
+\fi\fi
 \@tempcnta\z@
 \def\getanddefine@fonts#1#2{%
 \ifnum\@tempcnta=\@tempcntb
@@ -1388,12 +1474,29 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 }%
 \mv@bold
 %%
-\@tempcntb=\mathcode`\1
+\ifXeTeX
+\@tempcntb=\XeTeXmathcodenum`\1\relax
+\divide\@tempcntb by 1024   % cela fonctionne-il en unsigned?
+\divide\@tempcntb by 1024
+\divide\@tempcntb by 16
+%%
+\else
+\ifLuaTeX  
+%% if some package, rather than redefining operatorfont,
+%% defines a new math font and assigns the digits to it, then
+%% the subdued option will reassign the digits to the original
+%% operatorfont. But \luatexUmathcodenum returning either a
+%% legacy mathcode or a Unicode mathcode, I can not use it do
+%% get the family of 1. 
+\@tempcntb=0\relax
+\else
+\@tempcntb=\mathcode`\1\relax
 \divide\@tempcntb by 256
 \@tempcnta\@tempcntb
 \divide\@tempcnta by 16
 \multiply\@tempcnta by 16
 \advance\@tempcntb-\@tempcnta
+\fi\fi
 %%
 \@tempcnta\z@
 \def\getanddefine@fonts#1#2{%
@@ -1427,7 +1530,7 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 \ifx\mt@debut\mt@funnyoti
 \ifx\mt@tmp\mt@oti
 \edef\mt@normalmv@operator{\expandafter\noexpand\csname T1/\mt@reste\endcsname}
-\else 
+\else
 \edef\mt@normalmv@operator{\expandafter\noexpand\csname \mt@tmp/\mt@reste\endcsname}
 \fi\fi
 %%
@@ -1658,7 +1761,7 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 % \begin{macro}{\MTshape}
 % \begin{macro}{\MTboldvariant}
 % \begin{macro}{\MTlettershape}
-%   Some public macros to modify our private internals, and
+%   Some public macros to modifyour private internals, and
 %   we will use them also ourself.
 %
 %   In version 1.1 we add the possibility to have two
@@ -2311,16 +2414,39 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 % Due to the way = and - are used by \LaTeX{} in arrows, we will
 % have to redefine \cs{Relbar} and \cs{relbar} in order for 
 % them to preserve their original meanings.
+%
+% 1.15d: Oct 13, 2012. Belated amendment of the code to be compatible
+% with Unicode engines in case someone changed the mathcode of -. Also I
+% do my modifications to \cs{relbar} in a manner testing for the
+% presence of amsmath.
 %    \begin{macrocode}
 \ifmt@nominus\else
-\edef\mt@minus@sign{\mathord{\expandafter\mathchar\number\mathcode`\-}}
-\def\relbar{\mathrel{\smash\mt@minus@sign}}
-\def\rightarrowfill{$\m@th\mt@minus@sign\mkern-7mu%
-  \cleaders\hbox{$\mkern-2mu\mt@minus@sign\mkern-2mu$}\hfill
+\ifXeTeX
+\XeTeXmathcharnumdef\mt@minus@sign=\XeTeXmathcodenum`\-\relax
+%    \end{macrocode}
+% We could also have used
+% \verb|\edef\mt@minus@sign{\expandafter\XeTeXmathcharnum\the\XeTeXmathcodenum`\-\relax}|
+% but not \verb|\def\mt@minus@sign{\XeTeXmathcharnum\XeTeXmathcodenum`\-}|
+%    \begin{macrocode} 
+\else
+\ifLuaTeX
+%% \luatexUmathcharnumdef\mt@minus@sign=\luatexUmathcodenum`\-\relax ne
+%% marche pas pour le moment car \luatexUmathcodenum retourne parfois un
+%% legacy mathcode, parfois un Unicode mathcode, \`a mon avis c'est un bug
+%% de LuaLatex. \luatexUmathchardef\mt@minus@sign="2 "2 "0\relax
+\mathchardef\mt@minus@sign=8704\relax % "2200
+\else
+\mathchardef\mt@minus@sign=\mathcode`\-\relax
+\fi\fi
+\@ifpackageloaded{amsmath}
+{\def\relbar{\mathrel{\mathpalette\mathsm@sh\mt@minus@sign}}}
+{\DeclareRobustCommand\relbar{\mathrel{\smash\mt@minus@sign}}}
+\def\rightarrowfill{$\m@th\mathord{\relbar}\mkern-7mu%
+  \cleaders\hbox{$\mkern-2mu\relbar\mkern-2mu$}\hfill
   \mkern-7mu\mathord\rightarrow$}
 \def\leftarrowfill{$\m@th\mathord\leftarrow\mkern-7mu%
-  \cleaders\hbox{$\mkern-2mu\mt@minus@sign\mkern-2mu$}\hfill
-  \mkern-7mu\smash\mt@minus@sign$}
+  \cleaders\hbox{$\mkern-2mu\relbar\mkern-2mu$}\hfill
+  \mkern-7mu\mathord{\relbar}$}
 \fi
 %    \end{macrocode}
 % \end{macro}
@@ -2448,14 +2574,31 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 % give so much freedom to users ;-) Well this construction gives
 % an acceptable result for some of the fonts I have tested,
 % whether upright or in italics.
+%
+% 1.15d: Oct 13, 2012. The \cs{mathcode} thing with = is at last made
+% Unicode compatible.
 % \begin{macro}{+,=,\Relbar}
 %    \begin{macrocode}
 \ifmt@noplus\else
 \DeclareMathSymbol{+}{\mathbin}{\mt@font@tbu}{"2B}
 \fi
 \ifmt@noequal\else
-\edef\mt@equal@sign{{\expandafter\mathchar\number\mathcode`\=}}
-\DeclareRobustCommand\Relbar{\mathrel{\mt@equal@sign}}
+\ifXeTeX
+\XeTeXmathcharnumdef\mt@equal@sign=\XeTeXmathcodenum`\=\relax
+\else
+\ifLuaTeX
+%% 12 octobre 2012 \luatexUmathcodenum`\=
+%% ne marche pas pour le moment \`a cause du fait que \luatexUmathcodenum
+%% donne un mathcode sur 8bit ou un Unicode mathcode sans qu'on puisse
+%% savoir lequel
+%% \luatexUmathchardef\mt@equal@sign="3 "0 "3D\relax
+\mathchardef\mt@equal@sign=12349\relax
+\else
+\mathchardef\mt@equal@sign=\mathcode`\=\relax
+\fi\fi
+\@ifpackageloaded{amsmath}
+{\def\Relbar{\mathrel\mt@equal@sign}}
+{\DeclareRobustCommand\Relbar{\mathrel{\mt@equal@sign}}}
 \DeclareMathSymbol{=}{\mathrel}{\mt@font@tbu}{"3D}
 \fi
 %    \end{macrocode}
@@ -2487,10 +2630,27 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 \DeclareMathDelimiter{\backslash}   
     {\mathord}{mtoperatorfont}{"5C}{largesymbols}{"0F}
 \DeclareMathSymbol\setminus\mathbin{mtoperatorfont}{"5C}
+%    \end{macrocode}
+% \begin{macro}{\models}
+% 1.15d: 13 oct 2012. Before modifying \string|
+%  we must preserve \cs{models} 
+%    \begin{macrocode}
+\ifXeTeX
+\XeTeXmathcharnumdef\mt@vert@bar=\XeTeXmathcodenum`\|\relax
+\else
+\ifLuaTeX
+%% \luatexUmathchardef\mt@vert@bar="0 "2 "006A\relax
+\mathchardef\mt@vert@bar=618\relax
+\else\mathchardef\mt@vert@bar=\mathcode`\|\relax
+\fi\fi
+\DeclareRobustCommand\models{\mathrel{\mt@vert@bar}\joinrel\Relbar}
+%    \end{macrocode}
+% \end{macro}
+%    \begin{macrocode}
 \DeclareMathSymbol{|}\mathord{\mt@font@tbu}{"7C}
 \DeclareMathDelimiter{|}{\mt@font@tbu}{"7C}{largesymbols}{"0C}
 %    \end{macrocode}
-% I stopped short of redeclaring also \cs{Vert}!
+% I did not do anything with \cs{Vert}! Maybe I should!
 %    \begin{macrocode}
 \DeclareMathDelimiter\vert
                  \mathord{\mt@font@tbu}{"7C}{largesymbols}{"0C}

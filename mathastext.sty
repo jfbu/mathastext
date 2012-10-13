@@ -31,7 +31,7 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{mathastext}
-         [2012/10/05 v1.15c Use the text font in simple mathematics]
+         [2012/10/13 v1.15d Use the text font in simple mathematics]
 \newif\ifXeTeX
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname XeTeXinterchartoks\endcsname\relax
@@ -171,18 +171,41 @@ defaultbf,defaultit,defaultsf,defaulttt}}
     \DeclareOption{subdued}{\mt@subduedtrue}
 \DeclareOption*{\PackageWarning{mathastext}{Unknown option `\CurrentOption'}}
 \ProcessOptions\relax
+\@ifpackageloaded{amsmath}
+{\let\newmcodes@\relax} % brutal, but bye bye and don't come back.
+{}
 \ifmt@subdued
-%%
 \begingroup
 \def\install@mathalphabet#1#2{}
 %%
-\@tempcntb=\mathcode`\a
+\ifXeTeX
+\@tempcntb=\XeTeXmathcodenum`\a\relax
+\divide\@tempcntb by 1024   % cela fonctionne-il en unsigned?
+\divide\@tempcntb by 1024
+\divide\@tempcntb by 16
+%% let's hope that the division is done with *unsigned* integers...
+%%
+\else
+\ifLuaTeX
+%% if some package, rather than redefining letterfont, defines
+%% a new math font and assigns the a-z letters to it, then
+%% subdued option will reassign a-z to letterfont But
+%% as \luatexUmathcodenum returns either a legacy mathcode or a
+%% Unicode mathcode, I can not use it do get the family of a.
+%% And I don't want to spend more time on this. It seems that
+%% \luatexUmathcodenum`\a returns in default situation (due to
+%% the way the format is built on TeXLive I think) a
+%% Unicode mathcode but if some package does \mathcode`\a="61
+%% then we would be doomed if we relied on this.
+\@tempcntb=1\relax
+\else
+\@tempcntb=\mathcode`\a\relax
 \divide\@tempcntb by 256
 \@tempcnta\@tempcntb
 \divide\@tempcnta by 16
 \multiply\@tempcnta by 16
 \advance\@tempcntb-\@tempcnta
-%%
+\fi\fi
 \@tempcnta\z@
 \def\getanddefine@fonts#1#2{%
 \ifnum\@tempcnta=\@tempcntb
@@ -201,12 +224,29 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 }%
 \mv@bold
 %%
-\@tempcntb=\mathcode`\1
+\ifXeTeX
+\@tempcntb=\XeTeXmathcodenum`\1\relax
+\divide\@tempcntb by 1024   % cela fonctionne-il en unsigned?
+\divide\@tempcntb by 1024
+\divide\@tempcntb by 16
+%%
+\else
+\ifLuaTeX
+%% if some package, rather than redefining operatorfont,
+%% defines a new math font and assigns the digits to it, then
+%% the subdued option will reassign the digits to the original
+%% operatorfont. But \luatexUmathcodenum returning either a
+%% legacy mathcode or a Unicode mathcode, I can not use it do
+%% get the family of 1.
+\@tempcntb=0\relax
+\else
+\@tempcntb=\mathcode`\1\relax
 \divide\@tempcntb by 256
 \@tempcnta\@tempcntb
 \divide\@tempcnta by 16
 \multiply\@tempcnta by 16
 \advance\@tempcntb-\@tempcnta
+\fi\fi
 %%
 \@tempcnta\z@
 \def\getanddefine@fonts#1#2{%
@@ -794,14 +834,27 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 \DeclareMathSymbol{;}{\mathpunct}{\mt@font@tbu}{"3B}
 \fi
 \ifmt@nominus\else
-\edef\mt@minus@sign{\mathord{\expandafter\mathchar\number\mathcode`\-}}
-\def\relbar{\mathrel{\smash\mt@minus@sign}}
-\def\rightarrowfill{$\m@th\mt@minus@sign\mkern-7mu%
-  \cleaders\hbox{$\mkern-2mu\mt@minus@sign\mkern-2mu$}\hfill
+\ifXeTeX
+\XeTeXmathcharnumdef\mt@minus@sign=\XeTeXmathcodenum`\-\relax
+\else
+\ifLuaTeX
+%% \luatexUmathcharnumdef\mt@minus@sign=\luatexUmathcodenum`\-\relax ne
+%% marche pas pour le moment car \luatexUmathcodenum retourne parfois un
+%% legacy mathcode, parfois un Unicode mathcode, \`a mon avis c'est un bug
+%% de LuaLatex. \luatexUmathchardef\mt@minus@sign="2 "2 "0\relax
+\mathchardef\mt@minus@sign=8704\relax % "2200
+\else
+\mathchardef\mt@minus@sign=\mathcode`\-\relax
+\fi\fi
+\@ifpackageloaded{amsmath}
+{\def\relbar{\mathrel{\mathpalette\mathsm@sh\mt@minus@sign}}}
+{\DeclareRobustCommand\relbar{\mathrel{\smash\mt@minus@sign}}}
+\def\rightarrowfill{$\m@th\mathord{\relbar}\mkern-7mu%
+  \cleaders\hbox{$\mkern-2mu\relbar\mkern-2mu$}\hfill
   \mkern-7mu\mathord\rightarrow$}
 \def\leftarrowfill{$\m@th\mathord\leftarrow\mkern-7mu%
-  \cleaders\hbox{$\mkern-2mu\mt@minus@sign\mkern-2mu$}\hfill
-  \mkern-7mu\smash\mt@minus@sign$}
+  \cleaders\hbox{$\mkern-2mu\relbar\mkern-2mu$}\hfill
+  \mkern-7mu\mathord{\relbar}$}
 \fi
 \def\do@the@endashstuff{\edef\mt@tmp@enc{\encodingdefault}
   \ifx\mt@tmp@enc\mt@eui % xetex+fontspec
@@ -874,8 +927,22 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 \DeclareMathSymbol{+}{\mathbin}{\mt@font@tbu}{"2B}
 \fi
 \ifmt@noequal\else
-\edef\mt@equal@sign{{\expandafter\mathchar\number\mathcode`\=}}
-\DeclareRobustCommand\Relbar{\mathrel{\mt@equal@sign}}
+\ifXeTeX
+\XeTeXmathcharnumdef\mt@equal@sign=\XeTeXmathcodenum`\=\relax
+\else
+\ifLuaTeX
+%% 12 octobre 2012 \luatexUmathcodenum`\=
+%% ne marche pas pour le moment \`a cause du fait que \luatexUmathcodenum
+%% donne un mathcode sur 8bit ou un Unicode mathcode sans qu'on puisse
+%% savoir lequel
+%% \luatexUmathchardef\mt@equal@sign="3 "0 "3D\relax
+\mathchardef\mt@equal@sign=12349\relax
+\else
+\mathchardef\mt@equal@sign=\mathcode`\=\relax
+\fi\fi
+\@ifpackageloaded{amsmath}
+{\def\Relbar{\mathrel\mt@equal@sign}}
+{\DeclareRobustCommand\Relbar{\mathrel{\mt@equal@sign}}}
 \DeclareMathSymbol{=}{\mathrel}{\mt@font@tbu}{"3D}
 \fi
 \ifmt@noparen\else
@@ -896,6 +963,15 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 \DeclareMathDelimiter{\backslash}
     {\mathord}{mtoperatorfont}{"5C}{largesymbols}{"0F}
 \DeclareMathSymbol\setminus\mathbin{mtoperatorfont}{"5C}
+\ifXeTeX
+\XeTeXmathcharnumdef\mt@vert@bar=\XeTeXmathcodenum`\|\relax
+\else
+\ifLuaTeX
+%% \luatexUmathchardef\mt@vert@bar="0 "2 "006A\relax
+\mathchardef\mt@vert@bar=618\relax
+\else\mathchardef\mt@vert@bar=\mathcode`\|\relax
+\fi\fi
+\DeclareRobustCommand\models{\mathrel{\mt@vert@bar}\joinrel\Relbar}
 \DeclareMathSymbol{|}\mathord{\mt@font@tbu}{"7C}
 \DeclareMathDelimiter{|}{\mt@font@tbu}{"7C}{largesymbols}{"0C}
 \DeclareMathDelimiter\vert

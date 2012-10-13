@@ -2,7 +2,7 @@
     +                mathastext                 +
     +                                           +
     + `Use the text font in simple mathematics' +
-    +             v1.15c 2012/10/05             +
+    +             v1.15d 2012/10/13             +
     +             2589111+jfbu@users.noreply.github.com             +
     +-------------------------------------------+
 
@@ -88,7 +88,19 @@ source code, run latex on mathastext.dtx
 
 CHANGE LOG
 
-1.15c
+1.15d [2012/10/13]
+
+   *  The Unicode situation is now correctly treated,
+      throughout the code (this had been left in a half-done
+      way from version 1.14 of April 2011). 
+
+        - this includes an issue related to amsmath and its
+      DeclareMathOperator macro which has been fixed,
+
+        - and the code related to \relbar and \Relbar (and
+      \models) has been revised.
+
+1.15c [2012/10/05]
 
    *  It is now possible to use distinct fonts in LGR encoding
       for the Greek letters according to the current math
@@ -103,7 +115,7 @@ CHANGE LOG
 
    *  Improvements to the pdf documentation
 
-1.15
+1.15  [2012/09/26]
 
    *  The subdued option allows the mathastextification to
       act only locally.  
@@ -120,7 +132,7 @@ CHANGE LOG
       defined math versions (via earlier calls to
       \Mathastext[version_name]).
 
-1.14b
+1.14b [2011/04/03]
 
    *  there was a bug with \$, \#, \&, \% in math mode which
       showed up when ten or more math families had been
@@ -148,7 +160,7 @@ CHANGE LOG
       will be only for inline math; display math will use the
       default glyphs 
 
-1.13
+1.13 [2011/03/11]
 
    *  the LGRgreek option is added.
 
@@ -169,6 +181,12 @@ CHANGE LOG
 
    *  the en-dash and dotless i and j now work with all
       encodings, Unicode inclusive.
+
+1.11 [2011/03/11] New optional argument to \Mathastext macro.
+
+1.1  [2011/02/01] options italic and frenchmath.
+
+1.0  [2011/01/25]
 
 Copyright (C) 2011, 2012 by Jean-Francois B..
 
