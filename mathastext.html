@@ -1,13 +1,13 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html lang="en">
-<!-- Time-stamp: <05-05-2011 11:58:37 CEST JF> -->
+<!-- Time-stamp: <17-10-2012 19:27:46 CEST jfb> -->
 
 <head>
 <link rel="shortcut icon" type="image/png" href="zeta32.png">
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-   <META NAME="robots" CONTENT="index, follow">
+   <meta name="robots" content="index, follow">
    <title>mathastext</title>
-<STYLE type="text/css">
+<style type="text/css">
 .toc{list-style:none;}
 .title{margin:auto;text-align:center;}
 .center{text-align:center;margin-left:auto;margin-right:auto;}
@@ -19,7 +19,8 @@ BLOCKQUOTE{margin-left:4ex;margin-right:4ex;text-align:left;}
 .part{margin:auto;text-align:center;}
 .intro{margin-left:15%;margin-right:15%;}
 .central{margin-left:25%;margin-right:25%;}
-</STYLE>
+.mono{font-family:monospace,monospace;}
+</style>
 </head>
 
 <body>
@@ -27,21 +28,45 @@ BLOCKQUOTE{margin-left:4ex;margin-right:4ex;text-align:left;}
 <br>
 <br>
 
-<DIV CLASS="center">A LaTeX package: <b>mathastext</b><br>
-Copyright &copy; 2011, Jean-Fran&ccedil;ois B..</DIV>
+<div class="center">A LaTeX package: <b>mathastext</b><br>
+Copyright &copy; 2011, 2012 Jean-Fran&ccedil;ois B..</div>
 
 
-<DIV class="center">
- <table align="center" border="0" WIDTH="85%" cellpadding="5">
+<div class="center">
+ <table align="center" border="0" width="85%" cellpadding="5">
 
-<tr><td width="0"
- align="center"><img src="showcase/Riemann1859.png" alt="Riemann1859.png"></td>
+<tr><td width="0" align="center"><img src="Riemann1859.png" alt="Riemann1859.png">
+<div align="left">
+<pre style="font-size:90%">
+\usepackage[T1]{fontenc}
+\usepackage[german]{babel}
+\usepackage[variablett]{lmodern}
+\renewcommand\familydefault\ttdefault
+\usepackage[LGRgreek]{mathastext}
+\MTgreekfont{lmtt}\Mathastext
+</pre></div></td>
 
-<td><p><b>mathastext</b> is a package to allow to use the text font also in
-mathematics mode, thus giving a very unified look to the produced document.
-As a side-effect it alleviates somewhat the problem of the scarcity of free
-math fonts for TeX typesetting. Do not use it though if you hope to achieve
-optimal typographical results: the package originates in some (even worse)
+<td><p>Optimal typographical results for documents
+	containing mathematical symbols can only be hoped for
+	with math fonts specifically designed to match a given
+	text typeface. Although the list of freely available
+	math fonts (alongside the Computer Modern and AMS
+	extension fonts) is slowly expanding (fourier, kpfonts,
+	mathdesign, pxfonts, txfonts, and others...) it remains
+	limited, and the situation is even worse with Unicode
+	fonts (XeTeX/LuaTeX). So if you can't find a math font
+	which fits well with your favorite text font, try
+	out <b>mathastext</b>: it will simply use the text font
+	also for the math! (only the few math symbols available
+	in the ascii set, such as
+	+,&ndash;,&lt;,&gt;,=,  will be
+	picked up from the text font.) Often this gives quite
+	satisfying results especially if, like the author, you
+	aim at a very unified look for the document, and in
+	particular prefer upright to slanted shapes for math
+	(<b>mathastext</b> does have an option to maintain the
+	usual slanted shape). </p>
+<p> The package originates in some (even worse)
 macros I had been using many years ago to produce handouts as if done on a
 typewriter, or better said, to produce documents with a somewhat rough, but
 unified look, done by a real human and meaning to convey some message to real
@@ -51,42 +76,53 @@ in advance which piece would prove to be more important than the others. In a
 well-crafted mathematical document, every single part is as important as any
 other one, or, rather, it is up to the reader to uncover the web of links
 between atoms.</p>
-<DIV style="font-size:90%">
-The example on the left uses:</DIV>
-<pre style="font-size:90%">
-\usepackage[T1]{fontenc}
-\usepackage[german]{babel}
-\usepackage[variablett,lighttt]{lmodern}
-\renewcommand{\familydefault}{\ttdefault}
-\usepackage[eulergreek]{mathastext}
-\MathastextEulerScale{0.92}
-</pre>
+<p>The example on the side uses a typewriter font which well
+  illustrates the purpose. But <b>mathastext</b> will work
+  with all kinds of fonts and can produce less militant
+  math: see the <a href="showcase.html">examples</a> (be
+  patient, this page with its embedded png images weighs
+  circa 4,8 Mo!) A notable feature of <b>mathastext</b> is
+  to give a simple interface to using many distinct math
+  fonts in the same document: <a href="showcase-riemann.html">special example</a>.</p>
 </td>
-</tr></table></DIV>
+</tr></table></div>
 
-<CENTER>
-<table WIDTH="500"  border="0" cellpadding="10">
+<center>
+<table width="500" border="0" cellpadding="10">
 <tr><td>
-Current (recommended) version <b>(1.14c)</b>:<br>
-This version has been uploaded to CTAN on April 4, 2011.
+Current version <b>(1.15d)</b>:<br>
+This version has been uploaded to CTAN on October 13, 2012.
 <ul>
-<li> <a href="v114/README" >README</a></li>
+<li> <a href="v115/README">README</a></li>
 <li> Download from a <a href="http://mirrors.ctan.org/help/Catalogue/entries/mathastext.html">CTAN
 location</a></li>
-<li> <a href="v114/mathastext.pdf">PDF Documentation</a></li>
-<li> <a href="v114/mathastext.sty">mathastext.sty</a> (version <b>1.14c</b>)</li>
-<li> Documented <a href="v114/mathastext.dtx">source</a> (dtx file)</li>
-<li> <a href="v114/mathastext.ins">ins file</a></li>
+<li> <a href="v115/mathastext.pdf">PDF Documentation</a></li>
+<li> <a href="v115/mathastext.sty">mathastext.sty</a></li>
+<li> Documented <a href="v115/mathastext.dtx">source</a> (dtx file)</li>
+<li> <a href="v115/mathastext.ins">ins file</a></li>
 </ul>
 <a href="showcase.html">Examples</a> (be patient, the page with its embedded png images
-weighs circa 2,4 Mo! 34
-examples as png images (and 
-pdf files) and 24 additional examples as pdf files)
+weighs circa 4,8 Mo! It contains about 70 examples, as png images and/or as pdf
+files.)
 </td></tr></table>
-</CENTER>
+</center>
 
-<DIV class="intro">
+
+<div class="intro">
 <ul>
+<li>New with the latest versions:
+<ul>
+<li>(1.15d) fixes to some problems related to the <i>amsmath</i> package,
+  especially under the Unicode engines XeTeX or LuaLaTeX.</li>
+<li>(1.15c) it is now possible to use in each math version a distinct LGR font for the
+  Greek letters in math mode,
+<li>(1.15) the <i>subdued</i> package option allows to
+  have <span class="mono">mathastext</span> act only on some limited portions of
+  the document,</li>
+<li>(1.15) a fix to a problem originating with amsmath
+  when using the Unicode engines XeTeX or LuaLaTeX.</li>
+</ul><br>
+</li>
 <li>Related packages by the
 author: 
 <ul>
@@ -101,99 +137,92 @@ fonts)</li>
 (select upright/italic shape for the Greek letters from the TX fonts).</li>
 </ul><br>
 </li>
-<li>Using mathastext with Unicode fonts: <b>mathastext</b> can be used
-with the XeTeX and LuaTeX engines and Unicode fonts. It is recommended to load
-first the <b>fontspec</b> package, with its option <i>no-math</i>. As in this
-example:
+<li>Additions to the <a href="v115/mathastext.pdf">documentation</a>:
+<ul>
+<li>How to get the Greek letters from Computer Modern in upright shape? Example:
 <pre>
-\usepackage[no-math]{fontspec}
-\setmainfont{TeX Gyre Bonum}
+\usepackage[T1]{fontenc}
+\usepackage[basic,LGRgreek]{mathastext}
+\usepackage[lf]{electrum}
+\Mathastext 
+\begin{document}
+</pre>
+This will set up to use <span class="mono">ADF-Electrum</span> Latin letters with
+lining figures also in math, together with the upright Greek letters from
+Computer Modern.</li>
+<li>The sans-serif member of the document font family gives often good results when used in math-mode, in parallel with the text in serif.  Use this:
+<pre>
+\renewcommand\familydefault\sfdefault
 \usepackage{mathastext}
+\renewcommand\familydefault\rmdefault
 </pre>
-<ol>
-<li>The \setmainfont should always come <i>before</i>
-loading <b>mathastext</b> (else it must be followed by the \Mathastext command, or
-\Mathastext[<i>name_of_version</i>] to declare a math version; see the <a href="v114/mathastext.pdf">PDF Documentation</a>).</li>
-<li>
-Without the option <i>no-math</i> given to <b>fontspec</b>, digits and some other characters would not
-be typeset (despite loading afterwards mathastext) with the font specified by
-\setmainfont.  Without its
-option <i>no-math</i>, <b>fontspec</b> sets the \mathrm to refer to the text
-font (but <b>mathastext</b> does it also) and forces (except if some other package known to <b>fontspec</b> to deal with
-math fonts is detected) the digits to be typeset
-with CMR (or Latin Modern). So with <i>no-math</i> the first aspect is taken care
-of by mathastext itself and the second aspect is gotten rid of.  (tested
-February 2011; as things such as fontspec or LuaTeX evolve quickly this kind
-of things may unpredictably change at any time.)  </li>
-<li>The options of <b>mathastext</b> for dealing with Greek letters make
-reference to fonts in the old-fashioned 8bits TeX format (Euler font, Symbol
-font, or LGR-encoded fonts). If the Greek letters are
-to come from a Unicode font, the set-up has to be done by another package. For
-the XeLaTeX engine a convenient one is <b>mathspec</b>. For example:
-<pre>
-\usepackage{mathspec}
-\setmathsfont(Greek)[Uppercase=Regular,Lowercase=Regular]{Arial}
-\setmainfont{TeX Gyre Bonum}
-\usepackage{mathastext}
-</pre>
-and then you can type directly αβγ in math mode to have the Greek letters,
-in upright shape, from the Arial font. <b>Important</b>: <b>mathspec</b>
-automatically loads <b>fontspec</b>, with option <i>no-math</i>. Thus, this is
-a good thing for <b>mathastext</b>. Of course as <b>mathspec</b> allows to
-specify the fonts for Latin letters and Digits as well, the rationale for
-using <b>mathastext</b> then is (quasi) reduced to its capabilities to deal with
-multiple math versions (and also to the fact that it manages also most
-other characters from the Basic Latin set, besides Letters and
-Digits). (tested May 2011)
+It is then even less recommended to use the <i>italic</i> option (matter of taste!).</li>
+<li>The LGRgreek option
+  (<span class="mono">\usepackage[LGRgreek]{mathastext}</span>) picks up the
+  Greek letters in LGR encoding from the default font family at the time of
+  loading <span class="mono">mathastext</span>. With the latest version of the
+  package it is now possible to pick up distinct Greek fonts, depending on the
+  math version. It is useful to know that the CM/LM fonts (and CM-LGC,
+  package <i>cmlgc</i>) are available in LGR encoding for serif, sans-serif, and
+  typewriter families. Other available fonts in standard TeX distributions:the
+  Greek Font Society fonts (such as <i>GFS Didot</i>), the <i>epigrafica</i>
+  and <i>kerkis</i> packages, the <i>txfontsb</i> package which extends
+  the <i>txfonts</i> package with LGR-encoded Greek letters, the <i>droid</i>,
+  <i>comfortaa</i>, <i>dejavu</i>, and <i>opensans</i> package.</li>
+<li> Note that <span class="mono">mathastext</span> makes proviso
+  only for monotonic Greek letters (in math mode; many of these packages are
+  designed for polytonic Greek in text mode). After
+  loading <span class="mono">mathastext</span> with option LGRgreek one should
+  take note  that <span class="mono">\varphi</span> and other `var' letters
+ (except <span class="mono">\varsigma</span>) are not provided by this encoding, so the package does not make any specific assignments to such `var' macros. 
 </li>
-<li>
-The success of the <b>mathastext</b> option <i>italic</i> with a Unicode font
-depends on whether this font is provided with an italic variant: for example
-(tested on a Linux box with XeTeX)
-it works with Times New Roman but not with Arial
-Black or (tested on a Mac with LuaTeX) it works with Baskerville or Didot but not with
-American Typewriter.  (tested
-May 2011) </li>
-<li>The package <b>amsmath</b> has some problems with Unicode (or rather with
-packages aware of the Unicode context, such as <b>mathastext</b>). When
-using <b>amsmath</b> load <b>mathastext</b> (later) with option <i>noendash</i> and
-add the appropriate line below after \begin{document}:  (tested May 2011) <br>
-<pre>
-\XeTeXmathcode`\- ="2 \symmtoperatorfont "2013 \relax % if XeTeX
-\luatexUmathcode`\-="2 \symmtoperatorfont "2013 \relax % if LuaTeX
-</pre>
-Perhaps these problems of <b>amsmath</b> will auto-magically disappear with
-future versions of either amsmath, XeTeX or LuaTeX (or of packages loaded by default by the
-document classes), and this could make the above work-around superfluous.
-</li>
-</ol>
-<br>
-</li>
-<!--<li>To users of earlier versions: please note that the options <i>endash</i>
-and <i>alldelims</i> are now active by default (but option <i>alldelims</i> is
-automatically de-activated if the encoding is detected to be OT1).<br><br>
-</li>
--->
+</ul><br></li>
 <li>Known limitations and bugs: 
 <ul>
+<li>(2012/10/12) [update 2012/10/13: v1.15d fixes this] There are some left-over
+  issues (from v1.14 of April 2011) in the code of <b>mathastext</b> when it is
+  used with the unicode engines XeTeX and Lualatex, and especially regarding
+  some interactions with the amsmath package, which I am currently reviewing.
+  For XeTeX, everything is fixed, but I still have some progress to realize with
+  Lualatex. If you encounter a problem with the current version
+  of <b>mathastext</b>, try the option <i>nominus</i>, or perhaps
+  only <i>noendash</i>.</li>
 <li>Some characters from fonts having complex ligature rules may not
 display correctly in math mode (here is
 an <a href="showcase.html#fc">example</a>).</li>
-<!--<li>The <i>nopunctuation</i> option is erroneously listed in the pdf documentation under the name «nopunct».</li>-->
-<li>All versions prior to 1.12b were afflicted by bugs, some being rather
-severe, so users of these versions are strongly advised to upgrade. 
-</li>
+<li>Although the <i>subdued</i> option claims to
+  let <span class="mono">mathastext</span> act only on some limited parts of the
+  document, it just hides to the best possible the sinister dealings done
+  by <span class="mono">mathastext</span>: it does not really
+  cancels them. To do that one needs to also
+  use <i>basic</i>, <i>defaultmathsizes</i>, 
+  and <i>defaultalphabets</i> (and <i>nohbar</i>,
+  and <i>defaultimath</i>, and ... no that's all) but then the influence
+  of <span class="mono">mathastext</span> when activated in a math version is
+  lessened.</li>
 </ul><br>
 </li>
-<li> PDF documentation of the <a href="v10/mathastext-doc.pdf">initial version</a></li>
+<!--
+<li> PDF documentation of the <a href="v10/mathastext-doc.pdf">initial --
+  --version</a></li>
+-->
+<li> (Shortened) Version history:
+<pre>
+2011/01/25 1.0   Initial version. (<a href="v10/mathastext-doc.pdf">doc</a>)
+2011/02/01 1.1   bugs fixed; options italic and frenchmath; minus as endash.
+2011/02/06 1.11  bugs fixed; \Mathastext admits optional math version name.
+2011/03/11 1.13  bugs fixed; option LGRgreek.
+2011/04/03 1.14b bugs fixed; options LGRgreeks and selfGreeks.
+2012/09/26 1.15  option subdued allowing the mathastextification to act locally.
+2012/10/05 1.15c commands to set-up distinct LGR Greek fonts in each math version.
+</pre>
+</li>
 </ul>
-</DIV>
+</div>
 
 
 <p>
-    <a href="http://validator.w3.org/check?uri=referer"><img style="border:0;width:88px;height:31px"
-    src="valid-html401-blue.png"
-    alt="Valid HTML 4.01 Transitional"></a>
+    <a href="http://validator.w3.org/check?uri=referer"><img style="border:0;width:88px;height:31px" src="valid-html401-blue.png" alt="Valid HTML 4.01 Transitional"></a>
 </p>
 
 </body> 
