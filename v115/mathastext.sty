@@ -29,9 +29,11 @@
 %%     unpacking scripts (with extension .ins) which are part
 %%     of the distribution.
 %% 
+%% instructions to load the document fonts,
+%% and then:
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{mathastext}
-         [2012/10/13 v1.15d Use the text font in simple mathematics]
+         [2012/10/22 v1.15e Use the text font in math mode (jfB)]
 \newif\ifXeTeX
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname XeTeXinterchartoks\endcsname\relax
@@ -60,14 +62,22 @@
   \def\m@t@opsh{\shapedefault}  %% will be default shape for operator names
   \def\m@t@bold{\bfdefault}
   \def\m@t@ltsh{\shapedefault}  %% will be default shape for letters
-  \edef\m@t@greekfont{\familydefault} %% new with version 1.15c
+  \edef\m@t@greekfont{\familydefault} %% v 1.15c
+\newmuskip\m@t@existsmuskip  %% v 1.15e
+\newmuskip\m@t@forallmuskip
+\def\m@t@existsskip{1mu}
+\def\m@t@forallskip{.6667mu}
 \newif\ifmt@proceed
 \newif\ifmt@failed
 \def\mt@oti{OT1}\def\mt@ti{T1}\def\mt@eui{EU1}\def\mt@euii{EU2}\def\mt@lyi{LY1}
 \newif\ifmt@italic
-    \DeclareOption{italic}{\mt@italictrue\def\m@t@ltsh{\itdefault}}
+    \DeclareOption{italic}{\mt@italictrue
+        \def\m@t@ltsh{\itdefault}
+        \def\m@t@existsskip{0mu}
+        \def\m@t@forallskip{0mu}}
 \newif\ifmt@frenchmath
-    \DeclareOption{frenchmath}{\mt@frenchmathtrue\ExecuteOptions{italic}}
+    \DeclareOption{frenchmath}{\mt@frenchmathtrue\mt@italictrue
+      \def\m@t@ltsh{\itdefault}}
 %%
 \newif\ifmt@endash\mt@endashtrue
     \DeclareOption{endash}{\mt@endashtrue}
@@ -175,98 +185,18 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 {\let\newmcodes@\relax} % brutal, but bye bye and don't come back.
 {}
 \ifmt@subdued
-\begingroup
-\def\install@mathalphabet#1#2{}
-%%
-\ifXeTeX
-\@tempcntb=\XeTeXmathcodenum`\a\relax
-\divide\@tempcntb by 1024   % cela fonctionne-il en unsigned?
-\divide\@tempcntb by 1024
-\divide\@tempcntb by 16
-%% let's hope that the division is done with *unsigned* integers...
-%%
-\else
-\ifLuaTeX
-%% if some package, rather than redefining letterfont, defines
-%% a new math font and assigns the a-z letters to it, then
-%% subdued option will reassign a-z to letterfont But
-%% as \luatexUmathcodenum returns either a legacy mathcode or a
-%% Unicode mathcode, I can not use it do get the family of a.
-%% And I don't want to spend more time on this. It seems that
-%% \luatexUmathcodenum`\a returns in default situation (due to
-%% the way the format is built on TeXLive I think) a
-%% Unicode mathcode but if some package does \mathcode`\a="61
-%% then we would be doomed if we relied on this.
-\@tempcntb=1\relax
-\else
-\@tempcntb=\mathcode`\a\relax
-\divide\@tempcntb by 256
-\@tempcnta\@tempcntb
-\divide\@tempcnta by 16
-\multiply\@tempcnta by 16
-\advance\@tempcntb-\@tempcnta
-\fi\fi
-\@tempcnta\z@
-\def\getanddefine@fonts#1#2{%
-\ifnum\@tempcnta=\@tempcntb
-\gdef\mt@normalmv@letter{#2}%
-\fi
-\advance\@tempcnta\@ne
-}%
-\mv@normal
-%%
-\@tempcnta\z@
-\def\getanddefine@fonts#1#2{%
-\ifnum\@tempcnta=\@tempcntb
-\gdef\mt@boldmv@letter{#2}%
-\fi
-\advance\@tempcnta\@ne
-}%
-\mv@bold
-%%
-\ifXeTeX
-\@tempcntb=\XeTeXmathcodenum`\1\relax
-\divide\@tempcntb by 1024   % cela fonctionne-il en unsigned?
-\divide\@tempcntb by 1024
-\divide\@tempcntb by 16
-%%
-\else
-\ifLuaTeX
-%% if some package, rather than redefining operatorfont,
-%% defines a new math font and assigns the digits to it, then
-%% the subdued option will reassign the digits to the original
-%% operatorfont. But \luatexUmathcodenum returning either a
-%% legacy mathcode or a Unicode mathcode, I can not use it do
-%% get the family of 1.
-\@tempcntb=0\relax
-\else
-\@tempcntb=\mathcode`\1\relax
-\divide\@tempcntb by 256
-\@tempcnta\@tempcntb
-\divide\@tempcnta by 16
-\multiply\@tempcnta by 16
-\advance\@tempcntb-\@tempcnta
-\fi\fi
-%%
-\@tempcnta\z@
-\def\getanddefine@fonts#1#2{%
-\ifnum\@tempcnta=\@tempcntb
-\gdef\mt@normalmv@operator{#2}%
-\fi
-\advance\@tempcnta\@ne
-}%
-\mv@normal
-%%
-\@tempcnta\z@
-\def\getanddefine@fonts#1#2{%
-\ifnum\@tempcnta=\@tempcntb
-\gdef\mt@boldmv@operator{#2}%
-\fi
-\advance\@tempcnta\@ne
-}%
-\mv@bold
-%%
-\endgroup
+\def\mt@reserveda#1\getanddefine@fonts\symletters#2#3\@nil{%
+\def\mt@normalmv@letter{#2}}
+\expandafter\mt@reserveda\mv@normal\@nil
+\def\mt@reserveda#1\getanddefine@fonts\symletters#2#3\@nil{%
+\def\mt@boldmv@letter{#2}}
+\expandafter\mt@reserveda\mv@bold\@nil
+\def\mt@reserveda#1\getanddefine@fonts\symoperators#2#3\@nil{%
+\def\mt@normalmv@operator{#2}}
+\expandafter\mt@reserveda\mv@normal\@nil
+\def\mt@reserveda#1\getanddefine@fonts\symoperators#2#3\@nil{%
+\def\mt@boldmv@operator{#2}}
+\expandafter\mt@reserveda\mv@bold\@nil
 %%
 \edef\mt@funnyoti{\expandafter\expandafter\expandafter\@gobble\expandafter\string\csname OT1\endcsname}
 \def\mt@@debut#1/#2/#3/#4/{#1}
@@ -295,6 +225,46 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 \else
 \edef\mt@boldmv@operator{\expandafter\noexpand\csname \mt@tmp/\mt@reste\endcsname}
 \fi\fi
+\def\mt@reservedc#1#2#3#4{\def\mt@normalmv@mathbf{#4#3}}
+\def\mt@reserveda#1{%
+\def\mt@reservedb##1\install@mathalphabet#1##2##3\@nil{\mt@reservedc##2}%
+\expandafter\mt@reservedb\mv@normal\@nil}
+\expandafter\mt@reserveda\csname mathbf\space\endcsname
+\def\mt@reservedc#1#2#3#4{\def\mt@normalmv@mathit{#4#3}}
+\def\mt@reserveda#1{%
+\def\mt@reservedb##1\install@mathalphabet#1##2##3\@nil{\mt@reservedc##2}%
+\expandafter\mt@reservedb\mv@normal\@nil}
+\expandafter\mt@reserveda\csname mathit\space\endcsname
+\def\mt@reservedc#1#2#3#4{\def\mt@normalmv@mathsf{#4#3}}
+\def\mt@reserveda#1{%
+\def\mt@reservedb##1\install@mathalphabet#1##2##3\@nil{\mt@reservedc##2}%
+\expandafter\mt@reservedb\mv@normal\@nil}
+\expandafter\mt@reserveda\csname mathsf\space\endcsname
+\def\mt@reservedc#1#2#3#4{\def\mt@normalmv@mathtt{#4#3}}
+\def\mt@reserveda#1{%
+\def\mt@reservedb##1\install@mathalphabet#1##2##3\@nil{\mt@reservedc##2}%
+\expandafter\mt@reservedb\mv@bold\@nil}
+\expandafter\mt@reserveda\csname mathtt\space\endcsname
+\def\mt@reservedc#1#2#3#4{\def\mt@boldmv@mathbf{#4#3}}
+\def\mt@reserveda#1{%
+\def\mt@reservedb##1\install@mathalphabet#1##2##3\@nil{\mt@reservedc##2}%
+\expandafter\mt@reservedb\mv@bold\@nil}
+\expandafter\mt@reserveda\csname mathbf\space\endcsname
+\def\mt@reservedc#1#2#3#4{\def\mt@boldmv@mathit{#4#3}}
+\def\mt@reserveda#1{%
+\def\mt@reservedb##1\install@mathalphabet#1##2##3\@nil{\mt@reservedc##2}%
+\expandafter\mt@reservedb\mv@bold\@nil}
+\expandafter\mt@reserveda\csname mathit\space\endcsname
+\def\mt@reservedc#1#2#3#4{\def\mt@boldmv@mathsf{#4#3}}
+\def\mt@reserveda#1{%
+\def\mt@reservedb##1\install@mathalphabet#1##2##3\@nil{\mt@reservedc##2}%
+\expandafter\mt@reservedb\mv@bold\@nil}
+\expandafter\mt@reserveda\csname mathsf\space\endcsname
+\def\mt@reservedc#1#2#3#4{\def\mt@boldmv@mathtt{#4#3}}
+\def\mt@reserveda#1{%
+\def\mt@reservedb##1\install@mathalphabet#1##2##3\@nil{\mt@reservedc##2}%
+\expandafter\mt@reservedb\mv@bold\@nil}
+\expandafter\mt@reserveda\csname mathtt\space\endcsname
 \fi % fin de ce \ifmt@subdued
 \DeclareSymbolFont{mtoperatorfont}
     {\m@t@enc}{\m@t@fam}{\m@t@ser}{\m@t@opsh}
@@ -386,6 +356,10 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 \let\MathastextupGreek\MTupGreek
     \newcommand*\MTgreekfont[1]{\def\m@t@greekfont{#1}}
 \let\Mathastextgreekfont\MTgreekfont
+\newcommand*\MTexistsskip[1]{\def\m@t@existsskip{#1}}
+\newcommand*\MTforallskip[1]{\def\m@t@forallskip{#1}}
+\let\Mathastextexistsskip\MTexistsskip
+\let\Mathastextforallskip\MTforallskip
 \newcommand*\MTWillUse[5][\@empty]{
   \MTencoding{#2}
   \MTfamily{#3}
@@ -414,6 +388,8 @@ defaultbf,defaultit,defaultsf,defaulttt}}
   \edef\mt@sfdefault@normal{\sfdefault}
   \edef\mt@ttdefault@normal{\ttdefault}
   \edef\mt@boldvariant@normal{\m@t@bold}
+  \edef\mt@existsskip@normal{\m@t@existsskip}
+  \edef\mt@forallskip@normal{\m@t@forallskip}
   \edef\mt@encoding@bold{\m@t@enc}
   \edef\mt@family@bold{\m@t@fam}
   \edef\mt@series@bold{\m@t@bold}
@@ -424,7 +400,29 @@ defaultbf,defaultit,defaultsf,defaulttt}}
   \edef\mt@rmdefault@bold{\rmdefault}
   \edef\mt@sfdefault@bold{\sfdefault}
   \edef\mt@ttdefault@bold{\ttdefault}
+  \edef\mt@existsskip@bold{\m@t@existsskip}
+  \edef\mt@forallskip@bold{\m@t@forallskip}
+\ifmt@subdued
+  \edef\mt@existsskip@normal{0mu}
+  \edef\mt@forallskip@normal{0mu}
+  \edef\mt@existsskip@bold{0mu}
+  \edef\mt@forallskip@bold{0mu}
+\else
+\ifmt@italic
+\ifmt@frenchmath
+        \expandafter\m@t@existsmuskip\m@t@existsskip
+        \expandafter\m@t@forallmuskip\m@t@forallskip
+\else
+  \edef\mt@existsskip@normal{0mu}
+  \edef\mt@forallskip@normal{0mu}
+  \edef\mt@existsskip@bold{0mu}
+  \edef\mt@forallskip@bold{0mu}
+\fi\else
+        \expandafter\m@t@existsmuskip\m@t@existsskip
+        \expandafter\m@t@forallmuskip\m@t@forallskip
+\fi\fi
 %%
+\ifmt@subdued\else
    \SetSymbolFont{mtletterfont}{normal}{\mt@encoding@normal}
                                        {\mt@family@normal}
                                        {\mt@series@normal}
@@ -473,6 +471,7 @@ defaultbf,defaultit,defaultsf,defaulttt}}
                                  {\mt@ttdefault@bold}
                                  {\mt@series@bold}
                                  {\mt@shape@bold}
+\fi % v1.15e moved the \fi here
    \SetMathAlphabet{\mathnormalbold}{normal}{\mt@encoding@normal}
                                  {\mt@family@normal}
                                  {\mt@boldvariant@normal}
@@ -481,6 +480,7 @@ defaultbf,defaultit,defaultsf,defaulttt}}
                                  {\mt@family@bold}
                                  {\mt@boldvariant@bold}
                                  {\mt@ltshape@bold}
+%% \fi % former location
  \ifmt@needeuler
     \SetSymbolFont{mteulervm}{bold}{U}{zeur}{\mt@boldvariant@normal}{n}
     \SetMathAlphabet{\MathEulerBold}{normal}
@@ -542,6 +542,8 @@ defaultbf,defaultit,defaultsf,defaulttt}}
   \expandafter\edef\csname mt@rmdefault@\mt@version\endcsname{\rmdefault}
   \expandafter\edef\csname mt@sfdefault@\mt@version\endcsname{\sfdefault}
   \expandafter\edef\csname mt@ttdefault@\mt@version\endcsname{\ttdefault}
+  \expandafter\edef\csname mt@existsskip@\mt@version\endcsname{\m@t@existsskip}
+  \expandafter\edef\csname mt@forallskip@\mt@version\endcsname{\m@t@forallskip}
   \newif\ifmt@reallynoopt\mt@reallynoopttrue
     \ifx\@empty#1
     \else % we check nevertheless for [] situation, will not work with [ ]
@@ -673,7 +675,10 @@ defaultbf,defaultit,defaultsf,defaulttt}}
         \renewcommand{\sfdefault}{\m@t@@sfdefault}%
     \edef\m@t@@ttdefault{\csname mt@ttdefault@\mt@tmp\endcsname}%
         \renewcommand{\ttdefault}{\m@t@@ttdefault}%
-%% extending subdued to LGRgreek with v1.15c
+%% v1.15e: muskips
+    \expandafter\m@t@existsmuskip\csname mt@existsskip@\mt@tmp\endcsname
+    \expandafter\m@t@forallmuskip\csname mt@forallskip@\mt@tmp\endcsname
+%% v1.15c: extending subdued to LGRgreek
 \ifmt@subdued
 \ifmt@LGRgreek
 \edef\mt@tmp{#2}%
@@ -841,7 +846,8 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 %% \luatexUmathcharnumdef\mt@minus@sign=\luatexUmathcodenum`\-\relax ne
 %% marche pas pour le moment car \luatexUmathcodenum retourne parfois un
 %% legacy mathcode, parfois un Unicode mathcode, \`a mon avis c'est un bug
-%% de LuaLatex. \luatexUmathchardef\mt@minus@sign="2 "2 "0\relax
+%% de LuaLatex. En fait Taco H me dit que la prochaine version
+%% réglera ce problème. \luatexUmathchardef\mt@minus@sign="2 "2 "0\relax
 \mathchardef\mt@minus@sign=8704\relax % "2200
 \else
 \mathchardef\mt@minus@sign=\mathcode`\-\relax
@@ -1387,12 +1393,24 @@ defaultbf,defaultit,defaultsf,defaulttt}}
   \DeclareFontShape{U}{psy}{m}{n}{<->s*[\psy@scale] psyr}{}
   \fi
 }
+\let\mt@stdexists\exists
+\let\mt@stdforall\forall
+\renewcommand\exists{\mt@stdexists\mskip\m@t@existsmuskip}
+\renewcommand\forall{\mt@stdforall\mskip\m@t@forallmuskip}
 \ifmt@subdued
 \typeout{** ...entering subdued mode...}
 \expandafter\SetSymbolFont@ \expandafter\mv@normal\mt@normalmv@letter\symmtletterfont
 \expandafter\SetSymbolFont@ \expandafter\mv@bold\mt@boldmv@letter\symmtletterfont
 \expandafter\SetSymbolFont@ \expandafter\mv@normal\mt@normalmv@operator\symmtoperatorfont
 \expandafter\SetSymbolFont@ \expandafter\mv@bold\mt@boldmv@operator\symmtoperatorfont
+\expandafter\expandafter\expandafter\SetMathAlphabet@ \expandafter\expandafter\expandafter\mv@normal\expandafter\mt@normalmv@mathbf\csname Mathbf\space \endcsname\Mathbf
+\expandafter\expandafter\expandafter\SetMathAlphabet@ \expandafter\expandafter\expandafter\mv@normal\expandafter\mt@normalmv@mathit\csname Mathit\space \endcsname\Mathit
+\expandafter\expandafter\expandafter\SetMathAlphabet@ \expandafter\expandafter\expandafter\mv@normal\expandafter\mt@normalmv@mathsf\csname Mathsf\space \endcsname\Mathsf
+\expandafter\expandafter\expandafter\SetMathAlphabet@ \expandafter\expandafter\expandafter\mv@normal\expandafter\mt@normalmv@mathtt\csname Mathtt\space \endcsname\Mathtt
+\expandafter\expandafter\expandafter\SetMathAlphabet@ \expandafter\expandafter\expandafter\mv@bold\expandafter\mt@boldmv@mathbf\csname Mathbf\space \endcsname\Mathbf
+\expandafter\expandafter\expandafter\SetMathAlphabet@ \expandafter\expandafter\expandafter\mv@bold\expandafter\mt@boldmv@mathit\csname Mathit\space \endcsname\Mathit
+\expandafter\expandafter\expandafter\SetMathAlphabet@ \expandafter\expandafter\expandafter\mv@bold\expandafter\mt@boldmv@mathsf\csname Mathsf\space \endcsname\Mathsf
+\expandafter\expandafter\expandafter\SetMathAlphabet@ \expandafter\expandafter\expandafter\mv@bold\expandafter\mt@boldmv@mathtt\csname Mathtt\space \endcsname\Mathtt
 \typeout{** ...done.}
 \else
 \ifmt@LGRgreek

@@ -1,8 +1,8 @@
     +-------------------------------------------+
     +                mathastext                 +
     +                                           +
-    + `Use the text font in simple mathematics' +
-    +             v1.15d 2012/10/13             +
+    +     `Use the text font in math mode'      +
+    +             v1.15e 2012/10/22             +
     +             2589111+jfbu@users.noreply.github.com             +
     +-------------------------------------------+
 
@@ -76,8 +76,6 @@ Examples available there:
      mathsastext.html
      showcase.html
 
-
-
                     INSTALLATION
 
 Run latex on mathastext.ins to create mathastext.sty from
@@ -87,6 +85,20 @@ source code, run latex on mathastext.dtx
 
 
 CHANGE LOG
+
+1.15e [2012/10/22]
+
+   *  New user commands to specify skip or glue to be
+      inserted after the math symbols \exists and \forall
+
+   *  Complete (user transparent) rewrite of the code
+      implementing the subdued option; and its action has
+      been extended to apply also to the \mathbf, \mathit,
+      \mathsf, \mathtt alphabets and not only to \mathrm and
+      \mathnormal as in the previous versions.
+
+   *  Improvements in the documentation.
+
 
 1.15d [2012/10/13]
 
