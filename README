@@ -1,8 +1,8 @@
     +-------------------------------------------+
-    +                mathastext                 +
+    +                 mathastext                +
     +                                           +
-    +     `Use the text font in math mode'      +
-    +             v1.15e 2012/10/22             +
+    +      `Use the text font in math mode'     +
+    +             v1.15f 2012/10/24             +
     +             2589111+jfbu@users.noreply.github.com             +
     +-------------------------------------------+
 
@@ -85,6 +85,23 @@ source code, run latex on mathastext.dtx
 
 
 CHANGE LOG
+
+1.15f [2012/10/25]
+
+   *  \$, \#, \&, and \% had been re-defined by mathastext since its
+      inception in a rather strange (but working) way, which
+      could cause surprises to other packages. Fixed.
+
+   *  The subdued mechanism for the math alphabets is implemented
+      in a simpler and more efficient manner than in 1.15e.
+
+   *  The `defaultxx' options act a bit differently, and are more
+      useful in case of a `too many math alphabets' situation.
+
+   *  Various improvements in the documentation.
+
+   *  General clean up and better commenting of the source code.
+
 
 1.15e [2012/10/22]
 
@@ -194,7 +211,7 @@ CHANGE LOG
    *  the en-dash and dotless i and j now work with all
       encodings, Unicode inclusive.
 
-1.11 [2011/03/11] New optional argument to \Mathastext macro.
+1.11 [2011/02/06] New optional argument to \Mathastext macro.
 
 1.1  [2011/02/01] options italic and frenchmath.
 
