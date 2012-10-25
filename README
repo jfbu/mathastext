@@ -2,7 +2,7 @@
     +                 mathastext                +
     +                                           +
     +      `Use the text font in math mode'     +
-    +             v1.15f 2012/10/24             +
+    +             v1.15g 2012/10/25             +
     +             2589111+jfbu@users.noreply.github.com             +
     +-------------------------------------------+
 
@@ -86,7 +86,7 @@ source code, run latex on mathastext.dtx
 
 CHANGE LOG
 
-1.15f [2012/10/25]
+1.15f and 1.15g [2012/10/25]
 
    *  \$, \#, \&, and \% had been re-defined by mathastext since its
       inception in a rather strange (but working) way, which

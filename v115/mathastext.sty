@@ -30,7 +30,7 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{mathastext}
-         [2012/10/25 v1.15f Use the text font in math mode (jfB)]
+         [2012/10/25 v1.15g Use the text font in math mode (jfB)]
 \newif\ifXeTeX
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname XeTeXinterchartoks\endcsname\relax
@@ -934,13 +934,13 @@ and \protect\log-like names will be^^J%
 \ifmt@nospecials\else
 \ifXeTeX
   \XeTeXmathcode`\#=7 \symmtoperatorfont "0023 \relax
-  \XeTeXmathcode`\$=7 \symmtoperatorfont "0024 \relax
+  \XeTeXmathchardef\mathdollar=7 \symmtoperatorfont "0024 \relax
   \XeTeXmathcode`\%=7 \symmtoperatorfont "0025 \relax
   \XeTeXmathcode`\&=7 \symmtoperatorfont "0026 \relax
 \else
 \ifLuaTeX
   \luatexUmathcode`\#=7 \symmtoperatorfont "0023 \relax
-  \luatexUmathcode`\$=7 \symmtoperatorfont "0024 \relax
+  \luatexUmathchardef\mathdollar=7 \symmtoperatorfont "0024 \relax
   \luatexUmathcode`\%=7 \symmtoperatorfont "0025 \relax
   \luatexUmathcode`\&=7 \symmtoperatorfont "0026 \relax
 \else
@@ -949,7 +949,7 @@ and \protect\log-like names will be^^J%
 \advance\count255 by 28707 % "7023
     \mathcode`\#\count255
 \advance\count255 by 1
-    \mathcode`\$\count255
+    \mathchardef\mathdollar\count255
 \advance\count255 by 1
     \mathcode`\%\count255
 \advance\count255 by 1

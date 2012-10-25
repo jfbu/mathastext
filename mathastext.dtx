@@ -1,7 +1,7 @@
 % \iffalse -*- coding: iso-latin-1; -*-
 %<*dtx>
 \def\mstdocrevdate{2012/10/25}
-\ProvidesFile{mathastext.dtx}[2012/10/25 v1.15f ]
+\ProvidesFile{mathastext.dtx}[2012/10/25 v1.15g ]
 %</dtx>
 % \fi
 % \iffalse meta-comment
@@ -762,83 +762,83 @@ symbolmisc,symbolre,LGRgreek]{mathastext}
 %    option, and \emph{prior} to \mst.
 %
 %    The package was not extensively tested with unicode engines, but I include
-%    here two examples which compiled successfully with \XeTeX{}, the first one
-%    on a Linux machine, the second one on a Mac OS X machine.
+%    here two examples which compiled successfully with \XeTeX{} and
+%    \LuaLaTeX{}, the first one on a Linux machine, the second one on a Mac OS X
+%    machine.
 % \begin{verbatim}
 % \documentclass{article}
 % \usepackage[hscale=0.8]{geometry}
 % \usepackage{multicol}
-% \usepackage{amsmath}
-% %\usepackage{mathtools}
 % \usepackage[no-math]{fontspec}
 % \usepackage{lmodern}
 % \usepackage[subdued,italic]{mathastext}
-% \setmainfont{Andale Mono}
-% \Mathastext[Andale]
-% \setmainfont[Color=0000FF]{Arial}
-% \Mathastext[Arial]
-% \setmainfont{DejaVu Serif}
-% \Mathastext[DejaVu]
+% \setmainfont[Color=FF0000]{Andale Mono}  \Mathastext[Andale]
+% \setmainfont[Color=0000FF]{Arial}        \Mathastext[Arial]
+% \setmainfont[Color=00FF00]{DejaVu Serif} \Mathastext[DejaVu]
 % \MathastextDeclareVersion{times}{T1}{ptm}{m}{n}
 % \MTlettershape{n}\MTshape{it}
-% \setmainfont{Verdana}\Mathastext[Verdana]
+% \setmainfont[Color=999999]{Verdana}      \Mathastext[Verdana]
 % \begin{document}
+% \newcommand\TEST[1]{\MTversion{#1}%
+% \begin{multicols}{2}
+% \hbox to\columnwidth{\hbox to\columnwidth{\hfil
+%                 $abcdefghijklmnopqrstuvwxyz$\hfil}\kern-2.5em{#1}}
+%    \centerline{ $ABCDEFGHIJKLMNOPQRSTUVWXYZ$ }
+%    \centerline{ $0123456789$ }
+%    \centerline{ $!\,?\,*\,,\,.\,:\,;\,+\,-\,=\,(\,)\,[\,]\,/\,\#\,%
+%    \$\,\%\,\&\,<\,>\,|\,\{\,\}\,\backslash$ }
+% \columnbreak
+%    \centerline{ abcdefghijklmnopqrstuvwxyz }
+%    \centerline{ ABCDEFGHIJKLMNOPQRSTUVWXYZ }
+%    \centerline{ 0123456789}
+%    \centerline{ !\,?\,*\,,\,.\,:\,;\,+\,-\,=\,(\,)\,[\,]\,/\,\#\,%
+%    \$\,\%\,\&\,<\,>\,|\,\{\,\}\,\char92 }
+% \end{multicols}}
 % \begin{multicols}2 
 %    \centerline{\textbf{math mode}} 
 % \columnbreak
 %    \centerline{ text }
 % \end{multicols}
-% \MTversion{DejaVu} % or any other, as defined in the preamble
-% \begin{multicols}2 
-%    \centerline{ $abcdefghijklmnopqrstuvwxyz$}
-%    \centerline{ $ABCDEFGHIJKLMNOPQRSTUVWXYZ$}
-%    \centerline{ $0123456789$}
-%    \centerline{ $!\,?\,*\,,\,.\,:\,;\,+\,-\,=\,(\,)\,[\,]\,/\,\#\,%
-%    \$\,\%\,\&\,<\,>\,|\,\{\,\}\,\backslash$ }
-% \columnbreak
-%    \centerline{ abcdefghijklmnopqrstuvwxyz}
-%    \centerline{ ABCDEFGHIJKLMNOPQRSTUVWXYZ}
-%    \centerline{ 0123456789}
-%    \centerline{ !\,?\,*\,,\,.\,:\,;\,+\,-\,=\,(\,)\,[\,]\,/\,\#\,%
-%    \$\,\%\,\&\,<\,>\,|\,\{\,\}\,\char92 }
-% \end{multicols}
-% (repeat with the other fonts)
+% \TEST{DejaVu}\TEST{Verdana}\TEST{times}\TEST{Andale}
+% \TEST{Arial}\TEST{bold}\TEST{normal}
 % \end{document}
 % \end{verbatim}
-% And now an example with fonts available on Mac OS X:
+% And now the same thing with fonts available on Mac OS X:
 % \begin{verbatim}
 % \documentclass{article}
 % \usepackage[hscale=0.8]{geometry}
 % \usepackage{multicol}
-% \usepackage{amsmath}
 % \usepackage[no-math]{fontspec}
+% \usepackage{lmodern}
 % \usepackage[subdued,italic]{mathastext}
-% \setmainfont{Hoefler Text}\Mathastext[Hoefler]
-% \setmainfont{Osaka}\Mathastext[Osaka]
-% \setmainfont{Herculanum}\Mathastext[Herculanum]
-% \setmainfont{Didot}\Mathastext[Didot]
-% \setmainfont{Comic Sans MS}\Mathastext[Comic]
+% \setmainfont[Color=FF0000]{Hoefler Text}  \Mathastext[Hoefler]
+% \setmainfont[Color=00FF00]{Osaka}         \Mathastext[Osaka]
+% \setmainfont[Color=0000FF]{Herculanum}    \Mathastext[Herculanum]
+% \setmainfont[Color=FF00FF]{Didot}         \Mathastext[Didot]
+% \setmainfont[Color=999999]{Comic Sans MS} \Mathastext[Comic]
 % \begin{document}
+% \newcommand\TEST[1]{\MTversion{#1}%
+% \begin{multicols}{2}
+% \hbox to\columnwidth{\hbox to\columnwidth{\hfil
+%                 $abcdefghijklmnopqrstuvwxyz$\hfil}\kern-2.5em{#1}}
+%    \centerline{ $ABCDEFGHIJKLMNOPQRSTUVWXYZ$ }
+%    \centerline{ $0123456789$ }
+%    \centerline{ $!\,?\,*\,,\,.\,:\,;\,+\,-\,=\,(\,)\,[\,]\,/\,\#\,%
+%    \$\,\%\,\&\,<\,>\,|\,\{\,\}\,\backslash$ }
+% \columnbreak
+%    \centerline{ abcdefghijklmnopqrstuvwxyz }
+%    \centerline{ ABCDEFGHIJKLMNOPQRSTUVWXYZ }
+%    \centerline{ 0123456789 }
+%    \centerline{ !\,?\,*\,,\,.\,:\,;\,+\,-\,=\,(\,)\,[\,]\,/\,\#\,%
+%    \$\,\%\,\&\,<\,>\,|\,\{\,\}\,\char92 }
+% \end{multicols}}
 % \begin{multicols}2 
 %    \centerline{\textbf{math mode}} 
 % \columnbreak
 %    \centerline{ text }
 % \end{multicols}
-% \MTversion{Hoefler}
-% \begin{multicols}2 
-%    \centerline{ $abcdefghijklmnopqrstuvwxyz$}
-%    \centerline{ $ABCDEFGHIJKLMNOPQRSTUVWXYZ$}
-%    \centerline{ $0123456789$}
-%    \centerline{ $!\,?\,*\,,\,.\,:\,;\,+\,-\,=\,(\,)\,[\,]\,/\,\#\,%
-%    \$\,\%\,\&\,<\,>\,|\,\{\,\}\,\backslash$ }
-% \columnbreak
-%    \centerline{ abcdefghijklmnopqrstuvwxyz}
-%    \centerline{ ABCDEFGHIJKLMNOPQRSTUVWXYZ}
-%    \centerline{ 0123456789}
-%    \centerline{ !\,?\,*\,,\,.\,:\,;\,+\,-\,=\,(\,)\,[\,]\,/\,\#\,%
-%    \$\,\%\,\&\,<\,>\,|\,\{\,\}\,\char92 }
-% \end{multicols}
-% (repeat with the other fonts)
+% \TEST{Didot}\TEST{Comic}\TEST{normal}\TEST{Herculanum}
+% \TEST{Hoefler}\TEST{Osaka}\TEST{bold}
 % \end{document}
 % \end{verbatim}
 % 
@@ -1362,7 +1362,7 @@ symbolmisc,symbolre,LGRgreek]{mathastext}
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{mathastext}
-         [2012/10/25 v1.15f Use the text font in math mode (jfB)]
+         [2012/10/25 v1.15g Use the text font in math mode (jfB)]
 %    \end{macrocode}
 % Testing for XeTeX and LuaLaTeX. I should load some package for this
 % code picked up somewhere.
@@ -2881,25 +2881,37 @@ and \protect\log-like names will be^^J%
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{specials}
-% Note: these ``specials'' are not available in the Postscript Symbol font.
+%   \leavevmode\kern\parindent 1.14b (2011/04/02): the redefinitions of
+%   \#, \$, \% and \& were buggy (this showed up when 10 or more math
+%   families had been created).
 %
-% 1.14b (2011/04/02): the redefinitions of \#, \$, \% and \& were buggy (this
-% showed up when 10 or more math families had been created). 
+%   1.15f (2012/10/23): the code, although working, was a bit insane and
+%   had definitions which could surprise other packages. I (finally)
+%   correct this: I had been told that my earlier definitions caused a
+%   problem with |microtype|...
 %
-% 1.15f (2012/10/23): the code, although working, was a bit insane and
-% had definitions which could surprise other packages. I (finally)
-% correct this.
+% 1.15g (2012/10/25): ... but it was \emph{not} that insane, I just had
+% forgotten the reason I did it that way! I just extended to the other
+% specials what latex was doing with \char92\$ (\cs{mathdollar}!)... Apart
+% from that the \cs{mathalpha} (=7) thing
+% makes me nuts and reminds me that \TeX{} is not satisfying at all
+% here: why exclude the variable family from being assigned a type for
+% spacings? yes he had only 3 bits but perhaps that was too clever. I am
+% stuck as I just can't change for example $>$ to be of type
+% \cs{mathalpha} as it is \cs{mathrel}, etc\dots so perhaps I should
+% stop being stubborn and renounce doing \cs{mathalpha} here.
+% 
 %    \begin{macrocode}
 \ifmt@nospecials\else
 \ifXeTeX 
   \XeTeXmathcode`\#=7 \symmtoperatorfont "0023 \relax
-  \XeTeXmathcode`\$=7 \symmtoperatorfont "0024 \relax
+  \XeTeXmathchardef\mathdollar=7 \symmtoperatorfont "0024 \relax
   \XeTeXmathcode`\%=7 \symmtoperatorfont "0025 \relax
   \XeTeXmathcode`\&=7 \symmtoperatorfont "0026 \relax
 \else
 \ifLuaTeX
   \luatexUmathcode`\#=7 \symmtoperatorfont "0023 \relax
-  \luatexUmathcode`\$=7 \symmtoperatorfont "0024 \relax
+  \luatexUmathchardef\mathdollar=7 \symmtoperatorfont "0024 \relax
   \luatexUmathcode`\%=7 \symmtoperatorfont "0025 \relax
   \luatexUmathcode`\&=7 \symmtoperatorfont "0026 \relax
 \else
@@ -2908,7 +2920,7 @@ and \protect\log-like names will be^^J%
 \advance\count255 by 28707 % "7023
     \mathcode`\#\count255
 \advance\count255 by 1
-    \mathcode`\$\count255
+    \mathchardef\mathdollar\count255
 \advance\count255 by 1
     \mathcode`\%\count255
 \advance\count255 by 1
@@ -3589,8 +3601,7 @@ and \protect\log-like names will be^^J%
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{subdued}
-% v1.15: the subdued option (second half of the implementation). The code
-% for the math alphabets added with version v1.15e.
+% v1.15: the subdued option (second half of the implementation).
 %    \begin{macrocode}
 \ifmt@subdued
 \typeout{** ...entering subdued mode...}
