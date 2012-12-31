@@ -2,7 +2,7 @@
 %<*ins>
 \def\pkgname{mathastext}
 \def\pkgdate{2012/12/31}
-\def\pkgversion{v1.2b}
+\def\pkgversion{v1.2c}
 \def\pkgdescription{Use the text font in math mode (jfB)}
 %</ins>
 %%
@@ -10,7 +10,7 @@
 %% Copyright (C) 2011, 2012 by Jean-Francois B.
 %%
 %<*none>
-\def\lasttimestamp{Time-stamp: <31-12-2012 16:37:39 CET jfb>}
+\def\lasttimestamp{Time-stamp: <31-12-2012 19:21:14 CET jfb>}
 \def\docdate{2012/12/31}
 \def\striptimestamp#1 <#2 #3 #4 #5>{#2 at #3 #4}
 \edef\dtxtimestamp{\expandafter\striptimestamp\lasttimestamp}
@@ -240,10 +240,8 @@ in the various math versions.
 %<*alphabets>
 %-------------------------------------------------------------------------------
 %% This file `testmathastextalphabets.tex' is for testing the extended
-%% scope of the math alphabet commands with package `mathastext'.
-%% 
-%% Packages amsmath, mathtools, babel are loaded for extra-checking of
-%% compatibilities.
+%% scope of the math alphabet commands with package `mathastext', via
+%% the package command \MTnonlettersobeymathxx.
 %%
 %% Compile either with latex, pdflatex, lualatex (pdf output) or xelatex.
 %%
@@ -281,7 +279,7 @@ in the various math versions.
 \fi\fi
 \usepackage{metalogo} % must be loaded /after/ [no-math]fontspec
 \usepackage[french]{babel}
-\usepackage[italic]{mathastext}
+\usepackage[italic]{mathastext}\MTnonlettersobeymathxx
 \MTexplicitbracesobeymathxx
 \delimitershortfall-1pt
 \begin{document}
@@ -325,8 +323,8 @@ $\displaystyle\mathsf{\testformula}$
 
 \bigskip
 
-As \texttt{mathsatext} \texttt{1.2} does \verb|\MTnonlettersobeymathxx|
-by default, this preempts in math mode even active characters (among
+When using \verb|\MTnonlettersobeymathxx| (as is done in this test file),
+this preempts in math mode even active characters (among
 those treated by \texttt{mathastext} of course) and replaces
 their definitions with the \texttt{mathastext} definitions. 
 
@@ -341,9 +339,10 @@ active character. Let's try:
 The result is: \catcode`\?\active\def?{X}$?\mathtt{?}\hbox{?$\mathbf{?}$}$.
 
 However, after
-\verb|\MTnonlettersdonotobeymathxx|,\MTnonlettersdonotobeymathxx{}
-we get: $?\mathtt{?}\hbox{?$\mathbf{?}$}$. The original definition of
-the active character has been used everywhere, as expected.
+\verb|\MTnonlettersdonotobeymathxx|,\MTnonlettersdonotobeymathxx{} we get:
+$?\mathtt{?}\hbox{?$\mathbf{?}$}$. The original definition of the active
+character has been used everywhere, as expected. Note that \verb|1.2c| issues
+\texttt{\string\MTnonlettersdonot\-obeymathxx} by default.
 \end{document}
 %-------------------------------------------------------------------------------
 %</alphabets>
@@ -925,6 +924,7 @@ package option §LGRgreek§ and the command
 |\usepackage[LGRgreek]{mathastext}|.
 
 \subsection{Extended scope of the math alphabets commands}
+\label{sec:active}
 
 \begingroup
 \MTversion{italic}
@@ -948,7 +948,7 @@ A revolutionary ;-) novelty is introduced with version |1.2| of the package:
 \item the pre-declared or user-declared (using the |amsmath|
   \cs{DeclareMathOperator} or equivalent) operator names obey the math
   alphabet commands,
-\item all non alphabetical characters treated by \mst (among them $!$,
+\item and, \emph{optionally}, all non alphabetical characters treated by \mst (among them $!$,
   $?$, $<$, $>$, $=$, $+$, $-$, $($, $)$, $[$, $]$, $\backslash$,
   $\vert$, etc\dots) will also obey the math alphabet commands (when
   they are not used as delimiters). The spaces added by \TeX{} before
@@ -961,32 +961,40 @@ with the traditional default behavior:
 \MTmathoperatorsdonotobeymathxx\MTnonlettersdonotobeymathxx
 \[ \mathtt{(\sin(n!)<\cos(m-p)?)}\qquad \mathbf{[\sin(x+y)=\cos(z-t)]}\] 
 
-The mechanism is of course disabled by default for the normal and bold math
-versions when in \emph{subdued} mode. It is activated by default for all other
-math versions, or for all math versions when option |subdued| was not passed to
-the
+Theses mechanisms are of course disabled by default for the normal and bold math
+versions when in \emph{subdued} mode. The first one is activated by default for
+all other math versions, or for all math versions when option |subdued| was not
+passed to the
 package. The commands:\\
 \mbox{}\hspace{2cm}\csb{MTmathoperatorsdonotobeymathxx}\\
 \mbox{}\hspace{2cm}\csb{MTnonlettersdonotobeymathxx}\\
-cancel the new behavior and\\
+cancel the two mechanisms and\\
 \mbox{}\hspace{2cm}\csb{MTmathoperatorsobeymathxx}\\
 \mbox{}\hspace{2cm}\csb{MTnonlettersobeymathxx}\\
-re-activate it.\footnote{these commands are to be
-  used outside of math mode. Their scope is limited to the current \LaTeX{}
-  environment or group. They use the \cs{everymath} and \cs{everydisplay}
-  mechanism so if the document needs to modify these token lists it has to do it
-  in a responsible manner, extending not annihilating their previous contents.}
-\footnote{when in subdued mode, the math alphabets are the default ones, not the
-  ones modified by \mst to use the document text fonts. As a result, matters of
-  font encodings may then give unexpected results, for example for $-$. On the
-  present document page we switched to a math version to escape from the
-  |subdued| mode and avoid the problem with \cs{mathbf\{-\}} giving in the
-  normal (subdued) math version
+re-activate them.\footnote{these commands are to be used outside of math mode.
+  Their scope is limited to the current \LaTeX{} environment or group. They use
+  the \cs{everymath} and \cs{everydisplay} mechanism so if the document needs to
+  modify these token lists it has to do it in a responsible manner, extending
+  not annihilating their previous contents.} \footnote{when in subdued mode, the
+  math alphabets are the default ones, not the ones modified by \mst to use the
+  document text fonts. As a result, matters of font encodings may then give
+  unexpected results, for example for $-$. On the present document page we
+  switched to a math version to escape from the |subdued| mode and avoid the
+  problem with \cs{mathbf\{-\}} giving in the normal (subdued) math version
   {\MTversion{normal}\MTnonlettersobeymathxx$\mathbf-$, when `non-letters' are
     declared to obey math alphabets.}}
 
+\begin{framed}
+  \textbf{Important:} the package does \cs{MTnonlettersdonotobeymathxx} by
+  default because, in its current implementation, it adds constraints to the way
+  things must be input. Characters such as |?| or |[| now represent \emph{two}
+  `tokens' and this will utterly confuse \TeX{} if some precautions are not
+  taken: |$x^?$| or |$x\mathrel?y$| should be coded now |$x^{?}$|, 
+  respectively |$x\mathrel{?}y$|.
+\end{framed}
+
 The brace control sequences |\{| and |\}| have their own (supplementary) switch,
-which is not activated by default. The reason is that after
+which is (even less) activated by default. The reason is that after
 \csb{MTexplicitbracesobeymathxx}, they regrettably can not be used anymore as
 delimiters: |\big\{| or |\big\}| cease to function and must be replaced by
 |\big\lbrace| and |\big\rbrace|. But
@@ -1526,18 +1534,28 @@ option or one of its |defaultnormal|, |defaulttt|, etc\dots sub-options.
 Starting with version |1.2|, \mst makes characters `mathematically active' to
 achieve certain effects: automatic insertion of the italic corrections when
 using an upright text font in math, extended scope of the math alphabet commands
-which now apply to non letter symbols and to math operator names. And the
-already mathematically active right quote is modified to have some extra space
-added before the derivative glyph ${}'$. Version |1.2b| does this in a careful
-manner with the hope to not create conflict with packages (typically,
-language definition files from the |babel| system) making characters `globally
-active' in the document.\footnote{it is better if these characters are not
-  `active' at the time of loading \mst, and fortunately |babel| does the
-  activation of
-  characters only at the \texttt{\string\begin\{document\}}.} All the action
-  done by \mst is done anew at each math environment and has no effect
-  elsewhere.
+which now apply to non letter symbols and to math operator names (this feature
+is kept optional; see framed text below\dots). And the already mathematically
+active right quote is modified to have some extra space added before the
+derivative glyph ${}'$. Version |1.2b| does this in a careful manner with the
+hope to not create conflict with packages (typically, language definition files
+from the |babel| system) making characters `globally active' in the
+document.\footnote{it is better if these characters are not `active' at the time
+  of loading \mst, and fortunately |babel| does the activation of characters
+  only at the \texttt{\string\begin\{document\}}.} All the action done by \mst
+  is done anew at each math environment and has no effect elsewhere.
 
+  \begin{framed}\kern-.75\baselineskip
+    \begin{framed}
+      \textbf{Important!} As is mentioned in the section \ref{sec:active}, with
+      the ``non letters obey math alphabets'' mechanism , characters such as
+      |?|, or |[|, now represent \emph{two} `tokens' and this will utterly
+      confuse \TeX{} if some precautions are not taken. Examples: |$x^?$| or
+      |$x\mathrel?y$| should be input now |$x^{?}$| and, respectively,
+      |$x\mathrel{?}y$|. This is why the package does
+      \cs{MTnonletters\textbf{donot}\-obeymathxx} by default.
+    \end{framed}\vskip-.75\baselineskip
+  \end{framed}
 One thing to take note of is that this mechanism uses the \cs{everymath}
 and \cs{everydisplay} \TeX{} `token lists', so if it is needed to add to
 them some additional things this should be done in a way preserving the
@@ -1549,7 +1567,7 @@ Doing (after the |\begin{document}|) |\everymath={}| and
   package might have put in there, so it is much better, in case the need
   arises to preemptively cancel the action of \mst, to use the package
   macros \cs{MTmathoperatorsdonotobeymathxx},
-  \cs{MTnonlettersdonotobeymathxx}, \cs{MTnoicinmath}, and
+  \cs{MTnonlettersdonotobeymathxx} (this is default), \cs{MTnoicinmath}, and
   \cs{MTnormalprime} (which cancels the redefinition done by \mst of the
   action of the right quote |'| in math mode). 
 
@@ -1869,8 +1887,8 @@ Greek letters in the versions which will be declared next.
   §\MTexplicitbra\-cesobeymathxx§, §\MTexplicitbracesdonotobeymathxx§: these
   commands without argument must be used \emph{outside} of math mode. \mst
   issues automatically §\MTmathoperatorsobeymathxx§ and
-  §\MTnonlettersobeymathxx§ at the time of \cs{usepackage\{mathastext\}}, except
-  in case of the §subdued§ option. The `explicit braces' activation works only
+  §\MTnonletters\textbf{donot}obeymathxx§ at the time of
+  \cs{usepackage\{mathastext\}}. The `explicit braces' activation works only
   when \cs{MTnonletters\-obeymathxx} has been used.
 
 \item §\MTicinmath§: this command tells \mst to add italic corrections after all
@@ -1930,7 +1948,7 @@ Greek letters in the versions which will be declared next.
   corrections after lowercase and/or uppercase letters.
 
   With the §subdued§ option, \cs{MTversion\{normal\}} and \cs{MTversion\{bold\}}
-  do \cs{MTmathoperatorsdonotobeymathxx} and \cs{MTnonlettersdonotobeymathxx}.
+  do \cs{MTmathoperatorsdonotobeymathxx} (and \cs{MTnonlettersdonotobeymathxx}).
 \end{itemize}
 
 All further commands are for math mode only.
@@ -2041,7 +2059,7 @@ all the glyphs of the Euler font, if option §eulergreek§ (or
    after an explicit \cs{MTversion} (or \cs{mathastextversion}) command
    activating an additional math version as declared in the preamble. With
    option §subdued§ each \cs{MTversion\{normal\}} or \cs{MTversion\{bold\}} does
-   \cs{MTmathoperatorsdonotobeymathxx} and \cs{MTnonlettersdonotobeymathxx}.
+   \cs{MTmathoperatorsdonotobeymathxx} (and \cs{MTnonlettersdonotobeymathxx}).
  \item §italic§: the letters  default to italic shape in
   math mode.
  \item §frenchmath§: italic lowercase Latin letters, but
@@ -2516,6 +2534,11 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %      The mechanism is off by default for |\{| and |\}| as this is not
 %      compatible with their use as delimiters (|\lbrace| and |\rbrace| should
 %      be used instead) but it can be activated for them to. 
+%  
+%      |1.2c| [2012/12/31]: The mechanism is OFF by default, as it generally
+%      speaking currently puts constraints on the input: |$x^?$| must be input
+%      |$x^{?}$|, |$x\mathrel?y$| must be input |$x\mathrel{?}y$|. \fbox{So the
+%        macro \cs{MTnonlettersdonotobeymathxx} is made the default.}
 %
 %  \begin{macro}{\mst@mathactivate}
 %      The activation is
@@ -2602,7 +2625,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \newtoks\mst@do@AZ
 \newcommand\MTnonlettersdonotobeymathxx{\let\mst@the\@gobble}
 \newcommand\MTnonlettersobeymathxx{\let\mst@the\the}
-\MTnonlettersobeymathxx
+\MTnonlettersdonotobeymathxx % 1.2c !!!
 \newcommand\MTicinmath{% 
     \let\mst@thei\the
     \let\mst@theI\the
@@ -4886,7 +4909,7 @@ and \protect\log-like names will be^^J%
   Grave accent  \`     Left brace    \{     Vertical bar  \|
   Right brace   \}     Tilde         \~}
 
-\CheckSum{4641}
+\CheckSum{0}
 
 \Finale
 %%

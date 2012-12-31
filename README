@@ -5,7 +5,7 @@ Copyright (C) 2011, 2012 by Jean-Francois B..
     +                 mathastext                +
     +                                           +
     +      `Use the text font in math mode'     +
-    +             v1.2b  2012/12/31             +
+    +             v1.2c  2012/12/31             +
     +             2589111+jfbu@users.noreply.github.com             +
     +-------------------------------------------+
 
@@ -93,7 +93,7 @@ illustrate some features of the package.
 
 CHANGE LOG
 
-1.2b [2012/12/31]
+1.2c [2012/12/31]
 
    *  mathastext now inserts automatically after all (latin)
       letters in math mode their italic corrections, if the font
@@ -107,7 +107,9 @@ CHANGE LOG
       corrections,
 
    *  version 1.2 had some bad bugs when confronted to active
-      characters,
+      characters. This is corrected and additionally \MTnonletters-
+      -donotobeymathxx is made the default, as the user input is too
+      much constrained in its absence.
 
    *  a less fatal, but still annoying, typo had made the dot in 1.2
       of type \mathpunct rather than \mathord

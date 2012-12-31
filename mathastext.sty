@@ -22,7 +22,7 @@
 %% in the same archive or directory.)
 %%
 \ProvidesPackage{mathastext}
- [2012/12/31 v1.2b Use the text font in math mode (jfB)]
+ [2012/12/31 v1.2c Use the text font in math mode (jfB)]
 %%
 %% Package `mathastext' by Jean-Francois B.
 %% Copyright (C) 2011, 2012 by Jean-Francois B.
@@ -208,7 +208,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \newtoks\mst@do@AZ
 \newcommand\MTnonlettersdonotobeymathxx{\let\mst@the\@gobble}
 \newcommand\MTnonlettersobeymathxx{\let\mst@the\the}
-\MTnonlettersobeymathxx
+\MTnonlettersdonotobeymathxx % 1.2c !!!
 \newcommand\MTicinmath{%
     \let\mst@thei\the
     \let\mst@theI\the
