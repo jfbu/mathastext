@@ -1,8 +1,8 @@
 % -*- coding: iso-latin-1; -*-
 %<*ins>
 \def\pkgname{mathastext}
-\def\pkgdate{2012/12/31}
-\def\pkgversion{v1.2c}
+\def\pkgdate{2013/01/01}
+\def\pkgversion{v1.2d}
 \def\pkgdescription{Use the text font in math mode (jfB)}
 %</ins>
 %%
@@ -10,8 +10,8 @@
 %% Copyright (C) 2011, 2012 by Jean-Francois B.
 %%
 %<*none>
-\def\lasttimestamp{Time-stamp: <31-12-2012 19:21:14 CET jfb>}
-\def\docdate{2012/12/31}
+\def\lasttimestamp{Time-stamp: <02-01-2013 19:06:35 CET jfb>}
+\def\docdate{2013/01/01}
 \def\striptimestamp#1 <#2 #3 #4 #5>{#2 at #3 #4}
 \edef\dtxtimestamp{\expandafter\striptimestamp\lasttimestamp}
 \ProvidesFile{\pkgname.dtx}
@@ -136,23 +136,31 @@ $math\ in\ AvantGarde$.
 %% modification.
 %%
 \documentclass{article}
-\usepackage[hscale=0.8]{geometry}
+\usepackage[hscale=0.85]{geometry}
 \usepackage{multicol}
 \usepackage[no-math]{fontspec}
 \usepackage{lmodern}
-\usepackage[subdued,italic]{mathastext}
+\usepackage[subdued,italic,asterisk]{mathastext}
 \setmainfont[Color=FF0000]{Hoefler Text}  \Mathastext[Hoefler]
 \setmainfont[Color=336633]{American Typewriter}\Mathastext[Typewriter]
 \setmainfont[Color=0000FF]{Herculanum}    \Mathastext[Herculanum]
 \setmainfont[Color=FF00FF]{Didot}         \Mathastext[Didot]
 \setmainfont[Color=999999]{Comic Sans MS} \Mathastext[Comic]
 \begin{document}
-\mathastextversion{normal}
-This test uses \verb|mathastext| with its \emph{italic} and \emph{subdued}
-options. The base document fonts are the Latin Modern ones. The other fonts used
-were chosen from those of a Mac OS machine. Some of the used fonts have no
-italic variant.
-\newcommand\TEST[1]{\MTversion{#1}%
+\MTversion{normal} 
+This test uses \verb|mathastext| with its
+\emph{italic}, \emph{asterisk}, and \emph{subdued} options. Furthermore we test
+if the non-letter characters obey the math alphabet \verb|\mathbf| (this is
+disabled in the normal and bold math versions, as option \emph{subdued} was
+used; and if activated there we should use the package defined \verb|\Mathbf|
+rather than the original \verb|\mathbf| as the latter would use encoding
+\verb|OT1| in the normal and bold versions). The base document fonts are the
+Latin Modern ones. The other fonts used were chosen from those of a Mac OS
+machine. Some of the used fonts have no italic variant.
+\newcommand\TEST[1]{\MTversion{#1}\def\tmpa{#1}%
+  \def\tmpb{normal}\def\tmpc{bold}%
+  \ifx\tmpa\tmpb\else\ifx\tmpa\tmpc\else \MTnonlettersobeymathxx
+  \MTexplicitbracesobeymathxx\fi\fi
 \begin{multicols}{2}
 \hbox to\columnwidth{\hbox to\columnwidth{\hfil
                 $abcdefghijklmnopqrstuvwxyz$\hfil}\kern-2.5em{#1}}
@@ -160,11 +168,15 @@ italic variant.
    \centerline{ $0123456789$ }
    \centerline{ $!\,?\,*\,,\,.\,:\,;\,+\,-\,=\,(\,)\,[\,]\,/\,\#\,%
    \$\,\%\,\&\,<\,>\,|\,\{\,\}\,\backslash$ }
+   \centerline{ $\mathbf{!\,?\,*\,,\,.\,:\,;\,+\,-\,=\,(\,)\,[\,]\,/\,\#\,%
+   \$\,\%\,\&\,<\,>\,|\,\{\,\}\,\backslash}$ }
 \columnbreak
    \centerline{ abcdefghijklmnopqrstuvwxyz }
    \centerline{ ABCDEFGHIJKLMNOPQRSTUVWXYZ }
    \centerline{ 0123456789 }
    \centerline{ !\,?\,*\,,\,.\,:\,;\,+\,-\,=\,(\,)\,[\,]\,/\,\#\,%
+   \$\,\%\,\&\,<\,>\,|\,\{\,\}\,\char92 }
+   \centerline{\bfseries !\,?\,*\,,\,.\,:\,;\,+\,-\,=\,(\,)\,[\,]\,/\,\#\,%
    \$\,\%\,\&\,<\,>\,|\,\{\,\}\,\char92 }
 \end{multicols}}
 \begin{multicols}{2} 
@@ -192,7 +204,7 @@ italic variant.
 \usepackage{multicol}
 \usepackage[no-math]{fontspec}
 \usepackage{lmodern}
-\usepackage[subdued,italic]{mathastext}
+\usepackage[subdued,italic,asterisk]{mathastext}
 \setmainfont[Color=999999]{Verdana}      \Mathastext[Verdana]
 \setmainfont[Color=0000FF]{Arial}        \Mathastext[Arial]
 \setmainfont[Color=00FF00]{DejaVu Serif} \Mathastext[DejaVu]
@@ -200,14 +212,22 @@ italic variant.
 \MTlettershape{n}
 \setmainfont[Color=FF0000]{Andale Mono}  \Mathastext[Andale]
 \begin{document}
-\mathastextversion{normal}
-This test uses \verb|mathastext| with its \emph{italic} and \emph{subdued}
-options. The base document fonts are the Latin Modern ones. The other fonts used
-were chosen from those of a Linux machine. We also used the
-Times font in T1 encoding, but as explained in the user manual
-of mathastext it is not recommended to use different encodings
-in the various math versions. 
-\newcommand\TEST[1]{\MTversion{#1}%
+\MTversion{normal}
+This test uses
+\verb|mathastext| with its \emph{italic}, \emph{asterisk}, and \emph{subdued}
+options. Furthermore we test if the non-letter characters obey the math alphabet
+\verb|\mathbf| (this is disabled in the normal and bold math versions, as option
+\emph{subdued} was used; and if activated there we should use the package
+defined \verb|\Mathbf| rather than the original \verb|\mathbf| as the latter
+would use encoding \verb|OT1| in the normal and bold versions). The base
+document fonts are the Latin Modern ones. The other fonts used were chosen from
+those of a Linux machine. We also used the Times font in T1 encoding, but as
+explained in the user manual of mathastext it is not recommended to use
+different encodings in the various math versions.
+\newcommand\TEST[1]{\MTversion{#1}\def\tmpa{#1}%
+  \def\tmpb{normal}\def\tmpc{bold}%
+  \ifx\tmpa\tmpb\else\ifx\tmpa\tmpc\else \MTnonlettersobeymathxx
+  \MTexplicitbracesobeymathxx\fi\fi
 \begin{multicols}{2}
 \hbox to\columnwidth{\hbox to\columnwidth{\hfil
                 $abcdefghijklmnopqrstuvwxyz$\hfil}\kern-2.5em{#1}}
@@ -411,7 +431,7 @@ pdfpagemode=UseOutlines,%
 
 \let\oldexists\exists\let\oldforall\forall
 
-\usepackage[italic,subdued,defaultmathsizes,symbolmisc,symbolre,
+\usepackage[italic,subdued,asterisk,defaultmathsizes,symbolmisc,symbolre,
 LGRgreek]{mathastext}
 
 \Mathastext[italic]
@@ -638,7 +658,7 @@ typeset in Times.\footnote{let's do as if we did not know the excellent
       {ABCDEFGHIJKLMNOPQRSTUVWXYZ}\\
       {0123456789}\\
       \DeleteShortVerb{\|}%
-      {!\,?\,*\,,\,.\,:\,;\,+\,\textendash\,=\,(\,)\,[\,]\,/\,\#\,%
+      {!\,?\,\raisebox{-.3\height}{*}\,,\,.\,:\,;\,+\,\textendash\,=\,(\,)\,[\,]\,/\,\#\,%
         \$\,\%\,\&\,<\,>\,|\,\{\,\} {\color{black}\mdseries and
         }\char92}\endgroup\MakeShortVerb{\|}
   \end{framed}
@@ -646,7 +666,8 @@ typeset in Times.\footnote{let's do as if we did not know the excellent
 As one can see, this is a very limited list! some possibilities are offered by
 \mst for Greek letters and will be described later. 
 
-The |ascii| characters {}'{} and  {}-{} are not in the list:
+The text characters {}'{} and  {}-{} are not used, and the asterisk is
+done optionally:
 \begin{itemize}
 \item the derivative sign ${}'$ is left to its default as the text font
   glyph {}'{} is not, as a rule, a satisfying alternative.\footnote{|v1.2| adds
@@ -655,7 +676,13 @@ The |ascii| characters {}'{} and  {}-{} are not in the list:
  the CM derivative glyph.{\MTversion{upright}\sffamily\MTprimeskip{.5mu}%
    Compare $f'$ with \MTprimeskip{0mu}$f'$.} }
 \item   for the minus sign \mst uses the endash character
-  \textendash, if available, and not the hyphen character -. 
+  \textendash, if available, and not the hyphen character -,
+\item the option §asterisk§ is necessary for \mst to replace the binary math
+  operator $*$ (and the equivalent control sequence \cs{ast}) with a version
+  which uses the text asterisk * suitably lowered\footnote{the amount of
+    lowering can be customized.} (and with the correct spaces around it as
+  binary operator). The reason for making it optional is that after this |$R^*$|
+  or |$R^\ast$| do not work and have to be written |$R^{*}$| or |$R^{\ast}$|.
 \end{itemize}
 
 Nothing is changed to the ``large'' math symbols, except for
@@ -874,28 +901,30 @@ math version to have distinct fonts for text and math:
 \end{enumerate}
 
 In the body of the document the \LaTeX{} command
-\cs{mathversion}\marg{version\_name} will change only the fonts used in
-math mode. It is recommended to use instead the package command
-\csb{mathastextversion} (or its synonyms \cs{Mathastextversion},
-\cs{MTversion}, \cs{MTVersion}), with its
-mandatory argument \marg{version\_name}. It
+\cs{mathversion}\marg{version\_name} will change only the fonts used in math
+mode. It is recommended to use instead the package command
+\csb{mathastextversion} (or its synonyms \csb{MTversion},
+\cs{Mathastextversion}, \cs{MTVersion}), with a mandatory argument
+\marg{version\_name}. It
 \begin{itemize}
-\item checks in case the §subdued§ option was specified whether the asked for
+\item checks in case the §subdued§ option was specified whether the asked-for
   math version is \meta{normal} or \meta{bold}, and adapts the following
   to that case, 
-\item sets the font used in math mode for letters, digits, operator
-  names, punctuations and other ascii symbols,
-\item sets the font for the document text (if another version name is
+\item sets the font which will be used in math mode for letters (including math
+  operator names), digits, punctuations and other ascii symbols,
+\item sets the font of the document text (if another version name is
   additionally passed as optional argument, it uses instead the corresponding
   font for text),
 \item resets the |\(family,rm,sf,tt)default|s to their values as
   registered at the time  of definition of the version,
-\item resets the user-defined extra spaces after the symbols $\exists$,
+\item (see section \ref{sec:extraskips}) resets the user-defined extra spaces after the symbols $\exists$,
   $\forall$ and before the derivative ${}'$ to the values as decided in the
   preamble on a \emph{per version} basis,
-\item (\emph{new with} |1.2b|) checks if the used font is upright and then
+\item (see section \ref{sec:ic}) checks if the used font is upright and then
   activates the automatic insertion of italic corrections after each letter in
   math mode,
+\item (see section \ref{sec:mathxx}) makes the math operator names as well as
+  the `easy' non letter characters (and the asterisk) obey the math alphabets,
 \item does some additional set up for Greek letters  when the
   §LGRgreek§ option was used.
 \end{itemize}
@@ -924,77 +953,116 @@ package option §LGRgreek§ and the command
 |\usepackage[LGRgreek]{mathastext}|.
 
 \subsection{Extended scope of the math alphabets commands}
-\label{sec:active}
+\label{sec:mathxx}
 
 \begingroup
-\MTversion{italic}
+\MTversion{italic}\renewcommand\familydefault\sfdefault
+% il faudra peut-être que j'annule cette façon qu'à mathastext de tripatouiller
+% \familydefault... 
+\makeatletter\let\mst@doasterisk\relax\makeatother
 
-Since the initial version of \mst, some characters usually unaffected by the
-math alphabet commands \cs{mathbf}, \cs{mathtt}, \cs{mathsf}\dots{} are
-declared to be of `variable family type', in order for them to obey
-these commands: for example the hash sign $\#$ gives $\mathbf{\#}$ if input as
-|$\mathbf{\#}$| (\mst, especially in its beginnings, wanted as many characters
-as possible to be picked up from the text font and to behave similarly to
-letters and digits).
+Ever since the initial version of the package, some characters usually
+unaffected by the math alphabet commands \cs{mathbf}, \cs{mathtt},
+\cs{mathsf}\dots{} are declared to be of `variable family type', in order for
+them to obey these commands: for example the hash sign $\#$ gives $\mathbf{\#}$
+if input as |$\mathbf{\#}$| (\mst, especially in its beginnings, wanted as many
+characters as possible to be picked up from the text font and to behave
+similarly to letters and digits).
 
 So it was especially frustrating that mathematical characters such as $+$, or
-$<$, or $]$ could not be declared of `variable family' as this would, for
-reasons of the inner workings of \TeX{}, not be compatible with the
-automatically decided spaces put by \TeX{} around them, depending on the
-context.
+$<$, or $]$ could not be declared of `variable family' (in addition to being
+picked up in the text font) as this would, for reasons of the inner workings of
+\TeX{}, not be compatible with the automatically inserted spaces around them.
 
 A revolutionary ;-) novelty is introduced with version |1.2| of the package:
 \begin{enumerate}
 \item the pre-declared or user-declared (using the |amsmath|
   \cs{DeclareMathOperator} or equivalent) operator names obey the math
-  alphabet commands,
-\item and, \emph{optionally}, all non alphabetical characters treated by \mst (among them $!$,
-  $?$, $<$, $>$, $=$, $+$, $-$, $($, $)$, $[$, $]$, $\backslash$,
-  $\vert$, etc\dots) will also obey the math alphabet commands (when
-  they are not used as delimiters). The spaces added by \TeX{} before
-  and after are not modified.
+  alphabet commands,\footnote{contrarily to the next feature, this one is not
+    likely to create incompatibilities with other packages, so it is
+    activated by default.}
+\item and, \emph{optionally}, all non alphabetical characters treated by \mst,
+  \emph{i.e.}, if not disabled by options,
+  ${!}\,{?}\,{,}\,{:}\,{;}\,{+}\,{-}\,{=}\,{(}\,{)}\,{[}\,{]}\,{<}\,{>}\,{\{}\,{\}}$,
+  the asterisk $*$, and
+  $.\,/\,\vert\,\backslash\,{\#}\,{\$}\,{\%}\,{\&}$\footnote{%
+    ${\#}\,{\$}\,{\%}\,{\&}$ obey the math alphabets since the initial version
+    of \mst; the dot $.$, the slash $/$, the vertical bar $\vert$ and the
+    backslash $\backslash$ do not have specific spacings inserted by \TeX{}
+    around them, and the procedure is then not a devilish one, this is why it is
+    made the default for these characters which are listed apart. The math
+    symbols \cs{mid} (which is $\vert$ with type \cs{mathrel}) and \cs{setminus}
+    ($\backslash$ with type
+    \cs{mathbin}) are counted among the `hard' cases, not the `easy
+    non-letters'.} will also obey the math alphabet commands (when not used as
+  delimiters). The important thing is that the spaces added by \TeX{} before and
+  after are not modified.
+
 \end{enumerate}
 Let us compare, for example, the new behavior of \cs{mathtt} and \cs{mathbf}
-\MTmathoperatorsobeymathxx\MTnonlettersobeymathxx
+\MTmathoperatorsobeymathxx\MTnonlettersobeymathxx\MTeasynonlettersobeymathxx
 \[ \mathtt{(\sin(n!)<\cos(m-p)?)}\qquad \mathbf{[\sin(x+y)=\cos(z-t)]}\] 
 with the traditional default behavior:
 \MTmathoperatorsdonotobeymathxx\MTnonlettersdonotobeymathxx
+\MTeasynonlettersdonotobeymathxx
 \[ \mathtt{(\sin(n!)<\cos(m-p)?)}\qquad \mathbf{[\sin(x+y)=\cos(z-t)]}\] 
 
-Theses mechanisms are of course disabled by default for the normal and bold math
-versions when in \emph{subdued} mode. The first one is activated by default for
-all other math versions, or for all math versions when option |subdued| was not
-passed to the
-package. The commands:\\
+The first feature is activated by default, except of course for the normal and
+bold math versions when the package was given the \emph{subdued} option. The
+second feature is \emph{off} by default for the characters listed first. It is
+\emph{on} for the `easy' cases
+${\#}\,{\$}\,{\%}\,{\&}\,.\,/\,\vert\,\backslash$ (activating the feature for
+them puts no constraint on the user input and should not be too upsetting to
+other packages), and also for $*$ but only if this was required explicitely by
+the option §asterisk§, as the user then is supposed to know that |$R^*$| is no
+valid input anymore and should be replaced by |$R^{*}$|. The remaining `hard'
+cases create similar
+constraints, which will be commented more upon next. The relevant commands are\\
 \mbox{}\hspace{2cm}\csb{MTmathoperatorsdonotobeymathxx}\\
 \mbox{}\hspace{2cm}\csb{MTnonlettersdonotobeymathxx}\\
-cancel the two mechanisms and\\
+\mbox{}\hspace{2cm}\csb{MTeasynonlettersdonotobeymathxx}\\
+for deactivation and \\
 \mbox{}\hspace{2cm}\csb{MTmathoperatorsobeymathxx}\\
 \mbox{}\hspace{2cm}\csb{MTnonlettersobeymathxx}\\
-re-activate them.\footnote{these commands are to be used outside of math mode.
+\mbox{}\hspace{2cm}\csb{MTeasynonlettersobeymathxx}\\
+for activation.\footnote{these commands are to be used outside of math mode.
   Their scope is limited to the current \LaTeX{} environment or group. They use
   the \cs{everymath} and \cs{everydisplay} mechanism so if the document needs to
-  modify these token lists it has to do it in a responsible manner, extending
+  modify these token lists it has to do so in a responsible manner, extending
   not annihilating their previous contents.} \footnote{when in subdued mode, the
   math alphabets are the default ones, not the ones modified by \mst to use the
   document text fonts. As a result, matters of font encodings may then give
   unexpected results, for example for $-$. On the present document page we
   switched to a math version to escape from the |subdued| mode and avoid the
   problem with \cs{mathbf\{-\}} giving in the normal (subdued) math version
-  {\MTversion{normal}\MTnonlettersobeymathxx$\mathbf-$, when `non-letters' are
-    declared to obey math alphabets.}}
+  {\MTversion{normal}\MTnonlettersobeymathxx$\mathbf-$\sffamily, when
+    `non-letters' are declared to obey math alphabets.}}
 
 \begin{framed}
   \textbf{Important:} the package does \cs{MTnonlettersdonotobeymathxx} by
-  default because, in its current implementation, it adds constraints to the way
-  things must be input. Characters such as |?| or |[| now represent \emph{two}
-  `tokens' and this will utterly confuse \TeX{} if some precautions are not
-  taken: |$x^?$| or |$x\mathrel?y$| should be coded now |$x^{?}$|, 
-  respectively |$x\mathrel{?}y$|.
+  default. The reason is that activating the mechanism adds some constraints to
+  the way things must be input, adding
+  |\usepackage{mathastext}|{}\cs{MTnon\-letters\-obey\-mathxx} to a pre-existing
+  document might well create errors: 
+
+  All these characters treated by \mst, such
+  as |?|, |[|, |<| now represent (in math mode only!) \emph{two} `tokens' and
+  this will utterly confuse \TeX{} if some precautions are not taken: |$x^?$|,
+  |$R^+$| or |$\mathopen<A\mathclose>$| \emph{must} now be coded as |$x^{?}$|,
+  |$R^{+}$| and |$\mathopen{<}A\mathclose{>}$| (the rule is to do as if |?|,
+  |+|, |<| or |>| were each really \emph{two} characters).
+
+  Even if this rule is respected in the document source, it is still a
+  possibility that incompatibilities with other packages will arise because \mst
+  does a `mathematical activation' of the characters which could be unexpected
+  and unchecked for by other packages. This is precisely the case with the
+  |amsmath| package, and the problem goes away by just making sure that
+  |amsmath| is loaded before \mst{} (generally speaking, \mst should be loaded
+  last after all packages dealing with math things).
 \end{framed}
 
 The brace control sequences |\{| and |\}| have their own (supplementary) switch,
-which is (even less) activated by default. The reason is that after
+which is (even) less activated by default. The reason is that after
 \csb{MTexplicitbracesobeymathxx}, they regrettably can not be used anymore as
 delimiters: |\big\{| or |\big\}| cease to function and must be replaced by
 |\big\lbrace| and |\big\rbrace|. But
@@ -1030,8 +1098,6 @@ Examples: |\mathbf{<a,b>}| gives $\mathbf{<a,b>}$.
 The \LaTeX{} standard behavior for 
 |\mathbf{\mathopen{<}a,b\mathclose{>}}| is
 \endgroup
-\MTmathoperatorsdonotobeymathxx\MTnonlettersdonotobeymathxx
-\MTexplicitbracesdonotobeymathxx
 $\mathbf{\mathopen{<} a,b \mathclose{>}}$.
 
 
@@ -1197,7 +1263,14 @@ to preserve this behavior).
     is expected in the standard default \TeX{} font set-up in math.
   \end{framed}\vskip-.75\baselineskip
 \end{framed}
-\footnotetext{the situation is rather ironical!}
+\footnotetext{the situation is rather ironical! by the way, the warnings in
+  section \ref{sec:mathxx} related to \cs{MTnonletters\-obeymathxx} are less of
+  an issue here, because the additional italic correction is added \emph{after}
+  the original character. Nevertheless it is still true that (in math mode
+  only)
+  the letter characters |a-z|, |A-Z|, are now composite objects, something which
+  could surprise other packages. The macro §\MTnoicinmath§ cancels the
+  mechanism.}
 
 The feature-implementing commands §\MTicinmath§, §\MTnoicinmath§,
 §\MTicalsoinmathxx§ are described in section \ref{sec:cmds}.
@@ -1219,17 +1292,17 @@ The feature-implementing commands §\MTicinmath§, §\MTnoicinmath§,
 \begin{document}
 \Huge
 $\mathit{f_i^i}$\par $\mathrm{f_i^i}$
-\end{document}
-\end{verbatim}\kern-.75\baselineskip}\\
+\end{document}\end{verbatim} % problème de syntax highlighting dans emacs
+\kern-.75\baselineskip}\\
 \emph{Comment out the} |fontspec| \emph{line and use pdf\LaTeX{}. All
   three outputs are different on my \TeX{} installation. \XeTeX does not have
   the italic corrections. \LuaLaTeX{} does, but only for the italic font.
-  pdf\LaTeX{} has them for both the italic and the upright font. The fonts used
-  are the Latin Modern fonts, in OpenType format for the unicode engines.}
+  pdf\LaTeX{} has them for both the italic and the upright font.}
 
 \subsection{Additional whitespaces}
+\label{sec:extraskips}
 
-\begingroup\MTversion{upright}
+\begingroup\MTversion{upright}\renewcommand\familydefault\sfdefault
 \makeatletter % c'est parce que sinon ils sont pris dans Symbol
 \let\mst@stdexists\oldexists
 \let\mst@stdforall\oldforall
@@ -1238,9 +1311,9 @@ $\mathit{f_i^i}$\par $\mathrm{f_i^i}$
 \csb{MTforallskip}, \csb{MTexistsskip}, and \csb{MTprimeskip} are three commands
 with each a mandatory argument like for example |3mu plus 1mu minus 1mu| or just
 |2.5mu|. They are especially useful when using an upright font in math
-mode.\footnote{The |mu| is a unit length (`math unit') used in math mode. Its
-  value is relative to the current math style (normal size, subscript size,
-  subsubscript size, ...).}
+mode.\footnote{The |mu| is a unit length used in math mode (`math unit', 1/18th
+  of the `quad' value of the symbol font in the current style). Its value is
+  relative to the current math style.}
 \begin{itemize}
 \item compare $\forall B$ with\MTforallskip{2mu} $\forall B$, typeset after 
 |\MTforallskip{2mu}|, 
@@ -1259,7 +1332,8 @@ values of the skips. \mst applies the following (small) default skips:
 N$ and $f'$.\footnote{the derivative glyph from the |txfonts| math symbols
   adapts itself better to an upright letter, no skip seems to be needed then.}
 
-With the §italic§ option the defaults are set to zero. \MTversion{italic}Indeed
+With the §italic§ option the defaults are set to zero.
+\MTversion{italic}\renewcommand\familydefault\sfdefault Indeed
 $\forall B$, $\exists N$ and $f'$ look fine without additional skips. If the
 document decides then to declare in the preamble a math version with an upright
 font it is thus recommended to use the commands in the preamble before the
@@ -1399,6 +1473,8 @@ encoding: for example |lmr|, |txr| (needs |txfontsb|
 package on your system), |DejaVuSerif-TLF| (needs |dejavu| package
 on your system), etc\dots
 
+\enlargethispage{\baselineskip}
+
 \subsection{Unicode engines}
 
 \mst has been made minimally unicode-aware and can be used with \XeTeX{} or
@@ -1523,10 +1599,10 @@ And now the same thing with fonts available on Mac OS X:
 
 \subsection{Compatibility issues}
 
-Compatibility issues are naturally to be expected with packages dealing with the
-math setting; the fix is simply to load \mst last. And one should always load
-|amsmath| before \mst, especially when using Unicode engines (and also
-|fontspec| with its option |no-math| should be before \mst).
+Compatibility issues (or just questions of who decides last) are naturally to
+be expected with packages dealing with the math setting; the fix is simply to
+load \mst last. And one should always load |amsmath| before \mst (this is
+especially true when using Unicode engines but applies in general as well).
 
 In case of a `too many math alphabets' message try the |defaultalphabets|
 option or one of its |defaultnormal|, |defaulttt|, etc\dots sub-options.
@@ -1534,49 +1610,62 @@ option or one of its |defaultnormal|, |defaulttt|, etc\dots sub-options.
 Starting with version |1.2|, \mst makes characters `mathematically active' to
 achieve certain effects: automatic insertion of the italic corrections when
 using an upright text font in math, extended scope of the math alphabet commands
-which now apply to non letter symbols and to math operator names (this feature
-is kept optional; see framed text below\dots). And the already mathematically
-active right quote is modified to have some extra space added before the
-derivative glyph ${}'$. Version |1.2b| does this in a careful manner with the
-hope to not create conflict with packages (typically, language definition files
-from the |babel| system) making characters `globally active' in the
-document.\footnote{it is better if these characters are not `active' at the time
-  of loading \mst, and fortunately |babel| does the activation of characters
-  only at the \texttt{\string\begin\{document\}}.} All the action done by \mst
-  is done anew at each math environment and has no effect elsewhere.
+which now apply to non-letter symbols (and also to math operator names, but this
+is much easier to achieve). And the (already mathematically active) right quote
+is modified to have some extra space added before the derivative glyph ${}'$.
+
+Version |1.2b| does this in
+a careful manner with the hope to not create conflict with packages (typically,
+language definition files from the |babel| system) making characters `globally
+active' in the document.\footnote{it is better if these characters are not
+  `catcode active' at the time of loading \mst, and fortunately |babel| does the
+  activation of characters only at the \texttt{\string\begin\{document\}}.} All
+  the action done by \mst is done anew at each math environment and has no
+  effect elsewhere (even in hboxes included in a math mode group).
+
+  Still, it is to be expected that all these `math active' characters will
+  create incompatibilities (at least, surprises) with other packages. One such
+  radical incompatibility arose with |amsmath|. To fix it, \mst now replaces
+  an inner macro of |amsmath|
+  (\cs{resetMathstrut@}) with its own version.\\
+  \null\hspace{1cm}\fbox{Always load |amsmath| before \mst.}\\
+  Actually this last commandment was already made necessary by the use of the
+  text endash to represent the minus sign in math mode, and, especially for
+  Unicode engines, some aspects of the \cs{DeclareMathOperator} macro from
+  |amsmath|.
 
   \begin{framed}\kern-.75\baselineskip
     \begin{framed}
-      \textbf{Important!} As is mentioned in the section \ref{sec:active}, with
-      the ``non letters obey math alphabets'' mechanism , characters such as
+      \textbf{Important!} As is mentioned in the section \ref{sec:mathxx}, with
+      the ``non letters obey math alphabets'' mechanism, characters such as
       |?|, or |[|, now represent \emph{two} `tokens' and this will utterly
-      confuse \TeX{} if some precautions are not taken. Examples: |$x^?$| or
-      |$x\mathrel?y$| should be input now |$x^{?}$| and, respectively,
+      confuse \TeX{} if some precautions are not taken. Examples: |$0^+$| or
+      |$x\mathrel?y$| \emph{must} be input now as |$0^{+}$| and, respectively,
       |$x\mathrel{?}y$|. This is why the package does
       \cs{MTnonletters\textbf{donot}\-obeymathxx} by default.
     \end{framed}\vskip-.75\baselineskip
   \end{framed}
-One thing to take note of is that this mechanism uses the \cs{everymath}
-and \cs{everydisplay} \TeX{} `token lists', so if it is needed to add to
-them some additional things this should be done in a way preserving the
-former contents. 
+  One thing to take note of is that this mechanism uses the \cs{everymath}
+  and \cs{everydisplay}, so if it is needed to add to these \TeX{} `token
+  lists' some additional things this should be done in a way preserving the
+  former contents.
 
-Doing (after the |\begin{document}|) |\everymath={}| and
-  |\everydisplay={}| annihilates all of the \mst (evil) doing with math
-  active characters but it annihilates also everything else some other
-  package might have put in there, so it is much better, in case the need
-  arises to preemptively cancel the action of \mst, to use the package
-  macros \cs{MTmathoperatorsdonotobeymathxx},
-  \cs{MTnonlettersdonotobeymathxx} (this is default), \cs{MTnoicinmath}, and
-  \cs{MTnormalprime} (which cancels the redefinition done by \mst of the
-  action of the right quote |'| in math mode). 
+  Doing (after the |\begin{document}|) |\everymath={}| and |\everydisplay={}|
+    (preemptively) annihilates all of the \mst (evil) doing with math active
+    characters but it annihilates also everything else some other package might
+    have put in there, so it is much better, in case the need arises to
+    preemptively cancel the action of \mst, to use the package macros
+    \cs{MTmathoperatorsdonotobeymathxx}, \cs{MTnonlettersdonotobeymathxx} (this
+    is default), \cs{MTnoicinmath}, and \cs{MTnormalprime} (which cancels the
+    redefinition done by \mst of the action of the right quote |'| in math
+    mode).
 
-  An exception is with the modifications to $\oldexists$ and $\oldforall$ which
-  are done by the package in the preamble; the old definitions can be saved
-  before to be reestablished after loading the package. But just using
-  |\MTexistsskip{0mu}| and |\MTforallskip{0mu}| should be sufficient, except if
-  it is important that the \cs{exists} and \cs{forall} control sequences expand
-  to only one token each.
+  An exception is with the modifications to $\oldexists$ and $\oldforall$
+  which are done by the package in the preamble; the old definitions can be
+  saved before to be reestablished after loading the package. Just using
+  |\MTexistsskip{0mu}| and |\MTforallskip{0mu}| should be sufficient, except
+  if it is important that the \cs{exists} and \cs{forall} control sequences
+  always expand to only one token each.
 
 
    
@@ -1620,7 +1709,7 @@ for subscripts (it also copies code from the §moresize§ package to redefine
 \subsection{Miscellaneous}
 
 \begin{description}
-\item[the en-dash as minus sign:] Very often the -
+\item[the en-dash as minus sign:] very often the -
   character from the text font does not give a good
   minus sign. So by default, the package uses the
   en-dash sign \textendash{}. Use §noendash§ to
@@ -1654,7 +1743,7 @@ avoid this use (also with \LaTeX{}):\\
 \centerline{\cs{DeclareMathOperator}\cs{crazy}\{m\{.\}ch\{-\}in\{'\}tr\{/\}u\{:\}c\}}
 Note though that the quote ' will be typeset as a derivative sign $'$. 
 
-\item[hbar:] The definition of \cs{hbar} inherited from
+\item[hbar:] the definition of \cs{hbar} inherited from
   default \LaTeX{} will in our context make use of the
   §h§ of the current math font (so for us, it is also
   the text font, perhaps in italic shape), but the bar
@@ -1672,7 +1761,7 @@ Note though that the quote ' will be typeset as a derivative sign $'$.
   the \cs{hbar} directly as a glyph from the font.
 
 
-\item[dotless i and j:] By default the package redefines
+\item[dotless i and j:] by default the package redefines
   \cs{i} and \cs{j} to give the dotless i and j (if it
   exists at all), \emph{also in math mode,} in the text
   font. Will overwrite the default commands \cs{imath}
@@ -1681,6 +1770,26 @@ Note though that the quote ' will be typeset as a derivative sign $'$.
   is then assumed that |fontspec| has been loaded, and
   of course that the glyphs are indeed in the font).
 
+\item[asterisk:] previous versions of \mst did not do anything with the \cs{ast}
+  control sequence but did pick the asterisk $*$ in the document text font, and
+  this often was a rather silly thing as the text asterisk is generally in a
+  raised position. Furthermore, the $*$ lost its status of a binary operator and
+  was treated as an `ordinary' symbol. An option |noasterisk| turned this
+  feature off. Starting with |1.2d|, the |noasterisk| option is deprecated and
+  the new default is to do nothing. But when option §asterisk§ is received by
+  the package, then both \cs{ast} and $*$ are simultaneously modified to use (as
+  binary operators) the text asterisk, slightly lowered. The amount of lowering
+  is decided by the argument to the macro \csb{MTlowerast}\marg{dimen} whose
+  default value is |0.3\height|.\footnote{with the option \texttt{symbolmisc},
+    the asterisk is picked from the Symbol font, and the amount of lowering is
+    non-customizable; however if a math alphabet command is used, the asterisk
+    is then again from a text font and the lowering will be as specified by
+    \cs{MTlowerast}.} The symbol will behave as expected in subscripts and
+  subscripts of subscripts. But $*$ is now `mathematically
+  active'\thinspace\footnote{in a hopefully safe way, for example
+    {\ttfamily\$\string\label\{eq*1\}\$} is ok.} and |$R^*$| or |$R^\ast$|
+  \emph{must} be input as |$R^{*}$| and |$R^{\ast}$|. Furthermore, they will
+  obey the math alphabet commands.
 
   \item[\XeTeX{} and \LuaLaTeX{}:] for the en-dash
 and the dotless i and j, the package expects to detect
@@ -1882,14 +1991,24 @@ Greek letters in the versions which will be declared next.
   the normal and bold math versions with option §subdued§. The same
   observations apply.
 
+\item §\MTlowerast§\marg{dimen}: a \cs{raisebox} command is used to lower the
+  text asterisk to produce a reasonable math asterisk. The package uses the
+  command with the argument |0.3\height|, this will have to be fine-tuned for
+  each given text font but worked out ok with the fonts we tried. Not that the
+  dimension argument will be used also in sub-scripts and sub-sub-scripts, so it
+  is best not to use an absolute measure.
+
 \item §\MTmathoperatorsobeymathxx§, §\MTmathoperatorsdonotobeymathxx§,
   §\MTnonlettersobeymathxx§, §\MTnonlettersdonotobeymathxx§,
-  §\MTexplicitbra\-cesobeymathxx§, §\MTexplicitbracesdonotobeymathxx§: these
+  §\MTexplicitbra\-cesobeymathxx§, §\MTexplicitbracesdonotobeymathxx§,
+  §\MTeasynonlettersobeymathxx§, §\MTeasynonlettersdonotobeymathxx§: these
   commands without argument must be used \emph{outside} of math mode. \mst
-  issues automatically §\MTmathoperatorsobeymathxx§ and
+  issues automatically §\MTmathoperatorsobeymathxx§,
+  §\MTeasynonlettersobeymathxx§ and  and
   §\MTnonletters\textbf{donot}obeymathxx§ at the time of
-  \cs{usepackage\{mathastext\}}. The `explicit braces' activation works only
-  when \cs{MTnonletters\-obeymathxx} has been used.
+  \cs{usepackage\{math\-as\-text\}}. See the discussion in section \ref{sec:mathxx}.
+  The `explicit braces' activation works only
+  when \cs{MTnonletters\-obeymathxx} has already been used.
 
 \item §\MTicinmath§: this command tells \mst to add italic corrections after all
   letters in math mode. Its effect is cancelled inside math alphabets (except
@@ -2009,31 +2128,33 @@ all the glyphs of the Euler font, if option §eulergreek§ (or
   \cs{let}\cs{varepsilon}$=$\cs{epsilon}, etc\dots,
   in case only the `variant' form of the letter was used
   in the documents.
-\item Miscelleneous mathematical symbols from the postscript Symbol font
-  are made available (or replaced) when option §symbolmisc§ is
-  passed. They are \cs{prod}~$\prod$ \cs{sum}~$\sum$
-  \cs{implies}~$\implies$ \cs{impliedby}~$\impliedby$ \cs{iff}~$\iff$
-  \cs{shortiff}~$\shortiff$ \cs{to}~$\to$ \cs{longto}~$\longto$
-  \cs{mapsto}~$\mapsto$ \cs{longmapsto}~$\longmapsto$
-  \cs{aleph}~$\aleph$ \cs{inftypsy}~$\inftypsy$ \cs{emptyset}~$\emptyset$
-  \cs{surd}~$\surd$ \cs{nabla}~$\nabla$ \cs{angle}~$\angle$
-  \cs{forall}~$\forall$ \cs{exists}~$\exists$ \cs{neg}~$\neg$
-  \cs{clubsuit}~$\clubsuit$ \cs{diamondsuit}~$\diamondsuit$
+\item \hypertarget{symbolmisc}{Miscelleneous mathematical symbols} from the
+  postscript Symbol font are made available (or replaced) by option
+  §symbolmisc§.\footnote{option §asterisk§ is also required to treat the $*$.
+    Recall from section \ref{sec:mathxx} that the asterisk in math mode (also
+    when using the control sequence \cs{ast}) appears then to \TeX{} to be
+    a composite object.}
+  \makeatletter\let\mst@doasterisk\mst@@doasterisk\makeatother They are
+  \cs{prod}~$\prod$ \cs{sum}~$\sum$ \cs{implies}~$\implies$
+  \cs{impliedby}~$\impliedby$ \cs{iff}~$\iff$ \cs{shortiff}~$\shortiff$
+  \cs{to}~$\to$ \cs{longto}~$\longto$ \cs{mapsto}~$\mapsto$
+  \cs{longmapsto}~$\longmapsto$ \cs{aleph}~$\aleph$ \cs{inftypsy}~$\inftypsy$
+  \cs{emptyset}~$\emptyset$ \cs{surd}~$\surd$ \cs{nabla}~$\nabla$
+  \cs{angle}~$\angle$ \cs{forall}~$\forall$ \cs{exists}~$\exists$
+  \cs{neg}~$\neg$ \cs{clubsuit}~$\clubsuit$ \cs{diamondsuit}~$\diamondsuit$
   \cs{heartsuit}~$\heartsuit$ \cs{spadesuit}~$\spadesuit$
-  \cs{smallint}~$\smallint$ \cs{wedge}~$\wedge$ \cs{vee}~$\vee$
-  \cs{cap}~$\cap$ \cs{cup}~$\cup$ \cs{bullet}~$\bullet$ \cs{div}~$\div$
-  \cs{otimes}~$\otimes$ \cs{oplus}~$\oplus$ \cs{pm}~$\pm$ \cs{ast}~$\ast$
-  \cs{times}~$\times$ \cs{proptopsy}~$\proptopsy$ \cs{mid}~$\mid$
-  \cs{leq}~$\leq$ \cs{geq}~$\geq$ \cs{approx}~$\approx$
-  \cs{supset}~$\supset$ \cs{subset}~$\subset$ \cs{supseteq}~$\supseteq$
-  \cs{subseteq}~$\subseteq$ \cs{in}~$\in$ \cs{sim}~$\sim$
-  \cs{cong}~$\cong$ \cs{perp}~$\perp$ \cs{equiv}~$\equiv$
+  \cs{smallint}~$\smallint$ \cs{wedge}~$\wedge$ \cs{vee}~$\vee$ \cs{cap}~$\cap$
+  \cs{cup}~$\cup$ \cs{bullet}~$\bullet$ \cs{div}~$\div$ \cs{otimes}~$\otimes$
+  \cs{oplus}~$\oplus$ \cs{pm}~$\pm$ \cs{ast}~$\ast$ \cs{times}~$\times$
+  \cs{proptopsy}~$\proptopsy$ \cs{mid}~$\mid$ \cs{leq}~$\leq$ \cs{geq}~$\geq$
+  \cs{approx}~$\approx$ \cs{supset}~$\supset$ \cs{subset}~$\subset$
+  \cs{supseteq}~$\supseteq$ \cs{subseteq}~$\subseteq$ \cs{in}~$\in$
+  \cs{sim}~$\sim$ \cs{cong}~$\cong$ \cs{perp}~$\perp$ \cs{equiv}~$\equiv$
   \cs{notin}~$\notin$ \cs{langle}~$\langle$ \cs{rangle}~$\rangle$. And a
-  \cs{DotTriangle}~$\DotTriangle$ is made available by option §symbolre§
-  (which overwrites \cs{Re} and \cs{Im}: $\Re,\Im$). The \cs{inftypsy}
-  and \cs{proptopsy} have these names to leave up to the user the choice
-  to replace (or no) the original (larger) \cs{infty}
-  $\infty$ and \cs{propto} $\propto$. 
+  \cs{DotTriangle}~$\DotTriangle$ is made available by option §symbolre§ (which
+  overwrites \cs{Re} and \cs{Im}: $\Re,\Im$). The \cs{inftypsy} and
+  \cs{proptopsy} have these names to leave up to the user the choice to replace
+  (or no) the original (larger) \cs{infty} $\infty$ and \cs{propto} $\propto$.
 
   Regarding the \cs{prod} and \cs{sum} commands: they will use the Symbol
   glyphs $\prod\sum$ in inline math, and in display
@@ -2070,19 +2191,20 @@ all the glyphs of the Euler font, if option §eulergreek§ (or
 \item §endash§, §emdash§: use the text font en-dash (\textendash) or even
  the em-dash (\textemdash, but this seems crazy) for the minus sign
  rather than {}-{}. §endash§ option is default for the package.
+\item §asterisk§: use the text font (or the Symbol font) asterisk in math mode. 
 \item §noendash§: the minus sign will be the - from the
 text font, not the en-dash \textendash.
 \item §nohbar§: prevents \mst from defining its own
   \cs{hbar}.
 \item §nolessnomore§: besides
-  !\,?\,*\,,\,.\,:\,;\,+\,-\,=\,(\,)\,[\,]\,/\,\#\,\$\,\%\,\&
+  !\,?\,,\,.\,:\,;\,+\,\textendash\,=\,(\,)\,[\,]\,/\,\#\,\$\,\%\,\&
   \mst treats also \DeleteShortVerb{\|}
   $\mathord{<}\,\mathord{>}\,\mathord{|}$\, \{\,\} and
-  $\backslash$.\MakeShortVerb{\|} Use this option to not
-  do it. The option §nolessnomore§ is activated by default
+  $\backslash$.\MakeShortVerb{\|} Use this option to let it not
+  do it. This is the default
   in case of |OT1|-encoding.
  \item further excluding options: §noexclam§ !\,?\
-§noasterisk§ *\ §nopunctuation§ ,\,.\,:\,;\ §noplus§,
+\ §nopunctuation§ ,\,.\,:\,;\ §noplus§,
 §nominus§, §noplusnominus§\ +\,\textendash{} §noequal§ =\
 §noparenthesis§ (\,)\,[\,]\,/\ §nospecials§
 \#\,\$\,\%\,\&\ and §nodigits§.
@@ -2102,10 +2224,11 @@ Symbol font.
  \item §symbolre§: replaces \cs{Re} and \cs{Im} by the
  Symbol glyphs $\Re, \Im$ and defines a
 \cs{DotTriangle} command ($\DotTriangle$).
- \item §symbolmisc§: takes quite a few glyphs, including logical arrows,
-product and sum signs from Symbol. They are listed \emph{supra}. A
- \cs{renewcommand}|{\int}{\smallint}| will maximize even more
-the use of the Symbol font.
+\item §symbolmisc§: takes quite a few glyphs, including logical arrows, product
+  and sum signs from Symbol. They are listed
+  \hyperlink{symbolmisc}{\emph{supra}}. Doing
+  \cs{renewcommand\{\string\int\}\{\string\smallint\}} will maximize
+  even more the use of the Symbol font.
  \item §symboldelimiters§: the characters apart from
  letters and digits will be taken from the Symbol font. 
  \item §symbol§: combines §symbolgreek§, §symbolre§, and §symbolmisc§.
@@ -2209,21 +2332,22 @@ Numerous examples will be found there:\\
 \NeedsTeXFormat{LaTeX2e}
 %    \end{macrocode}
 % Testing for XeTeX and LuaLaTeX. I should load some package for this
-% code picked up somewhere.
+% code which I copied somewhere. 2013/01/01: at least the code now does not
+% overwrite previous \cs{ifXeTeX} or \cs{ifLuaTeX}...
 %    \begin{macrocode}
-\newif\ifXeTeX
+\newif\ifmst@XeTeX
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname XeTeXinterchartoks\endcsname\relax
-  \XeTeXfalse
+  \mst@XeTeXfalse
 \else
-  \XeTeXtrue
+  \mst@XeTeXtrue
 \fi
-\newif\ifLuaTeX
+\newif\ifmst@LuaTeX
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname directlua\endcsname\relax
-  \LuaTeXfalse
+  \mst@LuaTeXfalse
 \else
-  \LuaTeXtrue
+  \mst@LuaTeXtrue
 \fi
 %    \end{macrocode}
 % |1.2|: all inner macros of \mst now starts with |\mst@| for a cleaner
@@ -2306,12 +2430,18 @@ Numerous examples will be found there:\\
     \DeclareOption{noequal}{\mst@noequaltrue}
 \newif\ifmst@noexclam
     \DeclareOption{noexclam}{\mst@noexclamtrue}
-\newif\ifmst@noast
-    \DeclareOption{noasterisk}{\mst@noasttrue}
+\newif\ifmst@asterisk
+    \DeclareOption{noasterisk}{\PackageWarningNoLine{mathastext}
+        {option `noasterisk' is deprecated.^^J\space\space\space 
+         Check the documentation}}
+    \DeclareOption{asterisk}{\mst@asterisktrue
+      \AtBeginDocument{
+        \everymath\expandafter{\the\everymath \mst@doasterisk}
+        \everydisplay\expandafter{\the\everydisplay \mst@doasterisk}}}
 \newif\ifmst@nospecials
     \DeclareOption{nospecials}{\mst@nospecialstrue}
 \DeclareOption{basic}{\ExecuteOptions{noparenthesis,nopunctuation,%
-noplusnominus,noequal,noexclam,noasterisk,nospecials,nolessnomore}}
+noplusnominus,noequal,noexclam,nospecials,nolessnomore}}
 %%
 \newif\ifmst@nohbar
     \DeclareOption{nohbar}{\mst@nohbartrue}
@@ -2396,7 +2526,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %    \begin{macrocode}
 \newif\ifmst@subdued
     \DeclareOption{subdued}{\mst@subduedtrue}
-\DeclareOption*{\PackageWarning{mathastext}{Unknown option `\CurrentOption'}}
+\DeclareOption*{\PackageWarningNoLine{mathastext}{Unknown option `\CurrentOption'}}
 %    \end{macrocode}
 % \end{macro}
 %    \begin{macrocode}
@@ -2465,15 +2595,15 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %    math mode entrance, invokes, in case |'| is \emph{not} active then, the |'|
 %    with its catcode as seen by \TeX{} when it first reads
 %    |\mst@mathactivate'...|, so here when it stores the definition of
-%    \cs{mst@modifyprime}. Henve there would be a problem if this happened at
-%    the time of an active |'| and then the |'| is \emph{not} active anymore
+%    \cs{mst@modifyprime}. Henve there would be a problem if the |'| were
+%    active \emph{here} and then the |'| is \emph{not} active anymore
 %    when entering a math mode list. To be extra safe, I should perhaps issue a
 %    local |\@makeother'| here, but is it really worth the trouble? (and if I
 %    did it for |'| I would have for consistency to apply the same safeguard to
 %    all the other characters treated later by \mst).
 %
-%    The \cs{string'} below seems to contradict my belief in a non-active
-%    |'| here but it is just to be extra sure loading the package is
+%    The \cs{string'} below seems to contradict this belief in a non-active
+%    |'| here but this is just to be extra sure loading the package is
 %    safe. A user command \cs{MTnormalprime} is provided in case there is
 %    a problem later.
 %
@@ -2531,21 +2661,74 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %      obey the math alphabets commands but still have the automatic spacing.
 %      The use as delimiters for those concerned is also ok.
 %
-%      The mechanism is off by default for |\{| and |\}| as this is not
-%      compatible with their use as delimiters (|\lbrace| and |\rbrace| should
-%      be used instead) but it can be activated for them to. 
-%  
-%      |1.2c| [2012/12/31]: The mechanism is OFF by default, as it generally
-%      speaking currently puts constraints on the input: |$x^?$| must be input
-%      |$x^{?}$|, |$x\mathrel?y$| must be input |$x\mathrel{?}y$|. \fbox{So the
+%  \begin{macro}{\mst@mathactivate}
+%    The activation is done via setting the \cs{mathcode} to |"8000| through the
+%    macro \cs{mst@mathactivate} which in turn is put into the \cs{everymath}
+%    and \cs{everydisplay} token lists. No character is made active in the sense
+%    of the \cs{catcode},\\
+%    \null\hspace{1cm}\fbox{but the concerned characters will now expand in math
+%    mode to \emph{two} tokens.}\\
+%      |1.2c| [2012/12/31]: hence, this current
+%      implementation puts constraints on the input: |$x^?$| or |$x\mathrel?y$|
+%      now create errors. They must be input
+%      |$x^{?}$|, respectively |$x\mathrel{?}y$|.\\
+%   \null\hspace{1cm} \fbox{The disactivating
 %        macro \cs{MTnonlettersdonotobeymathxx} is made the default.}
 %
-%  \begin{macro}{\mst@mathactivate}
-%      The activation is
-%      done via setting the \cs{mathcode} to |"8000| through the macro
-%      \cs{mst@mathactivate} which in turn is put into the \cs{everymath} and
-%      \cs{everydisplay} token lists. No character is made active in the
-%      sense of the \cs{catcode}.
+%        The mechanism is (even more) off by default for |\{| and |\}| as this
+%        is not compatible with their use as delimiters (|\lbrace| and |\rbrace|
+%        should be used instead) but it can be activated for them too.
+%      
+%    
+%    
+%  \begin{macro}{\resetMathstrut@}
+%        2012/12/31: The |amsmath| macro \cs{resetMathstrut@} is not compatible
+%        with a
+%        mathematically active opening parenthesis: it does \\
+%        \null\hspace{1cm}|\mathchardef\@tempa\mathcode`\(\relax|\\
+%        and is made a part of the hook \cs{every@math@size} inside
+%        \cs{glb@settings}. 
+%        This is called from \cs{check@mathfonts} which is done in
+%        particular in \cs{frozen@everymath}, hence \emph{before} (but wait)
+%        what \mst puts in \cs{everymath}. Also, \cs{glb@settings} is triggered
+%        by \cs{mathversion} which must be done outside of math mode.
+%
+%        Alas, with things such as |$...\hbox{...$..$..}...$| \mst will have
+%        already made the parenthesis (mathematically) active. And
+%        \cs{boldsymbol} from |amsbsy| disables the \cs{@nomath} switch and
+%        executes \cs{mathversion\{bold\}} directly in math mode. So we have a
+%        problem with \cs{resetMathstrut@}. |lualatex-math| replaces
+%        \cs{resetMathstrut@} with its own version (which also looks at |)|).
+%        With |lualatex| no error is signaled when \mst has done
+%        |\mathcode`(="8000|, but the \cs{Mathstrutbox@} is then wrong.
+%
+%        The replacement macro avoids a potentially math active |(|. It
+%        assumes that there is still some appropriate glyph in slot |40| of
+%        |operators| and it sets the height and depth of \cs{Mathstrutbox@}
+%        to be large enough to accomodate both this glyph and the one from the
+%        mathastext font (both in the current math version). If option
+%        |noparen| was used, we leave everything untouched.
+%    \begin{macrocode}
+\ifmst@noparen\else
+\AtBeginDocument{
+\@ifundefined{resetMathstrut@}{}{%
+    \PackageWarningNoLine{mathastext}{a custom version of the amsmath macro^^J%
+      \space\space\space\string\resetMathstrut@\space will replace the original}
+    \ifmst@symboldelimiters
+    \def\resetMathstrut@{%
+        \setbox\z@\hbox{\the\textfont\symmtpsymbol\char40
+                        \the\textfont\symmtoperatorfont\char40
+                        \the\textfont\symoperators\char40}%
+        \ht\Mathstrutbox@\ht\z@ \dp\Mathstrutbox@\dp\z@}
+    \else
+    \def\resetMathstrut@{%
+        \setbox\z@\hbox{\the\textfont\symmtoperatorfont\char40
+                        \the\textfont\symoperators\char40}%
+        \ht\Mathstrutbox@\ht\z@ \dp\Mathstrutbox@\dp\z@}
+    \fi}}
+\fi
+%    \end{macrocode}
+%  \end{macro} 
 %
 %  \begin{macro}{\mst@fork}
 %      |1.2b| [2012/12/30]: there were bad oversights in the |1.2| code
@@ -2592,16 +2775,21 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %    to realize later it was more suitable to using an \emph{upright} text font
 %    in math mode!
 %
+%    Note: the italic correction is added of course \emph{after} the letters
+%    and |$x^y$| or |$x\mathrel yz$| at least do not create errors. But of
+%    course as nobody expects the letters to have their |mathcodes| set to
+%    |32768| there will certainly be some incompatibilities. This is less
+%    severe though that the problem with the `non-letters'.
+%
 %    One may question the fact of doing this at every math/display, as it
 %    seems costly. Why not do it once and for all? well, processor chips
 %    are fast these days. True, for the case of the characters such as
 %    |?|, |!|, |>|, |<|, ... which could reasonably be expected to be
 %    made active elsewhere in the document, it is certainly a great
-%    simplification for me to do my business at every math/display, as I
-%    store the then current definitions of the possibly activated
-%    character. For the letters, which are not really in danger of being
+%    simplification for me to do my business at every math/display which are
+%    groups. For the letters, which are not really in danger of being
 %    made active in the document, I could possibly have moved the
-%    |\mathcode="8000| thing to the document preamble, but to cancel it
+%    |\mathcode`x="8000| thing to the document preamble, but to cancel it
 %    (in the document body) would mean to have to reset all mathcodes,
 %    rather than let simply as is done here a \cs{the} to be a
 %    \cs{@gobble}.
@@ -2611,8 +2799,8 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %
 %      \cs{MTicalsoinmathxx} is destined to be used inside
 %      \cs{mathnormalbold} as I didn't want to add the complication of
-%      extracting the family number used inside \cs{mathnormabold} (will
-%      probably return to this point if I have time to spend on
+%      extracting the family number used inside \cs{mathnormalbold} (will
+%      perhaps come back if I have time to spend on
 %      |source2e|).
 %
 %      \cs{MTicinmath} can also be used inside math mode,
@@ -2621,33 +2809,39 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %      math mode had to be entered with italic corrections on.
 %    \begin{macrocode}
 \newtoks\mst@do@nonletters
+\newtoks\mst@do@easynonletters
 \newtoks\mst@do@az
 \newtoks\mst@do@AZ
 \newcommand\MTnonlettersdonotobeymathxx{\let\mst@the\@gobble}
 \newcommand\MTnonlettersobeymathxx{\let\mst@the\the}
+\newcommand\MTeasynonlettersdonotobeymathxx{\let\mst@theeasy\@gobble}
+\newcommand\MTeasynonlettersobeymathxx{\let\mst@theeasy\the}
 \MTnonlettersdonotobeymathxx % 1.2c !!!
+\MTeasynonlettersobeymathxx
 \newcommand\MTicinmath{% 
-    \let\mst@thei\the
-    \let\mst@theI\the
+    \let\mst@thef\the
+    \let\mst@theF\the
     \def\mst@itcorr{\ifnum\fam=\m@ne\/\else\ifnum\fam=\symmtletterfont\/\fi\fi}%
     \let\mst@ITcorr\mst@itcorr}
 \newcommand\MTnoicinmath{% also usable in math mode
     \def\mst@itcorr{}\def\mst@ITcorr{}%
-    \let\mst@thei\@gobble\let\mst@theI\@gobble}
+    \let\mst@thef\@gobble\let\mst@theF\@gobble}
 \newcommand\MTICinmath{% 
-    \let\mst@theI\the
+    \let\mst@theF\the
     \def\mst@ITcorr{\ifnum\fam=\m@ne\/\fi}}
 \newcommand\MTnoICinmath{% also usable in math mode
     \def\mst@ITcorr{}%
-    \let\mst@theI\@gobble}
+    \let\mst@theF\@gobble}
 \newcommand\MTicalsoinmathxx{%
     \ifx\mst@itcorr\@empty\else\def\mst@itcorr{\/}\fi
     \ifx\mst@ITcorr\@empty\else\def\mst@ITcorr{\/}\fi}
 \AtBeginDocument{
 \everymath\expandafter{\the\everymath \mst@the\mst@do@nonletters
-    \mst@thei\mst@do@az \mst@theI\mst@do@AZ}
+    \mst@theeasy\mst@do@easynonletters
+    \mst@thef\mst@do@az \mst@theF\mst@do@AZ}
 \everydisplay\expandafter{\the\everydisplay \mst@the\mst@do@nonletters
-    \mst@thei\mst@do@az \mst@theI\mst@do@AZ}
+    \mst@theeasy\mst@do@easynonletters
+    \mst@thef\mst@do@az \mst@theF\mst@do@AZ}
 }
 \def\mst@fork{%
     \ifx\protect\@typeset@protect\ifmmode
@@ -2678,6 +2872,9 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \def\mst@addtodo@nonletters#1#2#3{
   \expandafter\let\csname mst@ifdone\string#1\endcsname\iffalse
   \mst@do@nonletters\expandafter{\the\mst@do@nonletters\mst@mathactivate#1#2#3}
+}
+\def\mst@addtodo@easynonletters#1#2{
+  \mst@do@easynonletters\expandafter{\the\mst@do@easynonletters\mathcode`#1=#2}
 }
 \def\mst@addtodo@az#1#2#3{
   \expandafter\let\csname mst@ifdone\string#1\endcsname\iffalse
@@ -2752,44 +2949,44 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %   alphabets things in a much much easier way, see below.
 %    \begin{macrocode}
 \ifmst@subdued
-\def\mst@reserved#1\getanddefine@fonts\symletters#2#3\@nil{%
-\def\mst@normalmv@letter{#2}}
-\expandafter\mst@reserved\mv@normal\@nil
-\def\mst@reserved#1\getanddefine@fonts\symletters#2#3\@nil{%
-\def\mst@boldmv@letter{#2}}
-\expandafter\mst@reserved\mv@bold\@nil
-\def\mst@reserved#1\getanddefine@fonts\symoperators#2#3\@nil{%
-\def\mst@normalmv@operator{#2}}
-\expandafter\mst@reserved\mv@normal\@nil
-\def\mst@reserved#1\getanddefine@fonts\symoperators#2#3\@nil{%
-\def\mst@boldmv@operator{#2}}
-\expandafter\mst@reserved\mv@bold\@nil
+  \def\mst@reserved#1\getanddefine@fonts\symletters#2#3\@nil{%
+        \def\mst@normalmv@letter{#2}}
+  \expandafter\mst@reserved\mv@normal\@nil
+  \def\mst@reserved#1\getanddefine@fonts\symletters#2#3\@nil{%
+        \def\mst@boldmv@letter{#2}}
+  \expandafter\mst@reserved\mv@bold\@nil
+  \def\mst@reserved#1\getanddefine@fonts\symoperators#2#3\@nil{%
+        \def\mst@normalmv@operator{#2}}
+  \expandafter\mst@reserved\mv@normal\@nil
+  \def\mst@reserved#1\getanddefine@fonts\symoperators#2#3\@nil{%
+        \def\mst@boldmv@operator{#2}}
+  \expandafter\mst@reserved\mv@bold\@nil
 %%
-\edef\mst@tmp{\encodingdefault}
-\def\mst@reserved#1/#2/#3/#4/{\gdef\mst@debut{#1}\gdef\mst@reste{#2/#3/#4}}
-\begingroup\escapechar\m@ne
-\xdef\mst@funnyoti{\expandafter\string\csname OT1\endcsname}
-\expandafter\expandafter\expandafter
-\mst@reserved\expandafter\string\mst@normalmv@operator/
-\endgroup
-\ifx\mst@debut\mst@funnyoti\ifx\mst@tmp\mst@oti\def\mst@tmp{T1}\fi\fi
-\edef\mst@normalmv@operator{\expandafter\noexpand\csname 
+  \edef\mst@tmp{\encodingdefault}
+  \def\mst@reserved#1/#2/#3/#4/{\gdef\mst@debut{#1}\gdef\mst@reste{#2/#3/#4}}
+  \begingroup\escapechar\m@ne
+      \xdef\mst@funnyoti{\expandafter\string\csname OT1\endcsname}
+      \expandafter\expandafter\expandafter
+          \mst@reserved\expandafter\string\mst@normalmv@operator/
+  \endgroup
+  \ifx\mst@debut\mst@funnyoti\ifx\mst@tmp\mst@oti\def\mst@tmp{T1}\fi\fi
+  \edef\mst@normalmv@operator{\expandafter\noexpand\csname 
+                               \mst@tmp/\mst@reste\endcsname}
+  \begingroup\escapechar\m@ne
+      \expandafter\expandafter\expandafter
+          \mst@reserved\expandafter\string\mst@boldmv@operator/
+  \endgroup
+  \ifx\mst@debut\mst@funnyoti\ifx\mst@tmp\mst@oti\def\mst@tmp{T1}\fi\fi
+  \edef\mst@boldmv@operator{\expandafter\noexpand\csname 
                              \mst@tmp/\mst@reste\endcsname}
-\begingroup\escapechar\m@ne
-\expandafter\expandafter\expandafter
-\mst@reserved\expandafter\string\mst@boldmv@operator/
-\endgroup
-\ifx\mst@debut\mst@funnyoti\ifx\mst@tmp\mst@oti\def\mst@tmp{T1}\fi\fi
-\edef\mst@boldmv@operator{\expandafter\noexpand\csname 
-                           \mst@tmp/\mst@reste\endcsname}
-\AtEndOfPackage{
-\typeout{** ...entering subdued mode...}
-\expandafter\SetSymbolFont@ \expandafter\mv@normal\mst@normalmv@letter\symmtletterfont
-\expandafter\SetSymbolFont@ \expandafter\mv@bold\mst@boldmv@letter\symmtletterfont
-\expandafter\SetSymbolFont@ \expandafter\mv@normal\mst@normalmv@operator\symmtoperatorfont
-\expandafter\SetSymbolFont@ \expandafter\mv@bold\mst@boldmv@operator\symmtoperatorfont
-\typeout{** ...done.}
-}
+  \AtEndOfPackage{
+  \typeout{** ...entering subdued mode...}
+  \expandafter\SetSymbolFont@ \expandafter\mv@normal\mst@normalmv@letter\symmtletterfont
+  \expandafter\SetSymbolFont@ \expandafter\mv@bold\mst@boldmv@letter\symmtletterfont
+  \expandafter\SetSymbolFont@ \expandafter\mv@normal\mst@normalmv@operator\symmtoperatorfont
+  \expandafter\SetSymbolFont@ \expandafter\mv@bold\mst@boldmv@operator\symmtoperatorfont
+  \typeout{** ...done.}
+  }
 \fi % fin de ce \ifmst@subdued
 %    \end{macrocode}
 %  In the short-lived |1.15e| I was doing the following for alphabets:\\
@@ -2898,19 +3095,19 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \let\mst@original@sf\mathsf
 \let\mst@original@tt\mathtt
 \def\mst@restorealphabets{% for subdued
-\let\mathnormal\mst@original@normal
-\let\mathrm\mst@original@rm
-\let\mathbf\mst@original@bf
-\let\mathit\mst@original@it
-\let\mathsf\mst@original@sf
-\let\mathtt\mst@original@tt}
+    \let\mathnormal\mst@original@normal
+    \let\mathrm\mst@original@rm
+    \let\mathbf\mst@original@bf
+    \let\mathit\mst@original@it
+    \let\mathsf\mst@original@sf
+    \let\mathtt\mst@original@tt}
 \def\mst@setalphabets{%
-\ifmst@defaultnormal\else\renewcommand{\mathnormal}{\Mathnormal}\fi
-\ifmst@defaultrm\else\renewcommand{\mathrm}{\Mathrm}\fi
-\ifmst@defaultbf\else\renewcommand{\mathbf}{\Mathbf}\fi
-\ifmst@defaultit\else\renewcommand{\mathit}{\Mathit}\fi
-\ifmst@defaultsf\else\renewcommand{\mathsf}{\Mathsf}\fi
-\ifmst@defaulttt\else\renewcommand{\mathtt}{\Mathtt}\fi}
+    \ifmst@defaultnormal\else\renewcommand{\mathnormal}{\Mathnormal}\fi
+    \ifmst@defaultrm\else\renewcommand{\mathrm}{\Mathrm}\fi
+    \ifmst@defaultbf\else\renewcommand{\mathbf}{\Mathbf}\fi
+    \ifmst@defaultit\else\renewcommand{\mathit}{\Mathit}\fi
+    \ifmst@defaultsf\else\renewcommand{\mathsf}{\Mathsf}\fi
+    \ifmst@defaulttt\else\renewcommand{\mathtt}{\Mathtt}\fi}
 \ifmst@subdued\else\mst@setalphabets\fi
 %    \end{macrocode}
 % \end{macro}
@@ -2993,12 +3190,12 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 % In case we need the Euler font, we declare it here. It will use
 % |uzeur.fd| from the |eulervm| package of Walter~\textsc{Schmidt}
 %    \begin{macrocode}
-\ifmst@needeuler
+\ifmst@needeuler\typeout{** will use Euler font; command \string\MTEulerScale}
 \DeclareSymbolFont{mteulervm}{U}{zeur}{m}{n}
 \DeclareSymbolFontAlphabet{\MathEuler}{mteulervm}
 \DeclareMathAlphabet{\MathEulerBold}{U}{zeur}{\mst@bold}{n}
 \fi
-\newcommand\MTEulerScale[1]{\edef\zeu@Scale{#1}}
+\newcommand*\MTEulerScale[1]{\edef\zeu@Scale{#1}}
 \let\MathastextEulerScale\MTEulerScale
 %    \end{macrocode}
 % \LaTeXe{} has a strange initial configuration where the
@@ -3042,12 +3239,16 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 % \cs{psy@scale} will be used to scale the font (see at the
 % very end of this file).
 %    \begin{macrocode}
-\ifmst@needsymbol
+\ifmst@needsymbol\typeout{** will use Symbol font; command \string\MTSymbolScale}
  \def\psy@scale{1}
  \DeclareSymbolFont{mtpsymbol}{U}{psy}{m}{n}
  \DeclareSymbolFontAlphabet{\MathPSymbol}{mtpsymbol}
+\AtBeginDocument{
+  \DeclareFontFamily{U}{psy}{}
+  \DeclareFontShape{U}{psy}{m}{n}{<->s*[\psy@scale] psyr}{}
+}
 \fi
-\newcommand\MTSymbolScale[1]{\edef\psy@scale{#1}}
+\newcommand*\MTSymbolScale[1]{\edef\psy@scale{#1}}
 \let\MathastextSymbolScale\MTSymbolScale
 %    \end{macrocode}
 % I did not choose for name \cs{MathSymbol} as this may
@@ -3059,7 +3260,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 % \begin{macro}{\pmvec}
 % Definition of a poor man version of the \cs{vec} accent
 %    \begin{macrocode}
-\DeclareRobustCommand\pmvec[1]{\mathord{\stackrel{\raisebox{-.5ex}%
+\DeclareRobustCommand*\pmvec[1]{\mathord{\stackrel{\raisebox{-.5ex}%
 {\tiny\boldmath$\mathord{\rightarrow}$}}{{}#1}}}
 %    \end{macrocode}
 % \end{macro}
@@ -3135,12 +3336,12 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %   selfGreek. |\MTgreekfont{\familydefault}| acts like turning on LGRgreeks or
 %   selfGreeks.
 %    \begin{macrocode}
-    \newcommand\MTitgreek{%
+    \newcommand*\MTitgreek{%
 \mst@itgreektrue\mst@upgreekfalse\def\mst@greek@select{0}}
-    \newcommand\MTupgreek{%
+    \newcommand*\MTupgreek{%
 \mst@upgreektrue\mst@itgreekfalse\def\mst@greek@select{0}}
-    \newcommand\MTitGreek{\def\mst@greek@select{1}}
-    \newcommand\MTupGreek{\def\mst@greek@select{2}}
+    \newcommand*\MTitGreek{\def\mst@greek@select{1}}
+    \newcommand*\MTupGreek{\def\mst@greek@select{2}}
 \@onlypreamble\MTitgreek
 \@onlypreamble\MTupgreek
 \@onlypreamble\MTitGreek
@@ -3233,9 +3434,11 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
       \@for\mst@tmp:=it,sl\do{\ifx\mst@tmp\mst@shape@normal\MTnoICinmath\fi}%
   \fi
   \ifmst@subdued
+    \MTeasynonlettersdonotobeymathxx
     \MTnonlettersdonotobeymathxx
     \MTmathoperatorsdonotobeymathxx
     \MTnoicinmath
+    \ifmst@asterisk\let\mst@doasterisk\relax\fi
     \def\mst@exists@skip@normal{0mu}
     \def\mst@forall@skip@normal{0mu}
     \def\mst@prime@skip@normal{0mu}
@@ -3614,13 +3817,21 @@ and \protect\log-like names will be^^J%
 %% v1.15c: extending subdued to LGRgreek
 %% v1.15f: subdueing math alphabets in a simpler way than in 1.15e
 %% v1.2b: subdueing the activation of characters in math mode
+%% v1.2d: special treatment of the asterisk
+    \MTmathoperatorsobeymathxx
+    \MTeasynonlettersobeymathxx
+    \ifmst@asterisk
+        \let\mst@doasterisk\mst@@doasterisk
+    \fi
     \ifmst@subdued
       \edef\mst@tmp{#2}\def\mst@tmpa{normal}%
       \ifx\mst@tmp\mst@tmpa
         \mst@restorealphabets
         \MTmathoperatorsdonotobeymathxx
         \MTnonlettersdonotobeymathxx
+        \MTeasynonlettersdonotobeymathxx
         \MTnoicinmath
+        \ifmst@asterisk\let\mst@doasterisk\relax\fi
         \ifmst@LGRgreek\mst@restoregreek\fi
       \else
       \def\mst@tmpa{bold}%
@@ -3628,7 +3839,9 @@ and \protect\log-like names will be^^J%
           \mst@restorealphabets
           \MTmathoperatorsdonotobeymathxx
           \MTnonlettersdonotobeymathxx
+          \MTeasynonlettersdonotobeymathxx
           \MTnoicinmath
+          \ifmst@asterisk\let\mst@doasterisk\relax\fi
           \ifmst@LGRgreek\mst@restoregreek\fi
       \else
       \mst@setalphabets
@@ -3766,19 +3979,71 @@ and \protect\log-like names will be^^J%
 % to double the definitions for easy switch on-off of the mechanism, via a token
 % list which is put into \cs{everymath} and \cs{everydisplay}.
 %    \begin{macrocode}
-\ifmst@noexclam\else
+\ifmst@noexclam\else\typeout{** ! and ?}
 \DeclareMathSymbol{!}{\mathclose}{\mst@font@tbu}{"21}
-\DeclareMathSymbol{\mst@alpha@exclam}{\mathalpha}{\mst@font@tbu}{"21}
-\mst@addtodo@nonletters!\mathclose\mst@alpha@exclam
+\DeclareMathSymbol{\mst@varfam@exclam}{\mathalpha}{\mst@font@tbu}{"21}
+\mst@addtodo@nonletters!\mathclose\mst@varfam@exclam
 \DeclareMathSymbol{?}{\mathclose}{\mst@font@tbu}{"3F}
-\DeclareMathSymbol{\mst@alpha@question}{\mathalpha}{\mst@font@tbu}{"3F}
-\mst@addtodo@nonletters?\mathclose\mst@alpha@question
-\fi
-%% todo (?): this asterisk from the text font should be lowered.
-\ifmst@noast\else
-\DeclareMathSymbol{*}{\mathalpha}{\mst@font@tbu}{"2A} 
+\DeclareMathSymbol{\mst@varfam@question}{\mathalpha}{\mst@font@tbu}{"3F}
+\mst@addtodo@nonletters?\mathclose\mst@varfam@question
 \fi
 %    \end{macrocode}
+% \begin{macro}{\MTast}
+%   |1.12d| The \cs{ast} or |*| is defined in |fontmath.ltx| as a binary
+%   operator from the |symbols| font. Usually the asterisk from the text font is
+%   in a raised position. Previous versions of \mst did nothing with \cs{ast}
+%   but strangely defined |*| to be the one from the text font, with type
+%   \cs{mathalpha}. The package now leaves by default both |*| and |\ast|
+%   untouched, and if passed option |asterisk| replaces both of them with a
+%   lowered text asterisk (or the one from the Symbol font), and of type
+%   \cs{mathbin}. A trick is used to have optionally |*| and \cs{ast} also obey
+%   the math alphabets.
+%
+% The user macro \cs{MTlowerast} sets the amount
+% of lowering to be applied to the text asterisk.
+%    \begin{macrocode}
+  \def\mst@@doasterisk{\let\ast\mst@ast
+        \expandafter\let\csname mst@ifdone*\endcsname\iffalse
+        \mst@mathactivate*\mst@ast{}}
+\ifmst@asterisk\typeout{** asterisk: \string\ast\space and *}
+  \ifmst@symbolmisc
+    \def\mst@bin@ast{%
+    \mathbin{\mathchoice{\raisebox{-.1\height}
+                        {\the\textfont\symmtpsymbol\char42}}
+                      {\raisebox{-.1\height}
+                        {\the\textfont\symmtpsymbol\char42}}
+                      {\raisebox{-.1\height}
+                        {\the\scriptfont\symmtpsymbol\char42}}
+                      {\raisebox{-.1\height}
+                        {\the\scriptscriptfont\symmtpsymbol\char42}}}}
+  \else
+    \def\mst@bin@ast{%
+    \mathbin{\mathchoice{\raisebox{-\MTlowerast}
+                        {\the\textfont\symmtoperatorfont\char42}}
+                      {\raisebox{-\MTlowerast}
+                        {\the\textfont\symmtoperatorfont\char42}}
+                      {\raisebox{-\MTlowerast}
+                        {\the\scriptfont\symmtoperatorfont\char42}}
+                      {\raisebox{-\MTlowerast}
+                        {\the\scriptscriptfont\symmtoperatorfont\char42}}}}
+  \fi
+  \def\mst@varfam@ast{\ifnum\fam=\m@ne\mst@bin@ast\else
+    \mathbin{\mathchoice{\raisebox{-\MTlowerast}
+                        {\the\textfont\fam\char42}}
+                      {\raisebox{-\MTlowerast}
+                        {\the\textfont\fam\char42}}
+                      {\raisebox{-\MTlowerast}
+                        {\the\scriptfont\fam\char42}}
+                      {\raisebox{-\MTlowerast}
+                        {\the\scriptscriptfont\fam\char42}}}\fi}
+  \let\mst@doasterisk\mst@@doasterisk
+  \DeclareRobustCommand*{\mst@ast}{\mst@bin@ast}
+  \def\MTlowerast{.3\height}
+  \mst@do@easynonletters\expandafter{\the\mst@do@easynonletters
+     \expandafter\def\csname mst@ast \endcsname{\mst@varfam@ast}}
+\fi
+%    \end{macrocode}
+% \end{macro}
 % (2011) I renounced to try to do things with all the various dots, they are
 % defined in many different ways, and there is the amsmath also. Dealing with
 % this issue would mean a lot a time for a minuscule result. Better to leave the
@@ -3788,16 +4053,16 @@ and \protect\log-like names will be^^J%
 %
 % [(Dec. 2012) should I reexamine these definitive sounding remarks?]
 %    \begin{macrocode}
-\ifmst@nopunct\else
+\ifmst@nopunct\else\typeout{** punctuation: , . : ; and \string\colon}
 \DeclareMathSymbol{,}{\mathpunct}{\mst@font@tbu}{"2C}
-\DeclareMathSymbol{\mst@alpha@comma}{\mathalpha}{\mst@font@tbu}{"2C}
-\mst@addtodo@nonletters,\mathpunct\mst@alpha@comma
+\DeclareMathSymbol{\mst@varfam@comma}{\mathalpha}{\mst@font@tbu}{"2C}
+\mst@addtodo@nonletters,\mathpunct\mst@varfam@comma
 \DeclareMathSymbol{.}{\mathord}{\mst@font@tbu}{"2E}
-\DeclareMathSymbol{\mst@alpha@dot}{\mathalpha}{\mst@font@tbu}{"2E}
-\mst@addtodo@nonletters.\mathord\mst@alpha@dot
+\DeclareMathSymbol{\mst@varfam@dot}{\mathalpha}{\mst@font@tbu}{"2E}
+\mst@addtodo@easynonletters.\mst@varfam@dot
 \DeclareMathSymbol{:}{\mathrel}{\mst@font@tbu}{"3A} % relation spacing
-\DeclareMathSymbol{\mst@alpha@colon}{\mathalpha}{\mst@font@tbu}{"3A}
-\mst@addtodo@nonletters:\mathrel\mst@alpha@colon
+\DeclareMathSymbol{\mst@varfam@colon}{\mathalpha}{\mst@font@tbu}{"3A}
+\mst@addtodo@nonletters:\mathrel\mst@varfam@colon
 \@ifpackageloaded{amsmath}
 {} % \colon defined in amsmath.sty in terms of : with some enlarged explicit
    % spacing. No need to intervene. 
@@ -3807,10 +4072,10 @@ and \protect\log-like names will be^^J%
   % could not be used in \cs{DeclareMathSymbol} anymore.
     \DeclareMathSymbol{\colon}{\mathpunct}{\mst@font@tbu}{"3A}
     \mst@do@nonletters\expandafter{\the\mst@do@nonletters
-        \def\colon{\mathpunct{\mst@alpha@colon}}}} 
+        \def\colon{\mathpunct{\mst@varfam@colon}}}} 
 \DeclareMathSymbol{;}{\mathpunct}{\mst@font@tbu}{"3B}
-\DeclareMathSymbol{\mst@alpha@pointvirgule}{\mathalpha}{\mst@font@tbu}{"3B}
-\mst@addtodo@nonletters;\mathpunct\mst@alpha@pointvirgule
+\DeclareMathSymbol{\mst@varfam@pointvirgule}{\mathalpha}{\mst@font@tbu}{"3B}
+\mst@addtodo@nonletters;\mathpunct\mst@varfam@pointvirgule
 \fi
 %    \end{macrocode}
 % \begin{macro}{\relbar}
@@ -3825,10 +4090,10 @@ and \protect\log-like names will be^^J%
 % in a manner testing for the presence of amsmath.
 %    \begin{macrocode}
 \ifmst@nominus\else
-\ifXeTeX
+\ifmst@XeTeX
 \XeTeXmathcharnumdef\mst@minus@sign=\XeTeXmathcodenum`\-\relax
 \else
-\ifLuaTeX
+\ifmst@LuaTeX
 %% \luatexUmathcharnumdef\mst@minus@sign=\luatexUmathcodenum`\-\relax ne
 %% marche pas pour le moment car \luatexUmathcodenum retourne parfois un
 %% legacy mathcode, parfois un Unicode mathcode, \`a mon avis c'est un bug
@@ -3865,69 +4130,69 @@ and \protect\log-like names will be^^J%
 \def\do@the@endashstuff{\edef\mst@tmp@enc{\encodingdefault}
   \ifx\mst@tmp@enc\mst@eui % xetex+fontspec
 \AtBeginDocument{\XeTeXmathcode`\-="2 \symmtoperatorfont "2013\relax}
-\AtBeginDocument{\XeTeXmathchardef\mst@alpha@minus="7 \symmtoperatorfont "2013\relax}
+\AtBeginDocument{\XeTeXmathchardef\mst@varfam@minus="7 \symmtoperatorfont "2013\relax}
 \else
   \ifx\mst@tmp@enc\mst@euii % luatex+fontspec
 \AtBeginDocument{\luatexUmathcode`\-="2 \symmtoperatorfont "2013\relax}
-\AtBeginDocument{\luatexUmathchardef\mst@alpha@minus="7 \symmtoperatorfont "2013\relax}
+\AtBeginDocument{\luatexUmathchardef\mst@varfam@minus="7 \symmtoperatorfont "2013\relax}
 \else
   \ifx\mst@tmp@enc\mst@ti % T1
    \DeclareMathSymbol{-}{\mathbin}{mtoperatorfont}{21}
-   \DeclareMathSymbol{\mst@alpha@minus}{\mathalpha}{mtoperatorfont}{21}
+   \DeclareMathSymbol{\mst@varfam@minus}{\mathalpha}{mtoperatorfont}{21}
 \else
   \ifx\mst@tmp@enc\mst@oti % OT1
    \DeclareMathSymbol{-}{\mathbin}{mtoperatorfont}{123}
-   \DeclareMathSymbol{\mst@alpha@minus}{\mathalpha}{mtoperatorfont}{123}
+   \DeclareMathSymbol{\mst@varfam@minus}{\mathalpha}{mtoperatorfont}{123}
 \else
   \ifx\mst@tmp@enc\mst@lyi % LY1
    \DeclareMathSymbol{-}{\mathbin}{mtoperatorfont}{150}
-   \DeclareMathSymbol{\mst@alpha@minus}{\mathalpha}{mtoperatorfont}{150}
+   \DeclareMathSymbol{\mst@varfam@minus}{\mathalpha}{mtoperatorfont}{150}
 \else % make sure we have neither xetex nor luatex
-   \ifXeTeX\mst@aborttrue\else\ifLuaTeX\mst@aborttrue\else
+   \ifmst@XeTeX\mst@aborttrue\else\ifmst@LuaTeX\mst@aborttrue\else
    \DeclareMathSymbol{-}{\mathbin}{mtoperatorfont}
-   \DeclareMathSymbol{\mst@alpha@minus}{\mathalpha}{mtoperatorfont}
+   \DeclareMathSymbol{\mst@varfam@minus}{\mathalpha}{mtoperatorfont}
 {\expandafter\the\expandafter\csname\mst@tmp@enc\string\textendash\endcsname}
    \fi\fi
 \fi\fi\fi\fi\fi}
 \def\do@the@emdashstuff{\edef\mst@tmp@enc{\encodingdefault}
 \ifx\mst@tmp@enc\mst@eui % xetex+fontspec
 \AtBeginDocument{\XeTeXmathcode`\-="2 \symmtoperatorfont "2014\relax}
-\AtBeginDocument{\XeTeXmathchardef\mst@alpha@minus="7 \symmtoperatorfont "2014\relax}
+\AtBeginDocument{\XeTeXmathchardef\mst@varfam@minus="7 \symmtoperatorfont "2014\relax}
 \else
 \ifx\mst@tmp@enc\mst@euii % luatex+fontspec
 \AtBeginDocument{\luatexUmathcode`\-="2 \symmtoperatorfont "2014\relax}
-\AtBeginDocument{\luatexUmathchardef\mst@alpha@minus="7 \symmtoperatorfont "2014\relax}
+\AtBeginDocument{\luatexUmathchardef\mst@varfam@minus="7 \symmtoperatorfont "2014\relax}
 \else
   \ifx\mst@tmp@enc\mst@ti % T1
    \DeclareMathSymbol{-}{\mathbin}{mtoperatorfont}{22}
-   \DeclareMathSymbol{\mst@alpha@minus}{\mathalpha}{mtoperatorfont}{22}
+   \DeclareMathSymbol{\mst@varfam@minus}{\mathalpha}{mtoperatorfont}{22}
 \else
 \ifx\mst@tmp@enc\mst@oti % OT1
    \DeclareMathSymbol{-}{\mathbin}{mtoperatorfont}{124}
-   \DeclareMathSymbol{\mst@alpha@minus}{\mathalpha}{mtoperatorfont}{124}
+   \DeclareMathSymbol{\mst@varfam@minus}{\mathalpha}{mtoperatorfont}{124}
 \else
 \ifx\mst@tmp@enc\mst@lyi % LY1
    \DeclareMathSymbol{-}{\mathbin}{mtoperatorfont}{151}
-   \DeclareMathSymbol{\mst@alpha@minus}{\mathalpha}{mtoperatorfont}{151}
+   \DeclareMathSymbol{\mst@varfam@minus}{\mathalpha}{mtoperatorfont}{151}
 \else % make sure we have neither xetex nor luatex
-   \ifXeTeX\mst@aborttrue\else\ifLuaTeX\mst@aborttrue\else
+   \ifmst@XeTeX\mst@aborttrue\else\ifmst@LuaTeX\mst@aborttrue\else
    \DeclareMathSymbol{-}{\mathbin}{mtoperatorfont}
-   \DeclareMathSymbol{\mst@alpha@minus}{\mathalpha}{mtoperatorfont}
+   \DeclareMathSymbol{\mst@varfam@minus}{\mathalpha}{mtoperatorfont}
 {\expandafter\the\expandafter\csname\mst@tmp@enc\string\textemdash\endcsname}
    \fi\fi
 \fi\fi\fi\fi\fi}
-\ifmst@nominus\else
+\ifmst@nominus\else\typeout{** minus as endash}
 \mst@abortfalse
 \ifmst@endash\do@the@endashstuff\else
 \ifmst@emdash\do@the@emdashstuff\else
    \DeclareMathSymbol{-}{\mathbin}{\mst@font@tbu}{"2D}
-   \DeclareMathSymbol{\mst@alpha@minus}{\mathalpha}{\mst@font@tbu}{"2D}
+   \DeclareMathSymbol{\mst@varfam@minus}{\mathalpha}{\mst@font@tbu}{"2D}
 \fi\fi
 \ifmst@abort
     \DeclareMathSymbol{-}{\mathbin}{\mst@font@tbu}{"2D}
-    \DeclareMathSymbol{\mst@alpha@minus}{\mathalpha}{\mst@font@tbu}{"2D}
+    \DeclareMathSymbol{\mst@varfam@minus}{\mathalpha}{\mst@font@tbu}{"2D}
 \fi
-\mst@addtodo@nonletters-\mathbin\mst@alpha@minus
+\mst@addtodo@nonletters-\mathbin\mst@varfam@minus
 \fi
 %    \end{macrocode}
 % \end{macro}
@@ -3968,7 +4233,7 @@ and \protect\log-like names will be^^J%
     \fi
     \def\hbar{\mst@mathrlap{\mst@ltbar{\ }}h}
 \fi\fi}
-\ifmst@nohbar\else\do@the@hbarstuff\fi
+\ifmst@nohbar\else\typeout{** \string\hbar}\do@the@hbarstuff\fi
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
@@ -3987,16 +4252,16 @@ and \protect\log-like names will be^^J%
 % sorry!) made Unicode compatible.
 % \begin{macro}{+,=,\Relbar}
 %    \begin{macrocode}
-\ifmst@noplus\else
+\ifmst@noplus\else\typeout{** + and =}
 \DeclareMathSymbol{+}{\mathbin}{\mst@font@tbu}{"2B}
-\DeclareMathSymbol{\mst@alpha@plus}{\mathalpha}{\mst@font@tbu}{"2B}
-\mst@addtodo@nonletters+\mathbin\mst@alpha@plus
+\DeclareMathSymbol{\mst@varfam@plus}{\mathalpha}{\mst@font@tbu}{"2B}
+\mst@addtodo@nonletters+\mathbin\mst@varfam@plus
 \fi
 \ifmst@noequal\else
-\ifXeTeX
+\ifmst@XeTeX
 \XeTeXmathcharnumdef\mst@equal@sign=\XeTeXmathcodenum`\=\relax
 \else
-\ifLuaTeX
+\ifmst@LuaTeX
 %% 12 octobre 2012 \luatexUmathcodenum`\=
 %% ne marche pas pour le moment \`a cause du fait que \luatexUmathcodenum
 %% donne un mathcode sur 8bit ou un Unicode mathcode sans qu'on puisse
@@ -4010,7 +4275,7 @@ and \protect\log-like names will be^^J%
 {\def\Relbar{\mathrel\mst@equal@sign}}
 {\DeclareRobustCommand\Relbar{\mathrel{\mst@equal@sign}}}
 \DeclareMathSymbol{=}{\mathrel}{\mst@font@tbu}{"3D}
-\DeclareMathSymbol{\mst@alpha@equal}{\mathalpha}{\mst@font@tbu}{"3D}
+\DeclareMathSymbol{\mst@varfam@equal}{\mathalpha}{\mst@font@tbu}{"3D}
 %    \end{macrocode}
 % \begin{macro}{\nfss@catcodes}
 % 2012/12/18: Activating = (only in math mode actually) seems very bad but
@@ -4039,12 +4304,13 @@ and \protect\log-like names will be^^J%
 % 2012/12/28: to be on the safe side, I add also |;| and |+| and do it
 % without discriminating between engines
 %    \begin{macrocode}
+\typeout{** adding = ; and + to \string\nfss@catcodes}
 \g@addto@macro\nfss@catcodes{%
   \@makeother\=%
   \@makeother\;%
   \@makeother\+%
 }
-\mst@addtodo@nonletters=\mathrel\mst@alpha@equal
+\mst@addtodo@nonletters=\mathrel\mst@varfam@equal
 \fi
 %    \end{macrocode}
 % \end{macro}\end{macro}
@@ -4056,7 +4322,7 @@ and \protect\log-like names will be^^J%
 %   other hand in |latex.ltx| with |\{| and |\}| are defined (in math mode) in
 %   terms of the control sequences \cs{lbrace} and \cs{rbrace}.
 %    \begin{macrocode}
-\ifmst@noparen\else
+\ifmst@noparen\else\typeout{** parentheses ( ) [ ] and slash /}
 \ifmst@nosmalldelims
     \DeclareMathSymbol{(}{\mathopen}{\mst@font@tbu}{"28}
     \DeclareMathSymbol{)}{\mathclose}{\mst@font@tbu}{"29}
@@ -4070,33 +4336,35 @@ and \protect\log-like names will be^^J%
     \DeclareMathDelimiter{]}{\mathclose}{\mst@font@tbu}{"5D}{largesymbols}{"03}
     \DeclareMathDelimiter{/}{\mathord}{\mst@font@tbu}{"2F}{largesymbols}{"0E}
 \fi
-\DeclareMathSymbol{\mst@alpha@lparen}{\mathalpha}{\mst@font@tbu}{40}
-\DeclareMathSymbol{\mst@alpha@rparen}{\mathalpha}{\mst@font@tbu}{41}
-\DeclareMathSymbol{\mst@alpha@lbrack}{\mathalpha}{\mst@font@tbu}{"5B}
-\DeclareMathSymbol{\mst@alpha@rbrack}{\mathalpha}{\mst@font@tbu}{"5D}
-\DeclareMathSymbol{\mst@alpha@slash}{\mathalpha}{\mst@font@tbu}{"2F}
-\mst@addtodo@nonletters(\mathopen\mst@alpha@lparen
-\mst@addtodo@nonletters)\mathclose\mst@alpha@rparen
-\mst@addtodo@nonletters[\mathopen\mst@alpha@lbrack
-\mst@addtodo@nonletters]\mathclose\mst@alpha@rbrack
-\mst@addtodo@nonletters/\mathord\mst@alpha@slash
+\DeclareMathSymbol{\mst@varfam@lparen}{\mathalpha}{\mst@font@tbu}{40}
+\DeclareMathSymbol{\mst@varfam@rparen}{\mathalpha}{\mst@font@tbu}{41}
+\DeclareMathSymbol{\mst@varfam@lbrack}{\mathalpha}{\mst@font@tbu}{"5B}
+\DeclareMathSymbol{\mst@varfam@rbrack}{\mathalpha}{\mst@font@tbu}{"5D}
+\DeclareMathSymbol{\mst@varfam@slash}{\mathalpha}{\mst@font@tbu}{"2F}
+\mst@addtodo@nonletters(\mathopen\mst@varfam@lparen
+\mst@addtodo@nonletters)\mathclose\mst@varfam@rparen
+\mst@addtodo@nonletters[\mathopen\mst@varfam@lbrack
+\mst@addtodo@nonletters]\mathclose\mst@varfam@rbrack
+\mst@addtodo@easynonletters/\mst@varfam@slash
 \fi
 %    \end{macrocode}
 % \end{macro}\end{macro}
 % \begin{macro}{alldelims}
 % \begin{macro}{<,>,\}\begin{macro}{\setminus}\begin{macro}{\backslash}
 %    \begin{macrocode}
-\ifmst@alldelims
+\ifmst@alldelims\typeout{** alldelims: < >
+  \string\backslash\space\string\setminus\space|
+  \string\vert\space\string\mid\space\string\{\space and \string\}}
 \ifmst@nosmalldelims
 %    \end{macrocode}
-% Dec 18, 2012. We then want |\let\backslash\mst@alpha@backslash| to do nothing
+% Dec 18, 2012. We then want |\let\backslash\mst@varfam@backslash| to do nothing
 % when the \cs{backslash} is used as a delimiter. So here the original
 % definition from |latex.ltx| is copied, generally speaking when people use
 % other math symbol fonts they do respect the encoding of the CM symbols and
 % largesymbols, so this is 90\% safe. But in truth I should extract from the
 % meaning of \cs{backslash} the |delcode|.
 %    \begin{macrocode}
-    \DeclareMathDelimiter{\mst@alpha@backslash}
+    \DeclareMathDelimiter{\mst@varfam@backslash}
         {\mathalpha}{symbols}{"6E}{largesymbols}{"0F}
 \else
     \DeclareMathDelimiter{<}{\mathopen}{\mst@font@tbu}{"3C}{largesymbols}{"0A}
@@ -4108,30 +4376,30 @@ and \protect\log-like names will be^^J%
         {\mathord}{mtoperatorfont}{"5C}{largesymbols}{"0F}
     \DeclareMathDelimiter{\backslash}
         {\mathord}{mtoperatorfont}{"5C}{largesymbols}{"0F}
-    \DeclareMathDelimiter{\mst@alpha@backslash}
+    \DeclareMathDelimiter{\mst@varfam@backslash}
         {\mathalpha}{mtoperatorfont}{"5C}{largesymbols}{"0F}
 \fi    
 \DeclareMathSymbol{<}{\mathrel}{\mst@font@tbu}{"3C}
 \DeclareMathSymbol{>}{\mathrel}{\mst@font@tbu}{"3E}
-\DeclareMathSymbol{\mst@alpha@less}{\mathalpha}{\mst@font@tbu}{"3C}
-\DeclareMathSymbol{\mst@alpha@more}{\mathalpha}{\mst@font@tbu}{"3E}
-\mst@addtodo@nonletters<\mathrel\mst@alpha@less
-\mst@addtodo@nonletters>\mathrel\mst@alpha@more
-\mst@do@nonletters\expandafter{\the\mst@do@nonletters
-            \let\backslash\mst@alpha@backslash}
+\DeclareMathSymbol{\mst@varfam@less}{\mathalpha}{\mst@font@tbu}{"3C}
+\DeclareMathSymbol{\mst@varfam@more}{\mathalpha}{\mst@font@tbu}{"3E}
+\mst@addtodo@nonletters<\mathrel\mst@varfam@less
+\mst@addtodo@nonletters>\mathrel\mst@varfam@more
+\mst@do@easynonletters\expandafter{\the\mst@do@easynonletters
+            \let\backslash\mst@varfam@backslash}
 \DeclareMathSymbol{\setminus}{\mathbin}{mtoperatorfont}{"5C}
-\DeclareMathSymbol{\mst@alpha@setminus}{\mathalpha}{mtoperatorfont}{"5C}
+\DeclareMathSymbol{\mst@varfam@setminus}{\mathalpha}{mtoperatorfont}{"5C}
 \mst@do@nonletters\expandafter{\the\mst@do@nonletters
-            \def\setminus{\mathbin{\mst@alpha@setminus}}}
+            \def\setminus{\mathbin{\mst@varfam@setminus}}}
 %    \end{macrocode}
 % \end{macro}\end{macro}\end{macro}
 % \begin{macro}{\models}
 % |1.15d|: 13 oct 2012. Before modifying \string| we must preserve \cs{models}. 
 %    \begin{macrocode}
-\ifXeTeX
+\ifmst@XeTeX
 \XeTeXmathcharnumdef\mst@vert@bar=\XeTeXmathcodenum`\|\relax
 \else
-\ifLuaTeX
+\ifmst@LuaTeX
 %% \luatexUmathchardef\mst@vert@bar="0 "2 "006A\relax
 \mathchardef\mst@vert@bar=618\relax
 \else\mathchardef\mst@vert@bar=\mathcode`\|\relax
@@ -4150,11 +4418,11 @@ and \protect\log-like names will be^^J%
     \DeclareMathDelimiter{|}{\mathord}{\mst@font@tbu}{124}{largesymbols}{"0C}
 \fi    
 \def\vert{|}
-\DeclareMathSymbol{\mst@alpha@vbar}{\mathalpha}{\mst@font@tbu}{124}
-\mst@addtodo@nonletters|\mathord\mst@alpha@vbar
+\DeclareMathSymbol{\mst@varfam@vbar}{\mathalpha}{\mst@font@tbu}{124}
+\mst@addtodo@easynonletters|\mst@varfam@vbar
 \DeclareMathSymbol{\mid}{\mathrel}{\mst@font@tbu}{124}
 \mst@do@nonletters\expandafter{\the\mst@do@nonletters
-    \def\mid{\mathrel\mst@alpha@vbar}}
+    \def\mid{\mathrel\mst@varfam@vbar}}
 %    \end{macrocode}
 % \begin{macro}{\MTexplicitbraces-}\begin{macro}{obeymathxx}
 % \begin{macro}{\MTexplicitbraces-}\begin{macro}{donotobeymathxx}
@@ -4172,17 +4440,17 @@ and \protect\log-like names will be^^J%
    \DeclareMathDelimiter{\rbrace}
         {\mathclose}{\mst@font@tbu}{125}{largesymbols}{"09}
 \fi
-\DeclareMathSymbol{\mst@alpha@lbrace}{\mathalpha}{\mst@font@tbu}{123} 
-\DeclareMathSymbol{\mst@alpha@rbrace}{\mathalpha}{\mst@font@tbu}{125}
-\DeclareRobustCommand{\mst@lbrace}
-        {\ifmmode\mathopen\mst@alpha@lbrace\else\textbraceleft\fi}
-\DeclareRobustCommand{\mst@rbrace}
-        {\ifmmode\mathclose\mst@alpha@rbrace\else\textbraceright\fi}
+\DeclareMathSymbol{\mst@varfam@lbrace}{\mathalpha}{\mst@font@tbu}{123} 
+\DeclareMathSymbol{\mst@varfam@rbrace}{\mathalpha}{\mst@font@tbu}{125}
+\DeclareRobustCommand*{\mst@lbrace}
+        {\ifmmode\mathopen\mst@varfam@lbrace\else\textbraceleft\fi}
+\DeclareRobustCommand*{\mst@rbrace}
+        {\ifmmode\mathclose\mst@varfam@rbrace\else\textbraceright\fi}
 \mst@do@nonletters\expandafter{\the\mst@do@nonletters
     \mst@dobraces{\let\{\mst@lbrace\let\}\mst@rbrace}}
 \fi % end of \ifmst@alldelims
-\newcommand{\MTexplicitbracesobeymathxx}{\let\mst@dobraces\@firstofone}
-\newcommand{\MTexplicitbracesdonotobeymathxx}{\let\mst@dobraces\@gobble}
+\newcommand*{\MTexplicitbracesobeymathxx}{\let\mst@dobraces\@firstofone}
+\newcommand*{\MTexplicitbracesdonotobeymathxx}{\let\mst@dobraces\@gobble}
 \MTexplicitbracesdonotobeymathxx
 %    \end{macrocode}
 % \end{macro}\end{macro}\end{macro}\end{macro}
@@ -4192,31 +4460,33 @@ and \protect\log-like names will be^^J%
 %   \#, \$, \% and \& were buggy (this showed up when 10 or more math
 %   families had been created).
 %
-%   |1.15f| (2012/10/23): the code, although working, was a bit insane and
-%   had definitions which could surprise other packages. I (finally)
-%   correct this: I had been told that my earlier definitions caused a
-%   problem with |microtype|...
+%   |1.15f| (2012/10/23): the code, although working, was perhaps a bit insane
+%   and
+%   had definitions which could surprise other packages. For example, it did:\\
+%   \null\hspace{1cm}|\renewcommand{\%}{\ifmmode\mt@mmode@percent\else\char37\relax\fi}|\\
+%   But it seems this provokes a problem with |microtype|. Perhaps the problem
+%   was that the command was not declared robust? For the dollar \LaTeX{} itself does\\
+%   \null\hspace{1cm}|\DeclareRobustCommand{\$}{\ifmmode\mathdollar\else\textdollar\fi}|\\
+%   So here I just modify \cs{mathdollar}. Then we have in
+%   |latex.ltx| the same definitions as in |plain.tex|:
+%  |\chardef\%=`\%|, 
+%  |\chardef\&=`\&|, and 
+%  |\chardef\#=`\#|. It turns out that we can just adjust the mathcodes of these
+%  characters and achieve exactly what is wanted for the corresponding one char
+%  control sequences. In math mode the control sequence will use the specified
+%  mathcode. So here it is \emph{not} a redefinition of  the control sequences,
+%  purely an adjustment of mathcodes.
 %
-% |1.15g| (2012/10/25): ... but it was \emph{not} that insane, I just had
-% forgotten the reason I did it that way! I just extended to the other
-% specials what latex was doing with \char92\$ (\cs{mathdollar}!)... 
+%  |1.2d| (2013/01/01): previous versions imposed the variable family type. I
+%  hereby make it possible to de-activate this feature with the macro
+%  \cs{MTeasynonlettersdonotobeymathxx}. Besides, I have absolutely no idea
+%  why I had different looking code depending on the engine XeTeX, LuaTeX or
+%  default. Removed.
 %    \begin{macrocode}
-\ifmst@nospecials\else
-\ifXeTeX 
-  \XeTeXmathcode`\#=7 \symmtoperatorfont "0023 \relax
-  \XeTeXmathchardef\mathdollar=7 \symmtoperatorfont "0024 \relax
-  \XeTeXmathcode`\%=7 \symmtoperatorfont "0025 \relax
-  \XeTeXmathcode`\&=7 \symmtoperatorfont "0026 \relax
-\else
-\ifLuaTeX
-  \luatexUmathcode`\#=7 \symmtoperatorfont "0023 \relax
-  \luatexUmathchardef\mathdollar=7 \symmtoperatorfont "0024 \relax
-  \luatexUmathcode`\%=7 \symmtoperatorfont "0025 \relax
-  \luatexUmathcode`\&=7 \symmtoperatorfont "0026 \relax
-\else
+\ifmst@nospecials\else\typeout{** \string\#\space\string\mathdollar\space\string\%\space\string\&\space}
 \count255=\symmtoperatorfont
 \multiply\count255 by 256
-\advance\count255 by 28707 % "7023
+\advance\count255 by 35
     \mathcode`\#\count255
 \advance\count255 by 1
     \mathchardef\mathdollar\count255
@@ -4224,7 +4494,22 @@ and \protect\log-like names will be^^J%
     \mathcode`\%\count255
 \advance\count255 by 1
     \mathcode`\&\count255
-\fi\fi\fi
+\count255=\symmtoperatorfont
+\multiply\count255 by 256
+\advance\count255 by 28707 % = "7023
+    \mathchardef\mst@varfam@mathhash\count255
+\advance\count255 by 1
+    \mathchardef\mst@varfam@mathdollar\count255
+\advance\count255 by 1
+    \mathchardef\mst@varfam@mathpercent\count255
+\advance\count255 by 1
+    \mathchardef\mst@varfam@mathampersand\count255
+\mst@do@easynonletters\expandafter{\the\mst@do@easynonletters
+    \mathcode`\#=\mst@varfam@mathhash
+    \let\mathdollar\mst@varfam@mathdollar
+    \mathcode`\%=\mst@varfam@mathpercent
+    \mathcode`\&=\mst@varfam@mathampersand}
+\fi
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{symbolmisc}
@@ -4249,32 +4534,32 @@ and \protect\log-like names will be^^J%
 %    
 % Note oct 2012: maybe I should re-examine what I did?
 %    \begin{macrocode}
-\ifmst@symbolmisc   
+\ifmst@symbolmisc\typeout{** symbolmisc: miscellaneous math symbols from Symbol font}
 \let\mst@prod\prod
 \let\defaultprod\prod
 \DeclareMathSymbol{\prodpsy}{\mathop}{mtpsymbol}{213}
-\renewcommand{\prod}{\ifinner\prodpsy\else\mst@prod\fi}
+\renewcommand*{\prod}{\ifinner\prodpsy\else\mst@prod\fi}
 \let\mst@sum\sum
 \let\defaultsum\sum
 \DeclareMathSymbol{\sumpsy}{\mathop}{mtpsymbol}{229}
-\renewcommand{\sum}{\ifinner\sumpsy\else\mst@sum\fi}
+\renewcommand*{\sum}{\ifinner\sumpsy\else\mst@sum\fi}
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
 %    \begin{macrocode}
 \DeclareMathSymbol{\mst@implies}{\mathrel}{mtpsymbol}{222}
-\DeclareRobustCommand{\implies}{\;\mst@implies\;}
+\DeclareRobustCommand*{\implies}{\;\mst@implies\;}
 \DeclareMathSymbol{\mst@impliedby}{\mathrel}{mtpsymbol}{220}
-\DeclareRobustCommand{\impliedby}{\;\mst@impliedby\;}
-\DeclareRobustCommand{\iff}{\;\mst@impliedby\mathrel{\mkern-3mu}\mst@implies\;}
+\DeclareRobustCommand*{\impliedby}{\;\mst@impliedby\;}
+\DeclareRobustCommand*{\iff}{\;\mst@impliedby\mathrel{\mkern-3mu}\mst@implies\;}
 \DeclareMathSymbol{\mst@iff}{\mathrel}{mtpsymbol}{219}
-\DeclareRobustCommand{\shortiff}{\;\mst@iff\;}
+\DeclareRobustCommand*{\shortiff}{\;\mst@iff\;}
 \DeclareMathSymbol{\mst@to}{\mathrel}{mtpsymbol}{174}
 \DeclareMathSymbol{\mst@trait}{\mathrel}{mtpsymbol}{190}
-\DeclareRobustCommand\to{\mst@to}
-\DeclareRobustCommand\longto{\mkern2mu\mst@trait\mathrel{\mkern-10mu}\mst@to}
-\DeclareRobustCommand\mapsto{\mapstochar\mathrel{\mkern0.2mu}\mst@to}
-\DeclareRobustCommand\longmapsto{%
+\DeclareRobustCommand*\to{\mst@to}
+\DeclareRobustCommand*\longto{\mkern2mu\mst@trait\mathrel{\mkern-10mu}\mst@to}
+\DeclareRobustCommand*\mapsto{\mapstochar\mathrel{\mkern0.2mu}\mst@to}
+\DeclareRobustCommand*\longmapsto{%
 \mapstochar\mathrel{\mkern2mu}\mst@trait\mathrel{\mkern-10mu}\mst@to}
 \DeclareMathSymbol{\aleph}{\mathord}{mtpsymbol}{192}
 \DeclareMathSymbol{\inftypsy}{\mathord}{mtpsymbol}{165} 
@@ -4301,8 +4586,6 @@ and \protect\log-like names will be^^J%
 \DeclareMathSymbol{\otimes}{\mathbin}{mtpsymbol}{196}
 \DeclareMathSymbol{\oplus}{\mathbin}{mtpsymbol}{197}
 \DeclareMathSymbol{\pm}{\mathbin}{mtpsymbol}{177}
-%%\DeclareMathSymbol{*}{\mathbin}{mtpsymbol}{42} 
-\DeclareMathSymbol{\ast}{\mathbin}{mtpsymbol}{42}
 \DeclareMathSymbol{\times}{\mathbin}{mtpsymbol}{180}
 \DeclareMathSymbol{\proptopsy}{\mathrel}{mtpsymbol}{181}
 \DeclareMathSymbol{\mid}{\mathrel}{mtpsymbol}{124} 
@@ -4331,7 +4614,7 @@ and \protect\log-like names will be^^J%
 % \begin{macro}{symbolre}
 % I like the \cs{Re} and \cs{Im} from Symbol, so I overwrite the CM ones.
 %    \begin{macrocode}
-\ifmst@symbolre
+\ifmst@symbolre\typeout{** symbolre: \string\Re\space and \string\Im\space from Symbol font}
 \DeclareMathSymbol{\Re}{\mathord}{mtpsymbol}{"C2}
 \DeclareMathSymbol{\Im}{\mathord}{mtpsymbol}{"C1}
 \DeclareMathSymbol{\DotTriangle}{\mathord}{mtpsymbol}{92}
@@ -4386,7 +4669,7 @@ and \protect\log-like names will be^^J%
 %    \begin{macrocode}
        \mst@goaheadfalse
        \ifx\omicron\undefined
-       \newcommand{\omicron}{\mst@alph@omicron{o}}
+       \newcommand*{\omicron}{\mst@alph@omicron{o}}
        \fi  
 \fi\fi\fi\fi
 \ifmst@goahead
@@ -4781,20 +5064,20 @@ and \protect\log-like names will be^^J%
    \DeclareMathSymbol{\inodot}{\mathalpha}{mtletterfont}{16}
    \DeclareMathSymbol{\jnodot}{\mathalpha}{mtletterfont}{17}
 \else
-   \ifXeTeX\mst@goaheadfalse\else\ifLuaTeX\mst@goaheadfalse\else
+   \ifmst@XeTeX\mst@goaheadfalse\else\ifmst@LuaTeX\mst@goaheadfalse\else
    \DeclareMathSymbol{\inodot}{\mathalpha}{mtletterfont}
 {\expandafter\the\expandafter\csname\mst@tmp@enc\string\i\endcsname}
    \DeclareMathSymbol{\jnodot}{\mathalpha}{mtletterfont}
 {\expandafter\the\expandafter\csname\mst@tmp@enc\string\j\endcsname}
    \fi\fi
 \fi\fi\fi\fi\fi
-\ifmst@defaultimath\else
+\ifmst@defaultimath\else\typeout{** \string\i\space and \string\j\space}
   \ifmst@goahead
-    \renewcommand{\imath}{\inodot}
-    \renewcommand{\jmath}{\jnodot}
+    \renewcommand*{\imath}{\inodot}
+    \renewcommand*{\jmath}{\jnodot}
     \let\mst@oldi\i \let\mst@oldj\j
-    \DeclareRobustCommand{\i}{\ifmmode\inodot\else\mst@oldi\fi}
-    \DeclareRobustCommand{\j}{\ifmmode\jnodot\else\mst@oldj\fi}
+    \DeclareRobustCommand*{\i}{\ifmmode\inodot\else\mst@oldi\fi}
+    \DeclareRobustCommand*{\j}{\ifmmode\jnodot\else\mst@oldj\fi}
   \fi
 \fi
 %    \end{macrocode}
@@ -4813,7 +5096,7 @@ and \protect\log-like names will be^^J%
 %   |1.12b|: I add LY1 which is quasi like OT1
 %    \begin{macrocode}
 \edef\mst@tmp@enc{\encodingdefault} %% rather one too many than sorry 
-\ifmst@mathaccents 
+\ifmst@mathaccents\typeout{** math accents}
 \ifx\mst@ti\mst@tmp@enc
 \DeclareMathAccent{\acute}{\mathalpha}{mtoperatorfont}{1}
 \DeclareMathAccent{\grave}{\mathalpha}{mtoperatorfont}{0}
@@ -4882,14 +5165,7 @@ and \protect\log-like names will be^^J%
 \fi
 %    \end{macrocode}
 % \end{macro}
-% Scaling mechanism for the Symbol font and the end of the package.
 %    \begin{macrocode}
-\AtBeginDocument{
-\ifmst@needsymbol
-  \DeclareFontFamily{U}{psy}{}
-  \DeclareFontShape{U}{psy}{m}{n}{<->s*[\psy@scale] psyr}{}
-  \fi
-}
 \endinput
 %    \end{macrocode}
 % \MakePercentComment
@@ -4909,7 +5185,7 @@ and \protect\log-like names will be^^J%
   Grave accent  \`     Left brace    \{     Vertical bar  \|
   Right brace   \}     Tilde         \~}
 
-\CheckSum{0}
+\CheckSum{4948}
 
 \Finale
 %%

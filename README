@@ -5,7 +5,7 @@ Copyright (C) 2011, 2012 by Jean-Francois B..
     +                 mathastext                +
     +                                           +
     +      `Use the text font in math mode'     +
-    +             v1.2c  2012/12/31             +
+    +             v1.2d  2013/01/02             +
     +             2589111+jfbu@users.noreply.github.com             +
     +-------------------------------------------+
 
@@ -92,6 +92,19 @@ illustrate some features of the package.
 
 
 CHANGE LOG
+
+1.2d [2013/01/02]
+
+   *  an incompatibility with amsmath (its macro \resetMathstrut@),
+      exists since version 1.2 of the package. This is fixed
+      here.
+
+   *  various improvements in dealing with the asterisk and in the
+      mechanism of letting non-letter symbols obey the math alphabet
+      commands.
+
+   *  documentation extended and improved.
+
 
 1.2c [2012/12/31]
 
