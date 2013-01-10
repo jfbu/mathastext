@@ -5,7 +5,7 @@ Copyright (C) 2011, 2012 by Jean-Francois B..
     +                 mathastext                +
     +                                           +
     +      `Use the text font in math mode'     +
-    +             v1.2d  2013/01/02             +
+    +             v1.2e  2013/01/10             +
     +             2589111+jfbu@users.noreply.github.com             +
     +-------------------------------------------+
 
@@ -92,6 +92,41 @@ illustrate some features of the package.
 
 
 CHANGE LOG
+
+1.2e [2013/01/10]
+
+This version should be the last one in the 1.2 series as it seems to 
+correct most of the main problems which were introduced with the massive 
+use of mathematically active characters in versions 1.2 and 1.2b.
+
+   * It is indeed a thorny point when one wants to modify only in math mode
+     how an active character acts, without breaking things. The package now
+     does that /only/ if the activation appears to originate in the Babel
+     system, as it is then possible to modify appropriately the Babel macros
+     \user@active<char> and \normal@char<char>. The relevant issues are
+     discussed in section 2.10 of the user manual, in the test file
+     testmathastextalphabets.tex, and in the source code comments to the
+     macro \mst@mathactivate. The inherent incompatibility of Babel with
+     packages having made mathematically active the characters itself makes
+     document active is circumvented by this interference of mathastext. A
+     generally applicable Babel patch could be derived from the method used
+     by mathastext.
+
+   * The technique of mathematical activation is maintained only for the
+     characters which are not catcode active (at the entrance in math mode,
+     as mathastext does all its activation job at everymath and everydisplay).
+
+   * Sadly, the feature of added italic corrections introduced in version
+     1.2b did not behave as described in the user manual, due to forgotten
+     group braces. Fixed.
+
+   * The command \MTlowerast from the user manual of v1.2d was not the one
+     implemented in the source code. Fixed.
+
+   * The test files automatically extracted from a latex run on the dtx file
+     have been revised and extended. 
+
+   * The code is better documented.
 
 1.2d [2013/01/02]
 

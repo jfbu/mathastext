@@ -22,7 +22,7 @@
 %% in the same archive or directory.)
 %%
 \ProvidesPackage{mathastext}
- [2013/01/01 v1.2d Use the text font in math mode (jfB)]
+ [2013/01/10 v1.2e Use the text font in math mode (jfB)]
 %%
 %% Package `mathastext' by Jean-Francois B.
 %% Copyright (C) 2011, 2012 by Jean-Francois B.
@@ -190,13 +190,14 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \def\mst@prime@skip{.5mu}
 \ifmst@italic\ifmst@frenchmath\else\def\mst@prime@skip{0mu}\fi\fi
 \def\mst@active@math@prime{\sp\bgroup\mskip\mst@prime@muskip\prim@s}
-\def\mst@modifyprime{\mst@mathactivate'\mst@active@math@prime{}}
+{\catcode`\'=12
+\gdef\mst@modifyprime{\mst@mathactivate'{}\mst@active@math@prime}}
 \expandafter\let\csname mst@ifdone\string'\endcsname\iffalse
 \AtBeginDocument{
 \everymath\expandafter{\the\everymath \mst@modifyprime}
 \everydisplay\expandafter{\the\everydisplay \mst@modifyprime}
 }
-\newcommand\MTnormalprime{\let\mst@modifyprime\relax}
+\newcommand*\MTnormalprime{\let\mst@modifyprime\relax}
 \newcommand*\MTexistsskip[1]{\edef\mst@exists@skip{#1}%
     \expandafter\mst@exists@muskip\mst@exists@skip\relax}
 \newcommand*\MTforallskip[1]{\edef\mst@forall@skip{#1}%
@@ -231,27 +232,27 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \newtoks\mst@do@easynonletters
 \newtoks\mst@do@az
 \newtoks\mst@do@AZ
-\newcommand\MTnonlettersdonotobeymathxx{\let\mst@the\@gobble}
-\newcommand\MTnonlettersobeymathxx{\let\mst@the\the}
-\newcommand\MTeasynonlettersdonotobeymathxx{\let\mst@theeasy\@gobble}
-\newcommand\MTeasynonlettersobeymathxx{\let\mst@theeasy\the}
+\newcommand*\MTnonlettersdonotobeymathxx{\let\mst@the\@gobble}
+\newcommand*\MTnonlettersobeymathxx{\let\mst@the\the}
+\newcommand*\MTeasynonlettersdonotobeymathxx{\let\mst@theeasy\@gobble}
+\newcommand*\MTeasynonlettersobeymathxx{\let\mst@theeasy\the}
 \MTnonlettersdonotobeymathxx % 1.2c !!!
 \MTeasynonlettersobeymathxx
-\newcommand\MTicinmath{%
+\newcommand*\MTicinmath{%
     \let\mst@thef\the
     \let\mst@theF\the
     \def\mst@itcorr{\ifnum\fam=\m@ne\/\else\ifnum\fam=\symmtletterfont\/\fi\fi}%
     \let\mst@ITcorr\mst@itcorr}
-\newcommand\MTnoicinmath{% also usable in math mode
+\newcommand*\MTnoicinmath{% also usable in math mode
     \def\mst@itcorr{}\def\mst@ITcorr{}%
     \let\mst@thef\@gobble\let\mst@theF\@gobble}
-\newcommand\MTICinmath{%
+\newcommand*\MTICinmath{%
     \let\mst@theF\the
     \def\mst@ITcorr{\ifnum\fam=\m@ne\/\fi}}
-\newcommand\MTnoICinmath{% also usable in math mode
+\newcommand*\MTnoICinmath{% also usable in math mode
     \def\mst@ITcorr{}%
     \let\mst@theF\@gobble}
-\newcommand\MTicalsoinmathxx{%
+\newcommand*\MTicalsoinmathxx{%
     \ifx\mst@itcorr\@empty\else\def\mst@itcorr{\/}\fi
     \ifx\mst@ITcorr\@empty\else\def\mst@ITcorr{\/}\fi}
 \AtBeginDocument{
@@ -262,46 +263,78 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \mst@theeasy\mst@do@easynonletters
     \mst@thef\mst@do@az \mst@theF\mst@do@AZ}
 }
-\def\mst@fork{%
-    \ifx\protect\@typeset@protect\ifmmode
-      \expandafter\expandafter\expandafter\@thirdofthree
-    \fi\fi
-    \@firstoftwo}
-\begingroup % make sure ~ is active
+\def\mst@magic@v #1#2#3#4#5{#1#3#4}
+\def\mst@magic@vi #1#2#3#4#5#6{#1#2#4#5}
+\def\mst@fork{\ifmmode\mst@magic@v\fi\@thirdofthree}
+\def\mst@safefork{\ifmmode\if@safe@actives\else\mst@magic@vi\fi\fi\@thirdofthree}
+\def\mst@do@activecase#1#2#3{% #1 is a category 11 or 12 character token
+    \@ifundefined{active@char#1}{}{%
+         \ifcat #1a\mathcode`#1=#2\else
+         \ifx\relax #2\relax\mathcode`#1=`#1 \else\mathcode`#1=#3\fi\fi
+    \expandafter\expandafter\expandafter\let\expandafter\expandafter
+                   \csname mst@orig@user@active#1\endcsname
+                   \csname user@active#1\endcsname
+    \expandafter\expandafter\expandafter\let\expandafter\expandafter
+                   \csname mst@orig@normal@char#1\endcsname
+                   \csname normal@char#1\endcsname
+    \ifcat #1a%
+      \expandafter\edef\csname user@active#1\endcsname
+                   {\noexpand\mst@fork {{#2\noexpand#3}}{}\expandafter
+                    \noexpand\csname mst@orig@user@active#1\endcsname
+                   }%
+      \expandafter\edef\csname normal@char#1\endcsname
+                   {\noexpand\mst@safefork {{#2\noexpand#3}}{}\expandafter
+                    \noexpand\csname mst@orig@normal@char#1\endcsname
+                   }%
+    \else
+      \expandafter\edef\csname user@active#1\endcsname
+                   {\noexpand\mst@fork {#2}\noexpand#3\expandafter
+                    \noexpand\csname mst@orig@user@active#1\endcsname
+                   }%
+      \expandafter\edef\csname normal@char#1\endcsname
+                   {\noexpand\mst@safefork {#2}\noexpand#3\expandafter
+                    \noexpand\csname mst@orig@normal@char#1\endcsname
+                   }%
+    \fi}}
+\begingroup % make sure ~ is active at mathastext loading time
   \catcode`~=\active
   \def\x{\endgroup
-\def\mst@mathactivate##1##2##3{%
-    \begingroup
-    \lccode`~=`##1
-    \lccode`##1=`##1
-    \lowercase{\endgroup
-      \csname mst@ifdone\string##1\endcsname
-      \else
-        \expandafter\expandafter\expandafter
-        \let\expandafter\expandafter\csname mst@original\string##1\endcsname
-            \expandafter=\ifnum\catcode`##1=\active~\else##1\fi
-        \expandafter\def\csname mst@mathactive\string##1\endcsname{##2##3}%
-        \mathcode`##1="8000
-        \edef~{\noexpand\mst@fork
-            \expandafter\noexpand\csname mst@original\string##1\endcsname
-            \expandafter\noexpand\csname mst@mathactive\string##1\endcsname}%
-      \fi}%
-      \expandafter\let\csname mst@ifdone\string##1\endcsname=\iftrue}
-}\x
-\def\mst@addtodo@nonletters#1#2#3{
-  \expandafter\let\csname mst@ifdone\string#1\endcsname\iffalse
-  \mst@do@nonletters\expandafter{\the\mst@do@nonletters\mst@mathactivate#1#2#3}
+    \def\mst@mathactivate##1##2##3{% ##1 guaranteed of cat 11 or 12
+      \begingroup
+      \lccode`~=`##1
+      \lccode`##1=`##1
+      \lowercase{\endgroup
+        \csname mst@ifdone##1\endcsname
+        \else
+          \ifnum\catcode`##1=\active
+            \mst@do@activecase ##1{##2}##3
+            % careful as ##2 is empty in the asterisk and
+            % prime case!
+          \else
+            \mathcode`##1="8000
+            % I use " many times later, \string" everywhere would be a pain
+            \ifcat##1a\def~{{##2##3}}\else\def~{##2##3}\fi
+          \fi
+        \fi}%
+        \expandafter\let\csname mst@ifdone##1\endcsname=\iftrue}}
+\x
+\def\mst@addtodo@nonletters#1#2#3{%
+  % #1 will be of cat 11 or 12.
+  % #2 is  empty for asterisk and right quote
+  \expandafter\let\csname mst@ifdone#1\endcsname\iffalse
+  \mst@do@nonletters\expandafter{\the\mst@do@nonletters
+                                 \mst@mathactivate#1{#2}#3}%
 }
-\def\mst@addtodo@easynonletters#1#2{
-  \mst@do@easynonletters\expandafter{\the\mst@do@easynonletters\mathcode`#1=#2}
+\def\mst@addtodo@easynonletters#1#2{% #1 is a one char control sequence
+  \mst@do@easynonletters\expandafter{\the\mst@do@easynonletters\mathcode`#1=#2}%
 }
-\def\mst@addtodo@az#1#2#3{
-  \expandafter\let\csname mst@ifdone\string#1\endcsname\iffalse
+\def\mst@addtodo@az#1#2#3{%
+  \expandafter\let\csname mst@ifdone#1\endcsname\iffalse
   \mst@do@az\expandafter{\the\mst@do@az\mst@mathactivate#1#2#3}
 }
-\def\mst@addtodo@AZ#1#2#3{
-  \expandafter\let\csname mst@ifdone\string#1\endcsname\iffalse
-  \mst@do@AZ\expandafter{\the\mst@do@AZ\mst@mathactivate#1#2#3}
+\def\mst@addtodo@AZ#1#2#3{%
+  \expandafter\let\csname mst@ifdone#1\endcsname\iffalse
+  \mst@do@AZ\expandafter{\the\mst@do@AZ\mst@mathactivate#1#2#3}%
 }
 \@ifpackageloaded{amsmath}
 {\let\newmcodes@\relax} % brutal, but bye bye and don't come back.
@@ -348,9 +381,9 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \fi % fin de ce \ifmst@subdued
 \DeclareSymbolFont{mtoperatorfont}
     {\mst@enc}{\mst@fam}{\mst@ser}{\mst@opsh}
-\newcommand{\MTmathoperatorsobeymathxx}
+\newcommand*{\MTmathoperatorsobeymathxx}
 {\def\operator@font{\mathgroup\ifnum\fam=\m@ne\symmtoperatorfont\else\fam\fi}}
-\newcommand{\MTmathoperatorsdonotobeymathxx}
+\newcommand*{\MTmathoperatorsdonotobeymathxx}
 {\def\operator@font{\mathgroup\symmtoperatorfont}}
 \MTmathoperatorsobeymathxx
 \DeclareSymbolFont{mtletterfont}
@@ -846,9 +879,7 @@ and \protect\log-like names will be^^J%
 %% v1.2d: special treatment of the asterisk
     \MTmathoperatorsobeymathxx
     \MTeasynonlettersobeymathxx
-    \ifmst@asterisk
-        \let\mst@doasterisk\mst@@doasterisk
-    \fi
+    \ifmst@asterisk\let\mst@doasterisk\mst@@doasterisk\fi
     \ifmst@subdued
       \edef\mst@tmp{#2}\def\mst@tmpa{normal}%
       \ifx\mst@tmp\mst@tmpa
@@ -974,17 +1005,17 @@ and \protect\log-like names will be^^J%
 \else
 \def\mst@font@tbu{mtoperatorfont}
 \fi
-\ifmst@noexclam\else\typeout{** ! and ?}
+\ifmst@noexclam\else\typeout{** \string! and \string?}
 \DeclareMathSymbol{!}{\mathclose}{\mst@font@tbu}{"21}
 \DeclareMathSymbol{\mst@varfam@exclam}{\mathalpha}{\mst@font@tbu}{"21}
-\mst@addtodo@nonletters!\mathclose\mst@varfam@exclam
+\expandafter\mst@addtodo@nonletters\string!\mathclose\mst@varfam@exclam
 \DeclareMathSymbol{?}{\mathclose}{\mst@font@tbu}{"3F}
 \DeclareMathSymbol{\mst@varfam@question}{\mathalpha}{\mst@font@tbu}{"3F}
-\mst@addtodo@nonletters?\mathclose\mst@varfam@question
+\expandafter\mst@addtodo@nonletters\string?\mathclose\mst@varfam@question
 \fi
   \def\mst@@doasterisk{\let\ast\mst@ast
         \expandafter\let\csname mst@ifdone*\endcsname\iffalse
-        \mst@mathactivate*\mst@ast{}}
+        \mst@mathactivate*{}\mst@ast} % for the order cf. \mst@do@activecase
 \ifmst@asterisk\typeout{** asterisk: \string\ast\space and *}
   \ifmst@symbolmisc
     \def\mst@bin@ast{%
@@ -998,40 +1029,41 @@ and \protect\log-like names will be^^J%
                         {\the\scriptscriptfont\symmtpsymbol\char42}}}}
   \else
     \def\mst@bin@ast{%
-    \mathbin{\mathchoice{\raisebox{-\MTlowerast}
+    \mathbin{\mathchoice{\raisebox{-\mst@lowerast}
                         {\the\textfont\symmtoperatorfont\char42}}
-                      {\raisebox{-\MTlowerast}
+                      {\raisebox{-\mst@lowerast}
                         {\the\textfont\symmtoperatorfont\char42}}
-                      {\raisebox{-\MTlowerast}
+                      {\raisebox{-\mst@lowerast}
                         {\the\scriptfont\symmtoperatorfont\char42}}
-                      {\raisebox{-\MTlowerast}
+                      {\raisebox{-\mst@lowerast}
                         {\the\scriptscriptfont\symmtoperatorfont\char42}}}}
   \fi
   \def\mst@varfam@ast{\ifnum\fam=\m@ne\mst@bin@ast\else
-    \mathbin{\mathchoice{\raisebox{-\MTlowerast}
+    \mathbin{\mathchoice{\raisebox{-\mst@lowerast}
                         {\the\textfont\fam\char42}}
-                      {\raisebox{-\MTlowerast}
+                      {\raisebox{-\mst@lowerast}
                         {\the\textfont\fam\char42}}
-                      {\raisebox{-\MTlowerast}
+                      {\raisebox{-\mst@lowerast}
                         {\the\scriptfont\fam\char42}}
-                      {\raisebox{-\MTlowerast}
+                      {\raisebox{-\mst@lowerast}
                         {\the\scriptscriptfont\fam\char42}}}\fi}
   \let\mst@doasterisk\mst@@doasterisk
   \DeclareRobustCommand*{\mst@ast}{\mst@bin@ast}
-  \def\MTlowerast{.3\height}
+  \newcommand*\MTlowerast[1]{\def\mst@lowerast{#1}}
+  \MTlowerast{.3\height}
   \mst@do@easynonletters\expandafter{\the\mst@do@easynonletters
      \expandafter\def\csname mst@ast \endcsname{\mst@varfam@ast}}
 \fi
-\ifmst@nopunct\else\typeout{** punctuation: , . : ; and \string\colon}
+\ifmst@nopunct\else\typeout{** punctuation\string: \string, \string. \string: \string; and \string\colon}
 \DeclareMathSymbol{,}{\mathpunct}{\mst@font@tbu}{"2C}
 \DeclareMathSymbol{\mst@varfam@comma}{\mathalpha}{\mst@font@tbu}{"2C}
-\mst@addtodo@nonletters,\mathpunct\mst@varfam@comma
+\expandafter\mst@addtodo@nonletters\string,\mathpunct\mst@varfam@comma
 \DeclareMathSymbol{.}{\mathord}{\mst@font@tbu}{"2E}
 \DeclareMathSymbol{\mst@varfam@dot}{\mathalpha}{\mst@font@tbu}{"2E}
-\mst@addtodo@easynonletters.\mst@varfam@dot
+\mst@addtodo@easynonletters\.\mst@varfam@dot
 \DeclareMathSymbol{:}{\mathrel}{\mst@font@tbu}{"3A} % relation spacing
 \DeclareMathSymbol{\mst@varfam@colon}{\mathalpha}{\mst@font@tbu}{"3A}
-\mst@addtodo@nonletters:\mathrel\mst@varfam@colon
+\expandafter\mst@addtodo@nonletters\string:\mathrel\mst@varfam@colon
 \@ifpackageloaded{amsmath}
 {} % \colon defined in amsmath.sty in terms of : with some enlarged explicit
    % spacing. No need to intervene.
@@ -1044,7 +1076,7 @@ and \protect\log-like names will be^^J%
         \def\colon{\mathpunct{\mst@varfam@colon}}}}
 \DeclareMathSymbol{;}{\mathpunct}{\mst@font@tbu}{"3B}
 \DeclareMathSymbol{\mst@varfam@pointvirgule}{\mathalpha}{\mst@font@tbu}{"3B}
-\mst@addtodo@nonletters;\mathpunct\mst@varfam@pointvirgule
+\expandafter\mst@addtodo@nonletters\string;\mathpunct\mst@varfam@pointvirgule
 \fi
 \ifmst@nominus\else
 \ifmst@XeTeX
@@ -1135,7 +1167,7 @@ and \protect\log-like names will be^^J%
     \DeclareMathSymbol{-}{\mathbin}{\mst@font@tbu}{"2D}
     \DeclareMathSymbol{\mst@varfam@minus}{\mathalpha}{\mst@font@tbu}{"2D}
 \fi
-\mst@addtodo@nonletters-\mathbin\mst@varfam@minus
+\expandafter\mst@addtodo@nonletters\string-\mathbin\mst@varfam@minus
 \fi
 %%\def\hbar{{\mathchar'26\mkern-9muh}} % (original definition from latex.ltx)
 \def\mst@mathrlap{\mathpalette\mst@mathrlapinternal}
@@ -1155,10 +1187,10 @@ and \protect\log-like names will be^^J%
     \def\hbar{\mst@mathrlap{\mst@ltbar{\ }}h}
 \fi\fi}
 \ifmst@nohbar\else\typeout{** \string\hbar}\do@the@hbarstuff\fi
-\ifmst@noplus\else\typeout{** + and =}
+\ifmst@noplus\else\typeout{** \string+ and \string=}
 \DeclareMathSymbol{+}{\mathbin}{\mst@font@tbu}{"2B}
 \DeclareMathSymbol{\mst@varfam@plus}{\mathalpha}{\mst@font@tbu}{"2B}
-\mst@addtodo@nonletters+\mathbin\mst@varfam@plus
+\expandafter\mst@addtodo@nonletters\string+\mathbin\mst@varfam@plus
 \fi
 \ifmst@noequal\else
 \ifmst@XeTeX
@@ -1179,15 +1211,15 @@ and \protect\log-like names will be^^J%
 {\DeclareRobustCommand\Relbar{\mathrel{\mst@equal@sign}}}
 \DeclareMathSymbol{=}{\mathrel}{\mst@font@tbu}{"3D}
 \DeclareMathSymbol{\mst@varfam@equal}{\mathalpha}{\mst@font@tbu}{"3D}
-\typeout{** adding = ; and + to \string\nfss@catcodes}
+\typeout{** adding \string= \string; and \string+ to \string\nfss@catcodes}
 \g@addto@macro\nfss@catcodes{%
   \@makeother\=%
   \@makeother\;%
   \@makeother\+%
 }
-\mst@addtodo@nonletters=\mathrel\mst@varfam@equal
+\expandafter\mst@addtodo@nonletters\string=\mathrel\mst@varfam@equal
 \fi
-\ifmst@noparen\else\typeout{** parentheses ( ) [ ] and slash /}
+\ifmst@noparen\else\typeout{** parentheses \string( \string) \string[ \string] and slash \string/}
 \ifmst@nosmalldelims
     \DeclareMathSymbol{(}{\mathopen}{\mst@font@tbu}{"28}
     \DeclareMathSymbol{)}{\mathclose}{\mst@font@tbu}{"29}
@@ -1206,13 +1238,13 @@ and \protect\log-like names will be^^J%
 \DeclareMathSymbol{\mst@varfam@lbrack}{\mathalpha}{\mst@font@tbu}{"5B}
 \DeclareMathSymbol{\mst@varfam@rbrack}{\mathalpha}{\mst@font@tbu}{"5D}
 \DeclareMathSymbol{\mst@varfam@slash}{\mathalpha}{\mst@font@tbu}{"2F}
-\mst@addtodo@nonletters(\mathopen\mst@varfam@lparen
-\mst@addtodo@nonletters)\mathclose\mst@varfam@rparen
-\mst@addtodo@nonletters[\mathopen\mst@varfam@lbrack
-\mst@addtodo@nonletters]\mathclose\mst@varfam@rbrack
-\mst@addtodo@easynonletters/\mst@varfam@slash
+\expandafter\mst@addtodo@nonletters\string(\mathopen\mst@varfam@lparen
+\expandafter\mst@addtodo@nonletters\string)\mathclose\mst@varfam@rparen
+\expandafter\mst@addtodo@nonletters\string[\mathopen\mst@varfam@lbrack
+\expandafter\mst@addtodo@nonletters\string]\mathclose\mst@varfam@rbrack
+\mst@addtodo@easynonletters\/\mst@varfam@slash
 \fi
-\ifmst@alldelims\typeout{** alldelims: < >
+\ifmst@alldelims\typeout{** alldelims: \string< \string>
   \string\backslash\space\string\setminus\space|
   \string\vert\space\string\mid\space\string\{\space and \string\}}
 \ifmst@nosmalldelims
@@ -1232,8 +1264,8 @@ and \protect\log-like names will be^^J%
 \DeclareMathSymbol{>}{\mathrel}{\mst@font@tbu}{"3E}
 \DeclareMathSymbol{\mst@varfam@less}{\mathalpha}{\mst@font@tbu}{"3C}
 \DeclareMathSymbol{\mst@varfam@more}{\mathalpha}{\mst@font@tbu}{"3E}
-\mst@addtodo@nonletters<\mathrel\mst@varfam@less
-\mst@addtodo@nonletters>\mathrel\mst@varfam@more
+\expandafter\mst@addtodo@nonletters\string<\mathrel\mst@varfam@less
+\expandafter\mst@addtodo@nonletters\string>\mathrel\mst@varfam@more
 \mst@do@easynonletters\expandafter{\the\mst@do@easynonletters
             \let\backslash\mst@varfam@backslash}
 \DeclareMathSymbol{\setminus}{\mathbin}{mtoperatorfont}{"5C}
@@ -1256,7 +1288,7 @@ and \protect\log-like names will be^^J%
 \fi
 \def\vert{|}
 \DeclareMathSymbol{\mst@varfam@vbar}{\mathalpha}{\mst@font@tbu}{124}
-\mst@addtodo@easynonletters|\mst@varfam@vbar
+\mst@addtodo@easynonletters\|\mst@varfam@vbar
 \DeclareMathSymbol{\mid}{\mathrel}{\mst@font@tbu}{124}
 \mst@do@nonletters\expandafter{\the\mst@do@nonletters
     \def\mid{\mathrel\mst@varfam@vbar}}
