@@ -5,7 +5,7 @@ Copyright (C) 2011, 2012 by Jean-Francois B..
     +                 mathastext                +
     +                                           +
     +      `Use the text font in math mode'     +
-    +             v1.2e  2013/01/10             +
+    +             v1.2f  2013/01/21             +
     +             2589111+jfbu@users.noreply.github.com             +
     +-------------------------------------------+
 
@@ -93,6 +93,11 @@ illustrate some features of the package.
 
 CHANGE LOG
 
+1.2f [2013/01/21]
+
+   * minor code improvements. Change log added to the user manual.
+
+
 1.2e [2013/01/10]
 
 This version should be the last one in the 1.2 series as it seems to 
@@ -127,6 +132,7 @@ use of mathematically active characters in versions 1.2 and 1.2b.
      have been revised and extended. 
 
    * The code is better documented.
+
 
 1.2d [2013/01/02]
 
@@ -178,6 +184,7 @@ use of mathematically active characters in versions 1.2 and 1.2b.
    *  the format of the dtx file has changed. The package file
       is self-extracting from the dtx, and four additional test
       files are also produced during `latex mathastext.dtx'.
+
 
 1.15f and 1.15g [2012/10/25]
 
@@ -319,7 +326,7 @@ use of mathematically active characters in versions 1.2 and 1.2b.
 1.1  [2011/02/01] options italic and frenchmath.
 
 
-1.0  [2011/01/25]
+1.0  [2011/01/25] Initial version.
 
 Copyright (C) 2011, 2012 by Jean-Francois B..
 

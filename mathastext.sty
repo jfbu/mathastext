@@ -22,7 +22,7 @@
 %% in the same archive or directory.)
 %%
 \ProvidesPackage{mathastext}
- [2013/01/10 v1.2e Use the text font in math mode (jfB)]
+ [2013/01/21 v1.2f Use the text font in math mode (jfB)]
 %%
 %% Package `mathastext' by Jean-Francois B.
 %% Copyright (C) 2011, 2012 by Jean-Francois B.
@@ -91,12 +91,14 @@
     \DeclareOption{noexclam}{\mst@noexclamtrue}
 \newif\ifmst@asterisk
     \DeclareOption{noasterisk}{\PackageWarningNoLine{mathastext}
-        {option `noasterisk' is deprecated.^^J\space\space\space
+        {option `noasterisk\string' is deprecated.^^J\space\space\space
          Check the documentation}}
     \DeclareOption{asterisk}{\mst@asterisktrue
       \AtBeginDocument{
-        \everymath\expandafter{\the\everymath \mst@doasterisk}
-        \everydisplay\expandafter{\the\everydisplay \mst@doasterisk}}}
+        \everymath\expandafter{\the\everymath \mst@doasterisk
+                               \let\mst@doasterisk\relax}
+        \everydisplay\expandafter{\the\everydisplay \mst@doasterisk
+                               \let\mst@doasterisk\relax}}}
 \newif\ifmst@nospecials
     \DeclareOption{nospecials}{\mst@nospecialstrue}
 \DeclareOption{basic}{\ExecuteOptions{noparenthesis,nopunctuation,%
@@ -171,7 +173,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \DeclareOption{fouriervec}{\mst@fouriervectrue}
 \newif\ifmst@subdued
     \DeclareOption{subdued}{\mst@subduedtrue}
-\DeclareOption*{\PackageWarningNoLine{mathastext}{Unknown option `\CurrentOption'}}
+\DeclareOption*{\PackageWarningNoLine{mathastext}{Unknown option `\CurrentOption\string'}}
 \ProcessOptions\relax
 \newmuskip\mst@exists@muskip  %% v 1.15e
 \newmuskip\mst@forall@muskip
@@ -192,18 +194,17 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \def\mst@active@math@prime{\sp\bgroup\mskip\mst@prime@muskip\prim@s}
 {\catcode`\'=12
 \gdef\mst@modifyprime{\mst@mathactivate'{}\mst@active@math@prime}}
-\expandafter\let\csname mst@ifdone\string'\endcsname\iffalse
 \AtBeginDocument{
-\everymath\expandafter{\the\everymath \mst@modifyprime}
-\everydisplay\expandafter{\the\everydisplay \mst@modifyprime}
+\everymath\expandafter{\the\everymath \mst@modifyprime \MTnormalprime}
+\everydisplay\expandafter{\the\everydisplay \mst@modifyprime \MTnormalprime}
 }
 \newcommand*\MTnormalprime{\let\mst@modifyprime\relax}
 \newcommand*\MTexistsskip[1]{\edef\mst@exists@skip{#1}%
-    \expandafter\mst@exists@muskip\mst@exists@skip\relax}
+    \mst@exists@muskip\mst@exists@skip\relax}
 \newcommand*\MTforallskip[1]{\edef\mst@forall@skip{#1}%
-    \expandafter\mst@forall@muskip\mst@forall@skip\relax}
+    \mst@forall@muskip\mst@forall@skip\relax}
 \newcommand*\MTprimeskip[1]{\edef\mst@prime@skip{#1}%
-    \expandafter\mst@prime@muskip\mst@prime@skip\relax}
+    \mst@prime@muskip\mst@prime@skip\relax}
 \let\Mathastextexistsskip\MTexistsskip
 \let\Mathastextforallskip\MTforallskip
 \let\Mathastextprimeskip\MTprimeskip
@@ -256,12 +257,16 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \ifx\mst@itcorr\@empty\else\def\mst@itcorr{\/}\fi
     \ifx\mst@ITcorr\@empty\else\def\mst@ITcorr{\/}\fi}
 \AtBeginDocument{
-\everymath\expandafter{\the\everymath \mst@the\mst@do@nonletters
-    \mst@theeasy\mst@do@easynonletters
-    \mst@thef\mst@do@az \mst@theF\mst@do@AZ}
-\everydisplay\expandafter{\the\everydisplay \mst@the\mst@do@nonletters
-    \mst@theeasy\mst@do@easynonletters
-    \mst@thef\mst@do@az \mst@theF\mst@do@AZ}
+\everymath\expandafter{\the\everymath
+    \mst@the\mst@do@nonletters \let\mst@the\@gobble
+    \mst@theeasy\mst@do@easynonletters  \let\mst@theeasy\@gobble
+    \mst@thef\mst@do@az \let\mst@thef\@gobble
+    \mst@theF\mst@do@AZ \let\mst@theF\@gobble}
+\everydisplay\expandafter{\the\everydisplay
+    \mst@the\mst@do@nonletters \let\mst@the\@gobble
+    \mst@theeasy\mst@do@easynonletters  \let\mst@theeasy\@gobble
+    \mst@thef\mst@do@az \let\mst@thef\@gobble
+    \mst@theF\mst@do@AZ \let\mst@theF\@gobble}
 }
 \def\mst@magic@v #1#2#3#4#5{#1#3#4}
 \def\mst@magic@vi #1#2#3#4#5#6{#1#2#4#5}
@@ -304,8 +309,6 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
       \lccode`~=`##1
       \lccode`##1=`##1
       \lowercase{\endgroup
-        \csname mst@ifdone##1\endcsname
-        \else
           \ifnum\catcode`##1=\active
             \mst@do@activecase ##1{##2}##3
             % careful as ##2 is empty in the asterisk and
@@ -314,14 +317,11 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
             \mathcode`##1="8000
             % I use " many times later, \string" everywhere would be a pain
             \ifcat##1a\def~{{##2##3}}\else\def~{##2##3}\fi
-          \fi
-        \fi}%
-        \expandafter\let\csname mst@ifdone##1\endcsname=\iftrue}}
+          \fi}}}
 \x
 \def\mst@addtodo@nonletters#1#2#3{%
   % #1 will be of cat 11 or 12.
   % #2 is  empty for asterisk and right quote
-  \expandafter\let\csname mst@ifdone#1\endcsname\iffalse
   \mst@do@nonletters\expandafter{\the\mst@do@nonletters
                                  \mst@mathactivate#1{#2}#3}%
 }
@@ -329,11 +329,9 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
   \mst@do@easynonletters\expandafter{\the\mst@do@easynonletters\mathcode`#1=#2}%
 }
 \def\mst@addtodo@az#1#2#3{%
-  \expandafter\let\csname mst@ifdone#1\endcsname\iffalse
   \mst@do@az\expandafter{\the\mst@do@az\mst@mathactivate#1#2#3}
 }
 \def\mst@addtodo@AZ#1#2#3{%
-  \expandafter\let\csname mst@ifdone#1\endcsname\iffalse
   \mst@do@AZ\expandafter{\the\mst@do@AZ\mst@mathactivate#1#2#3}%
 }
 \@ifpackageloaded{amsmath}
@@ -477,9 +475,9 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \ifmst@fouriervec
   \DeclareFontEncoding{FML}{}{}
   \DeclareFontSubstitution{FML}{futm}{m}{it}
-  \DeclareSymbolFont{mtfourierpourvec}{FML}{futm}{m}{it}
-  \SetSymbolFont{mtfourierpourvec}{bold}{FML}{futm}{b}{it}
-  \DeclareMathAccent{\fouriervec}{\mathord}{mtfourierpourvec}{"7E}
+  \DeclareSymbolFont{mathastextfourier}{FML}{futm}{m}{it}
+  \SetSymbolFont{mathastextfourier}{bold}{FML}{futm}{b}{it}
+  \DeclareMathAccent{\fouriervec}{\mathord}{mathastextfourier}{"7E}
 \fi
 \newcommand*\MTencoding[1]{\def\mst@enc{#1}}
 \newcommand*\MTfamily[1]{\def\mst@fam{#1}}
@@ -517,24 +515,24 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \newcommand*\MTgreekfont[1]{\def\mst@greekfont{#1}}
 \@onlypreamble\MTgreekfont
 \let\Mathastextgreekfont\MTgreekfont
-\newcommand*\MTWillUse[5][\@empty]{
+\newcommand*\MTWillUse[5][\empty]{
   \MTencoding{#2}
   \MTfamily{#3}
   \MTseries{#4}
   \MTshape{#5}
     \ifmst@italic\MTlettershape{\itdefault}\fi % was missing in v 1.14 and prior
-  \ifx\@empty#1
+  \ifx\empty#1
   \else
 %% we check if optional argument was [],  this does not detect [ ]
   \def\mst@tmp{#1}
-   \ifx\@empty\mst@tmp\else\MTlettershape{#1}\fi
+   \ifx\empty\mst@tmp\else\MTlettershape{#1}\fi
   \fi
   \Mathastext}
 \@onlypreamble\MTWillUse
 \let\MathastextWillUse\MTWillUse
 \let\Mathastextwilluse\MTWillUse
-\newcommand*\Mathastext[1][\@empty]{
-\ifx\@empty#1 % no optional argument
+\newcommand*\Mathastext[1][\empty]{
+\ifx\empty#1 % no optional argument
   \mst@update@greeksh
   \edef\mst@encoding@normal{\mst@enc}
   \edef\mst@family@normal{\mst@fam}
@@ -583,9 +581,9 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
   \else % not subdued
     \ifmst@italic
       \ifmst@frenchmath
-        \expandafter\mst@exists@muskip\mst@exists@skip\relax
-        \expandafter\mst@forall@muskip\mst@forall@skip\relax
-        \expandafter\mst@prime@muskip\mst@prime@skip\relax
+        \mst@exists@muskip\mst@exists@skip\relax
+        \mst@forall@muskip\mst@forall@skip\relax
+        \mst@prime@muskip\mst@prime@skip\relax
       \else
        \def\mst@exists@skip@normal{0mu}
        \def\mst@forall@skip@normal{0mu}
@@ -595,9 +593,9 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
        \def\mst@prime@skip@bold{0mu}
       \fi
     \else
-        \expandafter\mst@exists@muskip\mst@exists@skip\relax
-        \expandafter\mst@forall@muskip\mst@forall@skip\relax
-        \expandafter\mst@prime@muskip\mst@prime@skip\relax
+        \mst@exists@muskip\mst@exists@skip\relax
+        \mst@forall@muskip\mst@forall@skip\relax
+        \mst@prime@muskip\mst@prime@skip\relax
     \fi
   \fi
 %% v1.15f
@@ -710,7 +708,7 @@ and \protect\log-like names will be^^J%
 \fi
 \else % optional argument, then we rather do DeclareVersion
  \edef\mst@tmp{#1}
- \ifx\mst@tmp\@empty
+ \ifx\mst@tmp\empty
     \Mathastext  % no infinite loop!
   \else
     \MTDeclareVersion[\mst@ltsh]{#1}
@@ -720,7 +718,7 @@ and \protect\log-like names will be^^J%
 }
 \@onlypreamble\Mathastext
 \let\mathastext\Mathastext
-\newcommand*\MTDeclareVersion[6][\@empty]{
+\newcommand*\MTDeclareVersion[6][\empty]{
   \edef\mst@version{#2}
   \DeclareMathVersion{\mst@version}
   \expandafter\edef\csname mst@encoding@\mst@version\endcsname{#3}
@@ -739,14 +737,14 @@ and \protect\log-like names will be^^J%
   \expandafter\edef\csname mst@prime@skip@\mst@version\endcsname
         {\mst@prime@skip}
   \mst@optionalparamfalse
-    \ifx\@empty#1
+    \ifx\empty#1
     \else % we check nevertheless for [] situation, will not work with [ ]
        \def\mst@tmp{#1}
-       \ifx\mst@tmp\@empty\else\mst@optionalparamtrue\fi
+       \ifx\mst@tmp\empty\else\mst@optionalparamtrue\fi
     \fi
   \ifmst@optionalparam
       \SetSymbolFont{mtletterfont}{#2}{#3}{#4}{#5}{#1}
-    \typeout{** Latin letters in math version `#2' will use the font
+    \typeout{** Latin letters in math version `#2\string' will use the font
     #3/#4/#5/#1^^J%
     ** Other characters (digits, ...) and \protect\log-like
     names will be in #6 shape.}
@@ -754,14 +752,14 @@ and \protect\log-like names will be^^J%
   \else
     \ifmst@italic
       \SetSymbolFont{mtletterfont}{#2}{#3}{#4}{#5}{\mst@ltsh}
-    \typeout{** Latin letters in math version `#2' will use the font
+    \typeout{** Latin letters in math version `#2\string' will use the font
     #3/#4/#5/\mst@ltsh^^J%
     ** Other characters (digits, ...) and \protect\log-like names
                     will be in #6 shape.}
       \expandafter\edef\csname mst@ltshape@\mst@version\endcsname{\mst@ltsh}
     \else
       \SetSymbolFont{mtletterfont}{#2}{#3}{#4}{#5}{#6}
-    \typeout{** Latin letters in math version `#2' will use the fonts
+    \typeout{** Latin letters in math version `#2\string' will use the fonts
     #3/#4/#5(\mst@bold)/#6}
       \expandafter\edef\csname mst@ltshape@\mst@version\endcsname{#6}
     \fi
@@ -821,13 +819,13 @@ and \protect\log-like names will be^^J%
 }
 \@onlypreamble\MTDeclareVersion
 \let\MathastextDeclareVersion\MTDeclareVersion
-\newcommand*\MTVersion[2][\@empty]{%
+\newcommand*\MTVersion[2][\empty]{%
     \mathversion{#2}%
-    \ifx\@empty#1% no optional argument
+    \ifx\empty#1% no optional argument
         \def\mst@tmp{#2}%
     \else% we check nevertheless for [] situation, will not work with [ ]
        \def\mst@tmpa{#1}%
-       \ifx\mst@tmpa\@empty\def\mst@tmp{#2}%
+       \ifx\mst@tmpa\empty\def\mst@tmp{#2}%
        \else\def\mst@tmp{#1}%
        \fi%
     \fi%
@@ -1013,9 +1011,7 @@ and \protect\log-like names will be^^J%
 \DeclareMathSymbol{\mst@varfam@question}{\mathalpha}{\mst@font@tbu}{"3F}
 \expandafter\mst@addtodo@nonletters\string?\mathclose\mst@varfam@question
 \fi
-  \def\mst@@doasterisk{\let\ast\mst@ast
-        \expandafter\let\csname mst@ifdone*\endcsname\iffalse
-        \mst@mathactivate*{}\mst@ast} % for the order cf. \mst@do@activecase
+\def\mst@@doasterisk{\let\ast\mst@ast\mst@mathactivate*{}\mst@ast}
 \ifmst@asterisk\typeout{** asterisk: \string\ast\space and *}
   \ifmst@symbolmisc
     \def\mst@bin@ast{%
@@ -1068,9 +1064,10 @@ and \protect\log-like names will be^^J%
 {} % \colon defined in amsmath.sty in terms of : with some enlarged explicit
    % spacing. No need to intervene.
 {% no amsmath, use standard punctuation spacing
-  % \let\colon\undefined
+\let\colon\undefined
   % the reason is if some package has redefined \colon which then
-  % could not be used in \cs{DeclareMathSymbol} anymore.
+  % can not be used in \cs{DeclareMathSymbol} anymore (we
+  % shamelessly overwrite...)
     \DeclareMathSymbol{\colon}{\mathpunct}{\mst@font@tbu}{"3A}
     \mst@do@nonletters\expandafter{\the\mst@do@nonletters
         \def\colon{\mathpunct{\mst@varfam@colon}}}}
@@ -1104,12 +1101,16 @@ and \protect\log-like names will be^^J%
 \fi
 \def\do@the@endashstuff{\edef\mst@tmp@enc{\encodingdefault}
   \ifx\mst@tmp@enc\mst@eui % xetex+fontspec
-\AtBeginDocument{\XeTeXmathcode`\-="2 \symmtoperatorfont "2013\relax}
-\AtBeginDocument{\XeTeXmathchardef\mst@varfam@minus="7 \symmtoperatorfont "2013\relax}
+  \AtBeginDocument{%
+    \XeTeXmathcode`\-="2 \symmtoperatorfont "2013\relax
+    \XeTeXmathchardef\mst@varfam@minus="7 \symmtoperatorfont "2013\relax
+  }
 \else
   \ifx\mst@tmp@enc\mst@euii % luatex+fontspec
-\AtBeginDocument{\luatexUmathcode`\-="2 \symmtoperatorfont "2013\relax}
-\AtBeginDocument{\luatexUmathchardef\mst@varfam@minus="7 \symmtoperatorfont "2013\relax}
+  \AtBeginDocument{%
+    \luatexUmathcode`\-="2 \symmtoperatorfont "2013\relax
+    \luatexUmathchardef\mst@varfam@minus="7 \symmtoperatorfont "2013\relax
+  }
 \else
   \ifx\mst@tmp@enc\mst@ti % T1
    \DeclareMathSymbol{-}{\mathbin}{mtoperatorfont}{21}
@@ -1131,12 +1132,16 @@ and \protect\log-like names will be^^J%
 \fi\fi\fi\fi\fi}
 \def\do@the@emdashstuff{\edef\mst@tmp@enc{\encodingdefault}
 \ifx\mst@tmp@enc\mst@eui % xetex+fontspec
-\AtBeginDocument{\XeTeXmathcode`\-="2 \symmtoperatorfont "2014\relax}
-\AtBeginDocument{\XeTeXmathchardef\mst@varfam@minus="7 \symmtoperatorfont "2014\relax}
+    \AtBeginDocument{%
+      \XeTeXmathcode`\-="2 \symmtoperatorfont "2014\relax
+      \XeTeXmathchardef\mst@varfam@minus="7 \symmtoperatorfont "2014\relax
+    }
 \else
 \ifx\mst@tmp@enc\mst@euii % luatex+fontspec
-\AtBeginDocument{\luatexUmathcode`\-="2 \symmtoperatorfont "2014\relax}
-\AtBeginDocument{\luatexUmathchardef\mst@varfam@minus="7 \symmtoperatorfont "2014\relax}
+    \AtBeginDocument{%
+      \luatexUmathcode`\-="2 \symmtoperatorfont "2014\relax
+      \luatexUmathchardef\mst@varfam@minus="7 \symmtoperatorfont "2014\relax
+    }
 \else
   \ifx\mst@tmp@enc\mst@ti % T1
    \DeclareMathSymbol{-}{\mathbin}{mtoperatorfont}{22}
@@ -1864,7 +1869,7 @@ and \protect\log-like names will be^^J%
 \DeclareMathSizes{\@xxxpt}{\@xxxpt}{\@xxvpt}{\@xxpt}
 \DeclareMathSizes{\@xxxvipt}{\@xxxvipt}{\@xxxpt}{\@xxvpt}
 \typeout{** mathastext has declared larger sizes for subscripts.^^J%
-** To keep LaTeX defaults, use option `defaultmathsizes'.}
+** To keep LaTeX defaults, use option `defaultmathsizes\string'.}
 \fi
 \endinput
 %%
