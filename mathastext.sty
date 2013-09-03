@@ -22,10 +22,11 @@
 %% in the same archive or directory.)
 %%
 \ProvidesPackage{mathastext}
- [2013/01/21 v1.2f Use the text font in math mode (jfB)]
+ [2013/09/02 v1.3 Use the text font in math mode (jfB)]
 %%
-%% Package `mathastext' by Jean-Francois B.
-%% Copyright (C) 2011, 2012 by Jean-Francois B.
+%% Package `mathastext', for LaTeX2e.
+%% Author: Jean-Francois B.
+%% Copyright (C) 2011, 2012, 2013 by Jean-Francois B.
 %%
 \NeedsTeXFormat{LaTeX2e}
 \newif\ifmst@XeTeX
@@ -101,8 +102,10 @@
                                \let\mst@doasterisk\relax}}}
 \newif\ifmst@nospecials
     \DeclareOption{nospecials}{\mst@nospecialstrue}
-\DeclareOption{basic}{\ExecuteOptions{noparenthesis,nopunctuation,%
-noplusnominus,noequal,noexclam,nospecials,nolessnomore}}
+\newif\ifmst@basic % 1.3 to avoid unnecessary patch of amsmath \newmcodes@
+\DeclareOption{basic}{\mst@basictrue
+    \ExecuteOptions{noparenthesis,nopunctuation,%
+                    noplusnominus,noequal,noexclam,nospecials,nolessnomore}}
 %%
 \newif\ifmst@nohbar
     \DeclareOption{nohbar}{\mst@nohbartrue}
@@ -173,7 +176,8 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \DeclareOption{fouriervec}{\mst@fouriervectrue}
 \newif\ifmst@subdued
     \DeclareOption{subdued}{\mst@subduedtrue}
-\DeclareOption*{\PackageWarningNoLine{mathastext}{Unknown option `\CurrentOption\string'}}
+\DeclareOption*{\PackageWarningNoLine{mathastext}
+    {Unknown option `\CurrentOption\string'}}
 \ProcessOptions\relax
 \newmuskip\mst@exists@muskip  %% v 1.15e
 \newmuskip\mst@forall@muskip
@@ -194,11 +198,11 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \def\mst@active@math@prime{\sp\bgroup\mskip\mst@prime@muskip\prim@s}
 {\catcode`\'=12
 \gdef\mst@modifyprime{\mst@mathactivate'{}\mst@active@math@prime}}
+\newcommand*\MTnormalprime{\let\mst@modifyprime\relax}
 \AtBeginDocument{
 \everymath\expandafter{\the\everymath \mst@modifyprime \MTnormalprime}
 \everydisplay\expandafter{\the\everydisplay \mst@modifyprime \MTnormalprime}
 }
-\newcommand*\MTnormalprime{\let\mst@modifyprime\relax}
 \newcommand*\MTexistsskip[1]{\edef\mst@exists@skip{#1}%
     \mst@exists@muskip\mst@exists@skip\relax}
 \newcommand*\MTforallskip[1]{\edef\mst@forall@skip{#1}%
@@ -214,8 +218,8 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \ifmst@noparen\else
 \AtBeginDocument{
 \@ifundefined{resetMathstrut@}{}{%
-    \PackageWarningNoLine{mathastext}{a custom version of the amsmath macro^^J%
-      \space\space\space\string\resetMathstrut@\space will replace the original}
+    \PackageWarningNoLine{mathastext}{%
+    \string\resetMathstrut@\space from amsmath replaced by custom version}
     \ifmst@symboldelimiters
     \def\resetMathstrut@{%
         \setbox\z@\hbox{\the\textfont\symmtpsymbol\char40
@@ -239,20 +243,18 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \newcommand*\MTeasynonlettersobeymathxx{\let\mst@theeasy\the}
 \MTnonlettersdonotobeymathxx % 1.2c !!!
 \MTeasynonlettersobeymathxx
+\newcommand*\MTmathactiveletters{\let\mst@thef\the \let\mst@theF\the}
+\newcommand*\MTmathactiveLetters{\let\mst@theF\the}
+\newcommand*\MTmathstandardletters{\let\mst@thef\@gobble \let\mst@theF\@gobble}
 \newcommand*\MTicinmath{%
-    \let\mst@thef\the
-    \let\mst@theF\the
+    \MTmathactiveletters
     \def\mst@itcorr{\ifnum\fam=\m@ne\/\else\ifnum\fam=\symmtletterfont\/\fi\fi}%
     \let\mst@ITcorr\mst@itcorr}
-\newcommand*\MTnoicinmath{% also usable in math mode
-    \def\mst@itcorr{}\def\mst@ITcorr{}%
-    \let\mst@thef\@gobble\let\mst@theF\@gobble}
 \newcommand*\MTICinmath{%
-    \let\mst@theF\the
+    \MTmathactiveLetters
     \def\mst@ITcorr{\ifnum\fam=\m@ne\/\fi}}
-\newcommand*\MTnoICinmath{% also usable in math mode
-    \def\mst@ITcorr{}%
-    \let\mst@theF\@gobble}
+\newcommand*\MTnoicinmath{\def\mst@itcorr{}\def\mst@ITcorr{}}
+\newcommand*\MTnoICinmath{\def\mst@ITcorr{}}
 \newcommand*\MTicalsoinmathxx{%
     \ifx\mst@itcorr\@empty\else\def\mst@itcorr{\/}\fi
     \ifx\mst@ITcorr\@empty\else\def\mst@ITcorr{\/}\fi}
@@ -267,6 +269,14 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \mst@theeasy\mst@do@easynonletters  \let\mst@theeasy\@gobble
     \mst@thef\mst@do@az \let\mst@thef\@gobble
     \mst@theF\mst@do@AZ \let\mst@theF\@gobble}
+}
+\newcommand*\MTsetmathskips[3]{%
+    \@namedef{mst@before\string#1}{\mskip#2\relax}%
+    \@namedef{mst@after\string#1}{\mskip#3\relax}%
+}
+\newcommand*\MTunsetmathskips[1]{%
+    \@namedef{mst@before\string#1}{\relax}%
+    \@namedef{mst@after\string#1}{\relax}%
 }
 \def\mst@magic@v #1#2#3#4#5{#1#3#4}
 \def\mst@magic@vi #1#2#3#4#5#6{#1#2#4#5}
@@ -301,8 +311,8 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
                     \noexpand\csname mst@orig@normal@char#1\endcsname
                    }%
     \fi}}
-\begingroup % make sure ~ is active at mathastext loading time
-  \catcode`~=\active
+\begingroup
+  \catcode`\~=\active
   \def\x{\endgroup
     \def\mst@mathactivate##1##2##3{% ##1 guaranteed of cat 11 or 12
       \begingroup
@@ -315,15 +325,18 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
             % prime case!
           \else
             \mathcode`##1="8000
-            % I use " many times later, \string" everywhere would be a pain
-            \ifcat##1a\def~{{##2##3}}\else\def~{##2##3}\fi
+            % version 1.3 adds the possibility of extra skips around letters,
+            % (only if non catcode active at the time of use).
+            \ifcat##1a\def~{{\csname mst@before##1\endcsname ##2##3%
+                             \csname mst@after##1\endcsname}}%
+            \else\def~{##2##3}\fi
           \fi}}}
 \x
 \def\mst@addtodo@nonletters#1#2#3{%
   % #1 will be of cat 11 or 12.
-  % #2 is  empty for asterisk and right quote
-  \mst@do@nonletters\expandafter{\the\mst@do@nonletters
-                                 \mst@mathactivate#1{#2}#3}%
+  % #2 is empty for asterisk and right quote
+  \mst@do@nonletters\expandafter
+      {\the\mst@do@nonletters \mst@mathactivate#1{#2}#3}%
 }
 \def\mst@addtodo@easynonletters#1#2{% #1 is a one char control sequence
   \mst@do@easynonletters\expandafter{\the\mst@do@easynonletters\mathcode`#1=#2}%
@@ -334,9 +347,11 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \def\mst@addtodo@AZ#1#2#3{%
   \mst@do@AZ\expandafter{\the\mst@do@AZ\mst@mathactivate#1#2#3}%
 }
-\@ifpackageloaded{amsmath}
-{\let\newmcodes@\relax} % brutal, but bye bye and don't come back.
-{}
+\ifmst@basic\else
+    \@ifpackageloaded{amsmath}
+    {\let\newmcodes@\relax} % brutal, but bye bye and don't come back.
+    {}
+\fi
 \ifmst@subdued
   \def\mst@reserved#1\getanddefine@fonts\symletters#2#3\@nil{%
         \def\mst@normalmv@letter{#2}}
@@ -560,7 +575,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
   \edef\mst@exists@skip@bold{\mst@exists@skip}
   \edef\mst@forall@skip@bold{\mst@forall@skip}
   \edef\mst@prime@skip@bold{\mst@prime@skip}
-  \MTicinmath
+  \MTicinmath % does \MTmathactiveletters, \MTnoicinmath only cancels ics
   \@for\mst@tmp:=it,sl\do{\ifx\mst@tmp\mst@ltshape@normal\MTnoicinmath\fi}%
   \ifmst@frenchmath
       \MTICinmath
@@ -570,7 +585,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \MTeasynonlettersdonotobeymathxx
     \MTnonlettersdonotobeymathxx
     \MTmathoperatorsdonotobeymathxx
-    \MTnoicinmath
+    \MTmathstandardletters % prior to 1.3, was \MTnoicinmath
     \ifmst@asterisk\let\mst@doasterisk\relax\fi
     \def\mst@exists@skip@normal{0mu}
     \def\mst@forall@skip@normal{0mu}
@@ -863,6 +878,8 @@ and \protect\log-like names will be^^J%
      \mst@prime@muskip\csname mst@prime@skip@\mst@tmp\endcsname\relax
 %% v1.2b: italic corrections except for italic/slanted (sic) letters, and of
 %% course except in the subdued normal and bold math versions
+%% v1.3: by default, letters are made mathematically active, even if italic
+%% corrections are not used, to allow the action of \MTsetmathskips.
     \edef\mst@tmpa{\csname mst@ltshape@\mst@tmp\endcsname}%
     \edef\mst@tmpb{\csname mst@shape@\mst@tmp\endcsname}%
     \MTicinmath
@@ -879,13 +896,14 @@ and \protect\log-like names will be^^J%
     \MTeasynonlettersobeymathxx
     \ifmst@asterisk\let\mst@doasterisk\mst@@doasterisk\fi
     \ifmst@subdued
-      \edef\mst@tmp{#2}\def\mst@tmpa{normal}%
+      \edef\mst@tmp{#2}%
+      \def\mst@tmpa{normal}%
       \ifx\mst@tmp\mst@tmpa
         \mst@restorealphabets
         \MTmathoperatorsdonotobeymathxx
         \MTnonlettersdonotobeymathxx
         \MTeasynonlettersdonotobeymathxx
-        \MTnoicinmath
+        \MTmathstandardletters
         \ifmst@asterisk\let\mst@doasterisk\relax\fi
         \ifmst@LGRgreek\mst@restoregreek\fi
       \else
@@ -895,7 +913,7 @@ and \protect\log-like names will be^^J%
           \MTmathoperatorsdonotobeymathxx
           \MTnonlettersdonotobeymathxx
           \MTeasynonlettersdonotobeymathxx
-          \MTnoicinmath
+          \MTmathstandardletters
           \ifmst@asterisk\let\mst@doasterisk\relax\fi
           \ifmst@LGRgreek\mst@restoregreek\fi
       \else
@@ -916,70 +934,26 @@ and \protect\log-like names will be^^J%
        \typeout{** Greek letters will use the PostScript Symbol font. Use^^J%
 ** \protect\MathastextSymbolScale{<factor>} to scale the font.}
 \fi\fi
-\def\mst@DeclareMathSymbol#1#2#3#4{%
-    \DeclareMathSymbol{#1}{#2}{#3}{#4}
-    \expandafter\DeclareMathSymbol\csname mst@#1\endcsname{#2}{#3}{#4}
+\def\mst@DeclareMathLetter #1{%
+    \DeclareMathSymbol {#1}{\mathalpha}{mtletterfont}{`#1}%
+    \expandafter
+    \DeclareMathSymbol \csname mst@#1\endcsname{\mathalpha}{mtletterfont}{`#1}%
     \expandafter\mst@addtodo@az
-        \expandafter#1\csname mst@#1\endcsname\mst@itcorr}
-\mst@DeclareMathSymbol{a}{\mathalpha}{mtletterfont}{`a}
-\mst@DeclareMathSymbol{b}{\mathalpha}{mtletterfont}{`b}
-\mst@DeclareMathSymbol{c}{\mathalpha}{mtletterfont}{`c}
-\mst@DeclareMathSymbol{d}{\mathalpha}{mtletterfont}{`d}
-\mst@DeclareMathSymbol{e}{\mathalpha}{mtletterfont}{`e}
-\mst@DeclareMathSymbol{f}{\mathalpha}{mtletterfont}{`f}
-\mst@DeclareMathSymbol{g}{\mathalpha}{mtletterfont}{`g}
-\mst@DeclareMathSymbol{h}{\mathalpha}{mtletterfont}{`h}
-\mst@DeclareMathSymbol{i}{\mathalpha}{mtletterfont}{`i}
-\mst@DeclareMathSymbol{j}{\mathalpha}{mtletterfont}{`j}
-\mst@DeclareMathSymbol{k}{\mathalpha}{mtletterfont}{`k}
-\mst@DeclareMathSymbol{l}{\mathalpha}{mtletterfont}{`l}
-\mst@DeclareMathSymbol{m}{\mathalpha}{mtletterfont}{`m}
-\mst@DeclareMathSymbol{n}{\mathalpha}{mtletterfont}{`n}
-\mst@DeclareMathSymbol{o}{\mathalpha}{mtletterfont}{`o}
-\mst@DeclareMathSymbol{p}{\mathalpha}{mtletterfont}{`p}
-\mst@DeclareMathSymbol{q}{\mathalpha}{mtletterfont}{`q}
-\mst@DeclareMathSymbol{r}{\mathalpha}{mtletterfont}{`r}
-\mst@DeclareMathSymbol{s}{\mathalpha}{mtletterfont}{`s}
-\mst@DeclareMathSymbol{t}{\mathalpha}{mtletterfont}{`t}
-\mst@DeclareMathSymbol{u}{\mathalpha}{mtletterfont}{`u}
-\mst@DeclareMathSymbol{v}{\mathalpha}{mtletterfont}{`v}
-\mst@DeclareMathSymbol{w}{\mathalpha}{mtletterfont}{`w}
-\mst@DeclareMathSymbol{x}{\mathalpha}{mtletterfont}{`x}
-\mst@DeclareMathSymbol{y}{\mathalpha}{mtletterfont}{`y}
-\mst@DeclareMathSymbol{z}{\mathalpha}{mtletterfont}{`z}
-\ifmst@frenchmath\def\mst@font@tbu{mtoperatorfont}
-   \else\def\mst@font@tbu{mtletterfont}\fi
-\def\mst@DeclareMathSymbol#1#2#3#4{%
-    \DeclareMathSymbol{#1}{#2}{#3}{#4}
-    \expandafter\DeclareMathSymbol\csname mst@#1\endcsname{#2}{#3}{#4}
+         \expandafter #1\csname mst@#1\endcsname\mst@itcorr}
+\@for\mst@tmp:=a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z\do
+     {\expandafter\mst@DeclareMathLetter\mst@tmp}
+\ifmst@frenchmath \def\mst@font@tbu{mtoperatorfont}
+   \else          \def\mst@font@tbu{mtletterfont}
+\fi
+\def\mst@DeclareMathLetter #1{%
+    \DeclareMathSymbol {#1}{\mathalpha}{\mst@font@tbu}{`#1}%
+    \expandafter
+    \DeclareMathSymbol \csname mst@#1\endcsname{\mathalpha}{\mst@font@tbu}{`#1}%
     \expandafter\mst@addtodo@AZ
-        \expandafter#1\csname mst@#1\endcsname\mst@ITcorr}
-\mst@DeclareMathSymbol{A}{\mathalpha}{\mst@font@tbu}{`A}
-\mst@DeclareMathSymbol{B}{\mathalpha}{\mst@font@tbu}{`B}
-\mst@DeclareMathSymbol{C}{\mathalpha}{\mst@font@tbu}{`C}
-\mst@DeclareMathSymbol{D}{\mathalpha}{\mst@font@tbu}{`D}
-\mst@DeclareMathSymbol{E}{\mathalpha}{\mst@font@tbu}{`E}
-\mst@DeclareMathSymbol{F}{\mathalpha}{\mst@font@tbu}{`F}
-\mst@DeclareMathSymbol{G}{\mathalpha}{\mst@font@tbu}{`G}
-\mst@DeclareMathSymbol{H}{\mathalpha}{\mst@font@tbu}{`H}
-\mst@DeclareMathSymbol{I}{\mathalpha}{\mst@font@tbu}{`I}
-\mst@DeclareMathSymbol{J}{\mathalpha}{\mst@font@tbu}{`J}
-\mst@DeclareMathSymbol{K}{\mathalpha}{\mst@font@tbu}{`K}
-\mst@DeclareMathSymbol{L}{\mathalpha}{\mst@font@tbu}{`L}
-\mst@DeclareMathSymbol{M}{\mathalpha}{\mst@font@tbu}{`M}
-\mst@DeclareMathSymbol{N}{\mathalpha}{\mst@font@tbu}{`N}
-\mst@DeclareMathSymbol{O}{\mathalpha}{\mst@font@tbu}{`O}
-\mst@DeclareMathSymbol{P}{\mathalpha}{\mst@font@tbu}{`P}
-\mst@DeclareMathSymbol{Q}{\mathalpha}{\mst@font@tbu}{`Q}
-\mst@DeclareMathSymbol{R}{\mathalpha}{\mst@font@tbu}{`R}
-\mst@DeclareMathSymbol{S}{\mathalpha}{\mst@font@tbu}{`S}
-\mst@DeclareMathSymbol{T}{\mathalpha}{\mst@font@tbu}{`T}
-\mst@DeclareMathSymbol{U}{\mathalpha}{\mst@font@tbu}{`U}
-\mst@DeclareMathSymbol{V}{\mathalpha}{\mst@font@tbu}{`V}
-\mst@DeclareMathSymbol{W}{\mathalpha}{\mst@font@tbu}{`W}
-\mst@DeclareMathSymbol{X}{\mathalpha}{\mst@font@tbu}{`X}
-\mst@DeclareMathSymbol{Y}{\mathalpha}{\mst@font@tbu}{`Y}
-\mst@DeclareMathSymbol{Z}{\mathalpha}{\mst@font@tbu}{`Z}
+        \expandafter #1\csname mst@#1\endcsname\mst@ITcorr}
+\@for\mst@tmp:=A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z\do
+     {\expandafter\mst@DeclareMathLetter\mst@tmp}
+\let\mst@DeclareMathLetter\relax
 %%
 \ifmst@nodigits\else
 \def\mst@font@tbu{mtoperatorfont}
@@ -1080,12 +1054,9 @@ and \protect\log-like names will be^^J%
 \XeTeXmathcharnumdef\mst@minus@sign=\XeTeXmathcodenum`\-\relax
 \else
 \ifmst@LuaTeX
-%% \luatexUmathcharnumdef\mst@minus@sign=\luatexUmathcodenum`\-\relax ne
-%% marche pas pour le moment car \luatexUmathcodenum retourne parfois un
-%% legacy mathcode, parfois un Unicode mathcode, \`a mon avis c'est un bug
-%% de LuaLatex. En fait Taco H me dit que la prochaine version
-%% r\'eglera ce probl\`eme. \luatexUmathchardef\mst@minus@sign="2 "2 "0\relax
-\mathchardef\mst@minus@sign=8704\relax % "2200
+\luatexUmathcharnumdef\mst@minus@sign=\luatexUmathcodenum`\-\relax
+%% I used this prior to the new \luatexUmathcodenum, as available with TL2013:
+%% \mathchardef\mst@minus@sign=8704\relax % "2200
 \else
 \mathchardef\mst@minus@sign=\mathcode`\-\relax
 \fi\fi
@@ -1202,12 +1173,7 @@ and \protect\log-like names will be^^J%
 \XeTeXmathcharnumdef\mst@equal@sign=\XeTeXmathcodenum`\=\relax
 \else
 \ifmst@LuaTeX
-%% 12 octobre 2012 \luatexUmathcodenum`\=
-%% ne marche pas pour le moment \`a cause du fait que \luatexUmathcodenum
-%% donne un mathcode sur 8bit ou un Unicode mathcode sans qu'on puisse
-%% savoir lequel
-%% \luatexUmathchardef\mst@equal@sign="3 "0 "3D\relax
-\mathchardef\mst@equal@sign=12349\relax
+\luatexUmathcharnumdef\mst@equal@sign=\luatexUmathcodenum`\=\relax
 \else
 \mathchardef\mst@equal@sign=\mathcode`\=\relax
 \fi\fi
@@ -1250,7 +1216,7 @@ and \protect\log-like names will be^^J%
 \mst@addtodo@easynonletters\/\mst@varfam@slash
 \fi
 \ifmst@alldelims\typeout{** alldelims: \string< \string>
-  \string\backslash\space\string\setminus\space|
+  \string\backslash\space\string\setminus\space\string|
   \string\vert\space\string\mid\space\string\{\space and \string\}}
 \ifmst@nosmalldelims
     \DeclareMathDelimiter{\mst@varfam@backslash}
@@ -1281,8 +1247,7 @@ and \protect\log-like names will be^^J%
 \XeTeXmathcharnumdef\mst@vert@bar=\XeTeXmathcodenum`\|\relax
 \else
 \ifmst@LuaTeX
-%% \luatexUmathchardef\mst@vert@bar="0 "2 "006A\relax
-\mathchardef\mst@vert@bar=618\relax
+\luatexUmathcharnumdef\mst@vert@bar=\luatexUmathcodenum`\|\relax
 \else\mathchardef\mst@vert@bar=\mathcode`\|\relax
 \fi\fi
 \DeclareRobustCommand\models{\mathrel{\mst@vert@bar}\joinrel\Relbar}
@@ -1294,18 +1259,20 @@ and \protect\log-like names will be^^J%
 \def\vert{|}
 \DeclareMathSymbol{\mst@varfam@vbar}{\mathalpha}{\mst@font@tbu}{124}
 \mst@addtodo@easynonletters\|\mst@varfam@vbar
+\let\mid\undefined % 1.3: to avoid problems with some packages
 \DeclareMathSymbol{\mid}{\mathrel}{\mst@font@tbu}{124}
 \mst@do@nonletters\expandafter{\the\mst@do@nonletters
     \def\mid{\mathrel\mst@varfam@vbar}}
-\ifmst@nosmalldelims
-   \DeclareMathSymbol{\lbrace}{\mathopen}{\mst@font@tbu}{123}
-   \DeclareMathSymbol{\rbrace}{\mathclose}{\mst@font@tbu}{125}
-\else
-   \DeclareMathDelimiter{\lbrace}
+\let\lbrace\undefined \let\rbrace\undefined
+  \ifmst@nosmalldelims
+     \DeclareMathSymbol{\lbrace}{\mathopen}{\mst@font@tbu}{123}
+     \DeclareMathSymbol{\rbrace}{\mathclose}{\mst@font@tbu}{125}
+  \else
+     \DeclareMathDelimiter{\lbrace}
         {\mathopen}{\mst@font@tbu}{123}{largesymbols}{"08}
-   \DeclareMathDelimiter{\rbrace}
+     \DeclareMathDelimiter{\rbrace}
         {\mathclose}{\mst@font@tbu}{125}{largesymbols}{"09}
-\fi
+  \fi
 \DeclareMathSymbol{\mst@varfam@lbrace}{\mathalpha}{\mst@font@tbu}{123}
 \DeclareMathSymbol{\mst@varfam@rbrace}{\mathalpha}{\mst@font@tbu}{125}
 \DeclareRobustCommand*{\mst@lbrace}

@@ -1,42 +1,41 @@
 %%
-%% Package `mathastext' by Jean-Francois B.
-%% Copyright (C) 2011, 2012 by Jean-Francois B.
+%% Package `mathastext', for LaTeX2e.
+%% Author: Jean-Francois B.
+%% Copyright (C) 2011, 2012, 2013 by Jean-Francois B.
 %%
-\def\pkgname{mathastext} % these macros of course are not included
-\def\pkgdate{2013/01/21} % into the package file! (else I would have
-\def\pkgversion{v1.2f}   % given them other names)
+\def\pkgname{mathastext}
+\def\pkgdate{2013/09/02}
+\def\pkgversion{1.3}
 \def\pkgdescription{Use the text font in math mode (jfB)}
-%% This file `mathastext.ins' is provided for compatibility with TeX
-%% distributions expecting to find it for installation of `mathastext.sty'.
 %%
-%% As usual `latex mathastext.ins' produces `mathastext.sty' from the source
-%% `mathastext.dtx'
+%% `mathastext.ins' is provided for compatibility with TeX distributions
+%% expecting to find it for installation of `mathastext.sty'.
 %%
-%% (an already existing `mathastext.sty' in the same repertory will be
-%% overwritten)
+%% `latex mathastext.ins' produces `mathastext.sty' from the source
+%% `mathastext.dtx'; an already existing `mathastext.sty' in the same repertory
+%% will be overwritten.
 %%
-%% Put `mathastext.sty' in a suitable location within the TeX installation:
-%% mathastext.sty -> ................/tex/latex/mathastext/
+%% Move `mathastext.sty' to a suitable location within the TeX installation:
+%% mathastext.sty -> <TDS>/tex/latex/mathastext/
 %%
-%% Some test files are also generated, processing them through latex, pdflatex,
-%% lualatex or xetex checks if some of the package commands work as advertised.
+%% Some test files are also generated, to be processed  through latex, pdflatex,
+%% lualatex or xetex.
 %%
-%% See `mathastext.dtx' for the copyright and conditions of distribution or
-%% modification.
+%% See the source file for the copyright and license informations.
 %%
 \input docstrip.tex
 \askforoverwritefalse
 \def\pkgpreamble{\defaultpreamble^^J\MetaPrefix^^J%
 \string\ProvidesPackage{\pkgname}^^J%
-\space[\pkgdate\space\pkgversion\space\pkgdescription]}
+\space[\pkgdate\space v\pkgversion\space\pkgdescription]}
 \def\testfilepreamble{\string\def\string\testfileincipit{Test file
 to accompany \string\texttt{\pkgname}^^J%
 version \string\texttt{\pkgversion} of \string\texttt{\pkgdate.}}}
 \generate{\usepreamble\testfilepreamble
-\file{test\pkgname mathversions.tex}{\from{\pkgname.dtx}{mathversions}}
-\file{test\pkgname macos.tex}{\from{\pkgname.dtx}{macos}}
-\file{test\pkgname linux.tex}{\from{\pkgname.dtx}{linux}}
-\file{test\pkgname alphabets.tex}{\from{\pkgname.dtx}{alphabets}}
+\file{\pkgname testmathversions.tex}{\from{\pkgname.dtx}{mathversions}}
+\file{\pkgname testmacos.tex}{\from{\pkgname.dtx}{macos}}
+\file{\pkgname testlinux.tex}{\from{\pkgname.dtx}{linux}}
+\file{\pkgname testalphabets.tex}{\from{\pkgname.dtx}{alphabets}}
 \usepreamble\pkgpreamble
 \file{\pkgname.sty}{\from{\pkgname.dtx}{package}}}
 \endbatchfile

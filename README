@@ -1,11 +1,11 @@
-Copyright (C) 2011, 2012 by Jean-Francois B..
+Copyright (C) 2011, 2012, 2013 by Jean-Francois B..
 [see bottom of this file for the LPPL statement]
 
     +-------------------------------------------+
     +                 mathastext                +
     +                                           +
     +      `Use the text font in math mode'     +
-    +             v1.2f  2013/01/21             +
+    +             v1.3   2013/09/02             +
     +             2589111+jfbu@users.noreply.github.com             +
     +-------------------------------------------+
 
@@ -93,6 +93,31 @@ illustrate some features of the package.
 
 CHANGE LOG
 
+1.3  [2013/09/02]
+
+   * commands \MTsetmathskips and \MTunsetmathskips added.
+
+   * commands \MTmathactiveletters and \MTmathstandardletters to govern
+the math activation of letters independently of its use for insertion of
+the italic corrections (\MTicinmath and \MTnoicinmath correspondingly
+modified).
+
+   * the new \luatexUmathcodenum as available since TL2013 allows
+identical treatment by mathastext of = and - under both LuaTeX and
+XeTeX.
+
+   * \newmcodes@ of amsmath is left untouched in case of option basic.
+
+   * a sentence containing | which was written to the log during the
+loading caused a problem if | was active (typically if
+\MakeShortVerb{\|} was added to the preamble prior to the loading of
+mathastext).
+
+   * some preemptive measures taken regarding things such as \mid,
+\lbrace, and \rbrace, as some packages define these things in manners
+which made the re-definitions done by mathastext issue errors.
+
+
 1.2f [2013/01/21]
 
    * minor code improvements. Change log added to the user manual.
@@ -104,32 +129,33 @@ This version should be the last one in the 1.2 series as it seems to
 correct most of the main problems which were introduced with the massive 
 use of mathematically active characters in versions 1.2 and 1.2b.
 
-   * It is indeed a thorny point when one wants to modify only in math mode
-     how an active character acts, without breaking things. The package now
-     does that /only/ if the activation appears to originate in the Babel
-     system, as it is then possible to modify appropriately the Babel macros
-     \user@active<char> and \normal@char<char>. The relevant issues are
-     discussed in section 2.10 of the user manual, in the test file
-     testmathastextalphabets.tex, and in the source code comments to the
-     macro \mst@mathactivate. The inherent incompatibility of Babel with
-     packages having made mathematically active the characters itself makes
-     document active is circumvented by this interference of mathastext. A
-     generally applicable Babel patch could be derived from the method used
-     by mathastext.
+   * It is indeed a thorny point when one wants to modify only in math
+     mode how an active character acts, without breaking things. The
+     package now does that /only/ if the activation appears to originate
+     in the Babel system, as it is then possible to modify appropriately
+     the Babel macros \user@active<char> and \normal@char<char>. The
+     relevant issues are discussed in section 2.10 of the user manual,
+     in the test file testmathastextalphabets.tex, and in the source
+     code comments to the macro \mst@mathactivate. The inherent
+     incompatibility of Babel with packages having made mathematically
+     active the characters itself makes document active is circumvented
+     by this interference of mathastext. A generally applicable Babel
+     patch could be derived from the method used by mathastext.
 
    * The technique of mathematical activation is maintained only for the
-     characters which are not catcode active (at the entrance in math mode,
-     as mathastext does all its activation job at everymath and everydisplay).
+     characters which are not catcode active (at the entrance in math
+     mode, as mathastext does all its activation job at everymath and
+     everydisplay).
 
-   * Sadly, the feature of added italic corrections introduced in version
-     1.2b did not behave as described in the user manual, due to forgotten
-     group braces. Fixed.
+   * Sadly, the feature of added italic corrections introduced in
+     version 1.2b did not behave as described in the user manual, due to
+     forgotten group braces. Fixed.
 
-   * The command \MTlowerast from the user manual of v1.2d was not the one
-     implemented in the source code. Fixed.
+   * The command \MTlowerast from the user manual of v1.2d was not the
+     one implemented in the source code. Fixed.
 
-   * The test files automatically extracted from a latex run on the dtx file
-     have been revised and extended. 
+   * The test files automatically extracted from a latex run on the dtx
+     file have been revised and extended.
 
    * The code is better documented.
 
@@ -328,7 +354,7 @@ use of mathematically active characters in versions 1.2 and 1.2b.
 
 1.0  [2011/01/25] Initial version.
 
-Copyright (C) 2011, 2012 by Jean-Francois B..
+Copyright (C) 2011, 2012, 2013 by Jean-Francois B..
 
 	The files of this package may be distributed and/or modified
 	under the conditions of the LaTeX Project Public License,
