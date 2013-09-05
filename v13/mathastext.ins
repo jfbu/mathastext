@@ -1,0 +1,44 @@
+%%
+%% Package `mathastext', for LaTeX2e.
+%% Author: Jean-Francois B.
+%% Copyright (C) 2011, 2012, 2013 by Jean-Francois B.
+%%
+\def\pkgname{mathastext}
+\def\pkgdate{2013/09/04}
+\def\pkgversion{1.3a}
+\def\pkgdescription{Use the text font in math mode (jfB)}
+%%
+%% `mathastext.ins' is provided for compatibility with TeX distributions
+%% expecting to find it for installation of `mathastext.sty'.
+%%
+%% `latex mathastext.ins' produces `mathastext.sty' from the source
+%% `mathastext.dtx'; an already existing `mathastext.sty' in the same repertory
+%% will be overwritten.
+%%
+%% Move `mathastext.sty' to a suitable location within the TeX installation:
+%% mathastext.sty -> <TDS>/tex/latex/mathastext/
+%%
+%% Some test files are also generated, to be processed  through latex, pdflatex,
+%% lualatex or xetex.
+%%
+%% See the source file for the copyright and license informations.
+%%
+\input docstrip.tex
+\askforoverwritefalse
+\def\pkgpreamble{\defaultpreamble^^J\MetaPrefix^^J%
+\string\ProvidesPackage{\pkgname}^^J%
+\space[\pkgdate\space v\pkgversion\space\pkgdescription]}
+\def\testfilepreamble{\string\def\string\testfileincipit{Test file
+to accompany \string\texttt{\pkgname}^^J%
+version \string\texttt{\pkgversion} of \string\texttt{\pkgdate.}}}
+\generate{\usepreamble\testfilepreamble
+\file{\pkgname testmathversions.tex}{\from{\pkgname.dtx}{mathversions}}
+\file{\pkgname testmacos.tex}{\from{\pkgname.dtx}{macos}}
+\file{\pkgname testlinux.tex}{\from{\pkgname.dtx}{linux}}
+\file{\pkgname testalphabets.tex}{\from{\pkgname.dtx}{alphabets}}
+\usepreamble\pkgpreamble
+\file{\pkgname.sty}{\from{\pkgname.dtx}{package}}}
+\endbatchfile
+\endinput
+%%
+%% End of file `mathastext.ins'.
