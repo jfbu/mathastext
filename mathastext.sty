@@ -22,7 +22,7 @@
 %% in the same archive or directory.)
 %%
 \ProvidesPackage{mathastext}
- [2013/09/02 v1.3 Use the text font in math mode (jfB)]
+ [2013/09/04 v1.3a Use the text font in math mode (jfB)]
 %%
 %% Package `mathastext', for LaTeX2e.
 %% Author: Jean-Francois B.
@@ -216,32 +216,53 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \let\mathastextforallskip\MTforallskip
 \let\mathastextprimeskip\MTprimeskip
 \ifmst@noparen\else
-\AtBeginDocument{
-\@ifundefined{resetMathstrut@}{}{%
-    \PackageWarningNoLine{mathastext}{%
-    \string\resetMathstrut@\space from amsmath replaced by custom version}
-    \ifmst@symboldelimiters
-    \def\resetMathstrut@{%
-        \setbox\z@\hbox{\the\textfont\symmtpsymbol\char40
-                        \the\textfont\symmtoperatorfont\char40
-                        \the\textfont\symoperators\char40}%
-        \ht\Mathstrutbox@\ht\z@ \dp\Mathstrutbox@\dp\z@}
-    \else
-    \def\resetMathstrut@{%
-        \setbox\z@\hbox{\the\textfont\symmtoperatorfont\char40
-                        \the\textfont\symoperators\char40}%
-        \ht\Mathstrutbox@\ht\z@ \dp\Mathstrutbox@\dp\z@}
-    \fi}}
+\AtBeginDocument{%
+    \@ifundefined{resetMathstrut@}{% nothing to do, no amsmath
+    }{% amsmath loaded, and possibly patched by things such as lualatex-math
+    \let\mst@savedresetMathstrut@\resetMathstrut@
+    \PackageWarning{mathastext}{current meaning of amsmath
+      \string\resetMathstrut@\space saved}%
+    \ifx\mst@the\the % means that \MTnonlettersobeymathxx was used in preamble
+      \let\mst@the\@gobble\MTnonlettersobeymathxx
+   \fi}}
 \fi
 \newtoks\mst@do@nonletters
 \newtoks\mst@do@easynonletters
 \newtoks\mst@do@az
 \newtoks\mst@do@AZ
-\newcommand*\MTnonlettersdonotobeymathxx{\let\mst@the\@gobble}
-\newcommand*\MTnonlettersobeymathxx{\let\mst@the\the}
+\let\mst@the\@gobble
+\newcommand*\MTnonlettersdonotobeymathxx{%
+    \ifx\mst@the\@gobble
+    \else
+      \@ifundefined{mst@savedresetMathstrut@}{}{%
+        \PackageWarning{mathastext}{restoring (for this group or environment) amsmath \string\resetMathstrut@}%
+      \let\resetMathstrut@\mst@savedresetMathstrut@}%
+    \fi
+    \let\mst@the\@gobble
+}
+\newcommand*\MTnonlettersobeymathxx{%
+    \ifx\mst@the\the
+    \else
+      \@ifundefined{mst@savedresetMathstrut@}{}{%
+        \ifmst@symboldelimiters
+          \def\resetMathstrut@{%
+           \setbox\z@\hbox{\the\textfont\symmtpsymbol\char40
+                        \the\textfont\symmtoperatorfont\char40
+                        \the\textfont\symoperators\char40}%
+           \ht\Mathstrutbox@\ht\z@ \dp\Mathstrutbox@\dp\z@}%
+        \else
+          \def\resetMathstrut@{%
+           \setbox\z@\hbox{\the\textfont\symmtoperatorfont\char40
+                        \the\textfont\symoperators\char40}%
+           \ht\Mathstrutbox@\ht\z@ \dp\Mathstrutbox@\dp\z@}%
+        \fi
+      \PackageWarning{mathastext}{\string\resetMathstrut@\space
+      from amsmath replaced (for this group or environment)}}%
+    \fi
+    \let\mst@the\the
+}
 \newcommand*\MTeasynonlettersdonotobeymathxx{\let\mst@theeasy\@gobble}
 \newcommand*\MTeasynonlettersobeymathxx{\let\mst@theeasy\the}
-\MTnonlettersdonotobeymathxx % 1.2c !!!
 \MTeasynonlettersobeymathxx
 \newcommand*\MTmathactiveletters{\let\mst@thef\the \let\mst@theF\the}
 \newcommand*\MTmathactiveLetters{\let\mst@theF\the}
@@ -271,12 +292,12 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \mst@theF\mst@do@AZ \let\mst@theF\@gobble}
 }
 \newcommand*\MTsetmathskips[3]{%
-    \@namedef{mst@before\string#1}{\mskip#2\relax}%
-    \@namedef{mst@after\string#1}{\mskip#3\relax}%
+    \@namedef{mst@before#1}{\mskip#2\relax}%
+    \@namedef{mst@after#1}{\mskip#3\relax}%
 }
 \newcommand*\MTunsetmathskips[1]{%
-    \@namedef{mst@before\string#1}{\relax}%
-    \@namedef{mst@after\string#1}{\relax}%
+    \@namedef{mst@before#1}{\relax}%
+    \@namedef{mst@after#1}{\relax}%
 }
 \def\mst@magic@v #1#2#3#4#5{#1#3#4}
 \def\mst@magic@vi #1#2#3#4#5#6{#1#2#4#5}

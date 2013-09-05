@@ -1,13 +1,34 @@
 Copyright (C) 2011, 2012, 2013 by Jean-Francois B..
-[see bottom of this file for the LPPL statement]
+`mathastext' is a LaTeX2e package.
 
-    +-------------------------------------------+
-    +                 mathastext                +
-    +                                           +
-    +      `Use the text font in math mode'     +
-    +             v1.3   2013/09/02             +
-    +             2589111+jfbu@users.noreply.github.com             +
-    +-------------------------------------------+
+        +-------------------------------------------+
+        +                 mathastext                +
+        +                                           +
+        +      `Use the text font in math mode'     +
+        +             v1.3a  2013/09/04             +
+        +             2589111+jfbu@users.noreply.github.com             +
+        +-------------------------------------------+
+
+  The files of this package may be distributed and/or modified
+  under the conditions of the LaTeX Project Public License,
+  either version 1.3 of this license or (at your option) any
+  later version.
+
+  The latest version of this license is in
+    http://www.latex-project.org/lppl.txt
+  and version 1.3 or later is part of all distributions of
+  LaTeX version 2003/12/01 or later.
+
+
+                    INSTALLATION
+
+Run latex or pdflatex on mathastext.dtx (or tex on mathastext.ins)
+to create the mathastext.sty file. Move the .sty file to a
+suitable location within the TeX installation. Run latex twice
+more on mathastext.dtx to finish producing the documentation.
+
+During this process test files have been generated which serve to
+illustrate some features of the package.
 
 
                     INTRODUCTION
@@ -31,26 +52,33 @@ for the math!
 
                         USAGE
 
-main options: italic, subdued, defaultmathsizes, LGRgreek.
+          `mathastext' is a LaTeX package
 
-          \usepackage[options]{mathastext}
-          after other font related packages.
+              \usepackage{mathastext}
 
-          The document will then use the text
-          font also in math mode (letters,
-          digits, punctuation and a a few other
-          ascii characters).      
+          The document will use in math mode the text font
+          as configured at package loading time, for these
+          characters:
 
-          Optionally load further font packages
-          and then make use of the
-          \Mathastext[version_name] command to
-          define math versions in the preamble
-          and use them in the document body with
-          the \MTversion{version_name} command.
+              abcdefghijklmnopqrstuvwxyz
+              ABCDEFGHIJKLMNOPQRSTUVWXYZ
+              0123456789
+              !?,.:;+-=()[]/#$%&<>|{}\
 
-          With the subdued option, mathastext is
-          only active inside such a defined math
-          version. 
+          The command \MTsetmathskips allows to set up extra
+          spacings around each given letter.
+
+          Use multiple \Mathastext[name]'s to define in the
+          preamble various math versions using each a given
+          text font, to be later activated in the document  
+          body via the command \MTversion{name}.
+
+          With the subdued option, mathastext will be active
+          only inside such math versions distinct from the
+          normal and bold.
+
+          Main options: italic, defaultmathsizes, subdued,
+                        asterisk, LGRgreek.
 
 Use the `italic' option to get the Latin letters in math
 mode be in italics. Digits and log-like operator names
@@ -66,12 +94,12 @@ possible:
     + LGRgreek: use the document text font in LGR encoding
       Further options specify the shape of the lowercase
       and uppercase Greek glyphs; starting with v1.15c it is
-	  possible to use multiple distinct LGR fonts in the
-	  same document. 
+      possible to use multiple distinct LGR fonts in the
+      same document.
 
 Commands are provided to scale the Euler and Symbol fonts by
 an arbitrary factor to let them fit better with the document
-text font. 
+text font.
 
 Read the PDF documentation for more.
 
@@ -80,18 +108,23 @@ Examples available there:
      showcase.html
 
 
-                    INSTALLATION
-
-Run latex or pdflatex on mathastext.dtx to create the mathastext.sty
-file. Move the .sty file to a suitable location within the TeX
-installation. Run latex twice more on mathastext.dtx to finish
-producing the documentation.
-
-During this process test files have been generated which serve to
-illustrate some features of the package.
-
 
 CHANGE LOG
+
+1.3a [2013/09/04]
+
+   * the somewhat silly \string's are removed from the \MTsetmathskips
+command of release 1.3, thus allowing its first argument to be a macro,
+or any expandable code, giving a letter.
+
+   * the amsmath \resetMathstrut@, which is incompatible with a
+mathematically active parenthesis ( is now modified only if necessary
+(i.e. only when \MTnonlettersobeymathxx is issued) and is restored to
+its original value if not needed anymore (i.e. after
+\MTnonlettersdonotobeymathxx, as for example when switching to the
+normal version under option subdued).
+
+   * improved documentation.
 
 1.3  [2013/09/02]
 
@@ -125,8 +158,8 @@ which made the re-definitions done by mathastext issue errors.
 
 1.2e [2013/01/10]
 
-This version should be the last one in the 1.2 series as it seems to 
-correct most of the main problems which were introduced with the massive 
+This version should be the last one in the 1.2 series as it seems to
+correct most of the main problems which were introduced with the massive
 use of mathematically active characters in versions 1.2 and 1.2b.
 
    * It is indeed a thorny point when one wants to modify only in math
@@ -247,7 +280,7 @@ use of mathematically active characters in versions 1.2 and 1.2b.
 
    *  the Unicode situation is now correctly treated,
       throughout the code (this had been left in a half-done
-      way from version 1.14 of April 2011). 
+      way from version 1.14 of April 2011).
 
         - this includes an issue related to amsmath and its
       DeclareMathOperator macro which has been fixed,
@@ -260,7 +293,7 @@ use of mathematically active characters in versions 1.2 and 1.2b.
 
    *  it is now possible to use distinct fonts in LGR encoding
       for the Greek letters according to the current math
-      version. 
+      version.
 
    *  improvements to the documentation.
 
@@ -276,7 +309,7 @@ use of mathematically active characters in versions 1.2 and 1.2b.
 1.15  [2012/09/26]
 
    *  the subdued option allows the mathastextification to
-      act only locally.  
+      act only locally.
 
    *  some measures taken to deal with amsmath related
       issues when using xetex or luatex.
@@ -302,7 +335,7 @@ use of mathematically active characters in versions 1.2 and 1.2b.
 
    *  the options LGRgreek and selfGreek act now a bit
       differently, and new options LGRgreeks and selfGreeks
-      have been defined. 
+      have been defined.
 
    +  I also cleaned up a bit the code, for a more
       structured namespace.
@@ -318,9 +351,9 @@ use of mathematically active characters in versions 1.2 and 1.2b.
 
 1.13b
 
-   *  when the Symbol font is used for \prod and \sum this 
+   *  when the Symbol font is used for \prod and \sum this
       will be only for inline math; display math will use the
-      default glyphs 
+      default glyphs
 
 
 1.13 [2011/03/11]
@@ -340,7 +373,7 @@ use of mathematically active characters in versions 1.2 and 1.2b.
 
    *  the \Mathastext command has been improved to
       facilitate the mechanism of math versions also when
-      using XeTeX or LuaTeX (with package fontspec.) 
+      using XeTeX or LuaTeX (with package fontspec.)
 
    *  the en-dash and dotless i and j now work with all
       encodings, Unicode inclusive.
@@ -353,17 +386,4 @@ use of mathematically active characters in versions 1.2 and 1.2b.
 
 
 1.0  [2011/01/25] Initial version.
-
-Copyright (C) 2011, 2012, 2013 by Jean-Francois B..
-
-	The files of this package may be distributed and/or modified
-	under the conditions of the LaTeX Project Public License,
-	either version 1.3 of this license or (at your option) any
-	later version.
-
-	The latest version of this license is in
-	  http://www.latex-project.org/lppl.txt
-	and version 1.3 or later is part of all distributions of
-	LaTeX version 2003/12/01 or later.
-
 
