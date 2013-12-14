@@ -1,0 +1,23 @@
+Date: January 26, 2011 6:12:02 PM CET
+......................................................................
+
+The following information was provided by our fellow contributor:
+
+Name of contribution: mathastext
+Version number: 1.0
+Author's name: Jean-Francois B.
+Summary description: use text font also in math
+License type: lppl
+
+Announcement text:
+
+The mathastext package propagates the document text font to
+mathematical mode, for the letters of the Latin alphabet and,
+optionally, some further ASCII-127 characters. Thus it makes
+possible (for a document with simple mathematics) to use a quite
+arbitrary font without worrying too much that it does not have
+specially designed accompanying math fonts. Also, mathastext
+provides a simple mechanism in order to use many different
+choices of (text hence, now, math) fonts in the same
+document (not that we recommend it!). A final aspect is that
+mathastext helps produce smaller PDF files.
