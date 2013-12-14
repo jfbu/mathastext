@@ -5,31 +5,22 @@ Copyright (C) 2011, 2012, 2013 by Jean-Francois B..
         +                 mathastext                +
         +                                           +
         +      `Use the text font in math mode'     +
-        +             v1.3a  2013/09/04             +
+        +             v1.3c  2013/12/14             +
         +             2589111+jfbu@users.noreply.github.com             +
         +-------------------------------------------+
 
-  The files of this package may be distributed and/or modified
-  under the conditions of the LaTeX Project Public License,
-  either version 1.3 of this license or (at your option) any
-  later version.
+This Work may be distributed and/or modified under the
+conditions of the LaTeX Project Public License, either
+version 1.3 of this license or (at your option) any later
+version.
 
-  The latest version of this license is in
-    http://www.latex-project.org/lppl.txt
-  and version 1.3 or later is part of all distributions of
-  LaTeX version 2003/12/01 or later.
+The latest version of this license is in
+  http://www.latex-project.org/lppl.txt
+and version 1.3 or later is part of all distributions of
+LaTeX version 2003/12/01 or later.
 
-
-                    INSTALLATION
-
-Run latex or pdflatex on mathastext.dtx (or tex on mathastext.ins)
-to create the mathastext.sty file. Move the .sty file to a
-suitable location within the TeX installation. Run latex twice
-more on mathastext.dtx to finish producing the documentation.
-
-During this process test files have been generated which serve to
-illustrate some features of the package.
-
+The Author of this Work is 
+   Jean-Francois B. <2589111+jfbu@users.noreply.github.com>
 
                     INTRODUCTION
 
@@ -50,35 +41,35 @@ try out mathastext: it will simply use the text font also
 for the math!
 
 
-                        USAGE
+                      USAGE
 
-          `mathastext' is a LaTeX package
+  `mathastext' is a LaTeX package
 
-              \usepackage{mathastext}
+      \usepackage{mathastext}
 
-          The document will use in math mode the text font
-          as configured at package loading time, for these
-          characters:
+  The document will use in math mode the text font
+  as configured at package loading time, for these
+  characters:
 
-              abcdefghijklmnopqrstuvwxyz
-              ABCDEFGHIJKLMNOPQRSTUVWXYZ
-              0123456789
-              !?,.:;+-=()[]/#$%&<>|{}\
+      abcdefghijklmnopqrstuvwxyz
+      ABCDEFGHIJKLMNOPQRSTUVWXYZ
+      0123456789
+      !?,.:;+-=()[]/#$%&<>|{}\
 
-          The command \MTsetmathskips allows to set up extra
-          spacings around each given letter.
+  The command \MTsetmathskips allows to set up extra
+  spacings around each given letter.
 
-          Use multiple \Mathastext[name]'s to define in the
-          preamble various math versions using each a given
-          text font, to be later activated in the document  
-          body via the command \MTversion{name}.
+  Use multiple \Mathastext[name]'s to define in the
+  preamble various math versions using each a given
+  text font, to be later activated in the document  
+  body via the command \MTversion{name}.
 
-          With the subdued option, mathastext will be active
-          only inside such math versions distinct from the
-          normal and bold.
+  With the subdued option, mathastext will be active
+  only inside such math versions distinct from the
+  normal and bold.
 
-          Main options: italic, defaultmathsizes, subdued,
-                        asterisk, LGRgreek.
+  Main options: italic, defaultmathsizes, subdued,
+                asterisk, LGRgreek.
 
 Use the `italic' option to get the Latin letters in math
 mode be in italics. Digits and log-like operator names
@@ -108,8 +99,56 @@ Examples available there:
      showcase.html
 
 
+Installation:
+=============
+ 
+* with mathastext.ins: run tex on mathastext.ins to generate the package
+style file mathastext.sty as well as mathastext.tex and some test files.
+
+* without mathastext.ins: run tex on mathastext.dtx to generate the
+package style file mathastext.sty as well as mathastext.tex and some
+test files. (and also mathastext.ins)
+ 
+  Move the style file mathastext.sty to a location where TeX can find
+  it. In a TDS compliant hierarchy this will be
+  <TDS>:tex/latex/mathastext/mathastext.sty
+
+*documentation*: run latex thrice on mathastext.tex then dvipdfmx. Or,
+run pdflatex thrice on mathastext.dtx. In the former case the
+documentation is with source code included, in the latter without. The
+file mathastext.tex can be customized to change the font size or set
+other options therein.
+
+   (Note: one cannot use lualatex/xelatex to compile the documentation.)
+
+*test files*: mathastexttestmathversions.tex
+              mathastexttestunicodemacos.tex
+              mathastexttestunicodelinux.tex
+              mathastexttestalphabets.tex
 
 CHANGE LOG
+
+1.3c [2013/12/14]
+  
+   * added a starred variant to \MTversion which tells mathastext to
+only do the math set-up and not modify the text fonts.
+
+   * added second optional version name argument to \Mathastext and to
+\MTDeclareVersion, to transfer settings for things not otherwise changed
+by mathastext from a math version to the one declared. This is mainly
+for symbols and large symbols to be the bold ones when the user sets up
+the series of a mathastextified font to be bold in a mathastext-declared
+version.
+
+   * renamed \defaultprod to \MToriginalprod, \defaultsum to
+\MToriginalsum, (this is in case of option symbolmisc).
+
+   * changes to the dtx organization; options for generating the
+documentation can be customized in generated mathastext.tex file.
+
+   * 1.2d code for \#, \$, \%, and \& modified erroneously the earlier
+correct 1.2c code and created a bug showing up with more than 16 math
+families (a possibility only with lualatex or xelatex).
 
 1.3a [2013/09/04]
 
