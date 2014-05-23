@@ -1,11 +1,10 @@
-Copyright (C) 2011, 2012, 2013 by Jean-Francois B..
-`mathastext' is a LaTeX2e package.
+Copyright (C) 2011-2014 Jean-Francois B..
 
         +-------------------------------------------+
         +                 mathastext                +
         +                                           +
         +      `Use the text font in math mode'     +
-        +             v1.3c  2013/12/14             +
+        +             v1.3d  2014/05/23             +
         +             2589111+jfbu@users.noreply.github.com             +
         +-------------------------------------------+
 
@@ -101,6 +100,11 @@ Examples available there:
 
 Installation:
 =============
+
+The fastest way is: unzip -d <destination> mathastext.tds.zip, where 
+<destination> could be ~/texmf or, on mac os x, ~/Library/texmf, or
+the working repertory of your project. Else, download mathastext.dtx,
+possibly also mathastext.ins, and follow these instructions:
  
 * with mathastext.ins: run tex on mathastext.ins to generate the package
 style file mathastext.sty as well as mathastext.tex and some test files.
@@ -127,6 +131,18 @@ other options therein.
               mathastexttestalphabets.tex
 
 CHANGE LOG
+
+1.3d [2014/05/23]
+
+   * new commands \MTstandardgreek and \MTcustomgreek. 
+
+   * The Greek letters, in case of use of one of the package related options,
+are left to their defaults in the normal and bold math versions if the
+subdued option was also used (this was so far the case only with options
+LGRgreek/LGRgreeks).
+
+   * \newmcodes@ of amsmath is left untouched if package lualatex-math
+is detected.
 
 1.3c [2013/12/14]
   
