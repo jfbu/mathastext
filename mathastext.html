@@ -1,13 +1,19 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html lang="en">
-<!-- Time-stamp: <04-09-2013 23:42:04 CEST jfb> -->
+<!-- Time-stamp: <05-02-2015 19:39:51 CET> -->
+<!-- (Raif Badawi) -->
+<!-- Time-stamp: <18-01-2015 13:08:24 CET> -->
+<!-- (copyright -> 2015) -->
+<!-- Time-stamp: <11-01-2015 à 23:33:53 CET> -->
+<!-- (Charlie) -->
+<!-- 1.3d (2014/05/23) -->
 
 <head>
 <link rel="shortcut icon" type="image/png" href="zeta32.png">
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-   <META NAME="robots" CONTENT="index, follow">
+   <meta name="robots" content="index, follow">
    <title>mathastext</title>
-<STYLE type="text/css">
+<style type="text/css">
 .toc{list-style:none;}
 .title{margin:auto;text-align:center;}
 .center{text-align:center;margin-left:auto;margin-right:auto;}
@@ -20,25 +26,31 @@ BLOCKQUOTE{margin-left:4ex;margin-right:4ex;text-align:left;}
 .intro{margin-left:15%;margin-right:15%;}
 .central{margin-left:25%;margin-right:25%;}
 .mono{font-family:monospace,monospace;}
-</STYLE>
+</style>
 </head>
 
-<body>
+<body> 
 
-<br>
-<br>
+<div style="text-align:center;">
+<a href="http://charliehebdo.fr/"><img src="jesuischarlie.png" alt="JeSuisCharlie http://charliehebdo.fr"></a>
+<a href="http://www.amnesty.fr/Nos-campagnes/Liberte-expression/Actualites/JeSuisRaif-4-moyens-agir-maintenant-en-faveur-de-Raif-Badawi-13909"><img src="affiche-raef-badawi.jpg" alt="Raif Badawi"></a>
+</div>
 
-<DIV CLASS="center">A LaTeX package: <b>mathastext</b><br>
-Copyright &copy; 2011, 2012, 2013 Jean-Fran&ccedil;ois B..</DIV>
+<div class="center">A LaTeX package: <b>mathastext</b><br>
+Copyright &copy; 2011-2015 Jean-Fran&ccedil;ois B..<br>
+Current version number is <b>1.3d</b> (2014/05/23) 
+  <a href="v13/README">README</a>, 
+  <a href="v13/mathastext.pdf">pdf</a>, 
+  <a href="v13/mathastext.sty">sty</a>, 
+  <a href="v13/mathastext.dtx">dtx</a>, 
+  <a href="v13/mathastext.tex">tex</a>.</div>
 
 
-<DIV class="center">
- <table align="center" border="0" WIDTH="85%" cellpadding="5">
+<div class="center">
+ <table align="center" border="0" width="85%" cellpadding="5">
 
-<tr><td width="0"
- align="center"><img src="showcase/Riemann1859.png"
- alt="Riemann1859.png">
-<DIV align="left">
+<tr><td width="0" align="center"><img src="showcase/Riemann1859.png" alt="Riemann1859.png">
+<div align="left">
 <pre style="font-size:90%">
 \usepackage[T1]{fontenc}
 \usepackage[german]{babel}
@@ -46,7 +58,7 @@ Copyright &copy; 2011, 2012, 2013 Jean-Fran&ccedil;ois B..</DIV>
 \renewcommand\familydefault\ttdefault
 \usepackage[LGRgreek]{mathastext}
 \MTgreekfont{lmtt}\Mathastext
-</pre></DIV></td>
+</pre></div></td>
 
 <td><p>Optimal typographical results for documents
 	containing mathematical symbols can only be hoped for
@@ -64,7 +76,7 @@ Copyright &copy; 2011, 2012, 2013 Jean-Fran&ccedil;ois B..</DIV>
 	use the text font also for the math! (additionally to
 	Latin letters, digits, punctuation signs, a few math
 	symbols available in the ascii set, such as
-	+,&ndash;,<,>,=, will also be picked up from the text
+	+,&ndash;,&lt;,&gt;,=, will also be picked up from the text
 	font.) Often this gives quite satisfying results
 	especially if, like the author, you aim at a very
 	unified look for the document, and in particular
@@ -90,49 +102,77 @@ between atoms.</p>
   to give a simple interface to using many distinct math
   fonts in the same document: <a href="showcase-riemann.html">special example</a>.</p>
 </td>
-</tr></table></DIV>
+</tr></table></div>
 
-<CENTER>
-<table WIDTH="500"  border="0" cellpadding="10">
+<center>
+<table width="500" border="0" cellpadding="10">
 <tr><td>
-Current version number is <b>1.3a</b> (2013/09/04)<br>
+Current version number is <b>1.3d</b> (2014/05/23)<br>
 <ul>
-<li> <a href="v13/README" >README</a></li>
-<li> Download
-  from the <a href="http://www.ctan.org/tex-archive/macros/latex/contrib/mathastext">CTAN portal</a> or the <a href="http://mirrors.ctan.org/help/Catalogue/entries/mathastext.html">TeX catalogue</a>.</li>
+<li> <a href="v13/README">README</a></li>
+<li> Download from the <a href="http://www.ctan.org/tex-archive/macros/latex/contrib/mathastext">CTAN 
+  portal</a> 
+  or
+  the <a href="http://mirrors.ctan.org/help/Catalogue/entries/mathastext.html">TeX
+  catalogue</a>.</li>
 <li> <a href="v13/mathastext.pdf">PDF Documentation</a></li>
 <li> Package file: <a href="v13/mathastext.sty">mathastext.sty</a></li>
-<li> Documented source: <a href="v13/mathastext.dtx">dtx</a>. Running latex or
-  pdflatex on the dtx file (thrice) or tex on the <a href="v13/mathastext.ins">ins</a> file extracts from the dtx the package file and some test
-  files. 
+<li> Documented source: <a href="v13/mathastext.dtx">dtx</a>. 
+  Running <b>tex</b> on the dtx file produces the package file, some test files,
+  and also also a small file
+  <a href="v13/mathastext.tex">mathastext.tex</a> where one can customize the
+  global font size or paper dimensions for producing the documentation with or
+  without source code included (compilation
+  of <a href="v13/mathastext.tex">mathastext.tex</a> must be done with
+  both the <a href="v13/mathastext.sty">.sty</a>
+  and <a href="v13/mathastext.dtx">.dtx</a> files in the repertory).
 <!--Here are those test
   files after compilation to PDF format:
   <ol>
 	<li> <a href="v12/testmathastextalphabets.pdf">testmathastextalphabets.pdf</a></li>
 	<li> <a href="v12/testmathastextlinux.pdf">testmathastextlinux.pdf</a></li>
 	<li> <a href="v12/testmathastextmacos.pdf">testmathastextmacos.pdf</a></li>
-	<li> <a href="v12/testmathastextmathversions.pdf">testmathastextmathversions.pdf</a>-->
+	<li> <a href="v12/testmathastextmathversions.pdf">testmathastextmathversions.pdf</a>
 </li>
-	</ol>
+	</ol>-->
 </li>
 </ul>
 <a href="showcase.html">Examples</a> (be patient, the page with its embedded png
 images weighs circa 5 Mo! It contains about 70 examples, as png images and/or as
 pdf files.)
 </td></tr></table>
-</CENTER>
+</center>
 
 
-<DIV class="intro">
+<div class="intro">
 <ul>
 <li>New with the latest versions:
 <ul>
-<li>(1.3a) (1) new command \MTsetmathskips allows to specify on a letter by
+<li>(1.3d) new commands \MTstandardgreek and \MTcustomgreek; subdued mode acts
+  on Greek letters, too, even if package is loaded with one of the Greek
+  related options.</li>
+<li>(1.3c) mechanism of "inheritance" in the declaration of mathastext math
+  versions; starred variant of \MTversion leaves untouched the text font.</li>
+<li>(1.3b)
+   <ol>
+   <li> added a starred variant to \MTversion which tells mathastext to
+only do the math set-up and not modify the text fonts.</li>
+   <li>  added second optional version name argument to \Mathastext and to
+\MTDeclareVersion, to transfer settings for things not otherwise changed
+by mathastext from a math version to the one declared. This is mainly
+for helping set in bold face also symbols and large symbols when the used font
+	 for letters has been chosen bold in the declared version.</li>
+    </ol>
+<li>(1.3a)
+<ol>
+<li>new command \MTsetmathskips allows to specify on a letter by
   letter basis some extra skips to be automatically inserted in math mode before
-  and after each occurrence of the given letter, (2) the package when running
-  under lualatex requires it in a version at least as recent as the one distributed with TL2013,
-  (3) the documentation is better
-  hyperlinked.
+  and after each occurrence of the given letter,</li> 
+<li>the package when running
+  under lualatex requires it in a version at least as recent as the one distributed with TL2013,</li>
+<li> the documentation is better
+  hyperlinked.</li>
+</ol>
 <li>(1.2f) "change log" added to the user manual. Minor code improvements.</li>
 <li>(1.2e) remaining technical issues introduced with the version 1.2 have been
   solved; the documentation and the test files have been extended. 
@@ -142,13 +182,13 @@ pdf files.)
   subscripts when using an upright text font for letters in text mode and
   it corrects bugs with active characters which were introduced in 1.2. </li>
 <li>(1.2) 
-<ul>
+<ol>
    <li> A new command sets up the amount of space to be automatically
       inserted before the derivative glyph (useful when using an
       upright font).</li>
    <li>  The scope of the math alphabets has been extended to apply
       to the non-alphabetical characters, and also to operator
-      names. In usual math mode $\mathbf{(\sin(n!)<\cos(x)?)}$
+      names. In usual math mode $\mathbf{(\sin(n!)&lt;\cos(x)?)}$
       changes only the font for n and x. With mathastext and if
       not told otherwise, /everything/ in the formula above
       will respond to \mathbf (and the automatic spaces are left
@@ -156,8 +196,8 @@ pdf files.)
    <li> The documentation has been improved. The package file is self-extracting
       from the dtx, and four additional test files are also produced during
       `latex mathastext.dtx'.</li>
-</ul>
-<li>(1.15g) improvements to the documentation; modifications of the \#,\&,\$ and
+</ol>
+<li>(1.15g) improvements to the documentation; modifications of the \#,\&amp;,\$ and
   \% related code which was working but admittedly a bit strange; changes to the
   behavior of the math alphabets related options; general clean up of the code
   and of its comments.
@@ -275,23 +315,24 @@ an <a href="showcase.html#fc">example</a>).</li>
 2012/09/26 1.15  option subdued allowing the mathastextification to act locally.
 2012/10/05 1.15c commands to set-up distinct LGR Greek fonts in each math version.
 2012/10/22 1.15e improvements to subdued; automatic spaces after \forall and \exists.
-2012/10/25 1.15g improvements in \#,\&,\$,\%; code cleaned up and better documented.
+2012/10/25 1.15g improvements in \#,\&amp;,\$,\%; code cleaned up and better documented.
 2012/12/20 1.2   extended scope of the math alphabets; automatic space before
                  the derivative glyph; documentation improved.
 2013/12/31 1.2b  automatic italic corrections in math mode. 
 2013/01/10 1.2e  remaining technical issues with active characters in v1.2 and v1.2b
                  solved; extended test files, documentation, and source code comments
 2013/09/02 1.3   new command \MTsetmathskips. 
+2013/12/14 1.3c  mechanism of "inheritance" in the declaration of mathastext math versions.
+                 starred variant of \MTversion leaves untouched the text font.
+2014/05/23 1.3d  new commands \MTstandardgreek and \MTcustomgreek.
 </pre>
 </li>
 </ul>
-</DIV>
+</div>
 
 
 <p>
-    <a href="http://validator.w3.org/check?uri=referer"><img style="border:0;width:88px;height:31px"
-    src="valid-html401-blue.png"
-    alt="Valid HTML 4.01 Transitional"></a>
+    <a href="http://validator.w3.org/check?uri=referer"><img style="border:0;width:88px;height:31px" src="valid-html401-blue.png" alt="Valid HTML 4.01 Transitional"></a>
 </p>
 
 </body> 
