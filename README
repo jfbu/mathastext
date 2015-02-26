@@ -1,4 +1,4 @@
-Copyright (C) 2011-2014 Jean-Francois B..
+Copyright (C) 2011-2015 Jean-Francois B..
 
         +-------------------------------------------+
         +                 mathastext                +
@@ -101,36 +101,40 @@ Examples available there:
 Installation:
 =============
 
-The fastest way is: unzip -d <destination> mathastext.tds.zip, where 
-<destination> could be ~/texmf or, on mac os x, ~/Library/texmf, or
-the working repertory of your project. Else, download mathastext.dtx,
-possibly also mathastext.ins, and follow these instructions:
+The fastest way is: unzip -d <destfolder> mathastext.tds.zip, where 
+<destfolder> could be ~/texmf or, on mac os x, ~/Library/texmf.
+
+Else, download mathastext.dtx, possibly also mathastext.ins, and follow
+these instructions:
  
-* with mathastext.ins: run tex on mathastext.ins to generate the package
+* with mathastext.ins: run tex on mathastext.ins to generate the package 
 style file mathastext.sty as well as mathastext.tex and some test files.
 
-* without mathastext.ins: run tex on mathastext.dtx to generate the
-package style file mathastext.sty as well as mathastext.tex and some
-test files. (and also mathastext.ins)
+* without mathastext.ins: run tex on mathastext.dtx to generate the package
+style file mathastext.sty as well as mathastext.tex and some test files.
+(and also mathastext.ins)
  
-  Move the style file mathastext.sty to a location where TeX can find
-  it. In a TDS compliant hierarchy this will be
-  <TDS>:tex/latex/mathastext/mathastext.sty
+  Move the style file mathastext.sty to a location where TeX can find it.
+  In a TDS compliant hierarchy this will be
+      <TDS>:tex/latex/mathastext/mathastext.sty
 
-*documentation*: run latex thrice on mathastext.tex then dvipdfmx. Or,
-run pdflatex thrice on mathastext.dtx. In the former case the
-documentation is with source code included, in the latter without. The
-file mathastext.tex can be customized to change the font size or set
-other options therein.
+*documentation*: run latex thrice on mathastext.tex then dvipdfmx. Or, run
+pdflatex thrice on mathastext.dtx. In the former case the documentation is
+with source code included, in the latter without. The file mathastext.tex
+can be customized to change the font size or set other options therein.
 
-   (Note: one cannot use lualatex/xelatex to compile the documentation.)
+   (One cannot use lualatex/xelatex to compile the documentation.)
 
 *test files*: mathastexttestmathversions.tex
               mathastexttestunicodemacos.tex
               mathastexttestunicodelinux.tex
               mathastexttestalphabets.tex
 
+
 CHANGE LOG
+
+[2015/02/26]: mention is made in the documentation of the improved
+compatibility of mathastext with the latest (3.34) beamer release.
 
 1.3d [2014/05/23]
 
