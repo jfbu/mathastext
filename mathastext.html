@@ -1,5 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html lang="en">
+<!-- Time-stamp: <28-02-2015 09:13:45 CET> -->
+<!-- (doc of 2015/02/26; lien pour mathastext.tds.zip) -->
 <!-- Time-stamp: <05-02-2015 19:39:51 CET> -->
 <!-- (Raif Badawi) -->
 <!-- Time-stamp: <18-01-2015 13:08:24 CET> -->
@@ -29,7 +31,7 @@ BLOCKQUOTE{margin-left:4ex;margin-right:4ex;text-align:left;}
 </style>
 </head>
 
-<body> 
+<body>
 
 <div style="text-align:center;">
 <a href="http://charliehebdo.fr/"><img src="jesuischarlie.png" alt="JeSuisCharlie http://charliehebdo.fr"></a>
@@ -38,12 +40,13 @@ BLOCKQUOTE{margin-left:4ex;margin-right:4ex;text-align:left;}
 
 <div class="center">A LaTeX package: <b>mathastext</b><br>
 Copyright &copy; 2011-2015 Jean-Fran&ccedil;ois B..<br>
-Current version number is <b>1.3d</b> (2014/05/23) 
+Current version number is <b>1.3d</b> (2014/05/23; doc of 2015/02/26)<br>
   <a href="v13/README">README</a>, 
   <a href="v13/mathastext.pdf">pdf</a>, 
   <a href="v13/mathastext.sty">sty</a>, 
   <a href="v13/mathastext.dtx">dtx</a>, 
-  <a href="v13/mathastext.tex">tex</a>.</div>
+  <a href="v13/mathastext.ins">ins</a>, 
+  <a href="v13/mathastext.tds.zip">mathastext.tds.zip</a>.</div>
 
 
 <div class="center">
@@ -107,25 +110,28 @@ between atoms.</p>
 <center>
 <table width="500" border="0" cellpadding="10">
 <tr><td>
-Current version number is <b>1.3d</b> (2014/05/23)<br>
+Current version number is <b>1.3d</b> (2014/05/23; doc of 2015/02/26)<br>
 <ul>
 <li> <a href="v13/README">README</a></li>
-<li> Download from the <a href="http://www.ctan.org/tex-archive/macros/latex/contrib/mathastext">CTAN 
-  portal</a> 
-  or
-  the <a href="http://mirrors.ctan.org/help/Catalogue/entries/mathastext.html">TeX
-  catalogue</a>.</li>
-<li> <a href="v13/mathastext.pdf">PDF Documentation</a></li>
-<li> Package file: <a href="v13/mathastext.sty">mathastext.sty</a></li>
-<li> Documented source: <a href="v13/mathastext.dtx">dtx</a>. 
-  Running <b>tex</b> on the dtx file produces the package file, some test files,
-  and also also a small file
-  <a href="v13/mathastext.tex">mathastext.tex</a> where one can customize the
-  global font size or paper dimensions for producing the documentation with or
-  without source code included (compilation
-  of <a href="v13/mathastext.tex">mathastext.tex</a> must be done with
-  both the <a href="v13/mathastext.sty">.sty</a>
-  and <a href="v13/mathastext.dtx">.dtx</a> files in the repertory).
+<li> Download from the <a href="http://www.ctan.org/tex-archive/macros/latex/contrib/mathastext">CTAN portal</a> or the
+  <a href="http://mirrors.ctan.org/help/Catalogue/entries/mathastext.html">TeX catalogue</a>.</li>
+<li><a href="v13/mathastext.pdf">PDF Documentation</a></li>
+<li>Package file: <a href="v13/mathastext.sty">mathastext.sty</a></li>
+<li>Documented source: <a href="v13/mathastext.dtx">dtx</a>.</li>
+<li>Installation:
+  <ol><li>using <a href="v13/mathastext.tds.zip">mathastext.tds.zip</a>:
+  run <code>unzip mathastext.tds.zip -d &lt;foo&gt;</code>
+  where <code>foo</code> is the <a href="http://tug.org/tds/tds.html">TDS</a>
+  compliant destination folder.
+    <li>manually: <b><code>tex
+  mathastext.dtx</code></b> to extract the package
+  file <code>mathastext.sty</code>, some test files, and
+  also <code>mathastext.tex</code>. There one can customize the global font
+  size or paper dimensions for producing the documentation with or without
+  source code included via <code>latex mathastext.tex</code> (thrice)
+  and <code>dvipdfmx mathastext.dvi</code>. It is also possible to run
+      directly <code>pdflatex mathastext.dtx</code>. Then move the various files to the correct locations... </li>
+   </ol>
 <!--Here are those test
   files after compilation to PDF format:
   <ol>
