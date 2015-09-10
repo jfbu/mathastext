@@ -1,14 +1,14 @@
 % -*- coding: iso-latin-1; -*-
 %<*dtx>
-{\def\dtxtimestamp {Time-stamp: <26-02-2015 23:33:58 CET>}% 
+{\def\dtxtimestamp {Time-stamp: <10-09-2015 13:09:59 CEST>}% 
  \def\getdtxtimestamp #1 <#2 #3 #4>{#2 at #3 #4}%
  \xdef\dtxtimestamp {\expandafter\getdtxtimestamp\dtxtimestamp }}%
-\def\docdate{2015/02/26}
+\def\docdate{2015/09/10}
 %</dtx>
 %%----------------------------------------------------------------
 %% Package: mathastext
 %<package>%% Use the text font in math mode (jfB)
-%% Version: 1.3d (2014/05/23; doc of 2015/02/26)
+%% Version: 1.3e (2015/09/10; doc of 2015/09/10)
 %% License: LPPL 1.3c
 %% Copyright (C) 2011-2015 Jean-Francois B. <2589111+jfbu@users.noreply.github.com>
 %% Examples of use of mathastext:
@@ -27,8 +27,8 @@
 %
 % The Author of this Work is: Jean-Francois B. <2589111+jfbu@users.noreply.github.com> 
 %<*drv|ins>
-\def\MSTpkgdate    {2014/05/23} 
-\def\MSTpkgversion {1.3d}
+\def\MSTpkgdate    {2015/09/10} 
+\def\MSTpkgversion {1.3e}
 %</drv|ins>
 % Installation:
 % =============
@@ -896,10 +896,15 @@ LGRgreek]{mathastext}
 \subsection{Recent changes}
 
 This is the documentation for version \texttt{\MSTpkgversion} of
-\texttt{\MSTpkgdate}. Updated \texttt{\docdate} to mention
-\hyperref[ssec:beamer]{better compatibility} with |beamer|.
+\texttt{\MSTpkgdate}.
 
-Changes for this release:
+Changes for release |1.3e| of |2015/09/10|: bugfix regarding option
+§nosmalldelims§ and its side effect on the use of |\{,\}| as delimiters.
+
+% Updated \texttt{2015/02/26} to mention
+% \hyperref[ssec:beamer]{better compatibility} with |beamer|.
+
+Changes for release |1.3d| of |2014/05/23|:
 \begin{enumerate}[noitemsep]
 \item if one of the Greek related options (§LGRgreek§(s),
   §selfGreek§(s), §eulergreek§, §symbolgreek§) has been passed to the
@@ -946,7 +951,6 @@ Changes for release |1.3a| of |2013/09/04|:
 \end{enumerate}
 
 
-{\small
 Version |1.2f|: addition of the ``change
   log'' at the end of this user manual, and some minor code improvements not
   changing neither features nor user interface.
@@ -978,7 +982,7 @@ version. These issues are commented upon in the
 Earlier, version |1.15| introduced the concept of the
 \hyperref[sec:subdued]{{subdued} math versions.}
 \par
-}
+
 
 \subsection{Installation}
 \begin{verbatim}
@@ -1942,44 +1946,50 @@ for activation.\footnote{these commands are to be used outside of math mode.
   last after all packages dealing with math things).
 \end{framed}
 
-The brace control sequences |\{| and |\}| have their own (supplementary) switch,
-which is (even) less activated by default. The reason is that after
-\csb{MTexplicitbracesobeymathxx}, they regrettably can not be used anymore as
-delimiters: |\big\{| or |\big\}| cease to function and must be replaced by
-|\big\lbrace| and |\big\rbrace|. But
-\MTmathoperatorsobeymathxx\MTnonlettersobeymathxx\MTexplicitbracesobeymathxx we
-can now enjoy $\mathtt{\{a, a>b\}}$, $\mathbf{\{a, a>b\}}$, $\mathsf{\{a,
-  a>b\}}$, or even $\mathnormalbold{\{a, a>b\}}$.\footnote{this last example
-  uses the \cs{mathnormalbold} additional alphabet defined by \mst.}
+The braces |\{| and |\}| remain unresponsive to the alphabet changing commands
+even after \csb{MTnonlettersobeymathxx}. One must issue also
+\csb{MTexplicitbracesobeymathxx}, but it has the disadvantage that |\{| and
+|\}| become then unusable as variable-size delimiters: |\big\{| or |\big\}|
+create errors and one must make use of |\big\lbrace| and |\big\rbrace|. But
+\MTmathoperatorsobeymathxx\MTnonlettersobeymathxx\MTexplicitbracesobeymathxx
+one can now enjoy $\mathtt{\{a, a>b\}}$, $\mathbf{\{a, a>b\}}$,
+$\mathsf{\{a, a>b\}}$, or even $\mathnormalbold{\{a, a>b\}}$.\footnote{this
+  last example uses the \cs{mathnormalbold} additional alphabet defined by
+  \mst.}
 
-There is no such restriction with $($, $)$ or the brackets $[$, $]$. When used
-as delimiters though, they will become again unreactive to the math alphabets:
-the same applies to $<$ and $>$ or to any of the other characters such as the
-slashes $/$, $\backslash$, when they are used as delimiters. This is a rather
-obvious restriction except possibly for the smallest size delimiters (the
-so-called `small variants'), as all other sizes will be anyway absent from the
-text fonts. Even the small variants may not be really available in the text
-fonts: for example the standard $<$ used as a delimiter is in \LaTeX{} a
-\cs{langle}: $\langle$. With standard \LaTeX{} |$\left< x\right>$| gives
-$\langle x\rangle$.
+Even with \csb{MTnonlettersobeymathxx}, the parentheses $($, $)$, brackets
+$[$, $]$, $<$ and $>$ or the slashes $/$, $\backslash$, \emph{when used as
+  left/right delimiters}, do not react to math alphabet commands. This is
+mainly explained by the fact that the text font will not contain suitable
+glyphs, hence no attempt was made to made the delimiters pick up their glyphs
+there.
 
+But \mst does try to pick up most of the `small variants' of the delimiters
+from the text font: |$\left<x\right>$| gives $\left<x\right>$ (but
+|$\left<b\right>$| gives $\left<b\right>$.) Notice that this differs from
+standard \LaTeX{} for which |$\left< x\right>$| gives $\langle x\rangle$. As
+it is perhaps a bit strange to have $\left< x\right>$ next to
+$\left< X\right>$ there is option §nosmalldelims§: with this option the
+small-sized variants of the delimiters are not modified by \mst (option
+§nosmalldelims§ has the side effect that, for the non-delimiter uses of 
+|\{, \}| 
+to be \mst-ified it is necessary to issue \csb{MTnonlettersobeymathxx} and
+\csb{MTexplicitbracesobeymathxx}.)
 
-Actually, \mst does try to pick up most of the `small variants' in the text
-font: |$\left<x\right>$| gives $\left<x\right>$ (but |$\left<b\right>$| gives $\left<b\right>$.) If you don't like that use the
-option §nosmalldelims§ (it is indeed perhaps a bit strange to have $\left<
-  x\right>$ next to $\left< X\right>$, again before blaming me, consider using
-§nosmalldelims§.) At any rate, whether `small' or not, delimiters are not under
-the extended law of math alphabets, this is a general rule of the way \mst
-manages these things.
+At any rate,
+as said above, whether `small' or not, delimiters are unresponsive to
+math alphabet commands, due to technical aspects of \TeX, and the way \mst
+handles these things.
+Examples: 
+|\mathbf{<a,b>}| gives $\mathbf{<a,b>}$ (brackets do respond),
+|\mathbf{\left<a,b\right>}| gives $\mathbf{\left<a,b\right>}$ (brackets do not
+respond), |\mathbf{\mathopen{<}a,b \mathclose{>}}| gives
+$\mathbf{\mathopen{<} a,b \mathclose{>}}$ (do respond).
 
-Examples: |\mathbf{<a,b>}| gives $\mathbf{<a,b>}$. 
-|\mathbf{\left<a,b\right>}| gives $\mathbf{\left<a,b\right>}$. 
-|\mathbf{\mathopen{<}a,b \mathclose{>}}| gives $\mathbf{\mathopen{<} a,b
-  \mathclose{>}}$.
-The \LaTeX{} standard behavior for 
-|\mathbf{\mathopen{<}a,b\mathclose{>}}| is
 \endgroup
-$\mathbf{\mathopen{<} a,b \mathclose{>}}$.
+The \LaTeX{} standard behavior for |\mathbf{\mathopen{<}a,b\mathclose{>}}| is
+$\mathbf{\mathopen{<} a,b \mathclose{>}}$ (neither brackets nor the comma do
+respond).
 
 
 
@@ -3065,10 +3075,14 @@ treated. Use this option in case of a mono-width
 \item §nosmalldelims§: this prevents \mst from trying to pick up in the text
   font the `small variants' of some math delimiters; it only affects what
   happens when a character such as a left parenthesis $($ or $[$ is used as a
-  delimiter, and \TeX{} has chosen the smallest sized variant. This has no
-  impact on what happens when they are not used as delimiters: then, and if not
-  disabled by the corresponding options, these characters are always picked up
-  from the text font.
+  delimiter, and in the event that \TeX{} has chosen the smallest sized
+  variant. This has no impact on what happens when they are not used as
+  delimiters: then, and if not disabled by the corresponding options, these
+  characters are always picked up from the text font.\footnote{in this very
+    special situation of option nosmalldelims, the braces are an exception to
+    this rule and they require both of \csb{MTnonlettersobeymathxx} and
+    \csb{MTexplicitbracesobeymathxx} for being picked up from the text font
+    when not used as delimiters.}
  \item §symbolgreek§, §symboldigits§: to let Greek letters (digits) use the
 Symbol font.
  \item §symbolre§: replaces \cs{Re} and \cs{Im} by the
@@ -3170,6 +3184,11 @@ Numerous examples will be found there:\\
 
 \begin{multicols}{2}
 \begin{verbatim}
+1.3e [2015/09/10]
+
+   * bugfix: under option nosmalldelims, \lbrace and \rbrace were redefined as
+math symbols and could not be used as delimiters.
+
 1.3d [2014/05/23]
 
    * new commands \MTstandardgreek and \MTcustomgreek. 
@@ -3536,7 +3555,7 @@ encodings, Unicode inclusive.
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage {mathastext}
-  [2014/05/23 v1.3d Use the text font in math mode (jfB)]
+  [2015/09/10 v1.3e Use the text font in math mode (jfB)]
 %    \end{macrocode}
 % Testing for XeTeX and LuaLaTeX. I should load some package for this code which
 % I copied somewhere (perhaps from the |iftex| package? or some post on
@@ -5749,7 +5768,9 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %   |\def\lbrack{[}\def\rbrack{]}| so this fits well with what we do here.
 %   \cs{lparen} and \cs{rparen} are similarly defined in |mathtools|. On the
 %   other hand in |latex.ltx| with |\{| and |\}| are defined (in math mode) in
-%   terms of the control sequences \cs{lbrace} and \cs{rbrace}.
+%   terms of the control sequences \cs{lbrace} and \cs{rbrace}. Such control
+%   sequences can not be simultaneously math symbols and math delimiters,
+%   thus, this complicates things for the mathastextification.
 %    \begin{macrocode}
 \ifmst@noparen\else\typeout{** parentheses \string( \string) \string[ \string] and slash \string/}
 \ifmst@nosmalldelims
@@ -5859,13 +5880,13 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %       preserve robustness.
 %
 %       For |1.3| I make |\lbrace| and |\rbrace| undefined first, else problems
-%       may arise with some packages.
+%       may arise with some packages. |1.3e| suppresses under option
+%       |nosmalldelims| the definitions of |\lbrace| and |\rbrace| as math
+%       symbols as this bug made |\left\lbrace| cause an error, naturally.
 %    \begin{macrocode}
-\let\lbrace\undefined \let\rbrace\undefined
   \ifmst@nosmalldelims
-     \DeclareMathSymbol{\lbrace}{\mathopen}{\mst@font@tbu}{123} 
-     \DeclareMathSymbol{\rbrace}{\mathclose}{\mst@font@tbu}{125} 
   \else
+     \let\lbrace\undefined \let\rbrace\undefined
      \DeclareMathDelimiter{\lbrace}
         {\mathopen}{\mst@font@tbu}{123}{largesymbols}{"08}
      \DeclareMathDelimiter{\rbrace}
@@ -6692,7 +6713,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
   Grave accent  \`     Left brace    \{     Vertical bar  \|
   Right brace   \}     Tilde         \~}
 
-\CheckSum{5184}
+\CheckSum{5176}
 \makeatletter\check@checksum\makeatother
 \Finale
 %%

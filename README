@@ -4,7 +4,7 @@ Copyright (C) 2011-2015 Jean-Francois B..
         +                 mathastext                +
         +                                           +
         +      `Use the text font in math mode'     +
-        +             v1.3d  2014/05/23             +
+        +             v1.3e  2015/09/10             +
         +             2589111+jfbu@users.noreply.github.com             +
         +-------------------------------------------+
 
@@ -132,6 +132,11 @@ can be customized to change the font size or set other options therein.
 
 
 CHANGE LOG
+
+1.3e [2015/09/10]
+
+   * bugfix regarding option nosmalldelims and bad side effet on 
+\lbrace, \rbrace.
 
 [2015/02/26]: mention is made in the documentation of the improved
 compatibility of mathastext with the latest (3.34) beamer release.
