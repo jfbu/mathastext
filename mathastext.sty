@@ -22,9 +22,9 @@
 %% in the same archive or directory.)
 %%----------------------------------------------------------------
 %% Package: mathastext
-%% Use the text font in math mode (jfB)
-%% Version: 1.3e (2015/09/10; doc of 2015/09/10)
-%% License: LPPL 1.3c
+%% Info:    Use the text font in math mode (jfB)
+%% Version: 1.3f 2015/09/12
+%% License: LPPL 1.3c (http://www.latex-project.org/lppl/lppl-1-3c.txt)
 %% Copyright (C) 2011-2015 Jean-Francois B. <2589111+jfbu@users.noreply.github.com>
 %% Examples of use of mathastext:
 %%        mathastext.html
@@ -32,7 +32,7 @@
 %%----------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage {mathastext}
-  [2015/09/10 v1.3e Use the text font in math mode (jfB)]
+  [2015/09/12 v1.3f Use the text font in math mode (jfB)]
 \newif\ifmst@XeTeX
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname XeTeXinterchartoks\endcsname\relax
@@ -228,7 +228,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \@ifundefined{resetMathstrut@}{% nothing to do, no amsmath
     }{% amsmath loaded, and possibly patched by things such as lualatex-math
     \let\mst@savedresetMathstrut@\resetMathstrut@
-    \PackageWarning{mathastext}{current meaning of amsmath
+    \PackageInfo{mathastext}{current meaning of amsmath
       \string\resetMathstrut@\space saved}%
     \ifx\mst@the\the % means that \MTnonlettersobeymathxx was used in preamble
       \let\mst@the\@gobble\MTnonlettersobeymathxx
@@ -243,7 +243,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \ifx\mst@the\@gobble
     \else
       \@ifundefined{mst@savedresetMathstrut@}{}{%
-        \PackageWarning{mathastext}{restoring (for this group or environment) amsmath \string\resetMathstrut@}%
+        \PackageInfo{mathastext}{restoring (for this group or environment) amsmath \string\resetMathstrut@}%
       \let\resetMathstrut@\mst@savedresetMathstrut@}%
     \fi
     \let\mst@the\@gobble
@@ -264,7 +264,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
                         \the\textfont\symoperators\char40}%
            \ht\Mathstrutbox@\ht\z@ \dp\Mathstrutbox@\dp\z@}%
         \fi
-      \PackageWarning{mathastext}{\string\resetMathstrut@\space
+      \PackageInfo{mathastext}{\string\resetMathstrut@\space
       from amsmath replaced (for this group or environment)}}%
     \fi
     \let\mst@the\the
