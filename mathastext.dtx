@@ -2,14 +2,14 @@
 % N.B.: this dtx file does NOT use \DocInput (only docstrip), the
 % LaTeX source of the documentation is NOT prefixed with % signs.
 %<*dtx>
-{\def\dtxtimestamp {Time-stamp: <12-09-2015 12:23:48 CEST>}% 
+{\def\dtxtimestamp {Time-stamp: <15-10-2015 21:35:11 CEST>}% 
  \def\getdtxtimestamp #1 <#2 #3 #4>{#2 at #3 #4}%
  \xdef\dtxtimestamp {\expandafter\getdtxtimestamp\dtxtimestamp }}%
-\def\docdate{2015/09/12}
+\def\docdate{2015/10/15}
 %</dtx>
 %<*drv|ins>
-\def\MSTpkgdate    {2015/09/12} 
-\def\MSTpkgversion {1.3f}
+\def\MSTpkgdate    {2015/10/15} 
+\def\MSTpkgversion {1.3g}
 %</drv|ins>
 %<*dtx>
 \iffalse % meta-comment
@@ -20,7 +20,7 @@
             +                                           +
             +                mathastext                 +
             +                                           +
-            +     'Use the text font in math mode'     +
+            +     'Use the text font in math mode'      +
             +                                           +
             +-------------------------------------------+
 
@@ -31,7 +31,7 @@ The Author of this Work is Jean-Francois B.
 
 Copyright (C) 2011-2015 Jean-Francois B. (`2589111+jfbu@users.noreply.github.com`)
 
-      Source: mathastext.dtx 1.3f 2015/09/12
+      Source: mathastext.dtx 1.3g 2015/10/15
 
 %</readme>
 %<*dtx>
@@ -47,7 +47,7 @@ not include the documented source code then, in contrast to 1a)+1b) method
 %%----------------------------------------------------------------
 %% Package: mathastext
 %% Info:    Use the text font in math mode (jfB)
-%% Version: 1.3f 2015/09/12
+%% Version: 1.3g 2015/10/15
 %% License: LPPL 1.3c (http://www.latex-project.org/lppl/lppl-1-3c.txt)
 %% Copyright (C) 2011-2015 Jean-Francois B. <2589111+jfbu@users.noreply.github.com>
 %% Examples of use of mathastext:
@@ -181,7 +181,7 @@ Main options: `italic`, `subdued`, `LGRgreek`.
   - `eulergreek`: use the Euler font for the Greek letters,
   - `symbolgreek`: use the Postscript Symbol font for the
      Greek letters.
-  - `LGRgreek`: use the document text font in LGR encoding
+  - `LGRgreek`: use the document text font in LGR encoding.
      Further options specify the shape of the lowercase
      and uppercase Greek glyphs; starting with v1.15c it is
      possible to use multiple distinct LGR fonts in the
@@ -197,12 +197,10 @@ INSTALLATION
 
 ### From `mathastext.tds.zip`
 
-
-This is the fastest way is: `unzip -d <destfolder> mathastext.tds.zip`,
+This is the fastest way: `unzip -d <destfolder> mathastext.tds.zip`,
 where `<destfolder>` could be `~/texmf` or (macosx), `~/Library/texmf`.
 
 ### From `mathastext.dtx`
-
 
 - with mathastext.ins: run tex on mathastext.ins to generate the package
   style file mathastext.sty as well as mathastext.tex and some test
@@ -238,6 +236,14 @@ This produces the documentation without the source code.
 CHANGE LOG
 ==========
 
+1.3g \[2015/10/15\]
+----
+
+* following `2015/10/01` LaTeX release, removal of the `"luatex"` 
+  prefix from the names of the LuaLaTeX math primitives. Compatibility
+  maintained with older LaTeX formats.
+  
+
 1.3f \[2015/09/12\]
 ----
 
@@ -246,8 +252,7 @@ CHANGE LOG
   potentially stressful to some users.
 
 * the `README` self-extracts from the `dtx` source, as a text
-  file `README.md` with Markdown syntax (which is appropriately
-  rendered on the http://ctan.org/pkg/mathastext site).
+  file `README.md` with Markdown syntax.
 
 
 1.3e \[2015/09/10\]
@@ -1348,6 +1353,13 @@ LGRgreek]{mathastext}
 % \hyperref[ssec:beamer]{better compatibility} with |beamer|.
 
 \begin{description}[leftmargin=0.5em]
+\item [Changes for release |1.3g|  of |2015/10/15|]
+\begin{itemize}[noitemsep]
+\item following |2015/10/01| LaTeX release, removal of the |"luatex"|
+  prefix from the names of LuaLaTeX math primitives. Compatibility
+  maintained with older LaTeX formats.
+\end{itemize}
+
 \item [Changes for release |1.3f|  of |2015/09/12|]
 \begin{itemize}[noitemsep]
 \item if the package needs to replace |amsmath|'s
@@ -3661,7 +3673,7 @@ Numerous examples will be found there:\\
     \catcode`\\ 12
 |long|gdef|@DTXLOGhelper #1 ----#2|par{|@@DTXLOGhelper #1\[\]|par}
 |long|gdef|@@DTXLOGhelper #1\[#2\]#3|par%
-    {|textbf{#1}%
+    {|textbf{#1}% le #1 ici contient un espace
      |ifx|relax #2|relax|else [#2]|fi
      |par|nopagebreak}
 |endgroup
@@ -3741,19 +3753,37 @@ Numerous examples will be found there:\\
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage {mathastext}
-  [2015/09/12 v1.3f Use the text font in math mode (jfB)]
+  [2015/10/15 v1.3g Use the text font in math mode (jfB)]
 %    \end{macrocode}
 % Testing for XeTeX and LuaLaTeX. I should load some package for this code which
 % I copied somewhere (perhaps from the |iftex| package? or some post on
 % |comp.text.tex|).  2013/01/01: at least
 % the code now does not overwrite previous \cs{ifXeTeX} or \cs{ifLuaTeX}...
+%
+% |1.3g 2015/10/15|: update for the naming of primitives, the situation has
+% evolved both on XeTeX side and on the LuaLaTeX side (LaTeX base 2015/10/01):
+% I was told "U" named math primitives were always available for LuaLaTeX. For
+% XeTeX, XeTeX prefix got replaced by U prefix with 0.99.. a certain number of
+% 9. I opted for rather simple approach of just trying the "modern" names and
+% if they don't exist fall back on earlier (and in danger of being deprecated)
+% names.
 %    \begin{macrocode}
+  \let\mst@Umathcharnumdef\Umathcharnumdef
+  \let\mst@Umathcodenum   \Umathcodenum
+  \let\mst@Umathcode      \Umathcode
+  \let\mst@Umathchardef   \Umathchardef
 \newif\ifmst@XeTeX
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname XeTeXinterchartoks\endcsname\relax
   \mst@XeTeXfalse
 \else
   \mst@XeTeXtrue
+  \ifx\mst@Umathcharnumdef\undefined
+    \let\mst@Umathcharnumdef\XeTeXmathcharnumdef
+    \let\mst@Umathcodenum   \XeTeXmathcodenum
+    \let\mst@Umathcode      \XeTeXmathcode
+    \let\mst@Umathchardef   \XeTeXmathchardef
+  \fi
 \fi
 \newif\ifmst@LuaTeX
 \begingroup\expandafter\expandafter\expandafter\endgroup
@@ -3761,7 +3791,16 @@ Numerous examples will be found there:\\
   \mst@LuaTeXfalse
 \else
   \mst@LuaTeXtrue
+  \ifx\mst@Umathcharnumdef\undefined
+    \let\mst@Umathcharnumdef\luatexUmathcharnumdef
+    \let\mst@Umathcodenum   \luatexUmathcodenum
+    \let\mst@Umathcode      \luatexUmathcode
+    \let\mst@Umathchardef   \luatexUmathchardef
+  \fi
 \fi
+\newif\ifmst@Unicode
+\ifmst@LuaTeX\mst@Unicodetrue\fi
+\ifmst@XeTeX \mst@Unicodetrue\fi
 %    \end{macrocode}
 % |1.2|: all inner macros of \mst now starts with |\mst@| for a cleaner
 % name-space. 
@@ -5726,17 +5765,15 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 % XeTeX, not for LuaLatex. Also I do my modifications to \cs{relbar}
 % in a manner testing for the presence of amsmath.
 %    \begin{macrocode}
-\ifmst@nominus\else
-\ifmst@XeTeX
-\XeTeXmathcharnumdef\mst@minus@sign=\XeTeXmathcodenum`\-\relax
+\ifmst@nominus
 \else
-\ifmst@LuaTeX
-\luatexUmathcharnumdef\mst@minus@sign=\luatexUmathcodenum`\-\relax
+  \ifmst@Unicode
+    \mst@Umathcharnumdef\mst@minus@sign=\mst@Umathcodenum`\-\relax
 %% I used this prior to the new \luatexUmathcodenum, as available with TL2013:
 %% \mathchardef\mst@minus@sign=8704\relax % "2200
-\else
-\mathchardef\mst@minus@sign=\mathcode`\-\relax
-\fi\fi
+  \else
+    \mathchardef\mst@minus@sign=\mathcode`\-\relax
+  \fi
 \@ifpackageloaded{amsmath}
 {\def\relbar{\mathrel{\mathpalette\mathsm@sh\mst@minus@sign}}}
 {\DeclareRobustCommand\relbar{\mathrel{\smash\mst@minus@sign}}}
@@ -5764,14 +5801,14 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \def\do@the@endashstuff{\edef\mst@tmp@enc{\encodingdefault}
   \ifx\mst@tmp@enc\mst@eui % xetex+fontspec
   \AtBeginDocument{%
-    \XeTeXmathcode`\-="2 \symmtoperatorfont "2013\relax
-    \XeTeXmathchardef\mst@varfam@minus="7 \symmtoperatorfont "2013\relax
+    \mst@Umathcode`\-="2 \symmtoperatorfont "2013\relax
+    \mst@Umathchardef\mst@varfam@minus="7 \symmtoperatorfont "2013\relax
   }
 \else
   \ifx\mst@tmp@enc\mst@euii % luatex+fontspec
   \AtBeginDocument{%
-    \luatexUmathcode`\-="2 \symmtoperatorfont "2013\relax
-    \luatexUmathchardef\mst@varfam@minus="7 \symmtoperatorfont "2013\relax
+    \mst@Umathcode`\-="2 \symmtoperatorfont "2013\relax
+    \mst@Umathchardef\mst@varfam@minus="7 \symmtoperatorfont "2013\relax
   }
 \else
   \ifx\mst@tmp@enc\mst@ti % T1
@@ -5786,23 +5823,23 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
    \DeclareMathSymbol{-}{\mathbin}{mtoperatorfont}{150}
    \DeclareMathSymbol{\mst@varfam@minus}{\mathalpha}{mtoperatorfont}{150}
 \else % make sure we have neither xetex nor luatex
-   \ifmst@XeTeX\mst@aborttrue\else\ifmst@LuaTeX\mst@aborttrue\else
+   \ifmst@Unicode\mst@aborttrue\else
    \DeclareMathSymbol{-}{\mathbin}{mtoperatorfont}
    \DeclareMathSymbol{\mst@varfam@minus}{\mathalpha}{mtoperatorfont}
 {\expandafter\the\expandafter\csname\mst@tmp@enc\string\textendash\endcsname}
-   \fi\fi
+   \fi
 \fi\fi\fi\fi\fi}
 \def\do@the@emdashstuff{\edef\mst@tmp@enc{\encodingdefault}
 \ifx\mst@tmp@enc\mst@eui % xetex+fontspec
     \AtBeginDocument{%
-      \XeTeXmathcode`\-="2 \symmtoperatorfont "2014\relax
-      \XeTeXmathchardef\mst@varfam@minus="7 \symmtoperatorfont "2014\relax
+      \mst@Umathcode`\-="2 \symmtoperatorfont "2014\relax
+      \mst@Umathchardef\mst@varfam@minus="7 \symmtoperatorfont "2014\relax
     }
 \else
 \ifx\mst@tmp@enc\mst@euii % luatex+fontspec
     \AtBeginDocument{%
-      \luatexUmathcode`\-="2 \symmtoperatorfont "2014\relax
-      \luatexUmathchardef\mst@varfam@minus="7 \symmtoperatorfont "2014\relax
+      \mst@Umathcode`\-="2 \symmtoperatorfont "2014\relax
+      \mst@Umathchardef\mst@varfam@minus="7 \symmtoperatorfont "2014\relax
     }
 \else
   \ifx\mst@tmp@enc\mst@ti % T1
@@ -5817,11 +5854,11 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
    \DeclareMathSymbol{-}{\mathbin}{mtoperatorfont}{151}
    \DeclareMathSymbol{\mst@varfam@minus}{\mathalpha}{mtoperatorfont}{151}
 \else % make sure we have neither xetex nor luatex
-   \ifmst@XeTeX\mst@aborttrue\else\ifmst@LuaTeX\mst@aborttrue\else
+   \ifmst@Unicode\mst@aborttrue\else
    \DeclareMathSymbol{-}{\mathbin}{mtoperatorfont}
    \DeclareMathSymbol{\mst@varfam@minus}{\mathalpha}{mtoperatorfont}
 {\expandafter\the\expandafter\csname\mst@tmp@enc\string\textemdash\endcsname}
-   \fi\fi
+   \fi
 \fi\fi\fi\fi\fi}
 \ifmst@nominus\else\typeout{** minus as endash}
 \mst@abortfalse
@@ -5863,10 +5900,10 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \def\mst@mathrlapinternal#1#2{\rlap{$\mathsurround=0pt#1{#2}$}}
 \def\do@the@hbarstuff{\edef\mst@tmp@enc{\encodingdefault}
 \ifx\mst@tmp@enc\mst@eui % xetex and unicode font
-  \XeTeXmathchardef\hbar="7 \symmtletterfont "0127 \relax 
+   \mst@Umathchardef\hbar="7 \symmtletterfont "0127 \relax 
 \else
 \ifx\mst@tmp@enc\mst@euii % luatex and unicode font
-   \luatexUmathchardef\hbar="7 \symmtletterfont "0127 \relax %% or 210F?
+   \mst@Umathchardef\hbar="7 \symmtletterfont "0127 \relax %% or 210F?
 \else % I must leave open the T1, OT1 possibility also for XeTeX or LuaTeX 
     \ifx\mst@ti\mst@tmp@enc
     \DeclareMathAccent{\mst@ltbar}{\mathalpha}{mtletterfont}{9}
@@ -5900,14 +5937,11 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \expandafter\mst@addtodo@nonletters\string+\mathbin\mst@varfam@plus
 \fi
 \ifmst@noequal\else
-\ifmst@XeTeX
-\XeTeXmathcharnumdef\mst@equal@sign=\XeTeXmathcodenum`\=\relax
+\ifmst@Unicode
+    \mst@Umathcharnumdef\mst@equal@sign=\mst@Umathcodenum`\=\relax
 \else
-\ifmst@LuaTeX
-\luatexUmathcharnumdef\mst@equal@sign=\luatexUmathcodenum`\=\relax
-\else
-\mathchardef\mst@equal@sign=\mathcode`\=\relax
-\fi\fi
+    \mathchardef\mst@equal@sign=\mathcode`\=\relax
+\fi
 \@ifpackageloaded{amsmath}
 {\def\Relbar{\mathrel\mst@equal@sign}}
 {\DeclareRobustCommand\Relbar{\mathrel{\mst@equal@sign}}}
@@ -6035,13 +6069,11 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 % \begin{macro}{\models}
 % |1.15d|: 13 oct 2012. Before modifying \string| we must preserve \cs{models}. 
 %    \begin{macrocode}
-\ifmst@XeTeX
-\XeTeXmathcharnumdef\mst@vert@bar=\XeTeXmathcodenum`\|\relax
+\ifmst@Unicode
+  \mst@Umathcharnumdef\mst@vert@bar=\mst@Umathcodenum`\|\relax
 \else
-\ifmst@LuaTeX
-\luatexUmathcharnumdef\mst@vert@bar=\luatexUmathcodenum`\|\relax
-\else\mathchardef\mst@vert@bar=\mathcode`\|\relax
-\fi\fi
+  \mathchardef\mst@vert@bar=\mathcode`\|\relax
+\fi
 \DeclareRobustCommand\models{\mathrel{\mst@vert@bar}\joinrel\Relbar}
 %    \end{macrocode}
 % \end{macro}
@@ -6131,33 +6163,23 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %  accomodate more than 16 math families. Code for XeTeX and LuaTeX again added.
 %  (and since TL2013 no more problems with |\luatexUmathcode|.)
 %    \begin{macrocode}
-\ifmst@nospecials\else
+\ifmst@nospecials
+\else
    \typeout{** \string\#\space\string\mathdollar\space
                \string\%\space\string\&\space}
-\ifmst@XeTeX 
-  \XeTeXmathcode`\#="0 \symmtoperatorfont "0023 \relax
-  \XeTeXmathchardef\mathdollar="0 \symmtoperatorfont "0024 \relax
-  \XeTeXmathcode`\%="0 \symmtoperatorfont "0025 \relax
-  \XeTeXmathcode`\&="0 \symmtoperatorfont "0026 \relax
-  \mst@do@easynonletters\expandafter{\the\mst@do@easynonletters
-    \XeTeXmathcode`\#="7 \symmtoperatorfont "0023 \relax
-    \XeTeXmathchardef\mathdollar="7 \symmtoperatorfont "0024 \relax
-    \XeTeXmathcode`\%="7 \symmtoperatorfont "0025 \relax
-    \XeTeXmathcode`\&="7 \symmtoperatorfont "0026 \relax 
-  }
-\else
-\ifmst@LuaTeX
-  \luatexUmathcode`\#="0 \symmtoperatorfont "0023 \relax
-  \luatexUmathchardef\mathdollar="0 \symmtoperatorfont "0024 \relax
-  \luatexUmathcode`\%="0 \symmtoperatorfont "0025 \relax
-  \luatexUmathcode`\&="0 \symmtoperatorfont "0026 \relax
-  \mst@do@easynonletters\expandafter{\the\mst@do@easynonletters
-    \luatexUmathcode`\#="7 \symmtoperatorfont "0023 \relax
-    \luatexUmathchardef\mathdollar="7 \symmtoperatorfont "0024 \relax
-    \luatexUmathcode`\%="7 \symmtoperatorfont "0025 \relax
-    \luatexUmathcode`\&="7 \symmtoperatorfont "0026 \relax
-  }
-\else
+  \ifmst@Unicode
+  \mst@Umathcode`\#="0 \symmtoperatorfont "0023 \relax
+  \mst@Umathchardef\mathdollar="0 \symmtoperatorfont "0024 \relax
+  \mst@Umathcode`\%="0 \symmtoperatorfont "0025 \relax
+  \mst@Umathcode`\&="0 \symmtoperatorfont "0026 \relax
+  \mst@do@easynonletters\expandafter{%
+    \the\mst@do@easynonletters
+    \mst@Umathcode`\#="7 \symmtoperatorfont "0023 \relax
+    \mst@Umathchardef\mathdollar="7 \symmtoperatorfont "0024 \relax
+    \mst@Umathcode`\%="7 \symmtoperatorfont "0025 \relax
+    \mst@Umathcode`\&="7 \symmtoperatorfont "0026 \relax
+    }
+  \else
   \count255=\symmtoperatorfont
   \multiply\count255 by 256
   \advance\count255 by 35
@@ -6183,7 +6205,8 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \let\mathdollar\mst@varfam@mathdollar
     \mathcode`\%=\mst@varfam@mathpercent
     \mathcode`\&=\mst@varfam@mathampersand}
-\fi\fi\fi
+  \fi
+\fi
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{symbolmisc}
@@ -6764,12 +6787,12 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \edef\mst@tmp@enc{\encodingdefault}
 \mst@goaheadtrue
 \ifx\mst@tmp@enc\mst@eui % xetex and unicode font
-  \XeTeXmathchardef\inodot="7 \symmtletterfont "0131 \relax
-  \XeTeXmathchardef\jnodot="7 \symmtletterfont "0237 \relax
+  \mst@Umathchardef\inodot="7 \symmtletterfont "0131 \relax
+  \mst@Umathchardef\jnodot="7 \symmtletterfont "0237 \relax
 \else
 \ifx\mst@tmp@enc\mst@euii % luatex and unicode font
-   \luatexUmathchardef\inodot="7 \symmtletterfont "0131 \relax
-   \luatexUmathchardef\jnodot="7 \symmtletterfont "0237 \relax
+   \mst@Umathchardef\inodot="7 \symmtletterfont "0131 \relax
+   \mst@Umathchardef\jnodot="7 \symmtletterfont "0237 \relax
 \else 
 \ifx\mst@tmp@enc\mst@ti % T1
    \DeclareMathSymbol{\inodot}{\mathalpha}{mtletterfont}{25}
@@ -6783,12 +6806,12 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
    \DeclareMathSymbol{\inodot}{\mathalpha}{mtletterfont}{16}
    \DeclareMathSymbol{\jnodot}{\mathalpha}{mtletterfont}{17}
 \else
-   \ifmst@XeTeX\mst@goaheadfalse\else\ifmst@LuaTeX\mst@goaheadfalse\else
+   \ifmst@Unicode\mst@goaheadfalse\else
    \DeclareMathSymbol{\inodot}{\mathalpha}{mtletterfont}
 {\expandafter\the\expandafter\csname\mst@tmp@enc\string\i\endcsname}
    \DeclareMathSymbol{\jnodot}{\mathalpha}{mtletterfont}
 {\expandafter\the\expandafter\csname\mst@tmp@enc\string\j\endcsname}
-   \fi\fi
+   \fi
 \fi\fi\fi\fi\fi
 \ifmst@defaultimath\else\typeout{** \string\i\space and \string\j\space}
   \ifmst@goahead
@@ -6904,7 +6927,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
   Grave accent  \`     Left brace    \{     Vertical bar  \|
   Right brace   \}     Tilde         \~}
 
-\CheckSum{5176}
+\CheckSum{5153}
 \makeatletter\check@checksum\makeatother
 \Finale
 %%

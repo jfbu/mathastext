@@ -3,7 +3,7 @@
             +                                           +
             +                mathastext                 +
             +                                           +
-            +     'Use the text font in math mode'     +
+            +     'Use the text font in math mode'      +
             +                                           +
             +-------------------------------------------+
 
@@ -14,7 +14,7 @@ The Author of this Work is Jean-Francois B.
 
 Copyright (C) 2011-2015 Jean-Francois B. (`2589111+jfbu@users.noreply.github.com`)
 
-      Source: mathastext.dtx 1.3f 2015/09/12
+      Source: mathastext.dtx 1.3g 2015/10/15
 
 > cumulative Change Log at bottom of this file.
 
@@ -70,7 +70,7 @@ Main options: `italic`, `subdued`, `LGRgreek`.
   - `eulergreek`: use the Euler font for the Greek letters,
   - `symbolgreek`: use the Postscript Symbol font for the
      Greek letters.
-  - `LGRgreek`: use the document text font in LGR encoding
+  - `LGRgreek`: use the document text font in LGR encoding.
      Further options specify the shape of the lowercase
      and uppercase Greek glyphs; starting with v1.15c it is
      possible to use multiple distinct LGR fonts in the
@@ -85,7 +85,7 @@ INSTALLATION
 
 ### From `mathastext.tds.zip`
 
-This is the fastest way is: `unzip -d <destfolder> mathastext.tds.zip`,
+This is the fastest way: `unzip -d <destfolder> mathastext.tds.zip`,
 where `<destfolder>` could be `~/texmf` or (macosx), `~/Library/texmf`.
 
 ### From `mathastext.dtx`
@@ -124,6 +124,13 @@ This produces the documentation without the source code.
 CHANGE LOG
 ==========
 
+1.3g \[2015/10/15\]
+----
+
+* following `2015/10/01` LaTeX release, removal of the `"luatex"`
+  prefix from the names of the LuaLaTeX math primitives. Compatibility
+  maintained with older LaTeX formats.
+
 1.3f \[2015/09/12\]
 ----
 
@@ -132,8 +139,7 @@ CHANGE LOG
   potentially stressful to some users.
 
 * the `README` self-extracts from the `dtx` source, as a text
-  file `README.md` with Markdown syntax (which is appropriately
-  rendered on the http://ctan.org/pkg/mathastext site).
+  file `README.md` with Markdown syntax.
 
 1.3e \[2015/09/10\]
 ----
