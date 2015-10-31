@@ -23,7 +23,7 @@
 %%----------------------------------------------------------------
 %% Package: mathastext
 %% Info:    Use the text font in math mode (jfB)
-%% Version: 1.3g 2015/10/15
+%% Version: 1.3h 2015/10/31
 %% License: LPPL 1.3c (http://www.latex-project.org/lppl/lppl-1-3c.txt)
 %% Copyright (C) 2011-2015 Jean-Francois B. <2589111+jfbu@users.noreply.github.com>
 %% Examples of use of mathastext:
@@ -32,7 +32,7 @@
 %%----------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage {mathastext}
-  [2015/10/15 v1.3g Use the text font in math mode (jfB)]
+  [2015/10/31 v1.3h Use the text font in math mode (jfB)]
   \let\mst@Umathcharnumdef\Umathcharnumdef
   \let\mst@Umathcodenum   \Umathcodenum
   \let\mst@Umathcode      \Umathcode
@@ -63,9 +63,9 @@
     \let\mst@Umathchardef   \luatexUmathchardef
   \fi
 \fi
-\newif\ifmst@Unicode
-\ifmst@LuaTeX\mst@Unicodetrue\fi
-\ifmst@XeTeX \mst@Unicodetrue\fi
+\newif\ifmst@XeOrLua
+\ifmst@LuaTeX\mst@XeOrLuatrue\fi
+\ifmst@XeTeX \mst@XeOrLuatrue\fi
 \def\mst@oti{OT1}\def\mst@ti{T1}\def\mst@lyi{LY1}
 \def\mst@eui{EU1}\def\mst@euii{EU2}
 \newif\ifmst@goahead
@@ -1116,7 +1116,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \fi
 \ifmst@nominus
 \else
-  \ifmst@Unicode
+  \ifmst@XeOrLua
     \mst@Umathcharnumdef\mst@minus@sign=\mst@Umathcodenum`\-\relax
 %% I used this prior to the new \luatexUmathcodenum, as available with TL2013:
 %% \mathchardef\mst@minus@sign=8704\relax % "2200
@@ -1158,7 +1158,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
    \DeclareMathSymbol{-}{\mathbin}{mtoperatorfont}{150}
    \DeclareMathSymbol{\mst@varfam@minus}{\mathalpha}{mtoperatorfont}{150}
 \else % make sure we have neither xetex nor luatex
-   \ifmst@Unicode\mst@aborttrue\else
+   \ifmst@XeOrLua\mst@aborttrue\else
    \DeclareMathSymbol{-}{\mathbin}{mtoperatorfont}
    \DeclareMathSymbol{\mst@varfam@minus}{\mathalpha}{mtoperatorfont}
 {\expandafter\the\expandafter\csname\mst@tmp@enc\string\textendash\endcsname}
@@ -1189,7 +1189,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
    \DeclareMathSymbol{-}{\mathbin}{mtoperatorfont}{151}
    \DeclareMathSymbol{\mst@varfam@minus}{\mathalpha}{mtoperatorfont}{151}
 \else % make sure we have neither xetex nor luatex
-   \ifmst@Unicode\mst@aborttrue\else
+   \ifmst@XeOrLua\mst@aborttrue\else
    \DeclareMathSymbol{-}{\mathbin}{mtoperatorfont}
    \DeclareMathSymbol{\mst@varfam@minus}{\mathalpha}{mtoperatorfont}
 {\expandafter\the\expandafter\csname\mst@tmp@enc\string\textemdash\endcsname}
@@ -1232,7 +1232,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \expandafter\mst@addtodo@nonletters\string+\mathbin\mst@varfam@plus
 \fi
 \ifmst@noequal\else
-\ifmst@Unicode
+\ifmst@XeOrLua
     \mst@Umathcharnumdef\mst@equal@sign=\mst@Umathcodenum`\=\relax
 \else
     \mathchardef\mst@equal@sign=\mathcode`\=\relax
@@ -1301,7 +1301,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \DeclareMathSymbol{\mst@varfam@setminus}{\mathalpha}{mtoperatorfont}{"5C}
 \mst@do@nonletters\expandafter{\the\mst@do@nonletters
             \def\setminus{\mathbin{\mst@varfam@setminus}}}
-\ifmst@Unicode
+\ifmst@XeOrLua
   \mst@Umathcharnumdef\mst@vert@bar=\mst@Umathcodenum`\|\relax
 \else
   \mathchardef\mst@vert@bar=\mathcode`\|\relax
@@ -1343,7 +1343,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \else
    \typeout{** \string\#\space\string\mathdollar\space
                \string\%\space\string\&\space}
-  \ifmst@Unicode
+  \ifmst@XeOrLua
   \mst@Umathcode`\#="0 \symmtoperatorfont "0023 \relax
   \mst@Umathchardef\mathdollar="0 \symmtoperatorfont "0024 \relax
   \mst@Umathcode`\%="0 \symmtoperatorfont "0025 \relax
@@ -1552,11 +1552,11 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
   \DeclareMathSymbol{\mst@chi}    {\mathalpha}{mteulervm}{"1F}
   \DeclareMathSymbol{\mst@psi}    {\mathalpha}{mteulervm}{"20}
   \DeclareMathSymbol{\mst@omega}  {\mathalpha}{mteulervm}{"21}
-  \let\mst@varrho=\mst@rho
-  \let\mst@varsigma=\mst@sigma
   \DeclareMathSymbol{\mst@varepsilon}{\mathalpha}{mteulervm}{"22}
   \DeclareMathSymbol{\mst@vartheta}{\mathalpha}{mteulervm}{"23}
   \DeclareMathSymbol{\mst@varpi}  {\mathalpha}{mteulervm}{"24}
+  \let\mst@varrho=\mst@rho
+  \let\mst@varsigma=\mst@sigma
   \DeclareMathSymbol{\mst@varphi} {\mathalpha}{mteulervm}{"27}
   \DeclareMathSymbol{\mst@partial}{\mathalpha}{mteulervm}{"40}
   \DeclareMathSymbol{\mst@wp}{\mathalpha}{mteulervm}{"7D}
@@ -1601,26 +1601,27 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \ifmst@LGRgreek
 \DeclareMathSymbol{\mst@Alpha}{\mathalpha}{mtlgrfontupper}{65}
 \DeclareMathSymbol{\mst@Beta}{\mathalpha}{mtlgrfontupper}{66}
-\DeclareMathSymbol{\mst@Gamma}{\mathalpha}{mtlgrfontupper}{71}
-\DeclareMathSymbol{\mst@Delta}{\mathalpha}{mtlgrfontupper}{68}
 \DeclareMathSymbol{\mst@Epsilon}{\mathalpha}{mtlgrfontupper}{69}
 \DeclareMathSymbol{\mst@Zeta}{\mathalpha}{mtlgrfontupper}{90}
 \DeclareMathSymbol{\mst@Eta}{\mathalpha}{mtlgrfontupper}{72}
-\DeclareMathSymbol{\mst@Theta}{\mathalpha}{mtlgrfontupper}{74}
 \DeclareMathSymbol{\mst@Iota}{\mathalpha}{mtlgrfontupper}{73}
 \DeclareMathSymbol{\mst@Kappa}{\mathalpha}{mtlgrfontupper}{75}
-\DeclareMathSymbol{\mst@Lambda}{\mathalpha}{mtlgrfontupper}{76}
 \DeclareMathSymbol{\mst@Mu}{\mathalpha}{mtlgrfontupper}{77}
 \DeclareMathSymbol{\mst@Nu}{\mathalpha}{mtlgrfontupper}{78}
-\DeclareMathSymbol{\mst@Xi}{\mathalpha}{mtlgrfontupper}{88}
 \DeclareMathSymbol{\mst@Omicron}{\mathalpha}{mtlgrfontupper}{79}
-\DeclareMathSymbol{\mst@Pi}{\mathalpha}{mtlgrfontupper}{80}
 \DeclareMathSymbol{\mst@Rho}{\mathalpha}{mtlgrfontupper}{82}
-\DeclareMathSymbol{\mst@Sigma}{\mathalpha}{mtlgrfontupper}{83}
 \DeclareMathSymbol{\mst@Tau}{\mathalpha}{mtlgrfontupper}{84}
+\DeclareMathSymbol{\mst@Chi}{\mathalpha}{mtlgrfontupper}{81}
+\DeclareMathSymbol{\mst@Digamma}{\mathalpha}{mtlgrfontlower}{195}
+\DeclareMathSymbol{\mst@Gamma}{\mathalpha}{mtlgrfontupper}{71}
+\DeclareMathSymbol{\mst@Delta}{\mathalpha}{mtlgrfontupper}{68}
+\DeclareMathSymbol{\mst@Theta}{\mathalpha}{mtlgrfontupper}{74}
+\DeclareMathSymbol{\mst@Lambda}{\mathalpha}{mtlgrfontupper}{76}
+\DeclareMathSymbol{\mst@Xi}{\mathalpha}{mtlgrfontupper}{88}
+\DeclareMathSymbol{\mst@Pi}{\mathalpha}{mtlgrfontupper}{80}
+\DeclareMathSymbol{\mst@Sigma}{\mathalpha}{mtlgrfontupper}{83}
 \DeclareMathSymbol{\mst@Upsilon}{\mathalpha}{mtlgrfontupper}{85}
 \DeclareMathSymbol{\mst@Phi}{\mathalpha}{mtlgrfontupper}{70}
-\DeclareMathSymbol{\mst@Chi}{\mathalpha}{mtlgrfontupper}{81}
 \DeclareMathSymbol{\mst@Psi}{\mathalpha}{mtlgrfontupper}{89}
 \DeclareMathSymbol{\mst@Omega}{\mathalpha}{mtlgrfontupper}{87}
 \DeclareMathSymbol{\mst@alpha}{\mathalpha}{mtlgrfontlower}{97}
@@ -1640,7 +1641,6 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \DeclareMathSymbol{\mst@omicron}{\mathalpha}{mtlgrfontlower}{111}
 \DeclareMathSymbol{\mst@pi}{\mathalpha}{mtlgrfontlower}{112}
 \DeclareMathSymbol{\mst@rho}{\mathalpha}{mtlgrfontlower}{114}
-\DeclareMathSymbol{\mst@varsigma}{\mathalpha}{mtlgrfontlower}{99}
 \DeclareMathSymbol{\mst@sigma}{\mathalpha}{mtlgrfontlower}{115}
 \DeclareMathSymbol{\mst@tau}{\mathalpha}{mtlgrfontlower}{116}
 \DeclareMathSymbol{\mst@upsilon}{\mathalpha}{mtlgrfontlower}{117}
@@ -1649,7 +1649,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \DeclareMathSymbol{\mst@psi}{\mathalpha}{mtlgrfontlower}{121}
 \DeclareMathSymbol{\mst@omega}{\mathalpha}{mtlgrfontlower}{119}
 \DeclareMathSymbol{\mst@digamma}{\mathalpha}{mtlgrfontlower}{147}
-\DeclareMathSymbol{\mst@Digamma}{\mathalpha}{mtlgrfontlower}{195}
+\DeclareMathSymbol{\mst@varsigma}{\mathalpha}{mtlgrfontlower}{99}
 \fi
 \newcommand*{\MTstandardgreek}{}
 \newcommand*{\MTcustomgreek}{}
@@ -1780,38 +1780,38 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \renewcommand*{\MTcustomgreek}{%
     \let\Alpha\mst@Alpha
     \let\Beta\mst@Beta
-    \let\Gamma\mst@Gamma
-    \let\Delta\mst@Delta
     \let\Epsilon\mst@Epsilon
     \let\Zeta\mst@Zeta
     \let\Eta\mst@Eta
-    \let\Theta\mst@Theta
     \let\Iota\mst@Iota
     \let\Kappa\mst@Kappa
-    \let\Lambda\mst@Lambda
     \let\Mu\mst@Mu
     \let\Nu\mst@Nu
-    \let\Xi\mst@Xi
     \let\Omicron\mst@Omicron
-    \let\Pi\mst@Pi
     \let\Rho\mst@Rho
-    \let\Sigma\mst@Sigma
     \let\Tau\mst@Tau
+    \let\Chi\mst@Chi
+    \ifmst@symbolgreek\else\let\Digamma\mst@Digamma\fi
+    \let\Gamma\mst@Gamma
+    \let\Delta\mst@Delta
+    \let\Theta\mst@Theta
+    \let\Lambda\mst@Lambda
+    \let\Xi\mst@Xi
+    \let\Pi\mst@Pi
+    \let\Sigma\mst@Sigma
     \let\Upsilon\mst@Upsilon
     \let\Phi\mst@Phi
-    \let\Chi\mst@Chi
     \let\Psi\mst@Psi
     \let\Omega\mst@Omega
+ \ifmst@selfGreek\else
     \let\alpha\mst@alpha
     \let\beta\mst@beta
     \let\gamma\mst@gamma
     \let\delta\mst@delta
     \let\epsilon\mst@epsilon
-    \let\varepsilon\mst@varepsilon
     \let\zeta\mst@zeta
     \let\eta\mst@eta
     \let\theta\mst@theta
-    \let\vartheta\mst@vartheta
     \let\iota\mst@iota
     \let\kappa\mst@kappa
     \let\lambda\mst@lambda
@@ -1820,23 +1820,27 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \let\xi\mst@xi
     \let\omicron\mst@omicron
     \let\pi\mst@pi
-    \let\varpi\mst@varpi
     \let\rho\mst@rho
-    \let\varrho\mst@varrho
     \let\sigma\mst@sigma
-    \let\varsigma\mst@varsigma
     \let\tau\mst@tau
     \let\upsilon\mst@upsilon
     \let\phi\mst@phi
-    \let\varphi\mst@varphi
     \let\chi\mst@chi
     \let\psi\mst@psi
     \let\omega\mst@omega
-    \let\Digamma\mst@Digamma
-    \let\digamma\mst@digamma
-    \let\partial\mst@partial
-    \let\wp\mst@wp
-    \let\ell\mst@ell
+    \ifmst@LGRgreek\let\digamma\mst@digamma\fi
+    \let\varsigma\mst@varsigma
+    \ifmst@LGRgreek\else
+      \let\varepsilon\mst@varepsilon
+      \let\vartheta\mst@vartheta
+      \let\varpi\mst@varpi
+      \let\varrho\mst@varrho
+      \let\varphi\mst@varphi
+      \let\partial\mst@partial
+      \let\wp\mst@wp
+      \ifmst@symbolgreek\else\let\ell\mst@ell\fi
+    \fi
+ \fi
 }
 \fi
 \let\Mathastextstandardgreek\MTstandardgreek
@@ -1864,7 +1868,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
    \DeclareMathSymbol{\inodot}{\mathalpha}{mtletterfont}{16}
    \DeclareMathSymbol{\jnodot}{\mathalpha}{mtletterfont}{17}
 \else
-   \ifmst@Unicode\mst@goaheadfalse\else
+   \ifmst@XeOrLua\mst@goaheadfalse\else
    \DeclareMathSymbol{\inodot}{\mathalpha}{mtletterfont}
 {\expandafter\the\expandafter\csname\mst@tmp@enc\string\i\endcsname}
    \DeclareMathSymbol{\jnodot}{\mathalpha}{mtletterfont}

@@ -14,7 +14,7 @@ The Author of this Work is Jean-Francois B.
 
 Copyright (C) 2011-2015 Jean-Francois B. (`2589111+jfbu@users.noreply.github.com`)
 
-      Source: mathastext.dtx 1.3g 2015/10/15
+      Source: mathastext.dtx 1.3h 2015/10/31
 
 > cumulative Change Log at bottom of this file.
 
@@ -123,6 +123,14 @@ This produces the documentation without the source code.
 
 CHANGE LOG
 ==========
+
+1.3h \[2015/10/31\]
+----
+
+* bugfixes: since `1.3d 2014/05/23` the option `symbolgreek` caused
+  `\ell` to become undefined, and, similarly but far worse, options
+  `selfGreek`, `selfGreeks` caused all lowercase Greek letters
+  `\alpha`, `\beta`, etc.. to become undefined.
 
 1.3g \[2015/10/15\]
 ----
