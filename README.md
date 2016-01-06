@@ -14,7 +14,7 @@ The Author of this Work is Jean-Francois B.
 
 Copyright (C) 2011-2015 Jean-Francois B. (`2589111+jfbu@users.noreply.github.com`)
 
-      Source: mathastext.dtx 1.3h 2015/10/31
+      Source: mathastext.dtx 1.3i 2016/01/06
 
 > cumulative Change Log at bottom of this file.
 
@@ -123,6 +123,16 @@ This produces the documentation without the source code.
 
 CHANGE LOG
 ==========
+
+1.3i \[2016/01/06\]
+----
+
+* `\url` from `url.sty` as well as `\url` and `\nolinkurl` from
+  `hyperref.sty` use math mode and (by default) the monotype text
+  font. To avoid mathastext overwriting the
+  special preparation done by `{url,hyperref}.sty` the commands
+  `\url/\nolinkurl` are patched to do automatically `\MTactivemathoff`
+  before entering math mode.
 
 1.3h \[2015/10/31\]
 ----
