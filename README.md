@@ -12,9 +12,9 @@ of the [LPPL1.3c](http://www.latex-project.org/lppl/lppl-1-3c.txt)
 
 The Author of this Work is Jean-Francois B.
 
-Copyright (C) 2011-2015 Jean-Francois B. (`2589111+jfbu@users.noreply.github.com`)
+Copyright (C) 2011-2016 Jean-Francois B. (`2589111+jfbu@users.noreply.github.com`)
 
-      Source: mathastext.dtx 1.3i 2016/01/06
+      Source: mathastext.dtx 1.3j 2016/01/15
 
 > cumulative Change Log at bottom of this file.
 
@@ -124,15 +124,50 @@ This produces the documentation without the source code.
 CHANGE LOG
 ==========
 
+1.3j \[2016/01/15\]
+----
+
+* renamed and modified recent `1.3i`'s `\MTactivemathoff` into
+  `\MTeverymathoff`. Added `\MTeverymathdefault`.
+
+* `subdued` mode is a bit stronger: also the asterisk reverts to the
+  default (if it was modified due to option `asterisk`), the added
+  extra `\mskip`'s (useful with upright fonts) for `'`, `\exists`,
+  and `\forall` are suppressed rather than re-configured to use `0mu`.
+  Related new commands `\MTexistsdoesskip`, `\MTforalldoesskip`,
+  `\MTprimedoesskip`, `\MTnormalexists`, `\MTnormalforall`,
+  `\MTnormalprime`.
+
+* the toggle for using mathematically active letters is only emitted
+  once during package loading; the `\Mathastext` command does not do
+  it anymore; the use in the preamble of `\MTmathstandardletters`,
+  or `\MTnoicinmath` and related commands is not overruled by later
+  use of `\Mathastext`.
+
+* quite a few documentation improvements and rewrites, particularly
+  in the description of commands which are related to the
+  modifications of mathcodes (mainly for math activation of
+  characters or letters) as done by mathastext at `\everymath` or
+  `\everydisplay`.
+
 1.3i \[2016/01/06\]
 ----
 
 * `\url` from `url.sty` as well as `\url` and `\nolinkurl` from
   `hyperref.sty` use math mode and (by default) the monotype text
-  font. To avoid mathastext overwriting the
-  special preparation done by `{url,hyperref}.sty` the commands
-  `\url/\nolinkurl` are patched to do automatically `\MTactivemathoff`
+  font. To avoid mathastext overwriting the special preparation done
+  by `{url,hyperref}.sty` the commands `\url/\nolinkurl` are patched
+  to do automatically `MTactivemathoff` (now `\MTeverymathoff`)
   before entering math mode.
+
+* the extra skips specified by `\MTsetmathskips` are not inserted
+  around letters if inside the arguments of math alphabet commands,
+  or within operator names.
+
+* the added explicit italic corrections (for non-oblique fonts) were
+  disabled within math alphabet scopes, except `mathnormal`; they
+  are now disabled within all math alphabets, inclusive of
+  `mathnormal`.
 
 1.3h \[2015/10/31\]
 ----
