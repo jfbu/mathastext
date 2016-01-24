@@ -1,0 +1,308 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!-- jfbu: for people like me having problems with too high dpi screens -->
+  <style type="text/css">body{font-size: 14pt;}</style>
+  <!-- jfbu: allows pre-formatted text to flow (CSS3) -->
+  <style type="text/css">
+      code {white-space: pre-wrap;}
+      pre  {white-space: pre-wrap;}
+  </style>
+</head>
+<body>
+<div id="TOC">
+<ul>
+<li><a href="#description">DESCRIPTION</a></li>
+<li><a href="#usage">USAGE</a></li>
+<li><a href="#installation">INSTALLATION</a><ul>
+<li><a href="#from-mathastext.tds.zip">From <code>mathastext.tds.zip</code></a></li>
+<li><a href="#from-mathastext.dtx">From <code>mathastext.dtx</code></a></li>
+<li><a href="#generating-documentation-and-test-files">Generating documentation and test files</a></li>
+</ul></li>
+<li><a href="#change-log">CHANGE LOG</a><ul>
+<li><a href="#k-20160124">1.3k [2016/01/24]</a></li>
+<li><a href="#j-20160115">1.3j [2016/01/15]</a></li>
+<li><a href="#i-20160106">1.3i [2016/01/06]</a></li>
+<li><a href="#h-20151031">1.3h [2015/10/31]</a></li>
+<li><a href="#g-20151015">1.3g [2015/10/15]</a></li>
+<li><a href="#f-20150912">1.3f [2015/09/12]</a></li>
+<li><a href="#e-20150910">1.3e [2015/09/10]</a></li>
+<li><a href="#d-20150226">1.3d [2015/02/26]</a></li>
+<li><a href="#d-20140523">1.3d [2014/05/23]</a></li>
+<li><a href="#c-20131214">1.3c [2013/12/14]</a></li>
+<li><a href="#a-20130904">1.3a [2013/09/04]</a></li>
+<li><a href="#section">1.3 [2013/09/02]</a></li>
+<li><a href="#f-20130121">1.2f [2013/01/21]</a></li>
+<li><a href="#e-20130110">1.2e [2013/01/10]</a></li>
+<li><a href="#d-20130102">1.2d [2013/01/02]</a></li>
+<li><a href="#c-20121231">1.2c [2012/12/31]</a></li>
+<li><a href="#section-1">1.2 [2012/12/20]</a></li>
+<li><a href="#f-and-1.15g-20121025">1.15f and 1.15g [2012/10/25]</a></li>
+<li><a href="#e-20121022">1.15e [2012/10/22]</a></li>
+<li><a href="#d-20121013">1.15d [2012/10/13]</a></li>
+<li><a href="#c-20121005">1.15c [2012/10/05]</a></li>
+<li><a href="#b">1.15b</a></li>
+<li><a href="#section-2">1.15 [2012/09/26]</a></li>
+<li><a href="#c">1.14c</a></li>
+<li><a href="#b-20110403">1.14b [2011/04/03]</a></li>
+<li><a href="#section-3">1.14</a></li>
+<li><a href="#b-1">1.13b</a></li>
+<li><a href="#section-4">1.13 [2011/03/11]</a></li>
+<li><a href="#section-5">1.12</a></li>
+<li><a href="#section-6">1.11 [2011/02/06]</a></li>
+<li><a href="#section-7">1.1 [2011/02/01]</a></li>
+<li><a href="#section-8">1.0 [2011/01/25]</a></li>
+</ul></li>
+</ul>
+</div>
+<!-- -->
+<pre><code>        +-------------------------------------------+
+        +                                           +
+        +                mathastext                 +
+        +                                           +
+        +     &#39;Use the text font in math mode&#39;      +
+        +                                           +
+        +-------------------------------------------+</code></pre>
+<p>This Work may be distributed and/or modified under the conditions of the <a href="http://www.latex-project.org/lppl/lppl-1-3c.txt">LPPL1.3c</a></p>
+<p>The Author of this Work is Jean-Francois B.</p>
+<p>Copyright (C) 2011-2016 Jean-Francois B. (<code>2589111+jfbu@users.noreply.github.com</code>)</p>
+<pre><code>  Source: mathastext.dtx 1.3k 2016/01/24</code></pre>
+<blockquote>
+<p>cumulative Change Log at bottom of this file.</p>
+</blockquote>
+<h1 id="description">DESCRIPTION</h1>
+<p>Optimal typographical results for documents containing mathematical symbols can only be hoped for with math fonts specifically designed to match a given text typeface. Although the list of freely available math fonts (alongside the Computer Modern and AMS extension fonts) is slowly expanding (fourier, kpfonts, mathdesign, pxfonts, txfonts, newpx, newtx, ...) it remains limited, and the situation is even worse with Unicode fonts (XeTeX/LuaTeX). So if you can't find a math font which fits well with your favorite text font, and wish to still be able to typeset mathematical documents, perhaps not of the highest typographical quality, but at least not subjected to obvious visual incompatibilities between your text font and the math fonts, try out mathastext: it will simply use the text font also for the math!</p>
+<ul>
+<li><a href="mathastext.html" class="uri">mathastext.html</a></li>
+<li><a href="showcase.html" class="uri">showcase.html</a></li>
+</ul>
+<h1 id="usage">USAGE</h1>
+<p><code>mathastext</code> is a LaTeX package</p>
+<pre><code>  \usepackage{mathastext}</code></pre>
+<p>The document will use in math mode the text font as configured at package loading time, for these characters:</p>
+<pre><code>  abcdefghijklmnopqrstuvwxyz
+  ABCDEFGHIJKLMNOPQRSTUVWXYZ
+  0123456789
+  !?,.:;+-=()[]/#$%&amp;&lt;&gt;|{}\</code></pre>
+<p>Main options: <code>italic</code>, <code>subdued</code>, <code>LGRgreek</code>.</p>
+<ul>
+<li>Use the <code>italic</code> option to get the Latin letters in math mode be in italics. Digits and log-like operator names (pre-defined as well as user-defined) will be in the same shape as the text font (usually this means upright).</li>
+<li>each <code>\Mathastext[&lt;name&gt;]</code> in the preamble defines a math version to be later activated in the document body via the command <code>\MTversion{&lt;name&gt;}</code>.</li>
+<li>With the <code>subdued</code> option, mathastext will be active only inside such math versions.</li>
+<li>For documents needing Greek letters the following is possible:</li>
+<li>no option: Greek letters defined by other packages,</li>
+<li><code>eulergreek</code>: use the Euler font for the Greek letters,</li>
+<li><code>symbolgreek</code>: use the Postscript Symbol font for the Greek letters.</li>
+<li><code>LGRgreek</code>: use the document text font in LGR encoding. Further options specify the shape of the lowercase and uppercase Greek glyphs; starting with v1.15c it is possible to use multiple distinct LGR fonts in the same document.</li>
+<li>Commands are provided to scale the Euler and Symbol fonts by an arbitrary factor to let them fit better with the document text font.</li>
+<li><code>\MTsetmathskips</code> allows to set up extra spacings around letters.</li>
+</ul>
+<h1 id="installation">INSTALLATION</h1>
+<h3 id="from-mathastext.tds.zip">From <code>mathastext.tds.zip</code></h3>
+<p>This is the fastest way: <code>unzip -d &lt;destfolder&gt; mathastext.tds.zip</code>, where <code>&lt;destfolder&gt;</code> could be <code>~/texmf</code> or (macosx), <code>~/Library/texmf</code>.</p>
+<h3 id="from-mathastext.dtx">From <code>mathastext.dtx</code></h3>
+<ul>
+<li>with mathastext.ins: run tex on mathastext.ins to generate the package style file mathastext.sty as well as mathastext.tex and some test files.</li>
+<li>without mathastext.ins: run tex (or etex) on mathastext.dtx to generate the package style file mathastext.sty as well as mathastext.tex and some test files. (and also mathastext.ins)</li>
+<li>Move the style file mathastext.sty to a location where TeX can find it. In a TDS compliant hierarchy this will be <TDS>:tex/latex/mathastext/mathastext.sty</li>
+</ul>
+<h3 id="generating-documentation-and-test-files">Generating documentation and test files</h3>
+<p>Run tex (or etex) on mathastext.dtx to generate mathastext.tex and some test files:</p>
+<pre><code>mathastexttestmathversions.tex
+mathastexttestunicodemacos.tex
+mathastexttestunicodelinux.tex
+mathastexttestalphabets.tex</code></pre>
+<p>To generate the documentation (with source code):</p>
+<pre><code>latex mathastext.tex (thrice)
+dvipdfmx mathastext.dvi</code></pre>
+<p>The file mathastext.tex can be customized to change the font size or set other options therein. Alternative: pdflatex mathastext.dtx (thrice). This produces the documentation without the source code.</p>
+<blockquote>
+<p>(One cannot use lualatex/xelatex to compile the documentation.)</p>
+</blockquote>
+<h1 id="change-log">CHANGE LOG</h1>
+<h2 id="k-20160124">1.3k [2016/01/24]</h2>
+<ul>
+<li>typos fixed in the documentation. In particular, the README link to the package homepage had remained broken from day one of the package releases: <code>mathastext.html</code> therein was misspelled as <code>mathsastext.html</code> ! (but the pdf documentation had the correct link; as well as the CTAN catalogue).</li>
+</ul>
+<h2 id="j-20160115">1.3j [2016/01/15]</h2>
+<ul>
+<li><p>renamed and modified recent <code>1.3i</code>'s <code>\MTactivemathoff</code> into <code>\MTeverymathoff</code>. Added <code>\MTeverymathdefault</code>.</p></li>
+<li><p><code>subdued</code> mode is a bit stronger: also the asterisk reverts to the default (if it was modified due to option <code>asterisk</code>), the added extra <code>\mskip</code>'s (useful with upright fonts) for <code>'</code>, <code>\exists</code>, and <code>\forall</code> are suppressed rather than re-configured to use <code>0mu</code>. Related new commands <code>\MTexistsdoesskip</code>, <code>\MTforalldoesskip</code>, <code>\MTprimedoesskip</code>, <code>\MTnormalexists</code>, <code>\MTnormalforall</code>, <code>\MTnormalprime</code>.</p></li>
+<li><p>the toggle for using mathematically active letters is only emitted once during package loading; the <code>\Mathastext</code> command does not do it anymore; the use in the preamble of <code>\MTmathstandardletters</code>, or <code>\MTnoicinmath</code> and related commands is not overruled by later use of <code>\Mathastext</code>.</p></li>
+<li><p>quite a few documentation improvements and rewrites, particularly in the description of commands which are related to the modifications of mathcodes (mainly for math activation of characters or letters) as done by mathastext at <code>\everymath</code> or <code>\everydisplay</code>.</p></li>
+</ul>
+<h2 id="i-20160106">1.3i [2016/01/06]</h2>
+<ul>
+<li><p><code>\url</code> from <code>url.sty</code> as well as <code>\url</code> and <code>\nolinkurl</code> from <code>hyperref.sty</code> use math mode and (by default) the monospace text font. To avoid mathastext overwriting the special preparation done by <code>{url,hyperref}.sty</code> the commands <code>\url/\nolinkurl</code> are patched to do automatically <code>MTactivemathoff</code> (now <code>\MTeverymathoff</code>) before entering math mode.</p></li>
+<li><p>the extra skips specified by <code>\MTsetmathskips</code> are not inserted around letters if inside the arguments of math alphabet commands, or within operator names.</p></li>
+<li><p>the added explicit italic corrections (for non-oblique fonts) were disabled within math alphabet scopes, except <code>mathnormal</code>; they are now disabled within all math alphabets, inclusive of <code>mathnormal</code>.</p></li>
+</ul>
+<h2 id="h-20151031">1.3h [2015/10/31]</h2>
+<ul>
+<li>bugfixes: since <code>1.3d 2014/05/23</code> the option <code>symbolgreek</code> caused <code>\ell</code> to become undefined, and, similarly but far worse, options <code>selfGreek</code>, <code>selfGreeks</code> caused all lowercase Greek letters <code>\alpha</code>, <code>\beta</code>, etc.. to become undefined.</li>
+</ul>
+<h2 id="g-20151015">1.3g [2015/10/15]</h2>
+<ul>
+<li>following <code>2015/10/01</code> LaTeX release, removal of the <code>&quot;luatex&quot;</code> prefix from the names of the LuaLaTeX math primitives. Compatibility maintained with older LaTeX formats.</li>
+</ul>
+<h2 id="f-20150912">1.3f [2015/09/12]</h2>
+<ul>
+<li><p>the replacement of amsmath's <code>\resetMathstrut@</code>, when it is done, emits an Info rather than a Warning as this could be potentially stressful to some users.</p></li>
+<li><p>the <code>README</code> self-extracts from the <code>dtx</code> source, as a text file <code>README.md</code> with Markdown syntax.</p></li>
+</ul>
+<h2 id="e-20150910">1.3e [2015/09/10]</h2>
+<ul>
+<li>bugfix: under option nosmalldelims, <code>\lbrace</code> and <code>\rbrace</code> were redefined as math symbols and could not be used as delimiters.</li>
+</ul>
+<h2 id="d-20150226">1.3d [2015/02/26]</h2>
+<ul>
+<li>the documentation mentions the improved compatibility of mathastext with the latest (3.34) beamer release: no more need for <code>\usefonttheme{professionalfonts}</code>.</li>
+</ul>
+<h2 id="d-20140523">1.3d [2014/05/23]</h2>
+<ul>
+<li><p>new commands <code>\MTstandardgreek</code> and <code>\MTcustomgreek</code>.</p></li>
+<li><p>The Greek letters, in case of use of one of the package related options, are left to their defaults in the normal and bold math versions if the subdued option was also used (this was so far the case only with options LGRgreek/LGRgreeks).</p></li>
+<li><p><code>\newmcodes@</code> of amsmath is left untouched if package lualatex-math is detected.</p></li>
+</ul>
+<h2 id="c-20131214">1.3c [2013/12/14]</h2>
+<ul>
+<li><p>added a starred variant to <code>\MTversion</code> which tells mathastext to only do the math set-up and not modify the text fonts.</p></li>
+<li><p>added second optional version name argument to <code>\Mathastext</code> and to <code>\MTDeclareVersion</code>, to transfer settings for things not otherwise changed by mathastext from a math version to the one declared. This is mainly for symbols and large symbols to be the bold ones when the user sets up the series of a mathastextified font to be bold in a mathastext-declared version.</p></li>
+<li><p>renamed <code>\defaultprod</code> to <code>\MToriginalprod</code>, <code>\defaultsum</code> to <code>\MToriginalsum</code>, (this is in case of option symbolmisc).</p></li>
+<li><p>changes to the dtx organization; options for generating the documentation can be customized in generated mathastext.tex file.</p></li>
+<li><p>1.2d code for <code>\#</code>, <code>\$</code>, <code>\%</code>, and <code>\&amp;</code> modified erroneously the earlier correct 1.2c code and created a bug showing up with more than 16 math families (a possibility only with lualatex or xelatex).</p></li>
+</ul>
+<h2 id="a-20130904">1.3a [2013/09/04]</h2>
+<ul>
+<li><p>the somewhat silly <code>\string</code>'s are removed from the <code>\MTsetmathskips</code> command of release 1.3, thus allowing its first argument to be a macro, or any expandable code, giving a letter.</p></li>
+<li><p>the amsmath <code>\resetMathstrut@</code>, which is incompatible with a mathematically active parenthesis ( is now modified only if necessary (i.e. only when <code>\MTnonlettersobeymathxx</code> is issued) and is restored to its original value if not needed anymore (i.e. after <code>\MTnonlettersdonotobeymathxx</code>, as for example when switching to the normal version under option subdued).</p></li>
+<li><p>improved documentation.</p></li>
+</ul>
+<h2 id="section">1.3 [2013/09/02]</h2>
+<ul>
+<li><p>commands <code>\MTsetmathskips</code> and <code>\MTunsetmathskips</code> added.</p></li>
+<li><p>commands <code>\MTmathactiveletters</code> and <code>\MTmathstandardletters</code> to govern the math activation of letters independently of its use for insertion of the italic corrections (<code>\MTicinmath</code> and <code>\MTnoicinmath</code> correspondingly modified).</p></li>
+<li><p>the new <code>\luatexUmathcodenum</code> as available since TL2013 allows identical treatment by mathastext of = and - under both LuaTeX and XeTeX.</p></li>
+<li><p><code>\newmcodes@</code> of amsmath is left untouched in case of option basic.</p></li>
+<li><p>a sentence containing | which was written to the log during the loading caused a problem if | was active (typically if <code>\MakeShortVerb</code>{\|} was added to the preamble prior to the loading of mathastext).</p></li>
+<li><p>some preemptive measures taken regarding things such as <code>\mid</code>, <code>\lbrace</code>, and <code>\rbrace</code>, as some packages define these things in manners which made the re-definitions done by mathastext issue errors.</p></li>
+</ul>
+<h2 id="f-20130121">1.2f [2013/01/21]</h2>
+<ul>
+<li>minor code improvements. Change log added to the user manual.</li>
+</ul>
+<h2 id="e-20130110">1.2e [2013/01/10]</h2>
+<p>This version should be the last one in the 1.2 series as it seems to correct most of the main problems which were introduced with the massive use of mathematically active characters in versions 1.2 and 1.2b.</p>
+<ul>
+<li><p>It is indeed a thorny point when one wants to modify only in math mode how an active character acts, without breaking things. The package now does that /only/ if the activation appears to originate in the Babel system, as it is then possible to modify appropriately the Babel macros <code>\user@active&lt;char&gt;</code> and <code>\normal@char&lt;char&gt;</code>. The relevant issues are discussed in section 2.10 of the user manual, in the test file mathastexttestalphabets.tex, and in the source code comments to the macro <code>\mst@mathactivate</code>. The inherent incompatibility of Babel with packages having made mathematically active the characters itself makes document active is circumvented by this interference of mathastext. A generally applicable Babel patch could be derived from the method used by mathastext.</p></li>
+<li><p>The technique of mathematical activation is maintained only for the characters which are not catcode active (at the entrance in math mode, as mathastext does all its activation job at everymath and everydisplay).</p></li>
+<li><p>Sadly, the feature of added italic corrections introduced in version 1.2b did not behave as described in the user manual, due to forgotten group braces. Fixed.</p></li>
+<li><p>The command <code>\MTlowerast</code> from the user manual of v1.2d was not the one implemented in the source code. Fixed.</p></li>
+<li><p>The test files automatically extracted from a latex run on the dtx file have been revised and extended.</p></li>
+<li><p>The code is better documented.</p></li>
+</ul>
+<h2 id="d-20130102">1.2d [2013/01/02]</h2>
+<ul>
+<li><p>an incompatibility with amsmath (its macro <code>\resetMathstrut@</code>), exists since version 1.2 of the package. This is fixed here.</p></li>
+<li><p>various improvements in dealing with the asterisk and in the mechanism of letting non-letter symbols obey the math alphabet commands.</p></li>
+<li><p>documentation extended and improved.</p></li>
+</ul>
+<h2 id="c-20121231">1.2c [2012/12/31]</h2>
+<ul>
+<li><p>mathastext now inserts automatically after all (latin) letters in math mode their italic corrections, if the font used is upright (sic). This improves the spacings for the positioning of subscripts. The feature is de-activated inside the math alphabets commands (apart from <code>\mathnormal</code>), so as to not prohibit the formation of ligatures,</p></li>
+<li><p>the documentation has been extended to explain in detail the issues which are relevant to the new feature of added italic corrections,</p></li>
+<li><p>version 1.2 had some bad bugs when confronted to active characters. This is corrected and additionally <code>\MTnonlettersdonotobeymathxx</code> is made the default, as the user input is too much constrained in its absence.</p></li>
+<li><p>a less fatal, but still annoying, typo had made the dot in 1.2 of type <code>\mathpunct</code> rather than <code>\mathord</code></p></li>
+<li><p>the inner namespace has been rationalized a bit.</p></li>
+</ul>
+<h2 id="section-1">1.2 [2012/12/20]</h2>
+<ul>
+<li><p>a new command sets up the amount of space to be automatically inserted before the derivative glyph (useful when using an upright font).</p></li>
+<li><p>the scope of the math alphabets has been extended to apply to the non-alphabetical characters, and also to operator names.</p></li>
+<li><p>the format of the dtx file has changed. The package file is self-extracting from the dtx, and four additional test files are also produced during <code>latex mathastext.dtx</code>.</p></li>
+</ul>
+<h2 id="f-and-1.15g-20121025">1.15f and 1.15g [2012/10/25]</h2>
+<ul>
+<li><p><code>\$</code>, <code>\#</code>, <code>\&amp;</code>, and <code>\%</code> had been re-defined by mathastext since its inception in a rather strange (but working) way, which could cause surprises to other packages. Fixed.</p></li>
+<li><p>the subdued mechanism for the math alphabets is implemented in a simpler and more efficient manner than in 1.15e.</p></li>
+<li><p>the <code>defaultxx</code> options act a bit differently, and are more useful in case of a <code>too many math alphabets</code> situation.</p></li>
+<li><p>various improvements in the documentation.</p></li>
+<li><p>general clean up and better commenting of the source code.</p></li>
+</ul>
+<h2 id="e-20121022">1.15e [2012/10/22]</h2>
+<ul>
+<li><p>new user commands to specify skip or glue to be inserted after the math symbols <code>\exists</code> and <code>\forall</code></p></li>
+<li><p>complete (user transparent) rewrite of the code implementing the subdued option; and its action has been extended to apply also to the <code>\mathbf</code>, <code>\mathit</code>, <code>\mathsf</code>, <code>\mathtt</code> alphabets and not only to <code>\mathrm</code> and <code>\mathnormal</code> as in the previous versions.</p></li>
+<li><p>improvements in the documentation.</p></li>
+</ul>
+<h2 id="d-20121013">1.15d [2012/10/13]</h2>
+<ul>
+<li><p>the Unicode situation is now correctly treated, throughout the code (this had been left in a half-done way from version 1.14 of April 2011).</p></li>
+<li><p>this includes an issue related to amsmath and its DeclareMathOperator macro which has been fixed,</p></li>
+<li><p>and the code related to <code>\relbar</code> and <code>\Relbar</code> (and <code>\models</code>) has been revised.</p></li>
+</ul>
+<h2 id="c-20121005">1.15c [2012/10/05]</h2>
+<ul>
+<li><p>it is now possible to use distinct fonts in LGR encoding for the Greek letters according to the current math version.</p></li>
+<li><p>improvements to the documentation.</p></li>
+</ul>
+<h2 id="b">1.15b</h2>
+<ul>
+<li><p>corrected a 'feature' of 1.15 which was backward-incompatible</p></li>
+<li><p>improvements to the pdf documentation</p></li>
+</ul>
+<h2 id="section-2">1.15 [2012/09/26]</h2>
+<ul>
+<li><p>the subdued option allows the mathastextification to act only locally.</p></li>
+<li><p>some measures taken to deal with amsmath related issues when using xetex or luatex.</p></li>
+</ul>
+<h2 id="c">1.14c</h2>
+<ul>
+<li>a bug is fixed: the <code>\Mathastext</code> macro reinitializes the fonts in the normal and bold math versions, but it also erroneously redeclared the math alphabet changing commands which could have been set up in previously defined math versions (via earlier calls to <code>\Mathastext</code>[version_name]).</li>
+</ul>
+<h2 id="b-20110403">1.14b [2011/04/03]</h2>
+<ul>
+<li><p>there was a bug with <code>\$</code>, <code>\#</code>, <code>\&amp;</code>, <code>\%</code> in math mode which showed up when ten or more math families had been declared. This bug affected also the minus sign under the same circumstances, when Unicode engines were used. Fixed.</p></li>
+<li><p>the options LGRgreek and selfGreek act now a bit differently, and new options LGRgreeks and selfGreeks have been defined.</p></li>
+<li><p>I also cleaned up a bit the code, for a more structured namespace.</p></li>
+</ul>
+<h2 id="section-3">1.14</h2>
+<ul>
+<li>mathastext now modifies also the math alphabets <code>\mathit</code>, <code>\mathsf</code> and <code>\mathtt</code>, thus making it a quite generic complete manner to adapt the math configuration to fonts provided with no math support.</li>
+</ul>
+<h2 id="b-1">1.13b</h2>
+<ul>
+<li>when the Symbol font is used for <code>\prod</code> and <code>\sum</code> this will be only for inline math; display math will use the default glyphs</li>
+</ul>
+<h2 id="section-4">1.13 [2011/03/11]</h2>
+<ul>
+<li><p>the LGRgreek option is added.</p></li>
+<li><p>internal changes for better readability of the code.</p></li>
+</ul>
+<h2 id="section-5">1.12</h2>
+<ul>
+<li><p>various bugs have been corrected.</p></li>
+<li><p>the endash and alldelims options are active by default.</p></li>
+<li><p>the package is more Unicode aware.</p></li>
+<li><p>the <code>\Mathastext</code> command has been improved to facilitate the mechanism of math versions also when using XeTeX or LuaTeX (with package fontspec.)</p></li>
+<li><p>the en-dash and dotless i and j now work with all encodings, Unicode inclusive.</p></li>
+</ul>
+<h2 id="section-6">1.11 [2011/02/06]</h2>
+<ul>
+<li>optional argument to <code>\Mathastext</code> macro.</li>
+</ul>
+<h2 id="section-7">1.1 [2011/02/01]</h2>
+<ul>
+<li>options italic and frenchmath.</li>
+</ul>
+<h2 id="section-8">1.0 [2011/01/25]</h2>
+<ul>
+<li>Initial version.</li>
+</ul>
+</body>
+</html>

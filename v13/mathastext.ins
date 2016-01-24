@@ -1,14 +1,15 @@
+\def\MSTpkgdate    {2016/01/24}
+\def\MSTpkgversion {1.3k}
 %%----------------------------------------------------------------
 %% Package: mathastext
-%% Version: 1.3d (2014/05/23; doc of 2015/02/26)
-%% License: LPPL 1.3c
-%% Copyright (C) 2011-2015 Jean-Francois B. <2589111+jfbu@users.noreply.github.com>
+%% Info:    Use the text font in math mode (jfB)
+%% Version: 1.3k 2016/01/24
+%% License: LPPL 1.3c (http://www.latex-project.org/lppl/lppl-1-3c.txt)
+%% Copyright (C) 2011-2016 Jean-Francois B. <2589111+jfbu@users.noreply.github.com>
 %% Examples of use of mathastext:
 %%        mathastext.html
 %%        showcase.html
 %%----------------------------------------------------------------
-\def\MSTpkgdate    {2014/05/23}
-\def\MSTpkgversion {1.3d}
 %% This is a generated file. "tex mathastext.ins" extracts mathastext.sty from
 %% mathastext.dtx as well as mathastext.tex (for typesetting the documentation),
 %% and some test files to check the package commands.
@@ -22,7 +23,9 @@
         \string\def\string\testfileincipit{Test file
         to accompany \string\texttt{mathastext}^^J%
         version \string\texttt{\MSTpkgversion} of \string\texttt{\MSTpkgdate}}}
-\generate{\nopreamble
+\generate{\nopreamble\nopostamble
+  \file{README.md}{\from{mathastext.dtx}{readme}}
+\usepostamble\defaultpostamble
   \file{mathastext.tex}{\from{mathastext.dtx}{drv}}
 \usepreamble\testfilepreamble
   \file{mathastexttestmathversions.tex}{\from{mathastext.dtx}{mathversions}}
