@@ -23,7 +23,7 @@
 %%----------------------------------------------------------------
 %% Package: mathastext
 %% Info:    Use the text font in math mode (jfB)
-%% Version: 1.3j 2016/01/15
+%% Version: 1.3k 2016/01/24
 %% License: LPPL 1.3c (http://www.latex-project.org/lppl/lppl-1-3c.txt)
 %% Copyright (C) 2011-2016 Jean-Francois B. <2589111+jfbu@users.noreply.github.com>
 %% Examples of use of mathastext:
@@ -32,7 +32,7 @@
 %%----------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage {mathastext}
-  [2016/01/15 v1.3j Use the text font in math mode (jfB)]
+  [2016/01/24 v1.3k Use the text font in math mode (jfB)]
   \let\mst@Umathcharnumdef\Umathcharnumdef
   \let\mst@Umathcodenum   \Umathcodenum
   \let\mst@Umathcode      \Umathcode
@@ -216,26 +216,26 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
    \let\mst@stdexists\exists
    \let\mst@stdforall\forall
    \def\MTnormalexists {\let\exists\mst@stdexists }%
-   \def\MTexistsdoesskip  {\let\exists\mst@exists    }%
+   \def\MTexistsdoesskip  {\let\exists\mst@exists }%
    \def\MTnormalforall {\let\forall\mst@stdforall }%
-   \def\MTforalldoesskip  {\let\forall\mst@forall    }%
+   \def\MTforalldoesskip  {\let\forall\mst@forall }%
    \ifmst@subdued
    \else
      \MTexistsdoesskip
      \MTforalldoesskip
    \fi
 }%
-\newcommand*\MTnormalexists {\AtBeginDocument {\MTnormalexists }}
-\newcommand*\MTexistsdoesskip  {\AtBeginDocument {\MTexistsdoesskip  }}
-\newcommand*\MTnormalforall {\AtBeginDocument {\MTnormalforall }}
-\newcommand*\MTforalldoesskip  {\AtBeginDocument {\MTforalldoesskip  }}
+\newcommand*\MTnormalexists   {\AtBeginDocument {\MTnormalexists   }}
+\newcommand*\MTexistsdoesskip {\AtBeginDocument {\MTexistsdoesskip }}
+\newcommand*\MTnormalforall   {\AtBeginDocument {\MTnormalforall   }}
+\newcommand*\MTforalldoesskip {\AtBeginDocument {\MTforalldoesskip }}
 \newmuskip\mst@prime@muskip   %% v 1.2
 \def\mst@prime@skip{.5mu}
 \ifmst@italic\ifmst@frenchmath\else\def\mst@prime@skip{0mu}\fi\fi
 \def\mst@active@math@prime{\sp\bgroup\mskip\mst@prime@muskip\prim@s}
 {\catcode`\'=12
 \gdef\mst@@modifyprime{\mst@mathactivate'{}\mst@active@math@prime}}
-\newcommand*\MTnormalprime{\let\mst@modifyprime\@empty }
+\newcommand*\MTnormalprime   {\let\mst@modifyprime\@empty }
 \newcommand*\MTprimedoesskip {\let\mst@modifyprime\mst@@modifyprime}
 \ifmst@subdued
     \MTnormalprime

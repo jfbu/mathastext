@@ -2,14 +2,14 @@
 % N.B.: this dtx file does NOT use \DocInput (only docstrip), the
 % LaTeX source of the documentation is NOT prefixed with % signs.
 %<*dtx>
-{\def\dtxtimestamp {Time-stamp: <15-01-2016 19:01:41 CET>}%
+{\def\dtxtimestamp {Time-stamp: <24-01-2016 18:07:48 CET>}%
  \def\getdtxtimestamp #1 <#2 #3 #4>{#2 at #3 #4}%
  \xdef\dtxtimestamp {\expandafter\getdtxtimestamp\dtxtimestamp }}%
-\def\docdate{2016/01/15}
+\def\docdate{2016/01/24}
 %</dtx>
 %<*drv|ins>
-\def\MSTpkgdate    {2016/01/15}
-\def\MSTpkgversion {1.3j}
+\def\MSTpkgdate    {2016/01/24}
+\def\MSTpkgversion {1.3k}
 %</drv|ins>
 %<*dtx>
 \iffalse % meta-comment
@@ -31,7 +31,7 @@ The Author of this Work is Jean-Francois B.
 
 Copyright (C) 2011-2016 Jean-Francois B. (`2589111+jfbu@users.noreply.github.com`)
 
-      Source: mathastext.dtx 1.3j 2016/01/15
+      Source: mathastext.dtx 1.3k 2016/01/24
 
 %</readme>
 %<*dtx>
@@ -47,7 +47,7 @@ not include the documented source code then, in contrast to 1a)+1b) method
 %%----------------------------------------------------------------
 %% Package: mathastext
 %% Info:    Use the text font in math mode (jfB)
-%% Version: 1.3j 2016/01/15
+%% Version: 1.3k 2016/01/24
 %% License: LPPL 1.3c (http://www.latex-project.org/lppl/lppl-1-3c.txt)
 %% Copyright (C) 2011-2016 Jean-Francois B. <2589111+jfbu@users.noreply.github.com>
 %% Examples of use of mathastext:
@@ -145,7 +145,7 @@ but at least not subjected to obvious visual incompatibilities
 between your text font and the math fonts, try out mathastext: 
 it will simply use the text font also for the math!
 
-- mathsastext.html
+- mathastext.html
 - showcase.html
 
 
@@ -236,6 +236,16 @@ This produces the documentation without the source code.
 CHANGE LOG
 ==========
 
+1.3k \[2016/01/24\]
+----
+
+* typos fixed in the documentation. In particular, the README link to
+  the package homepage had remained broken from day one of the package
+  releases: `mathastext.html` therein was misspelled as
+  `mathsastext.html` ! (but the pdf documentation had the correct link;
+  as well as the CTAN catalogue).
+ 
+ 
 1.3j \[2016/01/15\]
 ----
 
@@ -267,7 +277,7 @@ CHANGE LOG
 ----
 
 * `\url` from `url.sty` as well as `\url` and `\nolinkurl` from
-  `hyperref.sty` use math mode and (by default) the monotype text
+  `hyperref.sty` use math mode and (by default) the monospace text
   font. To avoid mathastext overwriting the special preparation done
   by `{url,hyperref}.sty` the commands `\url/\nolinkurl` are patched
   to do automatically `MTactivemathoff` (now `\MTeverymathoff`)
@@ -1438,6 +1448,11 @@ LGRgreek]{mathastext}
 
 \begin{description}[leftmargin=0.5em]
 
+\item [Changes for release |1.3k|  of |2016/01/24|]
+\begin{itemize}[noitemsep]
+\item Some typos in the documentation have been fixed.
+\end{itemize}
+
 \item [Changes for release |1.3j|  of |2016/01/15|]
 \begin{itemize}[noitemsep]
 \item renamed and modified recent |1.3i|'s \cs{MTactivemathoff} into
@@ -1464,7 +1479,7 @@ LGRgreek]{mathastext}
 \item [Changes for release |1.3i|  of |2016/01/06|]
 \begin{itemize}[noitemsep]
 \item |\url| from |url.sty| as well as |\url| and |\nolinkurl| from
-  |hyperref.sty| use math mode and (by default) the monotype text font. To
+  |hyperref.sty| use math mode and (by default) the monospace text font. To
   avoid \mst overwriting the special preparation done by |{url,hyperref}.sty|
   the commands
   |\url/\nolinkurl| are patched to do automatically \cs{MTactivemathoff} (now
@@ -2118,8 +2133,7 @@ mode. It is recommended to use instead the package command
   alphabets,
 \item in case of option §asterisk§, it re-issues §\MTactiveasterisk§,
 \item it does the additional set-up for Greek letters in case of the package
-  received one the Greek
-  related options.
+  received one of the Greek related options.
 \end{itemize}
 The scope is limited to the current \LaTeX{}
 environment or group. When switching to the \emph{normal} or \emph{bold} math
@@ -2413,7 +2427,7 @@ $\mathit{f_i^i}$\par $\mathrm{f_i^i}$
   the italic corrections. \LuaLaTeX{} does, but only for the italic font.
   pdf\LaTeX{} has them for both the italic and the upright font.}
 
-\subsection{Other extra  glue in math mode}
+\subsection{Extra  glue after \cs{exists}, \cs{forall}, and before the prime glyph}
 \label{sec:extraskips}
 
 \begingroup\MTversion{upright}\renewcommand\familydefault\sfdefault
@@ -2458,16 +2472,13 @@ font it is thus recommended to use the commands in the preamble before the
 the version. They will be remembered when this math version is entered in the
 document. The commands may also be used directly in the document body.
 
-Also, when the §subdued§ option has been used, the normal and bold math versions
-have by default zero length skips. There is no |\MTversion{normal}|\footnote{or
-  even \texttt{\char92MTversion*\{normal\}}.} done implicitely by the package
-when the document body starts (\emph{i.e.} at the level of |\begin{document}|),
-  even when the §subdued§ option is in force. As a result the last use in the
-  preamble of the |\MT...skip| commands decides the skips which will be
-  initially used; this is canceled if |\begin{document}| is followed with
-    |\MTversion{normal}|, in which case the skips used are the ones in force at
-    the latest \cs{Mathastext} (without optional argument) preamble use, or just
-    zero skips under the |subdued| regime.
+Under the §subdued§ option, the \emph{normal} math version (at the start of
+the document body, or after |\MTversion{normal}|) and the \emph{bold} math
+version (either at the start of the document body after \cs{boldmath}, or after
+|\MTversion{bold}|) do not have any extra skip inserted (even one of zero
+width) after $\oldforall$, $ \oldexists$, or before the ${}'$.%
+%
+\footnote{\CHANGED Prior to 1.3j skips of zero widths were inserted.}
 
 \endgroup
 
@@ -2842,9 +2853,7 @@ here two examples which compiled successfully with \XeTeX{} and
 \LuaLaTeX{}, the first one on a Linux machine, the second one on a Mac
 OS X machine.\footnote{running |tex| (in a temporary repertory) on a
   copy of the file |mathastext.dtx| will extract extended versions of
-  these examples as test files. Notice that the |Color=| specifications are not
-  recognized anymore under the current version of \LuaLaTeX{}, they used to be
-  in earlier versions.}
+  these examples as test files.}
 \begin{verbatim}
 \documentclass{article}
 \usepackage[hscale=0.8]{geometry}
@@ -3022,17 +3031,9 @@ the character was mathematically active remained true).
     \begin{framed}
       \textcolor{magenta}{\bfseries New with 1.3i:} the command |\url| of
       package |url|, and the commands |\url/\nolinkurl| of package |hyperref|
-      use math mode and a monotype font (by default). \mst patches these
+      use math mode and a monospace font (by default). \mst patches these
       commands in order for them to do automatically §\MTeverymathoff§.
     \end{framed}
-
-  Regarding $\oldexists$ and $\oldforall$: the old definitions could be
-  saved before loading the package but just
-  |\MTexistsskip{0mu}| and |\MTforallskip{0mu}| should be sufficient, except
-  if it is important that the \cs{exists} and \cs{forall} control sequences
-  always expand to only one token each.
-
-
    
 \section{Package options and commands}
 
@@ -3288,7 +3289,7 @@ again (on January 15, 2016) that
     \end{document}
 \end{verbatim}
 creates an infinite loop (see section \ref{sec:compat} where this was
-mentioned already, some years ago). Thus \mst has (since |1.2b 2012/12/30|) a
+mentioned already, some years ago). Thus \mst has (since |1.2e 2013/01/10|) a
 somewhat elaborate mechanism related to these issues (see the code comments),
 installed into the list of things done by \TeX\ systematically each time
 it enters math mode. For some legacy reason the package also puts into
@@ -3444,8 +3445,8 @@ by \mst to the \cs{everymath} and \cs{everydisplay} token list variables.
   the italic corrections when using upright fonts (see section \ref{sec:ic}).
 
 \item §\MTmathstandardletters§: cancels the `math activation' of the letters.
-  Must be re-issued after each \cs{MTversion}, but see
-  \cs{MTeverymathdefault}.
+  Must be re-issued after each \csb{MTversion}, but see
+  \csb{MTeverymathdefault}.
 
 \item §\MTicinmath§: this command is executed by default by \mst except in
   case of option |subdued| or if the user chosen letter shape is oblique (|it|
@@ -3550,13 +3551,11 @@ by \mst to the \cs{everymath} and \cs{everydisplay} token list variables.
   \csb{MTversion}\marg{version\_name}, except under option |subdued|
   when switching to the \emph{normal} or \emph{bold} math versions. Its
   default meaning is:
-    % {\parfillskip0pt\hfill
-    % \rlap{\kern10pt\textcolor{magenta}{\footnotesize\bfseries New! (1.3j)}}}
 \begin{verbatim}
-    \MTactiveasterisk % no effect without option asterisk
-    \MTprimedoesskip    % extra space before prime glyph
+    \MTactiveasterisk % this has no effect without option asterisk
+    \MTprimedoesskip  % this makes prime glyph obey extra space
     \MTeasynonlettersobeymathxx
-    \MTicinmath       % includes \MTmathactiveletters, hence skips from
+    \MTicinmath       % this does \MTmathactiveletters, hence also skips from
                       % \MTsetmathskips are obeyed.
 \end{verbatim}
   {\footnotesize Notice that under |subdued| option, switching to the
@@ -3565,7 +3564,13 @@ by \mst to the \cs{everymath} and \cs{everydisplay} token list variables.
     §\MTeverymathdefault§ which is issued when going back to a
     non-\emph{normal} or \emph{bold} math version doesn't do
     \cs{MTnonlettersobeymathxx}. It is up to the user to correct this if
-    needed (no issue without |subdued| option).\par}
+    needed (no issue without |subdued| option).
+
+
+Notice also that \csb{MTversion}\marg{version\_name}, except for \emph{normal}
+or \emph{bold} if |subdued| does \csb{MTforalldoesskip} and
+\csb{MTexistsdoesskip}, which are not included in \cs{MTeverymathdefault}
+actions as they are not related to \cs{everymath} and \cs{everydisplay}.\par}
 
 \item \RightNote{New! (1.3j)}§\MTeverymathoff§: does §\MTnormalasterisk§,
   §\MTnormalprime§, §\MTnonlettersdonotobeymathxx§,
@@ -3581,7 +3586,10 @@ by \mst to the \cs{everymath} and \cs{everydisplay} token list variables.
         % \rlap{\kern10pt\textcolor{magenta}{\bfseries New! (1.3i)}}\par}
 
     Automatically done by \csb{MTversion} under option |subdued|
-    when switching to the \emph{normal} or \emph{bold} math versions.\par}
+    if switching to the \emph{normal} or \emph{bold} math versions; and
+    \csb{MTversion} then does also \csb{MTnormalexists} and
+    \csb{MTnormalforall}.
+\par}
 
 \end{enumerate}
 
@@ -4130,7 +4138,7 @@ Numerous examples will be found there:\\
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage {mathastext}
-  [2016/01/15 v1.3j Use the text font in math mode (jfB)]
+  [2016/01/24 v1.3k Use the text font in math mode (jfB)]
 %    \end{macrocode}
 % Testing for XeTeX and LuaLaTeX. I should load some package for this code which
 % I copied somewhere (perhaps from the |iftex| package? or some post on
@@ -4416,19 +4424,26 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
    \let\mst@stdexists\exists
    \let\mst@stdforall\forall
    \def\MTnormalexists {\let\exists\mst@stdexists }%
-   \def\MTexistsdoesskip  {\let\exists\mst@exists    }%
+   \def\MTexistsdoesskip  {\let\exists\mst@exists }%
    \def\MTnormalforall {\let\forall\mst@stdforall }%
-   \def\MTforalldoesskip  {\let\forall\mst@forall    }%
+   \def\MTforalldoesskip  {\let\forall\mst@forall }%
+%    \end{macrocode}
+% The document body starts in the normal math version, whether or not
+% \cs{Mathastext} command as been used in the preamble (which either re-defines
+% the normal/bold math version or defines another one in case of optional
+% argument), and in case of |subdued| option should use the standard $\forall$
+% and $\exists$.
+%    \begin{macrocode}
    \ifmst@subdued
    \else
      \MTexistsdoesskip
      \MTforalldoesskip
    \fi
 }%
-\newcommand*\MTnormalexists {\AtBeginDocument {\MTnormalexists }}
-\newcommand*\MTexistsdoesskip  {\AtBeginDocument {\MTexistsdoesskip  }}
-\newcommand*\MTnormalforall {\AtBeginDocument {\MTnormalforall }}
-\newcommand*\MTforalldoesskip  {\AtBeginDocument {\MTforalldoesskip  }}
+\newcommand*\MTnormalexists   {\AtBeginDocument {\MTnormalexists   }}
+\newcommand*\MTexistsdoesskip {\AtBeginDocument {\MTexistsdoesskip }}
+\newcommand*\MTnormalforall   {\AtBeginDocument {\MTnormalforall   }}
+\newcommand*\MTforalldoesskip {\AtBeginDocument {\MTforalldoesskip }}
 %    \end{macrocode}
 %  \end{macro}\end{macro}\end{macro}\end{macro}
 %  \end{macro}\end{macro}\end{macro}\end{macro}
@@ -4475,7 +4490,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \def\mst@active@math@prime{\sp\bgroup\mskip\mst@prime@muskip\prim@s}
 {\catcode`\'=12 
 \gdef\mst@@modifyprime{\mst@mathactivate'{}\mst@active@math@prime}}
-\newcommand*\MTnormalprime{\let\mst@modifyprime\@empty }
+\newcommand*\MTnormalprime   {\let\mst@modifyprime\@empty }
 \newcommand*\MTprimedoesskip {\let\mst@modifyprime\mst@@modifyprime}
 \ifmst@subdued
     \MTnormalprime
@@ -5561,6 +5576,10 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %    But we omit for this from \cs{MTicinmath} the \cs{MTmathactiveletters}
 %    and issue the latter during loading of package, hence allowing
 %    \cs{MTmathstandardletters} to be effective in the preamble.
+%
+%    I forgot to document that under |subdued| option the \cs{Mathastext}
+%    command without optional parameter does not any |\SetSymbolFont| etc...
+%    has a few other taks to complete nevertheless.
 %    \begin{macrocode}
 \def\Mathastext {\@ifnextchar [\Mathastext@declare\Mathastext@ }
 \def\Mathastext@declare [#1]{%
@@ -5601,6 +5620,13 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
   \edef\mst@forall@skip@bold{\mst@forall@skip}%
   \edef\mst@prime@skip@bold{\mst@prime@skip}%
   \ifmst@subdued
+%    \end{macrocode}
+% Since |1.3j| this branch is actually almost superfluous, as entering
+% |normal| or |bold| with \cs{MTversion} does \cs{MTnormalexists},
+% \cs{MTnormalforall}, and \cs{MTnormalprime}. But some default values are
+% needed if the user insists on issuing \cs{MTexistsdoesskip}, etc...
+% nevertheless.
+%    \begin{macrocode}
     \def\mst@exists@skip@normal{0mu}%
     \def\mst@forall@skip@normal{0mu}%
     \def\mst@prime@skip@normal{0mu}%

@@ -14,7 +14,7 @@ The Author of this Work is Jean-Francois B.
 
 Copyright (C) 2011-2016 Jean-Francois B. (`2589111+jfbu@users.noreply.github.com`)
 
-      Source: mathastext.dtx 1.3j 2016/01/15
+      Source: mathastext.dtx 1.3k 2016/01/24
 
 > cumulative Change Log at bottom of this file.
 
@@ -36,7 +36,7 @@ but at least not subjected to obvious visual incompatibilities
 between your text font and the math fonts, try out mathastext:
 it will simply use the text font also for the math!
 
-- mathsastext.html
+- mathastext.html
 - showcase.html
 
 USAGE
@@ -124,6 +124,15 @@ This produces the documentation without the source code.
 CHANGE LOG
 ==========
 
+1.3k \[2016/01/24\]
+----
+
+* typos fixed in the documentation. In particular, the README link to
+  the package homepage had remained broken from day one of the package
+  releases: `mathastext.html` therein was misspelled as
+  `mathsastext.html` ! (but the pdf documentation had the correct link;
+  as well as the CTAN catalogue).
+
 1.3j \[2016/01/15\]
 ----
 
@@ -154,7 +163,7 @@ CHANGE LOG
 ----
 
 * `\url` from `url.sty` as well as `\url` and `\nolinkurl` from
-  `hyperref.sty` use math mode and (by default) the monotype text
+  `hyperref.sty` use math mode and (by default) the monospace text
   font. To avoid mathastext overwriting the special preparation done
   by `{url,hyperref}.sty` the commands `\url/\nolinkurl` are patched
   to do automatically `MTactivemathoff` (now `\MTeverymathoff`)
