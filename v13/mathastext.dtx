@@ -2,14 +2,14 @@
 % N.B.: this dtx file does NOT use \DocInput (only docstrip), the
 % LaTeX source of the documentation is NOT prefixed with % signs.
 %<*dtx>
-{\def\dtxtimestamp {Time-stamp: <24-01-2016 18:07:48 CET>}%
+{\def\dtxtimestamp {Time-stamp: <29-01-2016 09:19:47 CET>}%
  \def\getdtxtimestamp #1 <#2 #3 #4>{#2 at #3 #4}%
  \xdef\dtxtimestamp {\expandafter\getdtxtimestamp\dtxtimestamp }}%
-\def\docdate{2016/01/24}
+\def\docdate{2016/01/29}
 %</dtx>
 %<*drv|ins>
-\def\MSTpkgdate    {2016/01/24}
-\def\MSTpkgversion {1.3k}
+\def\MSTpkgdate    {2016/01/29}
+\def\MSTpkgversion {1.3l}
 %</drv|ins>
 %<*dtx>
 \iffalse % meta-comment
@@ -31,7 +31,7 @@ The Author of this Work is Jean-Francois B.
 
 Copyright (C) 2011-2016 Jean-Francois B. (`2589111+jfbu@users.noreply.github.com`)
 
-      Source: mathastext.dtx 1.3k 2016/01/24
+      Source: mathastext.dtx 1.3l 2016/01/29
 
 %</readme>
 %<*dtx>
@@ -47,7 +47,7 @@ not include the documented source code then, in contrast to 1a)+1b) method
 %%----------------------------------------------------------------
 %% Package: mathastext
 %% Info:    Use the text font in math mode (jfB)
-%% Version: 1.3k 2016/01/24
+%% Version: 1.3l 2016/01/29
 %% License: LPPL 1.3c (http://www.latex-project.org/lppl/lppl-1-3c.txt)
 %% Copyright (C) 2011-2016 Jean-Francois B. <2589111+jfbu@users.noreply.github.com>
 %% Examples of use of mathastext:
@@ -236,6 +236,13 @@ This produces the documentation without the source code.
 CHANGE LOG
 ==========
 
+1.3l \[2016/01/29\]
+----
+
+* compatibility with fontspec's upcoming switch from `EU1/EU2` to
+  `TU` common to both Unicode engines.
+ 
+ 
 1.3k \[2016/01/24\]
 ----
 
@@ -280,7 +287,7 @@ CHANGE LOG
   `hyperref.sty` use math mode and (by default) the monospace text
   font. To avoid mathastext overwriting the special preparation done
   by `{url,hyperref}.sty` the commands `\url/\nolinkurl` are patched
-  to do automatically `MTactivemathoff` (now `\MTeverymathoff`)
+  to do automatically `\MTactivemathoff` (now `\MTeverymathoff`)
   before entering math mode.
 
 * the extra skips specified by `\MTsetmathskips` are not inserted
@@ -441,8 +448,8 @@ use of mathematically active characters in versions 1.2 and 1.2b.
 
 * The technique of mathematical activation is maintained only for the
      characters which are not catcode active (at the entrance in math
-     mode, as mathastext does all its activation job at everymath and
-     everydisplay).
+     mode, as mathastext does all its activation job at `\everymath` and
+     `\everydisplay`).
 
 * Sadly, the feature of added italic corrections introduced in
      version 1.2b did not behave as described in the user manual, due to
@@ -477,11 +484,11 @@ use of mathematically active characters in versions 1.2 and 1.2b.
       used is upright (sic). This improves the spacings for the
       positioning of subscripts. The feature is de-activated
       inside the math alphabets commands (apart from `\mathnormal`),
-      so as to not prohibit the formation of ligatures,
+      so as to not prohibit the formation of ligatures.
 
 *  the documentation has been extended to explain in detail the
       issues which are relevant to the new feature of added italic
-      corrections,
+      corrections.
 
 * version 1.2 had some bad bugs when confronted to active
   characters. This is corrected and additionally
@@ -489,7 +496,7 @@ use of mathematically active characters in versions 1.2 and 1.2b.
   input is too much constrained in its absence.
 
 *  a less fatal, but still annoying, typo had made the dot in 1.2
-      of type `\mathpunct` rather than `\mathord`
+      of type `\mathpunct` rather than `\mathord`.
 
 *  the inner namespace has been rationalized a bit.
 
@@ -1447,6 +1454,12 @@ LGRgreek]{mathastext}
 % \hyperref[ssec:beamer]{better compatibility} with |beamer|.
 
 \begin{description}[leftmargin=0.5em]
+
+\item [Changes for release |1.3l|  of |2016/01/29|]
+\begin{itemize}[noitemsep]
+\item compatibility with fontspec's upcoming switch from |EU1/EU2| to
+  |TU| common to both Unicode engines.
+\end{itemize}
 
 \item [Changes for release |1.3k|  of |2016/01/24|]
 \begin{itemize}[noitemsep]
@@ -4138,15 +4151,15 @@ Numerous examples will be found there:\\
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage {mathastext}
-  [2016/01/24 v1.3k Use the text font in math mode (jfB)]
+  [2016/01/29 v1.3l Use the text font in math mode (jfB)]
 %    \end{macrocode}
 % Testing for XeTeX and LuaLaTeX. I should load some package for this code which
 % I copied somewhere (perhaps from the |iftex| package? or some post on
-% |comp.text.tex|).  2013/01/01: at least
+% |comp.text.tex|).  |2013/01/01|: at least
 % the code now does not overwrite previous \cs{ifXeTeX} or \cs{ifLuaTeX}...
 %
 % |1.3g 2015/10/15|: update for the naming of primitives, the situation has
-% evolved both on XeTeX side and on the LuaLaTeX side (LaTeX base 2015/10/01):
+% evolved both on XeTeX side and on the LuaLaTeX side (LaTeX base |2015/10/01|):
 % I was told "U" named math primitives were always available for LuaLaTeX. For
 % XeTeX, XeTeX prefix got replaced by U prefix with 0.99.. a certain number of
 % 9. I opted for rather simple approach of just trying the "modern" names and
@@ -4189,9 +4202,19 @@ Numerous examples will be found there:\\
 %    \end{macrocode}
 % |1.2|: all inner macros of \mst now starts with |\mst@| for a cleaner
 % name-space. 
+%
+% |1.3l 2016/01/29|: hmmm... at this late stage where nobody would expect me
+% to still look at the code, I have found at least two macros which still
+% didn't: \cs{do@the@endashstuff} and \cs{do@the@emdashstuff}.
+%
+% Ok, doing something more serious: compatibility with upcoming TL2016
+% fontspec and its switch to `|TU|' NFSS font encoding in replacement of
+% `|EU1/EU2|'. Anyhow, the code in \mst has been common to the two Unicode
+% engines for a while, hence it is not hard to adapt to the replacement of
+% |EU1/EU2| by |TU|, maintaining compatibility with legacy installations.
 %    \begin{macrocode}
 \def\mst@oti{OT1}\def\mst@ti{T1}\def\mst@lyi{LY1}
-\def\mst@eui{EU1}\def\mst@euii{EU2}
+\def\mst@eui{EU1}\def\mst@euii{EU2}\def\mst@uc{TU}
 \newif\ifmst@goahead
 \newif\ifmst@abort
 %    \end{macrocode}
@@ -4227,7 +4250,7 @@ Numerous examples will be found there:\\
 %    \end{macrocode}
 %  \end{macro}
 % \begin{macro}{Package options}
-%   2011/03/09: |1.13| introduces the option LGRgreek and systematic use
+%   |2011/03/09|: |1.13| introduces the option LGRgreek and systematic use
 %   of \cs{if...} conditionals, for better readability (by myself) of
 %   the code. 
 %    \begin{macrocode}
@@ -4380,7 +4403,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %  \begin{macro}{\MTnormalforall}
 %  \begin{macro}{\MTforalldoesskip }
 %  
-%      |1.15e| [2012/10/21]: math skip/glue \emph{after} \cs{exists} and
+%      |1.15e| |2012/10/21|: math skip/glue \emph{after} \cs{exists} and
 %      \cs{forall}, this is useful with upright letters in math mode.
 %      Each math version has its own user defined values for the skips,
 %      stored as macros. The redefinitions of $\exists$ and $\forall$ are
@@ -4453,13 +4476,13 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %  \begin{macro}{\MTnormalprime}
 %  \begin{macro}{\MTprimedoesskip}
 %
-%    |1.2| [2012/12/17]: math skip/glue \emph{before} the \cs{prime}
+%    |1.2| |2012/12/17|: math skip/glue \emph{before} the \cs{prime}
 %    glyph. This is useful with the default CM glyph and upright letters
 %    (in contrast the prime from |txfonts| works fine with upright
 %    letters). For this we replace the \LaTeX{} kernel \cs{active@math@prime}
 %    with our own skip-enhanced version \cs{mst@active@math@prime}.
 %
-%    |1.2b| [2012/12/31]: doing\\
+%    |1.2b| |2012/12/31|: doing\\
 %    \null\hspace{1cm}|{\catcode`\'=\active \global\let'\mst@active@math@prime}|\\
 %    is awfully wrong when the right quote is made active at begin document by
 %    some other package (as happens with |babel| for some languages). So \mst
@@ -4539,7 +4562,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %  \end{macro}\end{macro}
 %  \end{macro}
 %  \begin{macro}{\resetMathstrut@}
-%        2012/12/31: The |amsmath| macro \cs{resetMathstrut@} is not compatible
+%        |2012/12/31|: The |amsmath| macro \cs{resetMathstrut@} is not compatible
 %        with a
 %        mathematically active opening parenthesis: it does \\
 %        \null\hspace{1cm}|\mathchardef\@tempa\mathcode`\(\relax|\\
@@ -4568,14 +4591,14 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %        mathastext font (both in the current math version). If option
 %        |noparenthesis| was used, we leave everything untouched.
 %
-%    In |1.3a|, [2013/09/04], the modification is done only at the time of
+%    In |1.3a|, |2013/09/04|, the modification is done only at the time of
 %    \cs{MTnonlettersobeymathxx}. It is canceled by
 %    \cs{MTnonlettersdonotobeymathxx}. So the code has been moved to these
 %    macros and here we just store at the begin document the then meaning of
 %    \cs{resetMathstrut@}, and check also if \cs{MTnonlettersobeymathxx} has
 %    been invoked in the preamble.
 %
-%    |1.3f| [2015/09/12] issues only an Info message not a Warning, as I am
+%    |1.3f| |2015/09/12| issues only an Info message not a Warning, as I am
 %    becoming aware from another context (etoc) that Warnings are stressful to
 %    users, in some integrated environments for editing and compiling \LaTeX{}
 %    source files.
@@ -4594,7 +4617,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %    \end{macrocode}
 %  \end{macro} 
 %
-%      |1.2| [2012/12/20] does some rather daring \emph{math} activation of
+%      |1.2| |2012/12/20| does some rather daring \emph{math} activation of
 %      \verb$; , : ! ? + - = < > ( ) [ ]$  in
 %      math mode to achieve something I wanted to do since a long time: overcome
 %      the mutually excluding relation between the variable-family concept and
@@ -4609,7 +4632,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %    the entrance of the math mode are discussed later),\\
 %    \null\hspace{1cm}\fbox{but the concerned characters will now expand in math
 %    mode to \emph{two} tokens.}\\
-%      |1.2c| [2012/12/31]: hence, this current
+%      |1.2c| |2012/12/31|: hence, this current
 %      implementation puts constraints on the input: |$x^?$| or |$x\mathrel?y$|
 %      now create errors. They must be input
 %      |$x^{?}$|, respectively |$x\mathrel{?}y$|.\\
@@ -4622,7 +4645,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %      
 %
 %  \begin{macro}{\mst@mathactivate}
-%    |1.2b| [2012/12/30]: there were bad oversights in the |1.2| code
+%    |1.2b| |2012/12/30|: there were bad oversights in the |1.2| code
 %    for \cs{mst@mathactivate} related to the possibility for some
 %    characters to have been made active (in the sense of the catcode)
 %    elsewhere (something which often is done by language definition
@@ -4636,7 +4659,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %    |:| (assuming for the latter that things would have worked ok before
 %    the twiddling by \mst).
 %
-%    |1.2e| [2013/01/09]: alas |$\ref{eq:1}$| still was a problem.
+%    |1.2e| |2013/01/09|: alas |$\ref{eq:1}$| still was a problem.
 %    Indeed in that case the \mst prefix had no means to know it was
 %    inside a \cs{ref} so it made the character expand to its \mst
 %    redefinition, which is not acceptable inside a
@@ -4704,7 +4727,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %    paranoia are the latin letters (that would be crazy!) and
 %    also |*|, |"| and the left quote |`|.
 %
-%    |1.2f| [2013/01/21] with earlier versions (*) it was important not
+%    |1.2f| |2013/01/21| with earlier versions (*) it was important not
 %    to do twice the business of \cs{mst@mathactivate} (think
 %    |$\hbox{$?$}$|), so I used (this was a bit wasteful) some sort of
 %    boolean macro for each character. But now that there are the
@@ -4722,7 +4745,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %    |\label| or |\ref|. So testing for active characters should be done
 %    always... many things should be done always... I leave as is.
 %
-%    |1.3i| [2016/01/06] removes a spurious end of line space in
+%    |1.3i| |2016/01/06| removes a spurious end of line space in
 %    \cs{mst@mathactivate} (did not show as anyhow done in math mode).
 %
 %  \begin{macro}{\mst@do@az}
@@ -4730,7 +4753,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %  \begin{macro}{\mst@addtodo@az}
 %  \begin{macro}{\mst@addtodo@AZ}
 %  \begin{macro}{\mst@the}
-%    |1.2b| [2012/12/28] now that we understand the great advantages of |"8000|
+%    |1.2b| |2012/12/28| now that we understand the great advantages of |"8000|
 %    we do it also for all letters a-z and A-Z to insert automatically the
 %    italic corrections. See the \hyperref[sec:ic]{discussion} in the user
 %    manual. Ironically I wrote the code initially for the |italic| option only
@@ -4739,7 +4762,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %    the font shape is detected to be |it| or |sl|; to bypass this the command
 %    \cs{MTicinmath} is provided.
 %
-%    |1.2e| [2013/01/10] corrects a bad oversight of |1.2b| in
+%    |1.2e| |2013/01/10| corrects a bad oversight of |1.2b| in
 %    \cs{mst@mathactivate} which made the reproduction of the user manual
 %    illustrations with |$f_i^i$| impossible. As \cs{mst@mathactivate} was
 %    originally used also to get the non-letters obey math alphabet while
@@ -4758,7 +4781,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %
 %  \begin{macro}{\MTmath-}\begin{macro}{activeletters}
 %  \begin{macro}{\MTmath-}\begin{macro}{standardletters}
-%    |1.3| [2013/09/02] extends the use of mathematically active letters to
+%    |1.3| |2013/09/02| extends the use of mathematically active letters to
 %    allow the user to specify muglue before and after the letter itself (see
 %    \cs{MTsetmathskips}, below).
 %    Mathematically active letters were previously used only to add the italic
@@ -4772,7 +4795,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %  \begin{macro}{\MTnonletters-}\begin{macro}{obeymathxx}
 %  \begin{macro}{\MTnonletters-}\begin{macro}{donotobeymathxx}
 %  \begin{macro}{\resetMathstrut@}
-%      These macros are modified in version |1.3a| [2013/09/04] in order to
+%      These macros are modified in version |1.3a| |2013/09/04| in order to
 %      cleverly adjust, or not, the |amsmath| \cs{resetMathstrut@}. When used in
 %      the preamble, they just modify \cs{mst@the}. And there is code at begin
 %      document to check the status there of \cs{mst@the} and if its meaning is
@@ -4842,7 +4865,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %      earlier \cs{MTnoicinmath} from inside the same math group: the math mode
 %      had to be entered with the math activation of letters allowed.
 %
-%      |1.3i| [2016/01/06]: For some reason which I have now forgotten I did
+%      |1.3i| |2016/01/06|: For some reason which I have now forgotten I did
 %      until now:
 % \begin{verbatim}
 % \def\mst@itcorr{\ifnum\fam=\m@ne\/\else\ifnum\fam=\symmtletterfont\/\fi\fi}%
@@ -4916,7 +4939,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 % \end{macro}\end{macro}\end{macro}\end{macro}\end{macro}
 % \begin{macro}{\MTsetmathskips}
 % \begin{macro}{\MTunsetmathskips}
-%   |1.3| [2013/09/02]: user level command to specify extra spaces in math mode
+%   |1.3| |2013/09/02|: user level command to specify extra spaces in math mode
 %   around the letters (only the 7bit a,b,..,z and A,B,..,Z). First parameter is
 %   the letter, second is the math skip to be inserted before, and third the
 %   skip to be inserted after; for example \cs{thickmuskip} or explicitely
@@ -4938,7 +4961,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %   skips; so \cs{MTunsetmathskips} is provided to cancel the skips for one
 %   specific letter (|f| for example).
 %
-%   |1.3a| [2013/09/04]: I strangely had |\string#1| inside \cs{MTsetmathskips}.
+%   |1.3a| |2013/09/04|: I strangely had |\string#1| inside \cs{MTsetmathskips}.
 %   Phobic of catcode active letters... but with |\string| one needs some
 %   |\expandafter| to use \cs{MTsetmathskips} in an |\@for| loop for example. It
 %   is better to allow the first argument to be a macro or anything expanding to
@@ -4946,7 +4969,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %   (the user just has to tame them at the time of the \cs{MTsetmathskip}) so I
 %   take out these |\string|'s.
 %
-%   |1.3i| [2016/01/06]: the extra skips are suppressed for the arguments of
+%   |1.3i| |2016/01/06|: the extra skips are suppressed for the arguments of
 %   math alphabet commands. This applies in particular for amsmath's
 %   \cs{DeclareMathOperator}.
 %
@@ -4966,7 +4989,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 % \begin{macro}{\mst@addtodo@easynonletters}
 % \begin{macro}{\mst@addtodo@az}
 % \begin{macro}{\mst@addtodo@AZ}
-% Added note [2016/01/06]:
+% Added note |2016/01/06|:
 %   Notice that the initially |\relax| tokens \verb+\mst@[before|after]@<letter>+
 %   formed with |\csname...\endcsname| do not modify TeX's math layout:
 %   |{\relax f\relax}| is like |f| (also for ligatures inside |\mathrm| for
@@ -5089,7 +5112,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %   or a Unicode mathcode. On the other hand the much saner
 %   \cs{XeTeXmathcodenum} always return a Unicode mathcode. 
 %
-%   {UPDATE for \mst\ 1.3 (2013/09/02): since the release of lualatex as
+%   {UPDATE for \mst\ 1.3 (|2013/09/02|): since the release of lualatex as
 %   included in 
 %   TL2013, \cs{luatexUmathcodenum} behaves as \cs{XeTeXmathcodenum} so \mst 1.3
 %   treats identically under both unicode engines the equal and minus signs (and
@@ -6345,62 +6368,59 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{endash}
-%   2011/01/29, |1.1|: Producing this next piece of code was not a piece
-%   of cake for a novice like myself!\\
-%   2011/02/05, |1.11|: Compatibility with Unicode (via use of fontspec
-%   encodings EU1 and EU2)\\
-%   2011/02/07, |1.12|: Improved dealing of Unicode possibility.\\
-%   2011/04/02, |1.14b|: Corrected some very irresponsible bug in the
+%  |1.1| |2011/01/29|: Producing this next piece of code was not a piece
+%   of cake for a novice like myself!\newline
+%  |1.11| |2011/02/05|: Compatibility with Unicode (via use of fontspec
+%   encodings EU1 and EU2)\newline
+%  |1.12| |2011/02/07|: Improved dealing of Unicode possibility.\newline
+%  |1.14b| |2011/04/02|: Corrected some very irresponsible bug in the
 %   Unicode part which caused a problem when 10 or more math families have
-%   been allocated.\\
-%   2012/09/24, |1.15|: Added AtBeginDocument to circumvent some amsmath
+%   been allocated.\newline
+%  |1.15| |2012/09/24|: Added AtBeginDocument to circumvent some amsmath
 %   problem with unicode engines.
+%
+% |1.3l| |2016/01/29|: anticipating TL2016 fontspec's switch to |TU|.
 %    \begin{macrocode}
-\def\do@the@endashstuff{\edef\mst@tmp@enc{\encodingdefault}
-  \ifx\mst@tmp@enc\mst@eui % xetex+fontspec
-  \AtBeginDocument{%
+\def\mst@dothe@endashstuff{\edef\mst@tmp@enc{\encodingdefault}
+\if1\ifx\mst@tmp@enc\mst@eui  1\else
+    \ifx\mst@tmp@enc\mst@euii 1\else
+    \ifx\mst@tmp@enc\mst@uc   1\else 
+    0\fi\fi\fi
+  \AtBeginDocument{% Unicode engines and font
     \mst@Umathcode`\-=2 \symmtoperatorfont "2013\relax
     \mst@Umathchardef\mst@varfam@minus=7 \symmtoperatorfont "2013\relax
   }
 \else
-  \ifx\mst@tmp@enc\mst@euii % luatex+fontspec
-  \AtBeginDocument{%
-    \mst@Umathcode`\-=2 \symmtoperatorfont "2013\relax
-    \mst@Umathchardef\mst@varfam@minus=7 \symmtoperatorfont "2013\relax
-  }
-\else
-  \ifx\mst@tmp@enc\mst@ti % T1
+\ifx\mst@tmp@enc\mst@ti % T1
    \DeclareMathSymbol{-}{\mathbin}{mtoperatorfont}{21}
    \DeclareMathSymbol{\mst@varfam@minus}{\mathalpha}{mtoperatorfont}{21}
 \else
-  \ifx\mst@tmp@enc\mst@oti % OT1
+\ifx\mst@tmp@enc\mst@oti % OT1
    \DeclareMathSymbol{-}{\mathbin}{mtoperatorfont}{123}
    \DeclareMathSymbol{\mst@varfam@minus}{\mathalpha}{mtoperatorfont}{123}
 \else
-  \ifx\mst@tmp@enc\mst@lyi % LY1
+\ifx\mst@tmp@enc\mst@lyi % LY1
    \DeclareMathSymbol{-}{\mathbin}{mtoperatorfont}{150}
    \DeclareMathSymbol{\mst@varfam@minus}{\mathalpha}{mtoperatorfont}{150}
 \else % make sure we have neither xetex nor luatex
-   \ifmst@XeOrLua\mst@aborttrue\else
+ \ifmst@XeOrLua\mst@aborttrue
+ \else
    \DeclareMathSymbol{-}{\mathbin}{mtoperatorfont}
    \DeclareMathSymbol{\mst@varfam@minus}{\mathalpha}{mtoperatorfont}
 {\expandafter\the\expandafter\csname\mst@tmp@enc\string\textendash\endcsname}
-   \fi
-\fi\fi\fi\fi\fi}
-\def\do@the@emdashstuff{\edef\mst@tmp@enc{\encodingdefault}
-\ifx\mst@tmp@enc\mst@eui % xetex+fontspec
-    \AtBeginDocument{%
-      \mst@Umathcode`\-=2 \symmtoperatorfont "2014\relax
-      \mst@Umathchardef\mst@varfam@minus=7 \symmtoperatorfont "2014\relax
-    }
+ \fi
+\fi\fi\fi\fi}
+\def\mst@dothe@emdashstuff{\edef\mst@tmp@enc{\encodingdefault}
+\if1\ifx\mst@tmp@enc\mst@eui  1\else
+    \ifx\mst@tmp@enc\mst@euii 1\else
+    \ifx\mst@tmp@enc\mst@uc   1\else 
+    0\fi\fi\fi
+  \AtBeginDocument{% Unicode engine and font
+    \mst@Umathcode`\-=2 \symmtoperatorfont "2014\relax
+    \mst@Umathchardef\mst@varfam@minus=7 \symmtoperatorfont "2014\relax
+  }
 \else
-\ifx\mst@tmp@enc\mst@euii % luatex+fontspec
-    \AtBeginDocument{%
-      \mst@Umathcode`\-=2 \symmtoperatorfont "2014\relax
-      \mst@Umathchardef\mst@varfam@minus=7 \symmtoperatorfont "2014\relax
-    }
-\else
-  \ifx\mst@tmp@enc\mst@ti % T1
+\ifx\mst@tmp@enc\mst@ti % T1
    \DeclareMathSymbol{-}{\mathbin}{mtoperatorfont}{22}
    \DeclareMathSymbol{\mst@varfam@minus}{\mathalpha}{mtoperatorfont}{22}
 \else
@@ -6412,16 +6432,17 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
    \DeclareMathSymbol{-}{\mathbin}{mtoperatorfont}{151}
    \DeclareMathSymbol{\mst@varfam@minus}{\mathalpha}{mtoperatorfont}{151}
 \else % make sure we have neither xetex nor luatex
-   \ifmst@XeOrLua\mst@aborttrue\else
+ \ifmst@XeOrLua\mst@aborttrue
+ \else
    \DeclareMathSymbol{-}{\mathbin}{mtoperatorfont}
    \DeclareMathSymbol{\mst@varfam@minus}{\mathalpha}{mtoperatorfont}
 {\expandafter\the\expandafter\csname\mst@tmp@enc\string\textemdash\endcsname}
-   \fi
-\fi\fi\fi\fi\fi}
+ \fi
+\fi\fi\fi\fi}
 \ifmst@nominus\else\typeout{** minus as endash}
 \mst@abortfalse
-\ifmst@endash\do@the@endashstuff\else
-\ifmst@emdash\do@the@emdashstuff\else
+\ifmst@endash\mst@dothe@endashstuff\else
+\ifmst@emdash\mst@dothe@emdashstuff\else
    \DeclareMathSymbol{-}{\mathbin}{\mst@font@tbu}{"2D}
    \DeclareMathSymbol{\mst@varfam@minus}{\mathalpha}{\mst@font@tbu}{"2D}
 \fi\fi
@@ -6435,7 +6456,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 % \end{macro}
 % \begin{macro}{\hbar}
 % \begin{macro}{\mst@ltbar}
-%   2011/01/31, |1.1| I decide to settle the question of the |\hbar|. First, the
+%   |2011/01/31|, |1.1| I decide to settle the question of the |\hbar|. First, the
 %   \LaTeX{} definition
 %    \begin{macrocode}
 %%\def\hbar{{\mathchar'26\mkern-9muh}} % (original definition from latex.ltx)
@@ -6452,15 +6473,16 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 % I found by googling |rlap|. (as an aside, I am only now (April 2, 2011) aware
 % that the package |mathtools| provides the |mathrlap| etc... )
 %
+% |1.3l| |2016/01/29|: anticipating TL2016 fontspec's switch to |TU|.
 %    \begin{macrocode}
-%
 \def\mst@mathrlap{\mathpalette\mst@mathrlapinternal}
 \def\mst@mathrlapinternal#1#2{\rlap{$\mathsurround=0pt#1{#2}$}}
-\def\do@the@hbarstuff{\edef\mst@tmp@enc{\encodingdefault}
-\ifx\mst@tmp@enc\mst@eui % xetex and unicode font
-   \mst@Umathchardef\hbar="7 \symmtletterfont "0127 \relax 
-\else
-\ifx\mst@tmp@enc\mst@euii % luatex and unicode font
+\def\mst@dothe@hbarstuff{\edef\mst@tmp@enc{\encodingdefault}
+\if1\ifx\mst@tmp@enc\mst@eui  1\else
+    \ifx\mst@tmp@enc\mst@euii 1\else
+    \ifx\mst@tmp@enc\mst@uc   1\else 
+    0\fi\fi\fi
+   % Unicode engine and font
    \mst@Umathchardef\hbar="7 \symmtletterfont "0127 \relax %% or 210F?
 \else % I must leave open the T1, OT1 possibility also for XeTeX or LuaTeX 
     \ifx\mst@ti\mst@tmp@enc
@@ -6469,8 +6491,8 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \DeclareMathAccent{\mst@ltbar}{\mathalpha}{mtletterfont}{22}
     \fi
     \def\hbar{\mst@mathrlap{\mst@ltbar{\ }}h}
-\fi\fi}
-\ifmst@nohbar\else\typeout{** \string\hbar}\do@the@hbarstuff\fi
+\fi }
+\ifmst@nohbar\else\typeout{** \string\hbar}\mst@dothe@hbarstuff\fi
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
@@ -6507,10 +6529,10 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \DeclareMathSymbol{\mst@varfam@equal}{\mathalpha}{\mst@font@tbu}{"3D}
 %    \end{macrocode}
 % \begin{macro}{\nfss@catcodes}
-% 2012/12/18: Activating = (only in math mode actually) seems very bad but
+% |2012/12/18|: Activating = (only in math mode actually) seems very bad but
 % surprisingly works well. However I had a problem with |eu2lmtt.fd| which
 % should not be loaded with an active =.
-% 2012/12/25: Since then I had switched to only math activation. And in fact
+% |2012/12/25|: Since then I had switched to only math activation. And in fact
 % the problematic = from |eu2lmtt.fd| end up in \cs{csname}...\cs{endcsname}
 % and I have
 % learnt since that \TeX{} does not look at the |mathcode| inside a
@@ -6532,7 +6554,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 % re-definition can not be expanded inside a
 % \cs{csname}...\cs{endcsname}.
 %
-% 2012/12/28: to be on the safe side, I add also |;| and |+| and do it
+% |2012/12/28|: to be on the safe side, I add also |;| and |+| and do it
 % without discriminating between engines
 %    \begin{macrocode}
 \typeout{** adding \string= \string; and \string+ to \string\nfss@catcodes}
@@ -6689,11 +6711,11 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 % \end{macro}\end{macro}\end{macro}\end{macro}
 % \end{macro}\end{macro}
 % \begin{macro}{specials}
-%   \leavevmode\kern\parindent |1.14b| [2011/04/02]: the redefinitions of
+%   \leavevmode\kern\parindent |1.14b| |2011/04/02|: the redefinitions of
 %   \#, \$, \% and \& were buggy (this showed up when 10 or more math
 %   families had been created).
 %
-%   |1.15f| [2012/10/23]: the code, although working, was perhaps a bit insane
+%   |1.15f| |2012/10/23|: the code, although working, was perhaps a bit insane
 %   and
 %   had definitions which could surprise other packages. For example, it did:\\
 %   \null\hspace{1cm}|\renewcommand{\%}{\ifmmode\mt@mmode@percent\else\char37\relax\fi}|\\
@@ -6710,13 +6732,13 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %  mathcode. So here it is \emph{not} a redefinition of  the control sequences,
 %  purely an adjustment of mathcodes.
 %
-%  |1.2d| [2013/01/01]: previous versions imposed the variable family type. I
+%  |1.2d| |2013/01/01|: previous versions imposed the variable family type. I
 %  hereby make it possible to de-activate this feature with the macro
 %  \cs{MTeasynonlettersdonotobeymathxx}. Besides, I have absolutely no idea
 %  why I had different looking code depending on the engine XeTeX, LuaTeX or
 %  default. Removed.
 %
-%  |1.3c| [2013/12/14]: I have absolutely no idea why I removed the XeTeX and
+%  |1.3c| |2013/12/14|: I have absolutely no idea why I removed the XeTeX and
 %  LuaTeX code at the time of |1.2d|! the code for tex/pdftex engine could not
 %  accomodate more than 16 math families. Code for XeTeX and LuaTeX again added.
 %  (and since TL2013 no more problems with |\luatexUmathcode|.)
@@ -6788,7 +6810,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %   but this did not go well with subscripts and exponents. 
 %    
 % Note oct 2012: maybe I should re-examine what I did?
-% |1.3c| ([2013/12/14]) renames |\defaultprod| to |\MToriginalprod| and
+% |1.3c| (|2013/12/14|) renames |\defaultprod| to |\MToriginalprod| and
 % |\defaultsum| to 
 % |\MToriginalsum|. 
 %    \begin{macrocode}
@@ -6971,7 +6993,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \DeclareMathSymbol{\mst@Omega}{\mathord}{mtpsymbol}{"57}
   \else % de \mst@mathord=\mathord
 %    \end{macrocode}
-% not symbolgreek but eulergreek or selfGreek. Note 2015/10/31 : apparemment à
+% not symbolgreek but eulergreek or selfGreek. Note |2015/10/31| : apparemment à
 % un moment dans le passé je considérais eulergreek et selfGreek comme pouvant
 % être utilisés simultanément car j'avais ici "or both". Mais je laisse tomber
 % tout effort réel de m'en préoccuper.
@@ -7366,18 +7388,20 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %   used \cs{i} and \cs{j} from the text font the problem would be with the
 %   fontsize, if in scriptstyle. The amsmath \cs{text} would do the trick.
 %
-% |1.14b| [2011/04/02]: again this bug in the EU1/EU2 encoding part, as in the
+% |1.14b| |2011/04/02|: again this bug in the EU1/EU2 encoding part, as in the
 % code redefining \$ etc in math mode (see above). Fixed.
+%
+% |1.3l| |2016/01/29|: anticipating TL2016 fontspec's switch to |TU|.
 %    \begin{macrocode}
 \edef\mst@tmp@enc{\encodingdefault}
 \mst@goaheadtrue
-\ifx\mst@tmp@enc\mst@eui % xetex and unicode font
+\if1\ifx\mst@tmp@enc\mst@eui  1\else
+    \ifx\mst@tmp@enc\mst@euii 1\else
+    \ifx\mst@tmp@enc\mst@uc   1\else 
+    0\fi\fi\fi
+  % Unicode engine and font
   \mst@Umathchardef\inodot="7 \symmtletterfont "0131 \relax
   \mst@Umathchardef\jnodot="7 \symmtletterfont "0237 \relax
-\else
-\ifx\mst@tmp@enc\mst@euii % luatex and unicode font
-   \mst@Umathchardef\inodot="7 \symmtletterfont "0131 \relax
-   \mst@Umathchardef\jnodot="7 \symmtletterfont "0237 \relax
 \else 
 \ifx\mst@tmp@enc\mst@ti % T1
    \DeclareMathSymbol{\inodot}{\mathalpha}{mtletterfont}{25}
@@ -7397,7 +7421,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
    \DeclareMathSymbol{\jnodot}{\mathalpha}{mtletterfont}
 {\expandafter\the\expandafter\csname\mst@tmp@enc\string\j\endcsname}
    \fi
-\fi\fi\fi\fi\fi
+\fi\fi\fi\fi
 \ifmst@defaultimath\else\typeout{** \string\i\space and \string\j\space}
   \ifmst@goahead
     \renewcommand*{\imath}{\inodot}
@@ -7564,7 +7588,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
   Grave accent  \`     Left brace    \{     Vertical bar  \|
   Right brace   \}     Tilde         \~}
 
-\CheckSum{5281}
+\CheckSum{5285}
 \makeatletter\check@checksum\makeatother
 \Finale
 %%

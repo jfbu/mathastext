@@ -25,6 +25,7 @@
 <li><a href="#generating-documentation-and-test-files">Generating documentation and test files</a></li>
 </ul></li>
 <li><a href="#change-log">CHANGE LOG</a><ul>
+<li><a href="#l-20160129">1.3l [2016/01/29]</a></li>
 <li><a href="#k-20160124">1.3k [2016/01/24]</a></li>
 <li><a href="#j-20160115">1.3j [2016/01/15]</a></li>
 <li><a href="#i-20160106">1.3i [2016/01/06]</a></li>
@@ -71,7 +72,7 @@
 <p>This Work may be distributed and/or modified under the conditions of the <a href="http://www.latex-project.org/lppl/lppl-1-3c.txt">LPPL1.3c</a></p>
 <p>The Author of this Work is Jean-Francois B.</p>
 <p>Copyright (C) 2011-2016 Jean-Francois B. (<code>2589111+jfbu@users.noreply.github.com</code>)</p>
-<pre><code>  Source: mathastext.dtx 1.3k 2016/01/24</code></pre>
+<pre><code>  Source: mathastext.dtx 1.3l 2016/01/29</code></pre>
 <blockquote>
 <p>cumulative Change Log at bottom of this file.</p>
 </blockquote>
@@ -125,6 +126,10 @@ dvipdfmx mathastext.dvi</code></pre>
 <p>(One cannot use lualatex/xelatex to compile the documentation.)</p>
 </blockquote>
 <h1 id="change-log">CHANGE LOG</h1>
+<h2 id="l-20160129">1.3l [2016/01/29]</h2>
+<ul>
+<li>compatibility with fontspec's upcoming switch from <code>EU1/EU2</code> to <code>TU</code> common to both Unicode engines.</li>
+</ul>
 <h2 id="k-20160124">1.3k [2016/01/24]</h2>
 <ul>
 <li>typos fixed in the documentation. In particular, the README link to the package homepage had remained broken from day one of the package releases: <code>mathastext.html</code> therein was misspelled as <code>mathsastext.html</code> ! (but the pdf documentation had the correct link; as well as the CTAN catalogue).</li>
@@ -138,7 +143,7 @@ dvipdfmx mathastext.dvi</code></pre>
 </ul>
 <h2 id="i-20160106">1.3i [2016/01/06]</h2>
 <ul>
-<li><p><code>\url</code> from <code>url.sty</code> as well as <code>\url</code> and <code>\nolinkurl</code> from <code>hyperref.sty</code> use math mode and (by default) the monospace text font. To avoid mathastext overwriting the special preparation done by <code>{url,hyperref}.sty</code> the commands <code>\url/\nolinkurl</code> are patched to do automatically <code>MTactivemathoff</code> (now <code>\MTeverymathoff</code>) before entering math mode.</p></li>
+<li><p><code>\url</code> from <code>url.sty</code> as well as <code>\url</code> and <code>\nolinkurl</code> from <code>hyperref.sty</code> use math mode and (by default) the monospace text font. To avoid mathastext overwriting the special preparation done by <code>{url,hyperref}.sty</code> the commands <code>\url/\nolinkurl</code> are patched to do automatically <code>\MTactivemathoff</code> (now <code>\MTeverymathoff</code>) before entering math mode.</p></li>
 <li><p>the extra skips specified by <code>\MTsetmathskips</code> are not inserted around letters if inside the arguments of math alphabet commands, or within operator names.</p></li>
 <li><p>the added explicit italic corrections (for non-oblique fonts) were disabled within math alphabet scopes, except <code>mathnormal</code>; they are now disabled within all math alphabets, inclusive of <code>mathnormal</code>.</p></li>
 </ul>
@@ -200,7 +205,7 @@ dvipdfmx mathastext.dvi</code></pre>
 <p>This version should be the last one in the 1.2 series as it seems to correct most of the main problems which were introduced with the massive use of mathematically active characters in versions 1.2 and 1.2b.</p>
 <ul>
 <li><p>It is indeed a thorny point when one wants to modify only in math mode how an active character acts, without breaking things. The package now does that /only/ if the activation appears to originate in the Babel system, as it is then possible to modify appropriately the Babel macros <code>\user@active&lt;char&gt;</code> and <code>\normal@char&lt;char&gt;</code>. The relevant issues are discussed in section 2.10 of the user manual, in the test file mathastexttestalphabets.tex, and in the source code comments to the macro <code>\mst@mathactivate</code>. The inherent incompatibility of Babel with packages having made mathematically active the characters itself makes document active is circumvented by this interference of mathastext. A generally applicable Babel patch could be derived from the method used by mathastext.</p></li>
-<li><p>The technique of mathematical activation is maintained only for the characters which are not catcode active (at the entrance in math mode, as mathastext does all its activation job at everymath and everydisplay).</p></li>
+<li><p>The technique of mathematical activation is maintained only for the characters which are not catcode active (at the entrance in math mode, as mathastext does all its activation job at <code>\everymath</code> and <code>\everydisplay</code>).</p></li>
 <li><p>Sadly, the feature of added italic corrections introduced in version 1.2b did not behave as described in the user manual, due to forgotten group braces. Fixed.</p></li>
 <li><p>The command <code>\MTlowerast</code> from the user manual of v1.2d was not the one implemented in the source code. Fixed.</p></li>
 <li><p>The test files automatically extracted from a latex run on the dtx file have been revised and extended.</p></li>
@@ -214,10 +219,10 @@ dvipdfmx mathastext.dvi</code></pre>
 </ul>
 <h2 id="c-20121231">1.2c [2012/12/31]</h2>
 <ul>
-<li><p>mathastext now inserts automatically after all (latin) letters in math mode their italic corrections, if the font used is upright (sic). This improves the spacings for the positioning of subscripts. The feature is de-activated inside the math alphabets commands (apart from <code>\mathnormal</code>), so as to not prohibit the formation of ligatures,</p></li>
-<li><p>the documentation has been extended to explain in detail the issues which are relevant to the new feature of added italic corrections,</p></li>
+<li><p>mathastext now inserts automatically after all (latin) letters in math mode their italic corrections, if the font used is upright (sic). This improves the spacings for the positioning of subscripts. The feature is de-activated inside the math alphabets commands (apart from <code>\mathnormal</code>), so as to not prohibit the formation of ligatures.</p></li>
+<li><p>the documentation has been extended to explain in detail the issues which are relevant to the new feature of added italic corrections.</p></li>
 <li><p>version 1.2 had some bad bugs when confronted to active characters. This is corrected and additionally <code>\MTnonlettersdonotobeymathxx</code> is made the default, as the user input is too much constrained in its absence.</p></li>
-<li><p>a less fatal, but still annoying, typo had made the dot in 1.2 of type <code>\mathpunct</code> rather than <code>\mathord</code></p></li>
+<li><p>a less fatal, but still annoying, typo had made the dot in 1.2 of type <code>\mathpunct</code> rather than <code>\mathord</code>.</p></li>
 <li><p>the inner namespace has been rationalized a bit.</p></li>
 </ul>
 <h2 id="section-1">1.2 [2012/12/20]</h2>

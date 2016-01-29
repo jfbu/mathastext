@@ -23,7 +23,7 @@
 %%----------------------------------------------------------------
 %% Package: mathastext
 %% Info:    Use the text font in math mode (jfB)
-%% Version: 1.3k 2016/01/24
+%% Version: 1.3l 2016/01/29
 %% License: LPPL 1.3c (http://www.latex-project.org/lppl/lppl-1-3c.txt)
 %% Copyright (C) 2011-2016 Jean-Francois B. <2589111+jfbu@users.noreply.github.com>
 %% Examples of use of mathastext:
@@ -32,7 +32,7 @@
 %%----------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage {mathastext}
-  [2016/01/24 v1.3k Use the text font in math mode (jfB)]
+  [2016/01/29 v1.3l Use the text font in math mode (jfB)]
   \let\mst@Umathcharnumdef\Umathcharnumdef
   \let\mst@Umathcodenum   \Umathcodenum
   \let\mst@Umathcode      \Umathcode
@@ -67,7 +67,7 @@
 \ifmst@LuaTeX\mst@XeOrLuatrue\fi
 \ifmst@XeTeX \mst@XeOrLuatrue\fi
 \def\mst@oti{OT1}\def\mst@ti{T1}\def\mst@lyi{LY1}
-\def\mst@eui{EU1}\def\mst@euii{EU2}
+\def\mst@eui{EU1}\def\mst@euii{EU2}\def\mst@uc{TU}
 \newif\ifmst@goahead
 \newif\ifmst@abort
   \def\mst@enc{\encodingdefault}
@@ -1155,51 +1155,46 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
   \cleaders\hbox{$\mkern-2mu\relbar\mkern-2mu$}\hfill
   \mkern-7mu\mathord{\relbar}$}
 \fi
-\def\do@the@endashstuff{\edef\mst@tmp@enc{\encodingdefault}
-  \ifx\mst@tmp@enc\mst@eui % xetex+fontspec
-  \AtBeginDocument{%
+\def\mst@dothe@endashstuff{\edef\mst@tmp@enc{\encodingdefault}
+\if1\ifx\mst@tmp@enc\mst@eui  1\else
+    \ifx\mst@tmp@enc\mst@euii 1\else
+    \ifx\mst@tmp@enc\mst@uc   1\else
+    0\fi\fi\fi
+  \AtBeginDocument{% Unicode engines and font
     \mst@Umathcode`\-=2 \symmtoperatorfont "2013\relax
     \mst@Umathchardef\mst@varfam@minus=7 \symmtoperatorfont "2013\relax
   }
 \else
-  \ifx\mst@tmp@enc\mst@euii % luatex+fontspec
-  \AtBeginDocument{%
-    \mst@Umathcode`\-=2 \symmtoperatorfont "2013\relax
-    \mst@Umathchardef\mst@varfam@minus=7 \symmtoperatorfont "2013\relax
-  }
-\else
-  \ifx\mst@tmp@enc\mst@ti % T1
+\ifx\mst@tmp@enc\mst@ti % T1
    \DeclareMathSymbol{-}{\mathbin}{mtoperatorfont}{21}
    \DeclareMathSymbol{\mst@varfam@minus}{\mathalpha}{mtoperatorfont}{21}
 \else
-  \ifx\mst@tmp@enc\mst@oti % OT1
+\ifx\mst@tmp@enc\mst@oti % OT1
    \DeclareMathSymbol{-}{\mathbin}{mtoperatorfont}{123}
    \DeclareMathSymbol{\mst@varfam@minus}{\mathalpha}{mtoperatorfont}{123}
 \else
-  \ifx\mst@tmp@enc\mst@lyi % LY1
+\ifx\mst@tmp@enc\mst@lyi % LY1
    \DeclareMathSymbol{-}{\mathbin}{mtoperatorfont}{150}
    \DeclareMathSymbol{\mst@varfam@minus}{\mathalpha}{mtoperatorfont}{150}
 \else % make sure we have neither xetex nor luatex
-   \ifmst@XeOrLua\mst@aborttrue\else
+ \ifmst@XeOrLua\mst@aborttrue
+ \else
    \DeclareMathSymbol{-}{\mathbin}{mtoperatorfont}
    \DeclareMathSymbol{\mst@varfam@minus}{\mathalpha}{mtoperatorfont}
 {\expandafter\the\expandafter\csname\mst@tmp@enc\string\textendash\endcsname}
-   \fi
-\fi\fi\fi\fi\fi}
-\def\do@the@emdashstuff{\edef\mst@tmp@enc{\encodingdefault}
-\ifx\mst@tmp@enc\mst@eui % xetex+fontspec
-    \AtBeginDocument{%
-      \mst@Umathcode`\-=2 \symmtoperatorfont "2014\relax
-      \mst@Umathchardef\mst@varfam@minus=7 \symmtoperatorfont "2014\relax
-    }
+ \fi
+\fi\fi\fi\fi}
+\def\mst@dothe@emdashstuff{\edef\mst@tmp@enc{\encodingdefault}
+\if1\ifx\mst@tmp@enc\mst@eui  1\else
+    \ifx\mst@tmp@enc\mst@euii 1\else
+    \ifx\mst@tmp@enc\mst@uc   1\else
+    0\fi\fi\fi
+  \AtBeginDocument{% Unicode engine and font
+    \mst@Umathcode`\-=2 \symmtoperatorfont "2014\relax
+    \mst@Umathchardef\mst@varfam@minus=7 \symmtoperatorfont "2014\relax
+  }
 \else
-\ifx\mst@tmp@enc\mst@euii % luatex+fontspec
-    \AtBeginDocument{%
-      \mst@Umathcode`\-=2 \symmtoperatorfont "2014\relax
-      \mst@Umathchardef\mst@varfam@minus=7 \symmtoperatorfont "2014\relax
-    }
-\else
-  \ifx\mst@tmp@enc\mst@ti % T1
+\ifx\mst@tmp@enc\mst@ti % T1
    \DeclareMathSymbol{-}{\mathbin}{mtoperatorfont}{22}
    \DeclareMathSymbol{\mst@varfam@minus}{\mathalpha}{mtoperatorfont}{22}
 \else
@@ -1211,16 +1206,17 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
    \DeclareMathSymbol{-}{\mathbin}{mtoperatorfont}{151}
    \DeclareMathSymbol{\mst@varfam@minus}{\mathalpha}{mtoperatorfont}{151}
 \else % make sure we have neither xetex nor luatex
-   \ifmst@XeOrLua\mst@aborttrue\else
+ \ifmst@XeOrLua\mst@aborttrue
+ \else
    \DeclareMathSymbol{-}{\mathbin}{mtoperatorfont}
    \DeclareMathSymbol{\mst@varfam@minus}{\mathalpha}{mtoperatorfont}
 {\expandafter\the\expandafter\csname\mst@tmp@enc\string\textemdash\endcsname}
-   \fi
-\fi\fi\fi\fi\fi}
+ \fi
+\fi\fi\fi\fi}
 \ifmst@nominus\else\typeout{** minus as endash}
 \mst@abortfalse
-\ifmst@endash\do@the@endashstuff\else
-\ifmst@emdash\do@the@emdashstuff\else
+\ifmst@endash\mst@dothe@endashstuff\else
+\ifmst@emdash\mst@dothe@emdashstuff\else
    \DeclareMathSymbol{-}{\mathbin}{\mst@font@tbu}{"2D}
    \DeclareMathSymbol{\mst@varfam@minus}{\mathalpha}{\mst@font@tbu}{"2D}
 \fi\fi
@@ -1233,11 +1229,12 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %%\def\hbar{{\mathchar'26\mkern-9muh}} % (original definition from latex.ltx)
 \def\mst@mathrlap{\mathpalette\mst@mathrlapinternal}
 \def\mst@mathrlapinternal#1#2{\rlap{$\mathsurround=0pt#1{#2}$}}
-\def\do@the@hbarstuff{\edef\mst@tmp@enc{\encodingdefault}
-\ifx\mst@tmp@enc\mst@eui % xetex and unicode font
-   \mst@Umathchardef\hbar="7 \symmtletterfont "0127 \relax
-\else
-\ifx\mst@tmp@enc\mst@euii % luatex and unicode font
+\def\mst@dothe@hbarstuff{\edef\mst@tmp@enc{\encodingdefault}
+\if1\ifx\mst@tmp@enc\mst@eui  1\else
+    \ifx\mst@tmp@enc\mst@euii 1\else
+    \ifx\mst@tmp@enc\mst@uc   1\else
+    0\fi\fi\fi
+   % Unicode engine and font
    \mst@Umathchardef\hbar="7 \symmtletterfont "0127 \relax %% or 210F?
 \else % I must leave open the T1, OT1 possibility also for XeTeX or LuaTeX
     \ifx\mst@ti\mst@tmp@enc
@@ -1246,8 +1243,8 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \DeclareMathAccent{\mst@ltbar}{\mathalpha}{mtletterfont}{22}
     \fi
     \def\hbar{\mst@mathrlap{\mst@ltbar{\ }}h}
-\fi\fi}
-\ifmst@nohbar\else\typeout{** \string\hbar}\do@the@hbarstuff\fi
+\fi }
+\ifmst@nohbar\else\typeout{** \string\hbar}\mst@dothe@hbarstuff\fi
 \ifmst@noplus\else\typeout{** \string+ and \string=}
 \DeclareMathSymbol{+}{\mathbin}{\mst@font@tbu}{"2B}
 \DeclareMathSymbol{\mst@varfam@plus}{\mathalpha}{\mst@font@tbu}{"2B}
@@ -1870,13 +1867,13 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \ifmst@subdued\else\MTcustomgreek\fi
 \edef\mst@tmp@enc{\encodingdefault}
 \mst@goaheadtrue
-\ifx\mst@tmp@enc\mst@eui % xetex and unicode font
+\if1\ifx\mst@tmp@enc\mst@eui  1\else
+    \ifx\mst@tmp@enc\mst@euii 1\else
+    \ifx\mst@tmp@enc\mst@uc   1\else
+    0\fi\fi\fi
+  % Unicode engine and font
   \mst@Umathchardef\inodot="7 \symmtletterfont "0131 \relax
   \mst@Umathchardef\jnodot="7 \symmtletterfont "0237 \relax
-\else
-\ifx\mst@tmp@enc\mst@euii % luatex and unicode font
-   \mst@Umathchardef\inodot="7 \symmtletterfont "0131 \relax
-   \mst@Umathchardef\jnodot="7 \symmtletterfont "0237 \relax
 \else
 \ifx\mst@tmp@enc\mst@ti % T1
    \DeclareMathSymbol{\inodot}{\mathalpha}{mtletterfont}{25}
@@ -1896,7 +1893,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
    \DeclareMathSymbol{\jnodot}{\mathalpha}{mtletterfont}
 {\expandafter\the\expandafter\csname\mst@tmp@enc\string\j\endcsname}
    \fi
-\fi\fi\fi\fi\fi
+\fi\fi\fi\fi
 \ifmst@defaultimath\else\typeout{** \string\i\space and \string\j\space}
   \ifmst@goahead
     \renewcommand*{\imath}{\inodot}
