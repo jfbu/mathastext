@@ -14,7 +14,7 @@ The Author of this Work is Jean-Francois B.
 
 Copyright (C) 2011-2016 Jean-Francois B. (`2589111+jfbu@users.noreply.github.com`)
 
-      Source: mathastext.dtx 1.3k 2016/01/24
+      Source: mathastext.dtx 1.3l 2016/01/29
 
 > cumulative Change Log at bottom of this file.
 
@@ -124,6 +124,12 @@ This produces the documentation without the source code.
 CHANGE LOG
 ==========
 
+1.3l \[2016/01/29\]
+----
+
+* compatibility with fontspec's upcoming switch from `EU1/EU2` to
+  `TU` common to both Unicode engines.
+
 1.3k \[2016/01/24\]
 ----
 
@@ -166,7 +172,7 @@ CHANGE LOG
   `hyperref.sty` use math mode and (by default) the monospace text
   font. To avoid mathastext overwriting the special preparation done
   by `{url,hyperref}.sty` the commands `\url/\nolinkurl` are patched
-  to do automatically `MTactivemathoff` (now `\MTeverymathoff`)
+  to do automatically `\MTactivemathoff` (now `\MTeverymathoff`)
   before entering math mode.
 
 * the extra skips specified by `\MTsetmathskips` are not inserted
@@ -322,8 +328,8 @@ use of mathematically active characters in versions 1.2 and 1.2b.
 
 * The technique of mathematical activation is maintained only for the
      characters which are not catcode active (at the entrance in math
-     mode, as mathastext does all its activation job at everymath and
-     everydisplay).
+     mode, as mathastext does all its activation job at `\everymath` and
+     `\everydisplay`).
 
 * Sadly, the feature of added italic corrections introduced in
      version 1.2b did not behave as described in the user manual, due to
@@ -358,11 +364,11 @@ use of mathematically active characters in versions 1.2 and 1.2b.
       used is upright (sic). This improves the spacings for the
       positioning of subscripts. The feature is de-activated
       inside the math alphabets commands (apart from `\mathnormal`),
-      so as to not prohibit the formation of ligatures,
+      so as to not prohibit the formation of ligatures.
 
 *  the documentation has been extended to explain in detail the
       issues which are relevant to the new feature of added italic
-      corrections,
+      corrections.
 
 * version 1.2 had some bad bugs when confronted to active
   characters. This is corrected and additionally
@@ -370,7 +376,7 @@ use of mathematically active characters in versions 1.2 and 1.2b.
   input is too much constrained in its absence.
 
 *  a less fatal, but still annoying, typo had made the dot in 1.2
-      of type `\mathpunct` rather than `\mathord`
+      of type `\mathpunct` rather than `\mathord`.
 
 *  the inner namespace has been rationalized a bit.
 
