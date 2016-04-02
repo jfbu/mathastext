@@ -14,7 +14,7 @@ The Author of this Work is Jean-Francois B.
 
 Copyright (C) 2011-2016 Jean-Francois B. (`2589111+jfbu@users.noreply.github.com`)
 
-      Source: mathastext.dtx 1.3l 2016/01/29
+      Source: mathastext.dtx 1.3m 2016/04/02
 
 > cumulative Change Log at bottom of this file.
 
@@ -123,6 +123,11 @@ This produces the documentation without the source code.
 
 CHANGE LOG
 ==========
+
+1.3m \[2016/04/02\]
+----
+
+* minor code maintenance before annual TL freeze.
 
 1.3l \[2016/01/29\]
 ----
@@ -313,23 +318,24 @@ This version should be the last one in the 1.2 series as it seems to
 correct most of the main problems which were introduced with the massive
 use of mathematically active characters in versions 1.2 and 1.2b.
 
-* It is indeed a thorny point when one wants to modify only in math
-     mode how an active character acts, without breaking things. The
-     package now does that /only/ if the activation appears to originate
-     in the Babel system, as it is then possible to modify appropriately
-     the Babel macros `\user@active<char>` and `\normal@char<char>`. The
-     relevant issues are discussed in section 2.10 of the user manual,
-     in the test file mathastexttestalphabets.tex, and in the source
-     code comments to the macro `\mst@mathactivate`. The inherent
-     incompatibility of Babel with packages having made mathematically
-     active the characters itself makes document active is circumvented
-     by this interference of mathastext. A generally applicable Babel
-     patch could be derived from the method used by mathastext.
+* It is indeed a thorny point when one wants to modify an active character in
+  math mode only (without breaking usage in label's and ref's for example).
+  The package now does that _only_ if the activation originated in the Babel
+  system as it is then possible to modify appropriately the Babel macros
+  `\user@active<char>` and `\normal@char<char>`, at the time of entering math
+  mode (mathastext does all its activation job at `\everymath` and
+  `\everydisplay`).
 
-* The technique of mathematical activation is maintained only for the
-     characters which are not catcode active (at the entrance in math
-     mode, as mathastext does all its activation job at `\everymath` and
-     `\everydisplay`).
+  The relevant issues are discussed in section 2.10 of the user manual, in the
+  test file mathastexttestalphabets.tex, and in the source code comments for
+  macro `\mst@mathactivate`. The inherent incompatibility of Babel with
+  packages having made mathematically active the characters itself makes
+  document active is circumvented by this interference of mathastext. A
+  generally applicable Babel patch could be derived from the method used by
+  mathastext.
+
+  For the non catcode active characters, mathematical activation is used.
+  This is done at the entrance in math mode.
 
 * Sadly, the feature of added italic corrections introduced in
      version 1.2b did not behave as described in the user manual, due to

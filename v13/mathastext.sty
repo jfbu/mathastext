@@ -23,7 +23,7 @@
 %%----------------------------------------------------------------
 %% Package: mathastext
 %% Info:    Use the text font in math mode (jfB)
-%% Version: 1.3l 2016/01/29
+%% Version: 1.3m 2016/04/02
 %% License: LPPL 1.3c (http://www.latex-project.org/lppl/lppl-1-3c.txt)
 %% Copyright (C) 2011-2016 Jean-Francois B. <2589111+jfbu@users.noreply.github.com>
 %% Examples of use of mathastext:
@@ -32,18 +32,17 @@
 %%----------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage {mathastext}
-  [2016/01/29 v1.3l Use the text font in math mode (jfB)]
+  [2016/04/02 v1.3m Use the text font in math mode (jfB)]
   \let\mst@Umathcharnumdef\Umathcharnumdef
   \let\mst@Umathcodenum   \Umathcodenum
   \let\mst@Umathcode      \Umathcode
   \let\mst@Umathchardef   \Umathchardef
 \newif\ifmst@XeTeX
-\begingroup\expandafter\expandafter\expandafter\endgroup
-\expandafter\ifx\csname XeTeXinterchartoks\endcsname\relax
+\ifx\XeTeXinterchartoks\@undefined
   \mst@XeTeXfalse
 \else
   \mst@XeTeXtrue
-  \ifx\mst@Umathcharnumdef\undefined
+  \ifx\mst@Umathcharnumdef\@undefined
     \let\mst@Umathcharnumdef\XeTeXmathcharnumdef
     \let\mst@Umathcodenum   \XeTeXmathcodenum
     \let\mst@Umathcode      \XeTeXmathcode
@@ -51,12 +50,11 @@
   \fi
 \fi
 \newif\ifmst@LuaTeX
-\begingroup\expandafter\expandafter\expandafter\endgroup
-\expandafter\ifx\csname directlua\endcsname\relax
+\ifx\directlua\@undefined
   \mst@LuaTeXfalse
 \else
   \mst@LuaTeXtrue
-  \ifx\mst@Umathcharnumdef\undefined
+  \ifx\mst@Umathcharnumdef\@undefined
     \let\mst@Umathcharnumdef\luatexUmathcharnumdef
     \let\mst@Umathcodenum   \luatexUmathcodenum
     \let\mst@Umathcode      \luatexUmathcode
@@ -67,7 +65,11 @@
 \ifmst@LuaTeX\mst@XeOrLuatrue\fi
 \ifmst@XeTeX \mst@XeOrLuatrue\fi
 \def\mst@oti{OT1}\def\mst@ti{T1}\def\mst@lyi{LY1}
-\def\mst@eui{EU1}\def\mst@euii{EU2}\def\mst@uc{TU}
+\def\mst@eui{EU1}\def\mst@euii{EU2}\def\mst@tu{TU}
+\def\mst@OneifUniEnc {%
+    \ifx \mst@tmp@enc\mst@tu   1\else
+    \ifx \mst@tmp@enc\mst@eui  1\else
+    \ifx \mst@tmp@enc\mst@euii 1\else 0\fi\fi\fi }
 \newif\ifmst@goahead
 \newif\ifmst@abort
   \def\mst@enc{\encodingdefault}
@@ -338,6 +340,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \mst@theF\mst@do@AZ \let\mst@theF\@gobble}%
   \ifmst@subdued
     \MTeverymathoff
+    \MTnoicinmath
     \MTmathoperatorsdonotobeymathxx
   \else
      \ifx\mst@itcorr\@undefined
@@ -1156,10 +1159,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
   \mkern-7mu\mathord{\relbar}$}
 \fi
 \def\mst@dothe@endashstuff{\edef\mst@tmp@enc{\encodingdefault}
-\if1\ifx\mst@tmp@enc\mst@eui  1\else
-    \ifx\mst@tmp@enc\mst@euii 1\else
-    \ifx\mst@tmp@enc\mst@uc   1\else
-    0\fi\fi\fi
+\if1\mst@OneifUniEnc
   \AtBeginDocument{% Unicode engines and font
     \mst@Umathcode`\-=2 \symmtoperatorfont "2013\relax
     \mst@Umathchardef\mst@varfam@minus=7 \symmtoperatorfont "2013\relax
@@ -1185,10 +1185,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
  \fi
 \fi\fi\fi\fi}
 \def\mst@dothe@emdashstuff{\edef\mst@tmp@enc{\encodingdefault}
-\if1\ifx\mst@tmp@enc\mst@eui  1\else
-    \ifx\mst@tmp@enc\mst@euii 1\else
-    \ifx\mst@tmp@enc\mst@uc   1\else
-    0\fi\fi\fi
+\if1\mst@OneifUniEnc
   \AtBeginDocument{% Unicode engine and font
     \mst@Umathcode`\-=2 \symmtoperatorfont "2014\relax
     \mst@Umathchardef\mst@varfam@minus=7 \symmtoperatorfont "2014\relax
@@ -1230,10 +1227,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \def\mst@mathrlap{\mathpalette\mst@mathrlapinternal}
 \def\mst@mathrlapinternal#1#2{\rlap{$\mathsurround=0pt#1{#2}$}}
 \def\mst@dothe@hbarstuff{\edef\mst@tmp@enc{\encodingdefault}
-\if1\ifx\mst@tmp@enc\mst@eui  1\else
-    \ifx\mst@tmp@enc\mst@euii 1\else
-    \ifx\mst@tmp@enc\mst@uc   1\else
-    0\fi\fi\fi
+\if1\mst@OneifUniEnc
    % Unicode engine and font
    \mst@Umathchardef\hbar="7 \symmtletterfont "0127 \relax %% or 210F?
 \else % I must leave open the T1, OT1 possibility also for XeTeX or LuaTeX
@@ -1867,10 +1861,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \ifmst@subdued\else\MTcustomgreek\fi
 \edef\mst@tmp@enc{\encodingdefault}
 \mst@goaheadtrue
-\if1\ifx\mst@tmp@enc\mst@eui  1\else
-    \ifx\mst@tmp@enc\mst@euii 1\else
-    \ifx\mst@tmp@enc\mst@uc   1\else
-    0\fi\fi\fi
+\if1\mst@OneifUniEnc
   % Unicode engine and font
   \mst@Umathchardef\inodot="7 \symmtletterfont "0131 \relax
   \mst@Umathchardef\jnodot="7 \symmtletterfont "0237 \relax

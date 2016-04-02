@@ -13,7 +13,7 @@ The Author of this Work is Jean-Francois B.
 
 Copyright (C) 2011-2016 Jean-Francois B. (2589111+jfbu@users.noreply.github.com)
 
-      Source: mathastext.dtx 1.3l 2016/01/29
+      Source: mathastext.dtx 1.3m 2016/04/02
 
   cumulative Change Log at bottom of this file.
 
@@ -57,9 +57,9 @@ package loading time, for these characters:
 
 Main options: italic, subdued, LGRgreek.
 
--   Use the italic option to get the Latin letters in math mode be in
-    italics. Digits and log-like operator names (pre-defined as well as
-    user-defined) will be in the same shape as the text font (usually
+-   Use the italic option to get the Latin letters in math mode be
+    in italics. Digits and log-like operator names (pre-defined as well
+    as user-defined) will be in the same shape as the text font (usually
     this means upright).
 -   each \Mathastext[<name>] in the preamble defines a math version to
     be later activated in the document body via the command
@@ -124,6 +124,11 @@ This produces the documentation without the source code.
 
 
 CHANGE LOG
+
+
+1.3m [2016/04/02]
+
+-   minor code maintenance before annual TL freeze.
 
 
 1.3l [2016/01/29]
@@ -230,8 +235,8 @@ CHANGE LOG
     versions if the subdued option was also used (this was so far the
     case only with options LGRgreek/LGRgreeks).
 
--   \newmcodes@ of amsmath is left untouched if package lualatex-math is
-    detected.
+-   \newmcodes@ of amsmath is left untouched if package lualatex-math
+    is detected.
 
 
 1.3c [2013/12/14]
@@ -283,20 +288,20 @@ CHANGE LOG
     correspondingly modified).
 
 -   the new \luatexUmathcodenum as available since TL2013 allows
-    identical treatment by mathastext of = and - under both LuaTeX and
-    XeTeX.
+    identical treatment by mathastext of = and - under both LuaTeX
+    and XeTeX.
 
 -   \newmcodes@ of amsmath is left untouched in case of option basic.
 
 -   a sentence containing | which was written to the log during the
     loading caused a problem if | was active (typically if
-    \MakeShortVerb{\|} was added to the preamble prior to the loading of
-    mathastext).
+    \MakeShortVerb{\|} was added to the preamble prior to the loading
+    of mathastext).
 
 -   some preemptive measures taken regarding things such as \mid,
     \lbrace, and \rbrace, as some packages define these things in
-    manners which made the re-definitions done by mathastext issue
-    errors.
+    manners which made the re-definitions done by mathastext
+    issue errors.
 
 
 1.2f [2013/01/21]
@@ -310,23 +315,24 @@ This version should be the last one in the 1.2 series as it seems to
 correct most of the main problems which were introduced with the massive
 use of mathematically active characters in versions 1.2 and 1.2b.
 
--   It is indeed a thorny point when one wants to modify only in math
-    mode how an active character acts, without breaking things. The
-    package now does that /only/ if the activation appears to originate
-    in the Babel system, as it is then possible to modify appropriately
-    the Babel macros \user@active<char> and \normal@char<char>. The
-    relevant issues are discussed in section 2.10 of the user manual, in
-    the test file mathastexttestalphabets.tex, and in the source code
-    comments to the macro \mst@mathactivate. The inherent
-    incompatibility of Babel with packages having made mathematically
-    active the characters itself makes document active is circumvented
-    by this interference of mathastext. A generally applicable Babel
-    patch could be derived from the method used by mathastext.
+-   It is indeed a thorny point when one wants to modify an active
+    character in math mode only (without breaking usage in label's and
+    ref's for example). The package now does that _only_ if the
+    activation originated in the Babel system as it is then possible to
+    modify appropriately the Babel macros \user@active<char> and
+    \normal@char<char>, at the time of entering math mode (mathastext
+    does all its activation job at \everymath and \everydisplay).
 
--   The technique of mathematical activation is maintained only for the
-    characters which are not catcode active (at the entrance in math
-    mode, as mathastext does all its activation job at \everymath and
-    \everydisplay).
+The relevant issues are discussed in section 2.10 of the user manual, in
+the test file mathastexttestalphabets.tex, and in the source code
+comments for macro \mst@mathactivate. The inherent incompatibility of
+Babel with packages having made mathematically active the characters
+itself makes document active is circumvented by this interference of
+mathastext. A generally applicable Babel patch could be derived from the
+method used by mathastext.
+
+For the non catcode active characters, mathematical activation is used.
+This is done at the entrance in math mode.
 
 -   Sadly, the feature of added italic corrections introduced in version
     1.2b did not behave as described in the user manual, due to
@@ -347,8 +353,8 @@ use of mathematically active characters in versions 1.2 and 1.2b.
     since version 1.2 of the package. This is fixed here.
 
 -   various improvements in dealing with the asterisk and in the
-    mechanism of letting non-letter symbols obey the math alphabet
-    commands.
+    mechanism of letting non-letter symbols obey the math
+    alphabet commands.
 
 -   documentation extended and improved.
 
@@ -356,19 +362,19 @@ use of mathematically active characters in versions 1.2 and 1.2b.
 1.2c [2012/12/31]
 
 -   mathastext now inserts automatically after all (latin) letters in
-    math mode their italic corrections, if the font used is upright
-    (sic). This improves the spacings for the positioning of subscripts.
-    The feature is de-activated inside the math alphabets commands
-    (apart from \mathnormal), so as to not prohibit the formation of
-    ligatures.
+    math mode their italic corrections, if the font used is
+    upright (sic). This improves the spacings for the positioning
+    of subscripts. The feature is de-activated inside the math alphabets
+    commands (apart from \mathnormal), so as to not prohibit the
+    formation of ligatures.
 
 -   the documentation has been extended to explain in detail the issues
     which are relevant to the new feature of added italic corrections.
 
 -   version 1.2 had some bad bugs when confronted to active characters.
     This is corrected and additionally \MTnonlettersdonotobeymathxx is
-    made the default, as the user input is too much constrained in its
-    absence.
+    made the default, as the user input is too much constrained in
+    its absence.
 
 -   a less fatal, but still annoying, typo had made the dot in 1.2 of
     type \mathpunct rather than \mathord.
@@ -379,8 +385,8 @@ use of mathematically active characters in versions 1.2 and 1.2b.
 1.2 [2012/12/20]
 
 -   a new command sets up the amount of space to be automatically
-    inserted before the derivative glyph (useful when using an upright
-    font).
+    inserted before the derivative glyph (useful when using an
+    upright font).
 
 -   the scope of the math alphabets has been extended to apply to the
     non-alphabetical characters, and also to operator names.
@@ -423,14 +429,14 @@ use of mathematically active characters in versions 1.2 and 1.2b.
 1.15d [2012/10/13]
 
 -   the Unicode situation is now correctly treated, throughout the code
-    (this had been left in a half-done way from version 1.14 of April
-    2011).
+    (this had been left in a half-done way from version 1.14 of
+    April 2011).
 
 -   this includes an issue related to amsmath and its
     DeclareMathOperator macro which has been fixed,
 
--   and the code related to \relbar and \Relbar (and \models) has been
-    revised.
+-   and the code related to \relbar and \Relbar (and \models) has
+    been revised.
 
 
 1.15c [2012/10/05]
@@ -450,8 +456,8 @@ use of mathematically active characters in versions 1.2 and 1.2b.
 
 1.15 [2012/09/26]
 
--   the subdued option allows the mathastextification to act only
-    locally.
+-   the subdued option allows the mathastextification to act
+    only locally.
 
 -   some measures taken to deal with amsmath related issues when using
     xetex or luatex.
@@ -511,8 +517,8 @@ use of mathematically active characters in versions 1.2 and 1.2b.
     mechanism of math versions also when using XeTeX or LuaTeX (with
     package fontspec.)
 
--   the en-dash and dotless i and j now work with all encodings, Unicode
-    inclusive.
+-   the en-dash and dotless i and j now work with all encodings,
+    Unicode inclusive.
 
 
 1.11 [2011/02/06]

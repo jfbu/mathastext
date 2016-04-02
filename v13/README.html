@@ -25,6 +25,7 @@
 <li><a href="#generating-documentation-and-test-files">Generating documentation and test files</a></li>
 </ul></li>
 <li><a href="#change-log">CHANGE LOG</a><ul>
+<li><a href="#m-20160402">1.3m [2016/04/02]</a></li>
 <li><a href="#l-20160129">1.3l [2016/01/29]</a></li>
 <li><a href="#k-20160124">1.3k [2016/01/24]</a></li>
 <li><a href="#j-20160115">1.3j [2016/01/15]</a></li>
@@ -72,7 +73,7 @@
 <p>This Work may be distributed and/or modified under the conditions of the <a href="http://www.latex-project.org/lppl/lppl-1-3c.txt">LPPL1.3c</a></p>
 <p>The Author of this Work is Jean-Francois B.</p>
 <p>Copyright (C) 2011-2016 Jean-Francois B. (<code>2589111+jfbu@users.noreply.github.com</code>)</p>
-<pre><code>  Source: mathastext.dtx 1.3l 2016/01/29</code></pre>
+<pre><code>  Source: mathastext.dtx 1.3m 2016/04/02</code></pre>
 <blockquote>
 <p>cumulative Change Log at bottom of this file.</p>
 </blockquote>
@@ -126,6 +127,10 @@ dvipdfmx mathastext.dvi</code></pre>
 <p>(One cannot use lualatex/xelatex to compile the documentation.)</p>
 </blockquote>
 <h1 id="change-log">CHANGE LOG</h1>
+<h2 id="m-20160402">1.3m [2016/04/02]</h2>
+<ul>
+<li>minor code maintenance before annual TL freeze.</li>
+</ul>
 <h2 id="l-20160129">1.3l [2016/01/29]</h2>
 <ul>
 <li>compatibility with fontspec's upcoming switch from <code>EU1/EU2</code> to <code>TU</code> common to both Unicode engines.</li>
@@ -204,8 +209,11 @@ dvipdfmx mathastext.dvi</code></pre>
 <h2 id="e-20130110">1.2e [2013/01/10]</h2>
 <p>This version should be the last one in the 1.2 series as it seems to correct most of the main problems which were introduced with the massive use of mathematically active characters in versions 1.2 and 1.2b.</p>
 <ul>
-<li><p>It is indeed a thorny point when one wants to modify only in math mode how an active character acts, without breaking things. The package now does that /only/ if the activation appears to originate in the Babel system, as it is then possible to modify appropriately the Babel macros <code>\user@active&lt;char&gt;</code> and <code>\normal@char&lt;char&gt;</code>. The relevant issues are discussed in section 2.10 of the user manual, in the test file mathastexttestalphabets.tex, and in the source code comments to the macro <code>\mst@mathactivate</code>. The inherent incompatibility of Babel with packages having made mathematically active the characters itself makes document active is circumvented by this interference of mathastext. A generally applicable Babel patch could be derived from the method used by mathastext.</p></li>
-<li><p>The technique of mathematical activation is maintained only for the characters which are not catcode active (at the entrance in math mode, as mathastext does all its activation job at <code>\everymath</code> and <code>\everydisplay</code>).</p></li>
+<li>It is indeed a thorny point when one wants to modify an active character in math mode only (without breaking usage in label's and ref's for example). The package now does that <em>only</em> if the activation originated in the Babel system as it is then possible to modify appropriately the Babel macros <code>\user@active&lt;char&gt;</code> and <code>\normal@char&lt;char&gt;</code>, at the time of entering math mode (mathastext does all its activation job at <code>\everymath</code> and <code>\everydisplay</code>).</li>
+</ul>
+<p>The relevant issues are discussed in section 2.10 of the user manual, in the test file mathastexttestalphabets.tex, and in the source code comments for macro <code>\mst@mathactivate</code>. The inherent incompatibility of Babel with packages having made mathematically active the characters itself makes document active is circumvented by this interference of mathastext. A generally applicable Babel patch could be derived from the method used by mathastext.</p>
+<p>For the non catcode active characters, mathematical activation is used. This is done at the entrance in math mode.</p>
+<ul>
 <li><p>Sadly, the feature of added italic corrections introduced in version 1.2b did not behave as described in the user manual, due to forgotten group braces. Fixed.</p></li>
 <li><p>The command <code>\MTlowerast</code> from the user manual of v1.2d was not the one implemented in the source code. Fixed.</p></li>
 <li><p>The test files automatically extracted from a latex run on the dtx file have been revised and extended.</p></li>
