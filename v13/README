@@ -13,7 +13,7 @@ The Author of this Work is Jean-Francois B.
 
 Copyright (C) 2011-2016 Jean-Francois B. (2589111+jfbu@users.noreply.github.com)
 
-      Source: mathastext.dtx 1.3m 2016/04/02
+      Source: mathastext.dtx 1.3n 2016/04/22
 
   cumulative Change Log at bottom of this file.
 
@@ -124,6 +124,16 @@ This produces the documentation without the source code.
 
 
 CHANGE LOG
+
+
+1.3n [2016/04/22]
+
+-   at long last, mathastext takes take properly of annoying and
+    perplexing amsmath's \newmcodes@. The very recent change in
+    amsopn.sty finally made it compatible with Unicode engines, but
+    anyhow, mathastext must do its own patch to use the correct font.
+    All of this taking into account the various options passed to
+    the package. Lots of trouble for a tiny thing.
 
 
 1.3m [2016/04/02]

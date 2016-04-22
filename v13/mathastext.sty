@@ -22,8 +22,8 @@
 %% in the same archive or directory.)
 %%----------------------------------------------------------------
 %% Package: mathastext
-%% Info:    Use the text font in math mode (jfB)
-%% Version: 1.3m 2016/04/02
+%% Info:    Use the text font in math mode (JFB)
+%% Version: 1.3n 2016/04/22
 %% License: LPPL 1.3c (http://www.latex-project.org/lppl/lppl-1-3c.txt)
 %% Copyright (C) 2011-2016 Jean-Francois B. <2589111+jfbu@users.noreply.github.com>
 %% Examples of use of mathastext:
@@ -32,7 +32,7 @@
 %%----------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage {mathastext}
-  [2016/04/02 v1.3m Use the text font in math mode (jfB)]
+  [2016/04/22 v1.3n Use the text font in math mode (JFB)]
   \let\mst@Umathcharnumdef\Umathcharnumdef
   \let\mst@Umathcodenum   \Umathcodenum
   \let\mst@Umathcode      \Umathcode
@@ -327,7 +327,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \newcommand*\MTicalsoinmathxx{%
     \ifx\mst@itcorr\@empty\else\def\mst@itcorr{\/}\fi
     \ifx\mst@ITcorr\@empty\else\def\mst@ITcorr{\/}\fi}
-\AtBeginDocument{%
+\AtEndOfPackage{\AtBeginDocument{%
   \everymath\expandafter{\the\everymath
     \mst@the\mst@do@nonletters \let\mst@the\@gobble
     \mst@theeasy\mst@do@easynonletters  \let\mst@theeasy\@gobble
@@ -340,6 +340,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \mst@theF\mst@do@AZ \let\mst@theF\@gobble}%
   \ifmst@subdued
     \MTeverymathoff
+    \MTresetnewmcodes
     \MTnoicinmath
     \MTmathoperatorsdonotobeymathxx
   \else
@@ -357,7 +358,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
          \fi
      \fi
   \fi
-}
+}}
 \newcommand*\MTsetmathskips[3]{%
     \@namedef{mst@before#1}{\ifnum\fam=\m@ne\mskip#2\relax\fi }%
     \@namedef{mst@after#1}{\ifnum\fam=\m@ne\mskip#3\relax\fi }%
@@ -438,13 +439,62 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
   \mst@do@AZ\expandafter{\the\mst@do@AZ\mst@mathactivate#1#2\mst@ITcorr}%
 }
 \ifmst@basic\else
-\AtBeginDocument {%
-    \@ifpackageloaded{amsmath}
-    {\@ifpackageloaded{lualatex-math}
-       {\@ifpackagelater{lualatex-math}{2013/08/03}{}{\let\newmcodes@\relax}}
-       {\let\newmcodes@\relax}}
-    {}}
-\fi
+\ifx\numexpr\undefined
+\else
+  \ifmst@XeOrLua
+  \AtBeginDocument {%
+  \@ifpackageloaded{amsmath}
+  {\edef\mst@newmcodes@{%
+   \mst@Umathcode `\noexpand\' 0 \symmtoperatorfont 39\relax
+   \ifmst@asterisk
+    \mst@Umathcode `\noexpand\* 0 \symmtoperatorfont 42\relax
+   \else\mathcode`\noexpand\* 42
+   \fi
+   \ifmst@nopunct\mathcode `\noexpand\."613A \mathcode `\noexpand\: "603A
+   \else
+    \mst@Umathcode `\noexpand\. 6 \symmtoperatorfont 46\relax
+    \mst@Umathcode `\noexpand\: 6 \symmtoperatorfont 58\relax
+   \fi
+   \ifmst@nominus\mathcode`\noexpand\- 45
+   \else
+      \mst@Umathcode `\noexpand\- 0 \symmtoperatorfont 45\relax
+   \fi
+   \ifmst@noparen\mathcode `\noexpand\/  47
+   \else
+      \mst@Umathcode `\noexpand\/ 0 \symmtoperatorfont 47\relax
+   \fi
+  }%
+  \let\mst@originalnewmcodes@\newmcodes@
+  }%
+  {}%
+  }
+  \else
+  \AtBeginDocument {%
+  \@ifpackageloaded{amsmath}
+  {\edef\mst@newmcodes@{%
+    \mathcode`\noexpand\' \the\numexpr\symmtoperatorfont*\@cclvi+39\relax
+    \mathcode`\noexpand\*
+      \the\numexpr\ifmst@asterisk\symmtoperatorfont*\@cclvi\fi+42\relax
+    \ifmst@nopunct\mathcode `\noexpand\."613A \mathcode `\noexpand\: "603A
+    \else
+      \mathcode`\noexpand\. \the\numexpr\mst@varfam@dot-"1000\relax
+      \mathcode`\noexpand\: \the\numexpr\mst@varfam@colon-"1000\relax
+    \fi
+    \mathcode`\noexpand\-
+     \the\numexpr\unless\ifmst@nominus\symmtoperatorfont*\@cclvi\fi+45\relax
+    \mathcode`\noexpand\/
+     \the\numexpr\unless\ifmst@noparen\symmtoperatorfont*\@cclvi\fi+47\relax\relax
+    }%
+   \let\mst@originalnewmcodes@\newmcodes@
+   }%
+  {}%
+  }
+  \fi
+\fi\fi
+\newcommand*\MTresetnewmcodes{\ifx\mst@originalnewmcodes@\undefined\else
+                               \let\newmcodes@\mst@originalnewmcodes@\fi}
+\newcommand*\MTcustomizenewmcodes{\ifx\mst@originalnewmcodes@\undefined\else
+                               \let\newmcodes@\mst@newmcodes@\fi}
 \ifmst@subdued
   \def\mst@reserved#1\getanddefine@fonts\symletters#2#3\@nil{%
         \def\mst@normalmv@letter{#2}}
@@ -967,6 +1017,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \edef\mst@tmpb{\csname mst@shape@\mst@tmp\endcsname}%
     \MTmathoperatorsobeymathxx
     \MTeverymathdefault
+    \MTcustomizenewmcodes
     \@for\mst@tmpc:=it,sl\do{\ifx\mst@tmpc\mst@tmpa\MTnoicinmath\fi}%
     \ifmst@frenchmath
       \def\mst@ITcorr{\ifnum\fam=\m@ne\/\fi}%
@@ -981,6 +1032,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
         \MTnormalexists
         \MTnormalforall
         \MTeverymathoff
+        \MTresetnewmcodes
       \else
         \def\mst@tmpa{bold}%
         \ifx\mst@tmp\mst@tmpa
@@ -990,6 +1042,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
           \MTnormalexists
           \MTnormalforall
           \MTeverymathoff
+          \MTresetnewmcodes
         \else
           \mst@setalphabets
           \MTcustomgreek
@@ -1163,6 +1216,9 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
   \AtBeginDocument{% Unicode engines and font
     \mst@Umathcode`\-=2 \symmtoperatorfont "2013\relax
     \mst@Umathchardef\mst@varfam@minus=7 \symmtoperatorfont "2013\relax
+    % \mst@Umathcode `\-=7 \symmtoperatorfont "2013\relax
+    % \mst@Umathcharnumdef\mst@varfam@minus\mst@Umathcodenum`\-
+    % \mst@Umathcode `\-=2 \symmtoperatorfont "2013\relax
   }
 \else
 \ifx\mst@tmp@enc\mst@ti % T1
@@ -1369,26 +1425,26 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \mst@Umathcode`\&=7 \symmtoperatorfont "26 \relax
     }
   \else
-  \count255=\symmtoperatorfont
-  \multiply\count255 by 256
-  \advance\count255 by 35
-      \mathcode`\#\count255
-  \advance\count255 by \@ne
-      \mathchardef\mathdollar\count255
-  \advance\count255 by \@ne
-      \mathcode`\%\count255
-  \advance\count255 by \@ne
-      \mathcode`\&\count255
-  \count255=\symmtoperatorfont
-  \multiply\count255 by 256
-  \advance\count255 by 28707 % = "7023
-      \mathchardef\mst@varfam@mathhash\count255
-  \advance\count255 by \@ne
-      \mathchardef\mst@varfam@mathdollar\count255
-  \advance\count255 by \@ne
-      \mathchardef\mst@varfam@mathpercent\count255
-  \advance\count255 by \@ne
-      \mathchardef\mst@varfam@mathampersand\count255
+  \count@=\symmtoperatorfont
+  \multiply\count@ by \@cclvi
+  \advance\count@ by 35
+      \mathcode`\#\count@
+  \advance\count@ by \@ne
+      \mathchardef\mathdollar\count@
+  \advance\count@ by \@ne
+      \mathcode`\%\count@
+  \advance\count@ by \@ne
+      \mathcode`\&\count@
+  \count@=\symmtoperatorfont
+  \multiply\count@ by \@cclvi
+  \advance\count@ by 28707 % = "7023
+      \mathchardef\mst@varfam@mathhash\count@
+  \advance\count@ by \@ne
+      \mathchardef\mst@varfam@mathdollar\count@
+  \advance\count@ by \@ne
+      \mathchardef\mst@varfam@mathpercent\count@
+  \advance\count@ by \@ne
+      \mathchardef\mst@varfam@mathampersand\count@
   \mst@do@easynonletters\expandafter{\the\mst@do@easynonletters
     \mathcode`\#=\mst@varfam@mathhash
     \let\mathdollar\mst@varfam@mathdollar

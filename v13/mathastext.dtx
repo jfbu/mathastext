@@ -2,14 +2,14 @@
 % N.B.: this dtx file does NOT use \DocInput (only docstrip), the
 % LaTeX source of the documentation is NOT prefixed with % signs.
 %<*dtx>
-{\def\dtxtimestamp {Time-stamp: <02-04-2016 17:30:01 CEST>}%
+{\def\dtxtimestamp {Time-stamp: <22-04-2016 18:31:31 CEST>}%
  \def\getdtxtimestamp #1 <#2 #3 #4>{#2 at #3 #4}%
  \xdef\dtxtimestamp {\expandafter\getdtxtimestamp\dtxtimestamp }}%
-\def\docdate{2016/04/02}
+\def\docdate{2016/04/22}
 %</dtx>
 %<*drv|ins>
-\def\MSTpkgdate    {2016/04/02}
-\def\MSTpkgversion {1.3m}
+\def\MSTpkgdate    {2016/04/22}
+\def\MSTpkgversion {1.3n}
 %</drv|ins>
 %<*dtx>
 \iffalse % meta-comment
@@ -31,7 +31,7 @@ The Author of this Work is Jean-Francois B.
 
 Copyright (C) 2011-2016 Jean-Francois B. (`2589111+jfbu@users.noreply.github.com`)
 
-      Source: mathastext.dtx 1.3m 2016/04/02
+      Source: mathastext.dtx 1.3n 2016/04/22
 
 %</readme>
 %<*dtx>
@@ -46,8 +46,8 @@ not include the documented source code then, in contrast to 1a)+1b) method
 %<*!readme>
 %%----------------------------------------------------------------
 %% Package: mathastext
-%% Info:    Use the text font in math mode (jfB)
-%% Version: 1.3m 2016/04/02
+%% Info:    Use the text font in math mode (JFB)
+%% Version: 1.3n 2016/04/22
 %% License: LPPL 1.3c (http://www.latex-project.org/lppl/lppl-1-3c.txt)
 %% Copyright (C) 2011-2016 Jean-Francois B. <2589111+jfbu@users.noreply.github.com>
 %% Examples of use of mathastext:
@@ -236,6 +236,16 @@ This produces the documentation without the source code.
 
 CHANGE LOG
 ==========
+
+1.3n \[2016/04/22\]
+----
+
+* at long last, `mathastext` takes take properly of annoying and perplexing
+  amsmath's `\newmcodes@`. The very recent change in `amsopn.sty` finally
+  made it compatible with Unicode engines, but anyhow, `mathastext` must do
+  its own patch to use the correct font. All of this taking into account
+  the various options passed to the package. Lots of trouble for a tiny thing.
+
 
 1.3m \[2016/04/02\]
 ----
@@ -685,7 +695,7 @@ use of mathematically active characters in versions 1.2 and 1.2b.
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesFile{mathastext.tex}%
 [\MSTpkgdate\space v\MSTpkgversion\space 
-       driver file for mathastext documentation (jfB)]%
+       driver file for mathastext documentation (JFB)]%
 \PassOptionsToClass{a4paper,fontsize=11pt}{scrdoc}
 \chardef\Withdvipdfmx 1 % replace 1<space> by 0<space> for using latex/pdflatex
 \chardef\NoSourceCode 0 % replace 0<space> by 1<space> for no source code
@@ -1462,6 +1472,15 @@ LGRgreek]{mathastext}
 See \autoref{sec:changelog} for the detailed change log.
 
 \begin{description}[leftmargin=0.5em]
+
+\item [Changes for release |1.3n|  of |2016/04/22|]
+\begin{itemize}[noitemsep]
+\item at long last, \mst takes take properly of annoying and perplexing
+  amsmath's |\newmcodes@|. The very recent change in |amsopn.sty| finally
+  made it compatible with Unicode engines, but anyhow, \mst must do
+  its own patch to use the correct font. All of this taking into account
+  the various options passed to the package. Lots of trouble for a tiny thing.
+\end{itemize}
 
 \item [Changes for release |1.3m|  of |2016/04/02|]
 \begin{itemize}[noitemsep]
@@ -3062,34 +3081,25 @@ for subscripts (it also copies code from the |moresize| package to redefine
   encodings, including Unicode (if |fontspec| has been
   loaded).
 
-\item[amsmath:] the behavior of the \cs{DeclareMathOperator}
-command of |amsmath| is slightly modified by \mst. This
-command initially allows crazy things like 
-\cs{DeclareMathOperator}\cs{crazy}\{m.ch-in'tr/u:c\}
-and then the ., -, ', / and : will be typeset  in the
-roman font. But the font number was hardcoded in the macro
-and furthermore the code of |amsmath| would cause an error
-with Unicode engine as soon as some Unicode code is assigned
-to the minus character.\footnote{To the experts: the $\sin$,
-$\cos$, \dots{} operator names are \emph{not} defined by |amsmath| with
-the help of the \cs{DeclareMathOperator} macro, hence are
-not the cause of an error in \XeTeX{}/\LuaLaTeX{}. What \mst
-does is to let to relax the \cs{newmcodes@} macro, so it is
-possible to save it before loading \mst and re-establish
-later, if really really this is what you want.}\footnote{new with
-\texttt{1.3d}: if \mst
-detacts the \texttt{lualatex-math} package which fixes this
-\texttt{amsmath} issue, it 
-does not change \texttt{\char92newmcodes@}.}
-This specific issue will perhaps be
-fixed by some hypothetic future release of |amsmath|, or by other
-packages providing patches, but I decided for a preemptive
-strike. As a result the declaration above will not cause an
-error when \cs{crazy} is used with a Unicode engine, but there
- are now some spacings around the punctuation characters. To
-avoid this use (also with \LaTeX{}):\\
-\centerline{\cs{DeclareMathOperator}\cs{crazy}\{m\{.\}ch\{-\}in\{'\}tr\{/\}u\{:\}c\}}
-Note though that the quote ' will be typeset as a derivative sign $'$. 
+\item[amsmath:] \strut the behaviour of the
+  \cs{DeclareMathOperator}\vadjust{\vskip-\dp\strutbox\nointerlineskip\hbox to\hsize{\kern2em\smash{\CHANGED}}\vskip\dp\strutbox} command
+  of |amsmath| is modified by \mst for it to use the correct font.
+  Additionally, release |1.3n| of \mst at long last also handles an extra
+  operation done by |amsmath| for |'.:/-*| to be used in operator names
+  without the extra math spacing.%
+%
+\footnote{To the experts: there is a long story here that \cs{newmcodes@}
+  hardcodes the font, that it was not compatible with Unicode engines, that
+  during some time (2013-2016) \texttt{lualatex-math} fixed that and very
+  recently |amsopn.sty 2016/03/08 v2.02| also, so now \texttt{lualatex-math
+    1.6} does nothing as it is already fixed ``upstream'' in |amsopn.sty|, but
+  anyhow in both cases, this still hardcoded the font, so finally \mst does
+  the right thing from its point of view. See the code comments for more,
+  there is an issue here with \LuaLaTeX not applying the curly right quote
+  contrarily to \XeLaTeX.}
+%
+This customization is suppressed in §subdued§ mode for the |normal| and |bold|
+math versions.
 
 \item[hbar:] the definition of \cs{hbar} inherited from
   default \LaTeX{} will in our context make use of the
@@ -3151,8 +3161,8 @@ Note though that the quote ' will be typeset as a derivative sign $'$.
 
   \item[\XeTeX{} and \LuaLaTeX{}:] for the en-dash
 and the dotless i and j, the package expects to detect
-either the EU1 encoding for XeTeX{} or the EU2 encoding
-for \LuaLaTeX{} (this will be true if |fontspec| was
+either the EU1 encoding for \XeTeX\ or the EU2 encoding
+for \LuaLaTeX\ (this will be true if |fontspec| was
 loaded), or one of |OT1|, |LY1| or |T1|, else it
 will renounce and not attempt to access the en-dash or the
 dotless i and j glyphs. With \LaTeX{} and Pdf\LaTeX{},
@@ -4117,17 +4127,17 @@ Numerous examples will be found there:\\
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage {mathastext}
-  [2016/04/02 v1.3m Use the text font in math mode (jfB)]
+  [2016/04/22 v1.3n Use the text font in math mode (JFB)]
 %    \end{macrocode}
-% Testing for XeTeX and LuaLaTeX.
+% Testing for \XeTeX\ and \LuaLaTeX.
 %
 % |1.3g 2015/10/15|: update for the naming of primitives, the situation has
-% evolved both on XeTeX side and on the LuaLaTeX side (LaTeX base |2015/10/01|):
-% I was told "U" named math primitives were always available for LuaLaTeX. For
-% XeTeX, XeTeX prefix got replaced by U prefix with 0.99.. a certain number of
-% 9. I opted for rather simple approach of just trying the "modern" names and
-% if they don't exist fall back on earlier (and in danger of being deprecated)
-% names.
+% evolved both on \XeTeX\ side and on the \LuaLaTeX\ side (LaTeX base
+% |2015/10/01|): I was told "U" named math primitives were always available
+% for \LuaLaTeX. For \XeTeX, the XeTeX prefix got replaced by U prefix with
+% 0.99.. a certain number of 9. I opted for rather simple approach of just
+% trying the "modern" names and if they don't exist fall back on earlier (and
+% in danger of being deprecated) names.
 %    \begin{macrocode}
   \let\mst@Umathcharnumdef\Umathcharnumdef
   \let\mst@Umathcodenum   \Umathcodenum
@@ -4864,7 +4874,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \newcommand*\MTicalsoinmathxx{%
     \ifx\mst@itcorr\@empty\else\def\mst@itcorr{\/}\fi
     \ifx\mst@ITcorr\@empty\else\def\mst@ITcorr{\/}\fi}
-\AtBeginDocument{%
+\AtEndOfPackage{\AtBeginDocument{%
   \everymath\expandafter{\the\everymath 
     \mst@the\mst@do@nonletters \let\mst@the\@gobble
     \mst@theeasy\mst@do@easynonletters  \let\mst@theeasy\@gobble
@@ -4884,9 +4894,13 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 % |1.3m|: doing \cs{MTmathactiveletters} in subdued mode immediately after
 % |\begin{document}| resulted in errors because \cs{mst@itcorr} had been left
 % undefined. We thus add \cs{MTnoicinmath} to the subdued initialization.
+%
+% Attention |1.3n| needs here \cs{mst@originalnewmcodes@}, itself defined at
+% begin document. Thus we have wrappd the whole thing in \cs{AtEndOfPackage}.
 %    \begin{macrocode}
   \ifmst@subdued
     \MTeverymathoff
+    \MTresetnewmcodes
     \MTnoicinmath
     \MTmathoperatorsdonotobeymathxx
   \else
@@ -4912,7 +4926,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
          \fi
      \fi
   \fi
-}
+}}
 %    \end{macrocode}
 % \end{macro}\end{macro}\end{macro}\end{macro}\end{macro}\end{macro}\end{macro}
 % \end{macro}\end{macro}\end{macro}\end{macro}\end{macro}\end{macro}\end{macro}
@@ -5049,11 +5063,14 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %    \end{macrocode}
 % \end{macro}\end{macro}\end{macro}\end{macro}\end{macro}
 % \begin{macro}{\newmcodes@}
+% \begin{macro}{\mst@newmcodes@}
+% \begin{macro}{\MTresetnewmcodes}
+% \begin{macro}{\MTcustomizenewmcodes}
 %   |1.15d|: this amsmath macro causes an error in Unicode engines as soon
 %   someone assigns a Unicode mathcode to the minus sign, and then makes a
-%   \cs{DeclareMathOperator} declaration. Furthermore it hard-codes the
-%   font family 0 as being the one to be used. Moreover just putting the
-%   concerned signs -,:,.,\,' inside braces emulates enough the
+%   \cs{DeclareMathOperator} declaration. Furthermore it hard-codes the font
+%   family 0 as being the one to be used. Moreover just putting the concerned
+%   signs |-|, |:|, |.|, |\| ,|'|, |*| inside braces emulates enough the
 %   behavior (although the tick will give a prime).
 %   
 %   |1.3|: now tests if `basic' option was used.
@@ -5062,22 +5079,136 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %   meantime its relaxification will not be done if lualatex-math is
 %   loaded. And the whole thing is put at begin document.
 %
-%   |1.3m|: lualatex-math |1.5| n'a pas modifié son traitement de |\newmcodes@|
+%   |1.3m|: |lualatex-math 1.5| n'a pas modifié son traitement de |\newmcodes@|
 %   mais par contre a supprimé le patch de \cs{resetMathstrut@}. Mais la date
 %   de release est restée à |2015/09/22| (date de |1.4a|) au lieu de quelque
 %   chose comme |2016/03/13| (date pour l'annonce sur CTAN). Il faudra suivre
 %   l'évolution future de |amsmath.sty| maintenant assurée par D.C.
+%
+%   |1.3n 2016/04/22|: there is no more a patch of |\newmcodes@| by
+%   |lualatex-math 1.6| |(2016/04/16)|, as |amsmath 2016/03/10 v2.15b| has now
+%   a version compatible with \LuaLaTeX.
+%
+%   My very radical |\let\newmcodes@\relax| was only a temporary measure I
+%   adopted for lack of time on October 13, 2012, and apart from avoiding to
+%   do that in case |lualatex-math| was detected, I never came back... finally
+%   I handle it myself for |1.3n|. The remaining problem of this macro (now
+%   that it does not anymore crash |lualatex| or vice versa) is that (also
+%   with |amsmath| version |2016/03/10 v2.15b|) it hardcodes the font used.
+%   The aim of the macro is to modify the type of spacing affected to symbols
+%   |'|, |*|, |.|, |-|, |/|, |:|, in case they are used in operator names.
+%
+%   \begin{itemize}
+%   \item As I don't want to monopolize a count register only for
+%     computations, let's just be mean if \eTeX\ not there.
+%   \item \mst makes (or not, depending on commands issued by the user) these
+%     characters math active (the right tick already is), which complicates
+%     recovery of former mathcode. We have mathchar type \emph{macros}, but
+%     then the complication is in diverging behaviours of the engines:
+%     |\numexpr\mst@varfam@minus\relax| works with \LuaTeX, not with \XeTeX.
+%   \item the |*| must presumably really be the non-lowered text glyph.
+%   \item for the |-| I hesitated but do use the hyphen in the end.
+%   \item seems I simply don't understand what the amsmath code does with
+%     \cs{std@minus}. It is used in \cs{relbar} and it escapes me why
+%     \cs{newmcodes@} would ever want to redefine it, and more importantly why
+%     on earth it tests the mathcode of |-| for that ? yes, \cs{std@minus} is
+%     defined (at begin document) using the mathcode of |-|, but what's the
+%     connexion to \cs{newmcodes@} ?? Any way \mst defines \cs{relbar} with
+%     \cs{mst@minus@sign}. Thus I just drop this conditional.
+%   \item things are complicated by the options such as |nominus|,
+%     |noparenthesis|.
+%   \item the \cs{newmcodes@} macro is anyhow assuming that if a new math font
+%     is used it occupies math groups |0| and |1| !! very bad; fixing it in
+%     passing if the character has not been handled by \mst could be
+%     envisioned, but that's not \mst's job.
+%     \item years go by, and I remain as baffled as ever about the story of
+%     ``more than 16 math families''. I will not test again, but I am pretty
+%     sure that \cs{DeclareMathSymbol} does not work with more than 16
+%     families, thus when I try to be a good boy and use \cs{Umathcode} syntax
+%     with |symmtoperatorfont| I am perhaps doing unnecessary efforts.
+%   \item I noticed that \LuaLaTeX\ does not apply the ``TeX Ligature'' (bad
+%     name) regarding the right tick APOSTROPHE being transformed into RIGHT
+%     SINGLE QUOTATION MARK in math mode, but \XeLaTeX\ does. From the point
+%     of view of \mst, the behaviour of \XeLaTeX\ is the coherent one. It
+%     appears that \LuaLaTeX\ use in math mode of a text font does not obey
+%     set features, like this
+%     \url{http://tex.stackexchange.com/questions/208688/oldstylefigure-issue-with-lualatex-and-mathastext}
+%     perhaps illustrates. I opened a ticket at
+%     \url{https://github.com/wspr/fontspec/issues/238}, but as usual it is
+%     hard to figure out the best place where to report font matters.
+%     \item I make some effort not to require \cs{numexpr} in legacy engine...
+%     |wipet| should be happy if he ever reads these lines. Well no, too much
+%     pain as there is no immediate way to get hexadecimal digit. And |wipet|
+%     will not read this as this is a \LaTeX\ package, and I don't see why I
+%     should bother making |wipet| happy.
+%     \item Some hesitation about what to under option |symboldelimiters|. I
+%     temporarily used |\symmtpsymbol|, except for the right quote and for the
+%     hyphen, but finally  I drop that and use |\symmtoperatorfont| always.
+%     (after testing how it looked like).
+%   \end{itemize}
+% All in all this is a great deal of trouble and I understand I postponed back
+% in 2012! I spent some hours on this small thing, with consequent testing and
+% for example this TeX Ligature issue with Unicode engines.
 %    \begin{macrocode}
 \ifmst@basic\else
-\AtBeginDocument {%
-    \@ifpackageloaded{amsmath}
-    {\@ifpackageloaded{lualatex-math}
-       {\@ifpackagelater{lualatex-math}{2013/08/03}{}{\let\newmcodes@\relax}}
-       {\let\newmcodes@\relax}}
-    {}}
-\fi
+\ifx\numexpr\undefined
+\else
+  \ifmst@XeOrLua
+  \AtBeginDocument {%
+  \@ifpackageloaded{amsmath}
+  {\edef\mst@newmcodes@{%
+   \mst@Umathcode `\noexpand\' 0 \symmtoperatorfont 39\relax
+   \ifmst@asterisk
+    \mst@Umathcode `\noexpand\* 0 \symmtoperatorfont 42\relax 
+   \else\mathcode`\noexpand\* 42 
+   \fi
+   \ifmst@nopunct\mathcode `\noexpand\."613A \mathcode `\noexpand\: "603A
+   \else
+    \mst@Umathcode `\noexpand\. 6 \symmtoperatorfont 46\relax 
+    \mst@Umathcode `\noexpand\: 6 \symmtoperatorfont 58\relax 
+   \fi
+   \ifmst@nominus\mathcode`\noexpand\- 45 
+   \else
+      \mst@Umathcode `\noexpand\- 0 \symmtoperatorfont 45\relax
+   \fi
+   \ifmst@noparen\mathcode `\noexpand\/  47 
+   \else
+      \mst@Umathcode `\noexpand\/ 0 \symmtoperatorfont 47\relax
+   \fi
+  }%
+  \let\mst@originalnewmcodes@\newmcodes@
+  }%
+  {}%
+  }
+  \else
+  \AtBeginDocument {%
+  \@ifpackageloaded{amsmath}
+  {\edef\mst@newmcodes@{%
+    \mathcode`\noexpand\' \the\numexpr\symmtoperatorfont*\@cclvi+39\relax
+    \mathcode`\noexpand\* 
+      \the\numexpr\ifmst@asterisk\symmtoperatorfont*\@cclvi\fi+42\relax
+    \ifmst@nopunct\mathcode `\noexpand\."613A \mathcode `\noexpand\: "603A
+    \else
+      \mathcode`\noexpand\. \the\numexpr\mst@varfam@dot-"1000\relax
+      \mathcode`\noexpand\: \the\numexpr\mst@varfam@colon-"1000\relax
+    \fi
+    \mathcode`\noexpand\- 
+     \the\numexpr\unless\ifmst@nominus\symmtoperatorfont*\@cclvi\fi+45\relax
+    \mathcode`\noexpand\/ 
+     \the\numexpr\unless\ifmst@noparen\symmtoperatorfont*\@cclvi\fi+47\relax\relax
+    }%
+   \let\mst@originalnewmcodes@\newmcodes@
+   }%
+  {}%
+  }
+  \fi
+\fi\fi
+\newcommand*\MTresetnewmcodes{\ifx\mst@originalnewmcodes@\undefined\else
+                               \let\newmcodes@\mst@originalnewmcodes@\fi}
+\newcommand*\MTcustomizenewmcodes{\ifx\mst@originalnewmcodes@\undefined\else
+                               \let\newmcodes@\mst@newmcodes@\fi}
 %    \end{macrocode}
-% \end{macro}
+% \end{macro}\end{macro}\end{macro}\end{macro}
 % \begin{macro}{subdued}
 %   |1.15|: The subdued code was initiated in May 2011. I returned to
 %   |mathastext| on Sep 24, 2012, and decided to complete what I had started
@@ -6070,6 +6201,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %    \begin{macrocode}
     \MTmathoperatorsobeymathxx
     \MTeverymathdefault
+    \MTcustomizenewmcodes       
     \@for\mst@tmpc:=it,sl\do{\ifx\mst@tmpc\mst@tmpa\MTnoicinmath\fi}%
     \ifmst@frenchmath
       \def\mst@ITcorr{\ifnum\fam=\m@ne\/\fi}%
@@ -6079,7 +6211,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 % |1.3j| has a stronger subdued which does \cs{MTnormalprime},
 % \cs{MTnormalexists}, \cs{MTnormalforall} rather than simply setting the
 % skips to |0mu|. Note: \cs{MTnormalprime} is done as part of
-% \cs{MTeverymathoff}.
+% \cs{MTeverymathoff}. 
 %    \begin{macrocode}
     \ifmst@subdued
       \def\mst@tmpa{normal}%
@@ -6090,6 +6222,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
         \MTnormalexists
         \MTnormalforall
         \MTeverymathoff
+        \MTresetnewmcodes    
       \else
         \def\mst@tmpa{bold}%
         \ifx\mst@tmp\mst@tmpa
@@ -6098,7 +6231,8 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
           \MTmathoperatorsdonotobeymathxx
           \MTnormalexists
           \MTnormalforall
-          \MTeverymathoff          
+          \MTeverymathoff
+          \MTresetnewmcodes    
         \else
           \mst@setalphabets
           \MTcustomgreek
@@ -6329,7 +6463,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 % |1.15d|: Oct 13, 2012. Belated amendment of the code to be compatible
 % with Unicode engines in case someone changed the mathcode of -.
 % However, for the time being I can do it in an easy way only for
-% XeTeX, not for LuaLatex. Also I do my modifications to \cs{relbar}
+% \XeTeX, not for \LuaLaTeX. Also I do my modifications to \cs{relbar}
 % in a manner testing for the presence of amsmath.
 %    \begin{macrocode}
 \ifmst@nominus
@@ -6372,6 +6506,9 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
   \AtBeginDocument{% Unicode engines and font
     \mst@Umathcode`\-=2 \symmtoperatorfont "2013\relax
     \mst@Umathchardef\mst@varfam@minus=7 \symmtoperatorfont "2013\relax
+    % \mst@Umathcode `\-=7 \symmtoperatorfont "2013\relax
+    % \mst@Umathcharnumdef\mst@varfam@minus\mst@Umathcodenum`\-
+    % \mst@Umathcode `\-=2 \symmtoperatorfont "2013\relax
   }
 \else
 \ifx\mst@tmp@enc\mst@ti % T1
@@ -6712,13 +6849,14 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %  |1.2d| |2013/01/01|: previous versions imposed the variable family type. I
 %  hereby make it possible to de-activate this feature with the macro
 %  \cs{MTeasynonlettersdonotobeymathxx}. Besides, I have absolutely no idea
-%  why I had different looking code depending on the engine XeTeX, LuaTeX or
+%  why I had different looking code depending on the engine \XeTeX, \LuaTeX\ or
 %  default. Removed.
 %
-%  |1.3c| |2013/12/14|: I have absolutely no idea why I removed the XeTeX and
-%  LuaTeX code at the time of |1.2d|! the code for tex/pdftex engine could not
-%  accomodate more than 16 math families. Code for XeTeX and LuaTeX again added.
-%  (and since TL2013 no more problems with |\luatexUmathcode|.)
+%  |1.3c| |2013/12/14|: I have absolutely no idea why I removed the \XeTeX\
+%  and \LuaTeX\ code at the time of |1.2d|! the code for tex/pdftex engine
+%  could not accomodate more than 16 math families. Code for \XeTeX\ and
+%  \LuaTeX\ again added. (and since TL2013 no more problems with
+%  |\luatexUmathcode|.)
 %    \begin{macrocode}
 \ifmst@nospecials
 \else
@@ -6737,26 +6875,26 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \mst@Umathcode`\&=7 \symmtoperatorfont "26 \relax
     }
   \else
-  \count255=\symmtoperatorfont
-  \multiply\count255 by 256
-  \advance\count255 by 35
-      \mathcode`\#\count255
-  \advance\count255 by \@ne
-      \mathchardef\mathdollar\count255
-  \advance\count255 by \@ne
-      \mathcode`\%\count255
-  \advance\count255 by \@ne
-      \mathcode`\&\count255
-  \count255=\symmtoperatorfont
-  \multiply\count255 by 256
-  \advance\count255 by 28707 % = "7023
-      \mathchardef\mst@varfam@mathhash\count255
-  \advance\count255 by \@ne
-      \mathchardef\mst@varfam@mathdollar\count255
-  \advance\count255 by \@ne
-      \mathchardef\mst@varfam@mathpercent\count255
-  \advance\count255 by \@ne
-      \mathchardef\mst@varfam@mathampersand\count255
+  \count@=\symmtoperatorfont
+  \multiply\count@ by \@cclvi
+  \advance\count@ by 35
+      \mathcode`\#\count@
+  \advance\count@ by \@ne
+      \mathchardef\mathdollar\count@
+  \advance\count@ by \@ne
+      \mathcode`\%\count@
+  \advance\count@ by \@ne
+      \mathcode`\&\count@
+  \count@=\symmtoperatorfont
+  \multiply\count@ by \@cclvi
+  \advance\count@ by 28707 % = "7023
+      \mathchardef\mst@varfam@mathhash\count@
+  \advance\count@ by \@ne
+      \mathchardef\mst@varfam@mathdollar\count@
+  \advance\count@ by \@ne
+      \mathchardef\mst@varfam@mathpercent\count@
+  \advance\count@ by \@ne
+      \mathchardef\mst@varfam@mathampersand\count@
   \mst@do@easynonletters\expandafter{\the\mst@do@easynonletters
     \mathcode`\#=\mst@varfam@mathhash
     \let\mathdollar\mst@varfam@mathdollar
@@ -7522,6 +7660,9 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %   \cs{MTmathoperatorsobeymathxx} as the latter does not correspond to
 %   something done during execution of |\the\everymath|.
 %
+%   Should I put  |\let\newmcodes@\mst@newmcodes@| here too ? No, it is not
+%   done at everymath.
+%
 %   During the loading, the (non subdued) package does \cs{MTactiveasterisk}
 %   (if option asterisk), \cs{MTprimedoesskip}, \cs{MTeasynonlettersobeymathxx}
 %   and \cs{MTmathactiveletters}. There is some code at begin document for
@@ -7540,6 +7681,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \MTeasynonlettersobeymathxx
     \MTicinmath
 }%
+\endinput
 %    \end{macrocode}
 % \end{macro}
 % \DeleteShortVerb{\|}
@@ -7562,7 +7704,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
   Grave accent  \`     Left brace    \{     Vertical bar  \|
   Right brace   \}     Tilde         \~}
 
-\CheckSum{5233}
+\CheckSum{5406}
 \makeatletter\check@checksum\makeatother
 \Finale
 %%
