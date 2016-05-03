@@ -23,7 +23,7 @@
 %%----------------------------------------------------------------
 %% Package: mathastext
 %% Info:    Use the text font in math mode (JFB)
-%% Version: 1.3n 2016/04/22
+%% Version: 1.3o 2016/05/03
 %% License: LPPL 1.3c (http://www.latex-project.org/lppl/lppl-1-3c.txt)
 %% Copyright (C) 2011-2016 Jean-Francois B. <2589111+jfbu@users.noreply.github.com>
 %% Examples of use of mathastext:
@@ -32,7 +32,7 @@
 %%----------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage {mathastext}
-  [2016/04/22 v1.3n Use the text font in math mode (JFB)]
+  [2016/05/03 v1.3o Use the text font in math mode (JFB)]
   \let\mst@Umathcharnumdef\Umathcharnumdef
   \let\mst@Umathcodenum   \Umathcodenum
   \let\mst@Umathcode      \Umathcode
@@ -443,8 +443,8 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \else
   \ifmst@XeOrLua
   \AtBeginDocument {%
-  \@ifpackageloaded{amsmath}
-  {\edef\mst@newmcodes@{%
+  \ifx\newmcodes@\@undefined\else
+  \edef\mst@newmcodes@{%
    \mst@Umathcode `\noexpand\' 0 \symmtoperatorfont 39\relax
    \ifmst@asterisk
     \mst@Umathcode `\noexpand\* 0 \symmtoperatorfont 42\relax
@@ -465,13 +465,12 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
    \fi
   }%
   \let\mst@originalnewmcodes@\newmcodes@
-  }%
-  {}%
+  \fi
   }
   \else
   \AtBeginDocument {%
-  \@ifpackageloaded{amsmath}
-  {\edef\mst@newmcodes@{%
+  \ifx\newmcodes@\@undefined\else
+  \edef\mst@newmcodes@{%
     \mathcode`\noexpand\' \the\numexpr\symmtoperatorfont*\@cclvi+39\relax
     \mathcode`\noexpand\*
       \the\numexpr\ifmst@asterisk\symmtoperatorfont*\@cclvi\fi+42\relax
@@ -486,9 +485,8 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
      \the\numexpr\unless\ifmst@noparen\symmtoperatorfont*\@cclvi\fi+47\relax\relax
     }%
    \let\mst@originalnewmcodes@\newmcodes@
-   }%
-  {}%
-  }
+   \fi
+   }
   \fi
 \fi\fi
 \newcommand*\MTresetnewmcodes{\ifx\mst@originalnewmcodes@\undefined\else
@@ -542,6 +540,42 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 {\def\operator@font{\mathgroup\symmtoperatorfont}}
 \MTmathoperatorsobeymathxx
 \DeclareSymbolFont{mtletterfont}{\mst@enc}{\mst@fam}{\mst@ser}{\mst@ltsh}
+\begingroup
+\catcode`N 12
+\catcode`O 12
+\catcode`D 12
+\catcode`E 12
+\lowercase{\gdef\mst@fixmathfonts@ #1=NODE;#2#3\relax #4\@empty #5}%
+  {\ifx#2\empty\else\font\mst@mathfont=#1=base;#2#3\relax#5=\mst@mathfont\fi}
+\lowercase{\gdef\mst@fixmathfonts
+{\expandafter\mst@fixmathfonts@
+  \fontname\textfont\symmtoperatorfont\relax\relax=NODE;\empty\relax\@empty
+   {\textfont\symmtoperatorfont}%
+ \expandafter\mst@fixmathfonts@
+  \fontname\scriptfont\symmtoperatorfont\relax\relax=NODE;\empty\relax\@empty
+   {\scriptfont\symmtoperatorfont}%
+ \expandafter\mst@fixmathfonts@
+  \fontname\scriptscriptfont\symmtoperatorfont\relax\relax=NODE;\empty\relax\@empty
+   {\scriptscriptfont\symmtoperatorfont}%
+ \expandafter\mst@fixmathfonts@
+  \fontname\textfont\symmtletterfont\relax\relax=NODE;\empty\relax\@empty
+   {\textfont\symmtletterfont}%
+ \expandafter\mst@fixmathfonts@
+  \fontname\scriptfont\symmtletterfont\relax\relax=NODE;\empty\relax\@empty
+   {\scriptfont\symmtletterfont}%
+ \expandafter\mst@fixmathfonts@
+  \fontname\scriptscriptfont\symmtletterfont\relax\relax=NODE;\empty\relax\@empty
+   {\scriptscriptfont\symmtletterfont}%
+  }%
+}%
+\endgroup
+\ifmst@LuaTeX
+  \everymath\expandafter{\the\everymath\mst@@fixmathfonts}%
+  \everydisplay\expandafter{\the\everydisplay\mst@@fixmathfonts}%
+\fi
+\newcommand*\MTfixfonts{\let\mst@@fixmathfonts\mst@fixmathfonts}%
+\newcommand*\MTdonotfixfonts{\let\mst@@fixmathfonts\empty}%
+\MTfixfonts
 \let\mst@alph@omicron\mathnormal
 \@ifpackageloaded{fourier}{\ifsloped\else\let\mst@alph@omicron\mathrm\fi}{}
 \DeclareSymbolFontAlphabet{\Mathnormal}{mtletterfont}
@@ -1216,9 +1250,6 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
   \AtBeginDocument{% Unicode engines and font
     \mst@Umathcode`\-=2 \symmtoperatorfont "2013\relax
     \mst@Umathchardef\mst@varfam@minus=7 \symmtoperatorfont "2013\relax
-    % \mst@Umathcode `\-=7 \symmtoperatorfont "2013\relax
-    % \mst@Umathcharnumdef\mst@varfam@minus\mst@Umathcodenum`\-
-    % \mst@Umathcode `\-=2 \symmtoperatorfont "2013\relax
   }
 \else
 \ifx\mst@tmp@enc\mst@ti % T1
@@ -2015,6 +2046,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \MTnonlettersdonotobeymathxx
     \MTeasynonlettersdonotobeymathxx
     \MTmathstandardletters
+    \MTdonotfixfonts
 }%
 \AtBeginDocument {%
    \@ifpackageloaded{hyperref}
@@ -2026,6 +2058,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \MTprimedoesskip
     \MTeasynonlettersobeymathxx
     \MTicinmath
+    \MTfixfonts
 }%
 \endinput
 %%

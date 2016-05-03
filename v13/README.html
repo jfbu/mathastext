@@ -25,6 +25,7 @@
 <li><a href="#generating-documentation-and-test-files">Generating documentation and test files</a></li>
 </ul></li>
 <li><a href="#change-log">CHANGE LOG</a><ul>
+<li><a href="#o-20160503">1.3o [2016/05/03]</a></li>
 <li><a href="#n-20160422">1.3n [2016/04/22]</a></li>
 <li><a href="#m-20160402">1.3m [2016/04/02]</a></li>
 <li><a href="#l-20160129">1.3l [2016/01/29]</a></li>
@@ -74,7 +75,7 @@
 <p>This Work may be distributed and/or modified under the conditions of the <a href="http://www.latex-project.org/lppl/lppl-1-3c.txt">LPPL1.3c</a></p>
 <p>The Author of this Work is Jean-Francois B.</p>
 <p>Copyright (C) 2011-2016 Jean-Francois B. (<code>2589111+jfbu@users.noreply.github.com</code>)</p>
-<pre><code>  Source: mathastext.dtx 1.3n 2016/04/22</code></pre>
+<pre><code>  Source: mathastext.dtx 1.3o 2016/05/03</code></pre>
 <blockquote>
 <p>cumulative Change Log at bottom of this file.</p>
 </blockquote>
@@ -128,9 +129,13 @@ dvipdfmx mathastext.dvi</code></pre>
 <p>(One cannot use lualatex/xelatex to compile the documentation.)</p>
 </blockquote>
 <h1 id="change-log">CHANGE LOG</h1>
+<h2 id="o-20160503">1.3o [2016/05/03]</h2>
+<ul>
+<li><code>mathastext</code> fixes an issue related to a feature of <code>LuaLaTeX</code> and <code>luaotfload</code> that OpenType fonts are declared in one of two modes: <code>node</code> and <code>base</code>, and only the latter is functional in math mode. But by default text fonts are declared in mode <code>node</code>. Thus <code>mathastext</code> now intervenes to make it so that the font it declares in math mode will use mode <code>basic</code>. This fixes issues with for example old style figures being used while the text font used lining figures (or vice versa, depending on the font). But see the code comments for more.</li>
+</ul>
 <h2 id="n-20160422">1.3n [2016/04/22]</h2>
 <ul>
-<li>at long last, <code>mathastext</code> takes take properly of annoying and perplexing amsmath's <code>\newmcodes@</code>. The very recent change in <code>amsopn.sty</code> finally made it compatible with Unicode engines, but anyhow, <code>mathastext</code> must do its own patch to use the correct font. All of this taking into account the various options passed to the package. Lots of trouble for a tiny thing.</li>
+<li>at long last, <code>mathastext</code> takes care properly of annoying and perplexing amsmath's <code>\newmcodes@</code>. The very recent change in <code>amsopn.sty</code> finally made it compatible with Unicode engines, but anyhow, <code>mathastext</code> must do its own patch to use the correct font. All of this taking into account the various options passed to the package. Lots of trouble for a tiny thing.</li>
 </ul>
 <h2 id="m-20160402">1.3m [2016/04/02]</h2>
 <ul>

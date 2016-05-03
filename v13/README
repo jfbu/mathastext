@@ -13,7 +13,7 @@ The Author of this Work is Jean-Francois B.
 
 Copyright (C) 2011-2016 Jean-Francois B. (2589111+jfbu@users.noreply.github.com)
 
-      Source: mathastext.dtx 1.3n 2016/04/22
+      Source: mathastext.dtx 1.3o 2016/05/03
 
   cumulative Change Log at bottom of this file.
 
@@ -126,9 +126,21 @@ This produces the documentation without the source code.
 CHANGE LOG
 
 
+1.3o [2016/05/03]
+
+-   mathastext fixes an issue related to a feature of LuaLaTeX and
+    luaotfload that OpenType fonts are declared in one of two modes:
+    node and base, and only the latter is functional in math mode. But
+    by default text fonts are declared in mode node. Thus mathastext now
+    intervenes to make it so that the font it declares in math mode will
+    use mode basic. This fixes issues with for example old style figures
+    being used while the text font used lining figures (or vice versa,
+    depending on the font). But see the code comments for more.
+
+
 1.3n [2016/04/22]
 
--   at long last, mathastext takes take properly of annoying and
+-   at long last, mathastext takes care properly of annoying and
     perplexing amsmath's \newmcodes@. The very recent change in
     amsopn.sty finally made it compatible with Unicode engines, but
     anyhow, mathastext must do its own patch to use the correct font.
