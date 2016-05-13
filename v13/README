@@ -13,7 +13,7 @@ The Author of this Work is Jean-Francois B.
 
 Copyright (C) 2011-2016 Jean-Francois B. (2589111+jfbu@users.noreply.github.com)
 
-      Source: mathastext.dtx 1.3o 2016/05/03
+      Source: mathastext.dtx 1.3p 2016/05/13
 
   cumulative Change Log at bottom of this file.
 
@@ -124,6 +124,16 @@ This produces the documentation without the source code.
 
 
 CHANGE LOG
+
+
+1.3p [2016/05/13]
+
+-   bugfix: release 1.3n had forgotten to activate by default its new
+    customization of the amsmath macro \newmcodes@ (it was done from
+    using \MTversion in the document body but not by default at start
+    of body.)
+
+-   public name \MTfixmathfonts for a 1.3o macro.
 
 
 1.3o [2016/05/03]

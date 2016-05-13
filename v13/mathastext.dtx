@@ -2,12 +2,12 @@
 % N.B.: this dtx file does NOT use \DocInput (only docstrip), the
 % LaTeX source of the documentation is NOT prefixed with % signs.
 %<*dtx>
-\def\dtxtimestamp {Time-stamp: <03-05-2016 at 10:53:00 CEST>}%
-\def\docdate{2016/05/03}
+\def\dtxtimestamp {Time-stamp: <13-05-2016 13:28:47 CEST>}%
+\def\docdate{2016/05/13}
 %</dtx>
 %<*drv|ins>
-\def\MSTpkgdate    {2016/05/03}
-\def\MSTpkgversion {1.3o}
+\def\MSTpkgdate    {2016/05/13}
+\def\MSTpkgversion {1.3p}
 %</drv|ins>
 %<*dtx>
 \iffalse % meta-comment
@@ -29,7 +29,7 @@ The Author of this Work is Jean-Francois B.
 
 Copyright (C) 2011-2016 Jean-Francois B. (`2589111+jfbu@users.noreply.github.com`)
 
-      Source: mathastext.dtx 1.3o 2016/05/03
+      Source: mathastext.dtx 1.3p 2016/05/13
 
 %</readme>
 %<*dtx>
@@ -45,7 +45,7 @@ not include the documented source code then, in contrast to 1a)+1b) method
 %%----------------------------------------------------------------
 %% Package: mathastext
 %% Info:    Use the text font in math mode (JFB)
-%% Version: 1.3o 2016/05/03
+%% Version: 1.3p 2016/05/13
 %% License: LPPL 1.3c (http://www.latex-project.org/lppl/lppl-1-3c.txt)
 %% Copyright (C) 2011-2016 Jean-Francois B. <2589111+jfbu@users.noreply.github.com>
 %% Examples of use of mathastext:
@@ -234,6 +234,17 @@ This produces the documentation without the source code.
 
 CHANGE LOG
 ==========
+
+1.3p \[2016/05/13\]
+----
+
+* bugfix: release `1.3n` had forgotten to activate by default its new
+  customization of the amsmath macro `\newmcodes@` (it was done from
+  using `\MTversion` in the document body but not by default at start
+  of body.)
+
+* public name `\MTfixmathfonts` for a `1.3o` macro.
+
 
 1.3o \[2016/05/03\]
 ----
@@ -1484,10 +1495,17 @@ See \autoref{sec:changelog} for the detailed change log.
 
 \begin{description}[leftmargin=0.5em]
 
+\item [Changes for release |1.3p|  of |2016/05/13|]
+\begin{itemize}[noitemsep]
+\item bugfix: release |1.3n| had forgotten to activate by default its new
+  customization of the amsmath macro |\newmcodes@| (it was done from using
+  §\MTversion§ in the document body but not by default at start of body.)
+\item public name §\MTfixmathfonts§ for a |1.3o| macro.
+\end{itemize}
 
 \item [Changes for release |1.3o|  of |2016/05/03|]
 \begin{itemize}[noitemsep]
-\item \mst fixes an issue related to a feature of Lua\LaTeX\ and
+\item \mst fixes an issue related to a feature of \LuaLaTeX\ and
   |luaotfload| that OpenType fonts are declared in one of two modes:
   |node| and |base|, and only the latter is functional in math mode. But
   by default text fonts are declared in mode |node|. Thus \mst
@@ -1514,7 +1532,7 @@ See \autoref{sec:changelog} for the detailed change log.
 
 \item [Changes for release |1.3j|  of |2016/01/15|]
 \begin{itemize}[noitemsep]
-\item §\MTeverymathoff§ (renamed) and added §\MTeverymathdefault§.
+\item §\MTeverymathoff§ (renamed) and §\MTeverymathdefault§ added.
 
 \item §subdued§ mode is a bit stronger: also the asterisk reverts to the
   default (if it was modified due to option §asterisk§), the added extra
@@ -1587,38 +1605,22 @@ See \autoref{sec:changelog} for the detailed change log.
   letter.
 \end{itemize}
 
-\item[Version |1.2f|]:
-addition of the ``change
-  log'' at the end of this user manual, and some minor code improvements not
-  changing neither features nor user interface.
-
-\item[Version |1.2e|] made additions: in this user manual
-to the section \ref{sec:compat} describing the compatibility issues, and
-to the test files illustrating various package features. Important
-changes to the source code were done to fix compatibility problems with
-active characters dating back to the |1.2| version. Also, an oversight
-in the implementation of the italic correction features from |1.2b| was
-corrected.
-
-\item[Version |1.2d|] introduced the §asterisk§ option and addressed a
-problem of compatibility with |amsmath|.
-
-\item [The main new features in versions |1.2| and |1.2b|] were the
+\item [The |1.2x| series:] the main new features were the
 \hyperref[sec:mathxx]{extended scope of the math alphabets} and,
 respectively, \hyperref[sec:ic]{added italic corrections in math mode}.
 Both use mathematically active characters and some (thorny) technical
 problems related to globally active characters were finally solved to
-(almost) complete satisfaction (let's hope) only in the current |1.2e|
+(almost) complete satisfaction (let's hope) only in the |1.2e|
 version. These issues are commented upon in the 
 \hyperref[sec:compat]{compatibility section}, in the test file
-\texttt{mathastexttestalphabets.tex} and in the commented source code.
+\texttt{mathastexttestalphabets.tex} and in the commented source code. Also
+the §asterisk§ option was introduced and compatibility with |amsmath| improved.
 
-\item
-[Earlier, version |1.15|] introduced the concept of the
+\item [|1.15|] introduced the concept of the
 \hyperref[sec:subdued]{{subdued} math versions.}
-\end{description}
 
-Initial release |1.0| was on |2011/01/25|.
+\item [Initial release |1.0|] was on |2011/01/25|.
+\end{description}
 
 \subsection{Installation}
 \begin{verbatim}
@@ -3522,7 +3524,7 @@ by \mst to the \cs{everymath} and \cs{everydisplay} token list variables.
   former is done by default, it makes characters \verb+.+, \verb+/+, \verb+|+,
   \verb+\+, \verb+#+, \verb+$+, \verb+%+, and \verb+&+
   (if not excluded by package options) obey math alphabet commands. See also
-  section \ref{sec:mathxx}. This functionality does {\bf not} make the
+  section \ref{sec:mathxx}. This functionality does \emph{not} make the
   characters ``math active'' (but it does modify |\mathcode|'s, naturally).
 
 \item §\MTnonlettersobeymathxx§, §\MTnonlettersdonotobeymathxx§: the former
@@ -3599,11 +3601,18 @@ actions as they are not related to \cs{everymath} and \cs{everydisplay}.\par}
     \csb{MTnormalforall}.
 \par}
 
-\item \RightNote{New! (1.3o)}§\MTfixfonts§: this is a Lua\LaTeX{} only macro.
-  It instructs \mst when entering math mode to fix some issues with
-  OpenType features such as Lining Figures not being applied in math mode when
-  one uses text fonts there. Done automatically by the package (except in
-  §subdued§ mode for |normal| and |bold|).
+\small
+
+\item \RightNote{New! (1.3o)}§\MTfixfonts§: this is operant only under
+  \LuaLaTeX{}. It has the effect that each time math mode is entered macro
+  \csb{MTfixmathfonts} will be executed. The latter forces so-called |base|
+  mode for the used text font in math mode, in an effort to (only partially,
+  see code comments) fix the fact that OpenType features such as Lining
+  Figures were in some cases not being applied in math mode when one uses text
+  fonts there (text fonts are declared by \LuaTeX+|luaotfload| to use |node|
+  mode, which is non-functional in math.) It is invoked automatically by the
+  package (except for |normal| and |bold| math versions under §subdued§
+  option), and in normal situations, there is no reason to use it directly.
 
 % pas envie de perdre mon temps là-dessus. D'ailleurs peut-être déjà pour
 % commencer bm ne fonctionne pas avec fontes OpenType.
@@ -3612,7 +3621,17 @@ actions as they are not related to \cs{everymath} and \cs{everydisplay}.\par}
 
 \item \RightNote{New! (1.3o)}§\MTdonotfixfonts§: cancels the job of
   |\MTfixfonts|. Done automatically in §subdued§ mode when in the |normal| or
-  |bold| math version. Only operant in Lua\LaTeX{}.
+  |bold| math version; in normal contexts, there is no reason to use this
+  command. Only operant under \LuaLaTeX.
+
+\footnotesize
+
+\item \RightNote{New! (1.3p)}§\MTfixmathfonts§: this used to be an inner macro
+  but it is given a public name by |1.3p| because I discovered that
+  |$..\hbox{\MTversion{foo}$..$}..$| (same with |\mathversion|) causes
+  an issue and one needs to invoke again \cs{MTfixmathfonts} \emph{after} the
+  box, for some reason. To be used \emph{only} under \LuaLaTeX{} and only for
+  such rare cases where it may be needed.
 
 \end{enumerate}
 
@@ -3748,7 +3767,8 @@ actions as they are not related to \cs{everymath} and \cs{everydisplay}.\par}
 
 \item §\MTmathoperatorsobeymathxx§, §\MTmathoperatorsdonotobeymathxx§: the
   former is done by default, it makes operator names obey math alphabets. See
-  also section \ref{sec:mathxx}. This functionality \emph{does {\bf not} rely}
+  also section \ref{sec:mathxx}. This functionality \emph{does
+    {\normalfont\bfseries not} rely}
   on ``math active characters''. Automatically issued by each \cs{MTversion},
   except under option |subdued| when switching to \emph{normal} or \emph{bold}.
 
@@ -4162,7 +4182,7 @@ Numerous examples will be found there:\\
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage {mathastext}
-  [2016/05/03 v1.3o Use the text font in math mode (JFB)]
+  [2016/05/13 v1.3p Use the text font in math mode (JFB)]
 %    \end{macrocode}
 % Testing for \XeTeX\ and \LuaLaTeX.
 %
@@ -4930,9 +4950,14 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 % |\begin{document}| resulted in errors because \cs{mst@itcorr} had been left
 % undefined. We thus add \cs{MTnoicinmath} to the subdued initialization.
 %
-% Attention |1.3n| needs here \cs{mst@originalnewmcodes@}, itself defined at
-% begin document. Thus we have wrapped the whole thing in \cs{AtEndOfPackage}.
+% Since |1.3n| there is \cs{MTresetnewmcodes} which needs
+% \cs{mst@originalnewmcodes@}, itself defined at begin document. Thus we have
+% wrapped the whole thing in \cs{AtEndOfPackage}.
+%
+% And |1.3p| adds here \cs{MTcustomizenewmcodes} which had been regrettably
+% forgotten by |1.3n|.
 %    \begin{macrocode}
+  \MTcustomizenewmcodes
   \ifmst@subdued
     \MTeverymathoff
     \MTresetnewmcodes
@@ -5101,7 +5126,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 % \begin{macro}{\mst@newmcodes@}
 % \begin{macro}{\MTresetnewmcodes}
 % \begin{macro}{\MTcustomizenewmcodes}
-%   |1.15d|: this amsmath macro causes an error in Unicode engines as soon
+%   |1.15d|: the \cs{newmcodes@} amsmath macro causes an error in Unicode engines as soon
 %   someone assigns a Unicode mathcode to the minus sign, and then makes a
 %   \cs{DeclareMathOperator} declaration. Furthermore it hard-codes the font
 %   family 0 as being the one to be used. Moreover just putting the concerned
@@ -5231,9 +5256,9 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \mathcode`\noexpand\/ 
      \the\numexpr\unless\ifmst@noparen\symmtoperatorfont*\@cclvi\fi+47\relax\relax
     }%
-   \let\mst@originalnewmcodes@\newmcodes@
-   \fi
-   }
+  \let\mst@originalnewmcodes@\newmcodes@
+  \fi
+  }
   \fi
 \fi\fi
 \newcommand*\MTresetnewmcodes{\ifx\mst@originalnewmcodes@\undefined\else
@@ -5394,21 +5419,21 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \DeclareSymbolFont{mtletterfont}{\mst@enc}{\mst@fam}{\mst@ser}{\mst@ltsh}
 %    \end{macrocode}
 % \end{macro}
-% \begin{macro}{\mst@fixmathfonts}
+% \begin{macro}{\MTfixmathfonts}
 %   There is a long-standing issue
-%   \url{https://github.com/lualatex/luaotfload/issues/204} on Lua\LaTeX{} not
+%   \url{https://github.com/lualatex/luaotfload/issues/204} on \LuaLaTeX{} not
 %   applying OpenType features in math mode (this impacts |\url| macro too, as
 %   it uses math mode.) Lua\TeX{} has two modes for handling of OpenType
 %   fonts, the default in text being to use the |node| mode, and this mode is
 %   non-working in math, thus \mst needs to force use of |base| mode. Else one
 %   sees old style figures where one does not expect them, or the opposite,
-%   depending on the default font feature, see for example \url{http://tex.stackexchange.com/questions/208688/oldstylefigure-issue-with-lualatex-and-mathastext/277628}
+%   depending on the default font feature, see for example \url{http://tex.stackexchange.com/questions/208688/oldstylefigure-issue-with-lualatex-and-mathastext/277628}.
 %
 %   Once we know the cause, the fix is relatively easy. I will go for the
 %   |\everymath| way, because I don't want to dwelve at all with the details
 %   of \LaTeX's handling of math fonts, of size changes, of math versions
 %   etc... perhaps in the future \LaTeX{} will fix the issue upstream by modifying
-%   \cs{DeclareSymbolFont} under Lua\LaTeX{} + |luaotfload| regime, then the
+%   \cs{DeclareSymbolFont} under \LuaLaTeX{} + |luaotfload| regime, then the
 %   present patch by \mst will be unneeded. Naturally, here we care only about
 %   the two maths fonts used by \mst: |mtoperatorfont| and |mtletterfont|.
 %
@@ -5427,6 +5452,8 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %   |mode=node| but this mode ``does not work in math mode.''
 %
 % Done for |1.3o| of |2016/05/03|.
+%
+% |1.3p| renames the macro to \cs{MTfixmathfonts} for public access.
 %    \begin{macrocode}
 \begingroup
 \catcode`N 12
@@ -5435,7 +5462,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \catcode`E 12
 \lowercase{\gdef\mst@fixmathfonts@ #1=NODE;#2#3\relax #4\@empty #5}%
   {\ifx#2\empty\else\font\mst@mathfont=#1=base;#2#3\relax#5=\mst@mathfont\fi}
-\lowercase{\gdef\mst@fixmathfonts
+\lowercase{\gdef\MTfixmathfonts
 {\expandafter\mst@fixmathfonts@
   \fontname\textfont\symmtoperatorfont\relax\relax=NODE;\empty\relax\@empty
    {\textfont\symmtoperatorfont}%
@@ -5458,11 +5485,11 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 }%
 \endgroup
 \ifmst@LuaTeX
-  \everymath\expandafter{\the\everymath\mst@@fixmathfonts}%
-  \everydisplay\expandafter{\the\everydisplay\mst@@fixmathfonts}%
+  \everymath\expandafter{\the\everymath\mst@fixmathfonts}%
+  \everydisplay\expandafter{\the\everydisplay\mst@fixmathfonts}%
 \fi
-\newcommand*\MTfixfonts{\let\mst@@fixmathfonts\mst@fixmathfonts}%
-\newcommand*\MTdonotfixfonts{\let\mst@@fixmathfonts\empty}%
+\newcommand*\MTfixfonts{\let\mst@fixmathfonts\MTfixmathfonts}%
+\newcommand*\MTdonotfixfonts{\let\mst@fixmathfonts\empty}%
 \MTfixfonts
 %    \end{macrocode}
 % \end{macro}
@@ -7738,7 +7765,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %   |\MTeverymathoff|, as it is not exclusively a matter of math active
 %   characters due to |\MTeasynonlettersdonotobeymathxx|.
 %
-%   |1.3o 2016/05/03| adds \cs{MTdonotfixfonts}. Lua\LaTeX\ only.
+%   |1.3o 2016/05/03| adds \cs{MTdonotfixfonts}. Operant with \LuaLaTeX\ only.
 %    \begin{macrocode}
 \newcommand*\MTeverymathoff {%
     \MTnormalasterisk
@@ -7780,7 +7807,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %   it will not be overruled (as it is delayed at begin document to after \mst
 %   dealings).
 %
-%   |1.3o 2016/04/02| adds \cs{MTfixfonts}. Lua\LaTeX\ only.
+%   |1.3o 2016/05/03| adds \cs{MTfixfonts}. Operant with \LuaLaTeX\ only.
 %    \begin{macrocode}
 \newcommand*\MTeverymathdefault {%
     \MTactiveasterisk
@@ -7812,7 +7839,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
   Grave accent  \`     Left brace    \{     Vertical bar  \|
   Right brace   \}     Tilde         \~}
 
-\CheckSum{5521}
+\CheckSum{5522}
 \makeatletter\check@checksum\makeatother
 \Finale
 %%
