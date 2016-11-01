@@ -20,11 +20,13 @@
 <li><a href="#description">DESCRIPTION</a></li>
 <li><a href="#usage">USAGE</a></li>
 <li><a href="#installation">INSTALLATION</a><ul>
+<li><a href="#using-the-manager-of-your-tex-installation">Using the manager of your TeX installation</a></li>
 <li><a href="#from-mathastext.tds.zip">From <code>mathastext.tds.zip</code></a></li>
 <li><a href="#from-mathastext.dtx">From <code>mathastext.dtx</code></a></li>
 <li><a href="#generating-documentation-and-test-files">Generating documentation and test files</a></li>
 </ul></li>
 <li><a href="#change-log">CHANGE LOG</a><ul>
+<li><a href="#q-20161031">1.3q [2016/10/31]</a></li>
 <li><a href="#p-20160513">1.3p [2016/05/13]</a></li>
 <li><a href="#o-20160503">1.3o [2016/05/03]</a></li>
 <li><a href="#n-20160422">1.3n [2016/04/22]</a></li>
@@ -76,7 +78,7 @@
 <p>This Work may be distributed and/or modified under the conditions of the <a href="http://www.latex-project.org/lppl/lppl-1-3c.txt">LPPL1.3c</a></p>
 <p>The Author of this Work is Jean-Francois B.</p>
 <p>Copyright (C) 2011-2016 Jean-Francois B. (<code>2589111+jfbu@users.noreply.github.com</code>)</p>
-<pre><code>  Source: mathastext.dtx 1.3p 2016/05/13</code></pre>
+<pre><code>  Source: mathastext.dtx 1.3q 2016/10/31</code></pre>
 <blockquote>
 <p>cumulative Change Log at bottom of this file.</p>
 </blockquote>
@@ -108,8 +110,10 @@
 <li><code>\MTsetmathskips</code> allows to set up extra spacings around letters.</li>
 </ul>
 <h1 id="installation">INSTALLATION</h1>
+<h3 id="using-the-manager-of-your-tex-installation">Using the manager of your TeX installation</h3>
+<p>mathastext is in TeXLive and MikTeX. Just use the package manager to upgrade or install it.</p>
 <h3 id="from-mathastext.tds.zip">From <code>mathastext.tds.zip</code></h3>
-<p>This is the fastest way: <code>unzip -d &lt;destfolder&gt; mathastext.tds.zip</code>, where <code>&lt;destfolder&gt;</code> could be <code>~/texmf</code> or (macosx), <code>~/Library/texmf</code>.</p>
+<p>user install in \$HOME folder: <code>unzip -d &lt;destfolder&gt; mathastext.tds.zip</code>, where <code>&lt;destfolder&gt;</code> could be <code>~/texmf</code> or on macosx <code>~/Library/texmf</code>.</p>
 <h3 id="from-mathastext.dtx">From <code>mathastext.dtx</code></h3>
 <ul>
 <li>with mathastext.ins: run tex on mathastext.ins to generate the package style file mathastext.sty as well as mathastext.tex and some test files.</li>
@@ -127,9 +131,14 @@ mathastexttestalphabets.tex</code></pre>
 dvipdfmx mathastext.dvi</code></pre>
 <p>The file mathastext.tex can be customized to change the font size or set other options therein. Alternative: pdflatex mathastext.dtx (thrice). This produces the documentation without the source code.</p>
 <blockquote>
-<p>(One cannot use lualatex/xelatex to compile the documentation.)</p>
+<p>(One cannot use lualatex or xelatex to compile the documentation.)</p>
 </blockquote>
 <h1 id="change-log">CHANGE LOG</h1>
+<h2 id="q-20161031">1.3q [2016/10/31]</h2>
+<ul>
+<li><p>new option <code>unicodeminus</code>.</p></li>
+<li><p>the <code>Recent Changes</code> section of the documentation has been removed as it was a duplicate of information available in the <code>Change Log</code>. Some other changes in the documentation, in particular the use of straight quotes in verbatim.</p></li>
+</ul>
 <h2 id="p-20160513">1.3p [2016/05/13]</h2>
 <ul>
 <li><p>bugfix: release <code>1.3n</code> had forgotten to activate by default its new customization of the amsmath macro <code>\newmcodes@</code> (it was done from using <code>\MTversion</code> in the document body but not by default at start of body.)</p></li>
@@ -137,7 +146,7 @@ dvipdfmx mathastext.dvi</code></pre>
 </ul>
 <h2 id="o-20160503">1.3o [2016/05/03]</h2>
 <ul>
-<li><code>mathastext</code> fixes an issue related to a feature of <code>LuaLaTeX</code> and <code>luaotfload</code> that OpenType fonts are declared in one of two modes: <code>node</code> and <code>base</code>, and only the latter is functional in math mode. But by default text fonts are declared in mode <code>node</code>. Thus <code>mathastext</code> now intervenes to make it so that the font it declares in math mode will use mode <code>basic</code>. This fixes issues with for example old style figures being used while the text font used lining figures (or vice versa, depending on the font). But see the code comments for more.</li>
+<li><code>mathastext</code> fixes an issue related to a feature of <code>LuaLaTeX</code> and <code>luaotfload</code> that OpenType fonts are declared in one of two modes: <code>node</code> and <code>base</code>, and only the latter is functional in math mode. But by default text fonts are declared in mode <code>node</code>. Thus <code>mathastext</code> now intervenes to make it so that the font it declares in math mode will use mode <code>base</code>. This fixes issues with for example old style figures being used while the text font used lining figures (or vice versa, depending on the font). But see the code comments for more.</li>
 </ul>
 <h2 id="n-20160422">1.3n [2016/04/22]</h2>
 <ul>

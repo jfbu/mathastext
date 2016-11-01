@@ -23,7 +23,7 @@
 %%----------------------------------------------------------------
 %% Package: mathastext
 %% Info:    Use the text font in math mode (JFB)
-%% Version: 1.3p 2016/05/13
+%% Version: 1.3q 2016/10/31
 %% License: LPPL 1.3c (http://www.latex-project.org/lppl/lppl-1-3c.txt)
 %% Copyright (C) 2011-2016 Jean-Francois B. <2589111+jfbu@users.noreply.github.com>
 %% Examples of use of mathastext:
@@ -32,7 +32,7 @@
 %%----------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage {mathastext}
-  [2016/05/13 v1.3p Use the text font in math mode (JFB)]
+  [2016/10/31 v1.3q Use the text font in math mode (JFB)]
   \let\mst@Umathcharnumdef\Umathcharnumdef
   \let\mst@Umathcodenum   \Umathcodenum
   \let\mst@Umathcode      \Umathcode
@@ -200,8 +200,15 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \DeclareOption{fouriervec}{\mst@fouriervectrue}
 \newif\ifmst@subdued
     \DeclareOption{subdued}{\mst@subduedtrue}
-\DeclareOption*{\PackageWarningNoLine{mathastext}
-    {Unknown option `\CurrentOption\string'}}
+\def\mst@unicodeminus {2013}
+\def\mst@checkoption #1unicodeminus#2\mst@#3\mst@@
+   {\ifx\\#3\\\PackageWarningNoLine{mathastext}
+               {Unknown option `\CurrentOption\string'}\else
+    \ifx\\#2\\\def\mst@unicodeminus {2212}\else
+    \expandafter\def\expandafter\mst@unicodeminus\expandafter{\@secondoftwo#2}%
+    \fi\fi}
+\DeclareOption*%
+  {\expandafter\mst@checkoption\CurrentOption\mst@ unicodeminus\mst@\mst@@}
 \ProcessOptions\relax
 \newmuskip\mst@exists@muskip  %% v 1.15e
 \newmuskip\mst@forall@muskip
@@ -1231,7 +1238,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \else
   \ifmst@XeOrLua
     \mst@Umathcharnumdef\mst@minus@sign=\mst@Umathcodenum`\-\relax
-%% I used this prior to the new \luatexUmathcodenum, as available with TL2013:
+%% I used this prior to the new \luatexUmathcodenum, as available since TL2013:
 %% \mathchardef\mst@minus@sign=8704\relax % "2200
   \else
     \mathchardef\mst@minus@sign=\mathcode`\-\relax
@@ -1249,8 +1256,8 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \def\mst@dothe@endashstuff{\edef\mst@tmp@enc{\encodingdefault}
 \if1\mst@OneifUniEnc
   \AtBeginDocument{% Unicode engines and font
-    \mst@Umathcode`\-=2 \symmtoperatorfont "2013\relax
-    \mst@Umathchardef\mst@varfam@minus=7 \symmtoperatorfont "2013\relax
+    \mst@Umathcode`\-=2 \symmtoperatorfont "\mst@unicodeminus\relax
+    \mst@Umathchardef\mst@varfam@minus=7 \symmtoperatorfont "\mst@unicodeminus\relax
   }
 \else
 \ifx\mst@tmp@enc\mst@ti % T1

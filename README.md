@@ -14,7 +14,7 @@ The Author of this Work is Jean-Francois B.
 
 Copyright (C) 2011-2016 Jean-Francois B. (`2589111+jfbu@users.noreply.github.com`)
 
-      Source: mathastext.dtx 1.3p 2016/05/13
+      Source: mathastext.dtx 1.3q 2016/10/31
 
 > cumulative Change Log at bottom of this file.
 
@@ -83,10 +83,15 @@ Main options: `italic`, `subdued`, `LGRgreek`.
 INSTALLATION
 ============
 
+### Using the manager of your TeX installation
+
+mathastext is in TeXLive and MikTeX. Just use the package manager to upgrade
+or install it.
+
 ### From `mathastext.tds.zip`
 
-This is the fastest way: `unzip -d <destfolder> mathastext.tds.zip`,
-where `<destfolder>` could be `~/texmf` or (macosx), `~/Library/texmf`.
+user install in \$HOME folder: `unzip -d <destfolder> mathastext.tds.zip`,
+where `<destfolder>` could be `~/texmf` or on macosx  `~/Library/texmf`.
 
 ### From `mathastext.dtx`
 
@@ -119,10 +124,20 @@ The file mathastext.tex can be customized to change the font size or set
 other options therein. Alternative: pdflatex mathastext.dtx (thrice).
 This produces the documentation without the source code.
 
-> (One cannot use lualatex/xelatex to compile the documentation.)
+> (One cannot use lualatex or xelatex to compile the documentation.)
 
 CHANGE LOG
 ==========
+
+1.3q \[2016/10/31\]
+----
+
+* new option `unicodeminus`.
+
+* the `Recent Changes` section of the documentation has been removed as it
+  was a duplicate of information available in the `Change Log`. Some other
+  changes in the documentation, in particular the use of straight quotes
+  in verbatim.
 
 1.3p \[2016/05/13\]
 ----
@@ -142,7 +157,7 @@ CHANGE LOG
   `node` and `base`, and only the latter is functional in math mode. But
   by default text fonts are declared in mode `node`. Thus `mathastext`
   now intervenes to make it so that the font it declares in math mode
-  will use mode `basic`. This fixes issues with for example old style
+  will use mode `base`. This fixes issues with for example old style
   figures being used while the text font used lining figures (or vice
   versa, depending on the font). But see the code comments for more.
 
