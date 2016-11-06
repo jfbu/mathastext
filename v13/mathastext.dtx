@@ -2,12 +2,12 @@
 % N.B.: this dtx file does NOT use \DocInput (only docstrip), the
 % LaTeX source of the documentation is NOT prefixed with % signs.
 %<*dtx>
-\def\dtxtimestamp {Time-stamp: <31-10-2016 at 18:53:06 CET>}%
-\def\docdate{2016/10/31}
+\def\dtxtimestamp {Time-stamp: <06-11-2016 at 19:22:30 CET>}%
+\def\docdate{2016/11/06}
 %</dtx>
 %<*drv|ins>
-\def\MSTpkgdate    {2016/10/31}
-\def\MSTpkgversion {1.3q}
+\def\MSTpkgdate    {2016/11/06}
+\def\MSTpkgversion {1.3r}
 %</drv|ins>
 %<*dtx>
 \iffalse % meta-comment
@@ -29,7 +29,7 @@ The Author of this Work is Jean-Francois B.
 
 Copyright (C) 2011-2016 Jean-Francois B. (`2589111+jfbu@users.noreply.github.com`)
 
-      Source: mathastext.dtx 1.3q 2016/10/31
+      Source: mathastext.dtx 1.3r 2016/11/06
 
 %</readme>
 %<*dtx>
@@ -45,7 +45,7 @@ not include the documented source code then, in contrast to 1a)+1b) method
 %%----------------------------------------------------------------
 %% Package: mathastext
 %% Info:    Use the text font in math mode (JFB)
-%% Version: 1.3q 2016/10/31
+%% Version: 1.3r 2016/11/06
 %% License: LPPL 1.3c (http://www.latex-project.org/lppl/lppl-1-3c.txt)
 %% Copyright (C) 2011-2016 Jean-Francois B. <2589111+jfbu@users.noreply.github.com>
 %% Examples of use of mathastext:
@@ -240,13 +240,21 @@ This produces the documentation without the source code.
 CHANGE LOG
 ==========
 
+1.3r \[2016/11/06\]
+----
+
+* documentation tweaks.
+
+
 1.3q \[2016/10/31\]
 ----
 
 * new option `unicodeminus`.
 
 * the `Recent Changes` section of the documentation has been removed as it
-  was a duplicate of information available in the `Change Log`. Some other
+  was a duplicate of information available in the `Change Log`.
+
+* some other
   changes in the documentation, in particular the use of straight quotes
   in verbatim.
 
@@ -1405,38 +1413,32 @@ LGRgreek]{mathastext}
 
 \usepackage{etoc}
 
-% à partir de 1.3j:
-% _très très_ peu satisfaisant mais pas envie d'y passer du temps
-% je refais très vite pour 1.3q, c'est un peu n'importe quoi mais ça ira
-% je fais RLnote.
+% - à partir de 1.3j: _très très_ peu satisfaisant mais pas envie d'y passer
+% du temps.
+%
+% - je refais très vite pour 1.3q: \RLNote remplace \RightNote et est fait
+% différemment, \CHANGED aussi a été refait. Finalement 1.3r utilise ttfamily.
 
-% ah zut Lundi 31 octobre 2016 à 18:38:45, j'ai téléversé la documentation de
-% 1.3q sur CTAN alors que ceci n'était pas du tout fini et en particulier la
-% coordination avec \CHANGED.
-% :-((
-
-\def\RLNote #1#2{\leavevmode\strut\vadjust{%
- \kern-\dp\strutbox
+\def\RLNote #1#2{\leavevmode\strut\vadjust{\kern-\dp\strutbox
  \hbox to\textwidth
   {\vtop to \dp\strutbox{}%
-   \footnotesize\normalfont\bfseries
-        \llap{\smash{\textcolor{magenta}{#1\kern10pt}}}%
-        \kern\textwidth
-        \rlap{\smash{\textcolor{magenta}{\kern10pt(#2)}}}%
+   \footnotesize\normalfont\ttfamily
+   \color{magenta}%
+   \llap{\smash{#1\kern10pt}}\kern\textwidth\rlap{\smash{\kern10pt(#2)}}%
   }%
  }%
 }
 
 \def\RightNote {\RLNote {}}
 
-% ici aussi je ne peaufine pas. À utiliser au début de \footnote.
-
 % modifié pour la doc de 1.3q. Bordel de Koma-Script. Il utilise des em.
 % À droite je vais normaliser à 10pt pour que ça soit coordonné avec \RightNote.
-
+% refait pour 1.3r
+% ** À utiliser au tout début d'une footnote **
 \def\CHANGED #1{\leavevmode\kern-1em
- {\bfseries\color{magenta}\llap{changed:\kern10pt}%
-  \kern\textwidth\rlap{\kern10pt(#1)}\kern-\textwidth}\kern1em}
+ {\ttfamily\color{magenta}\llap{changed:\kern10pt}%
+  \kern\textwidth\rlap{\kern10pt(#1)}\kern-\textwidth}%
+ \kern1em }
 
 % pour 1.3q
 % attention que doc.sty n'utilise pas \@noligs
@@ -1447,6 +1449,12 @@ LGRgreek]{mathastext}
   \catcode``=\active
   \g@addto@macro\verbatim@nolig@list{\let'\textquotesingle\let`\textasciigrave}
 \endgroup
+
+% KOMA-script est HORRIPILANT.
+\def\rm {\normalfont}
+\def\bf {\normalfont\bfseries}
+\def\tt {\normalfont\ttfamily}
+% mais bon, en fait je ne les utilise pas.
 
 \begin{document}
 \MTversion{normal}
@@ -1731,13 +1739,16 @@ done optionally:
  the CM derivative glyph.{\MTversion{upright}\sffamily\MTprimeskip{.5mu}%
    Compare $f'$ with \MTprimeskip{0mu}$f'$.} }
 \item   for the minus sign \mst uses the endash character
-  \textendash, if available, and not the hyphen character -,
-\item the option §asterisk§ is necessary for \mst to replace the binary math
+  \textendash, if available, and not the hyphen character -.%
+%
+\footnote{see the §unicodeminus§ option if using an OpenType font.}
+%
+\item the §asterisk§ option is mandatory for \mst to replace the binary math
   operator $*$ (and the equivalent control sequence \cs{ast}) with a version
   which uses the text asterisk * suitably lowered\footnote{the amount of
     lowering can be customized.} (and with the correct spaces around it as
-  binary operator). The reason for making it optional is that after this |$R^*$|
-  or |$R^\ast$| do not work and have to be written |$R^{*}$| or |$R^{\ast}$|.
+  binary operator). The reason is that after this inputs such as |$R^*$|
+  or |$R^\ast$| raise errors and \emph{must} be written |$R^{*}$| or |$R^{\ast}$|.
 \end{itemize}
 
 Nothing is changed to the ``large'' math symbols, except for
@@ -1779,8 +1790,9 @@ text.
 Starting
 with release |3.34| of |beamer|, \mst is recognized as a ``math font package''.
 
-Only with \textbf{earlier} |beamer| versions is it necessary to issue
-\centeredline{|\usefonttheme{professionalfonts}|} in the preamble. Example:
+\emph{Only with \emph{{\bfseries earlier} |beamer| versions} is it necessary to issue}
+\centeredline{|\usefonttheme{professionalfonts}|}
+\emph{in the preamble.} Example:
 
 \begin{verbatim}
 \documentclass{beamer}
@@ -1812,8 +1824,9 @@ Only with \textbf{earlier} |beamer| versions is it necessary to issue
   documentation of the font package). Then option §LGRgreek§ tells
   \mst to pick up these Greek letters. And it is possible to specify
   whether the Greek letters should be upright, or
-  ``italic''.\footnote{a more detailed discussion comes next. Note
-  that the default CM and its replacement Latin Modern for european
+  ``italic''.%
+%
+\footnote{the default CM and its replacement Latin Modern for european
   languages are (transparently to the user) extended with |LGR|
   encoded fonts from the |cbfonts| (|cbgreek-complete|)
   package.} 
@@ -2298,7 +2311,7 @@ The feature-implementing commands §\MTicinmath§, §\MTnoicinmath§,
 \endgroup
 
 \textbf{\hbox{Note:}} \emph{from brief testing on 2012/12/28, \XeTeX{} seems not
-  to create fake italic corrections for OpenType fonts. Hence the \TeX{}
+  to obey in math mode italic corrections for OpenType fonts. Hence the \TeX{}
   placement algorithms for math mode described in this section do not work well
   when an OpenType (text) font is used for the letters in math mode, and the
   document is compiled with the \XeTeX{} engine. On the other hand \LuaLaTeX{}
@@ -2316,11 +2329,18 @@ $\mathit{f_i^i}$\par $\mathrm{f_i^i}$
 \end{document}\end{verbatim}
 \kern-.75\baselineskip}\\%\end{verbatim} FIX DU FONT-LOCKING DE AUCTEX (11.89.6)
 \emph{Comment out the} |fontspec| \emph{line and use pdf\LaTeX{}. All
-  three outputs are different on my \TeX{} installation. \XeTeX does not have
+  three outputs are different on my \TeX{} installation. \XeTeX{} does not have
   the italic corrections. \LuaLaTeX{} does, but only for the italic font.
-  pdf\LaTeX{} has them for both the italic and the upright font.}
+  pdf\LaTeX{} has them for both the italic and the upright font.%
+\footnotemark }
 
-\subsection{Extra  glue after \cs{exists}, \cs{forall}, and before the prime glyph}
+\footnotetext {2016/11/04: the situation hasn't changed a iota since,
+at least on current TL2016. For more see
+\url{http://tex.stackexchange.com/a/337076} which explores also the differences
+between the two Unicode engines regarding italic corrections in pure text mode.}
+
+\subsection{Extra  glue after \texorpdfstring{\cs{exists}}{\textbackslash
+exists}, \texorpdfstring{\cs{forall}}{\textbackslash forall}, and before the prime glyph}
 \label{sec:extraskips}
 
 \begingroup\MTversion{upright}\renewcommand\familydefault\sfdefault
@@ -2469,7 +2489,8 @@ for activation.\footnote{these commands are to be used outside of math mode.
   \textbf{Important:} the package does \csb{MTnonlettersdonotobeymathxx} by
   default. The reason is that activating the mechanism adds some constraints to
   the way things must be input, adding
-  |\usepackage{mathastext}|{}\cs{MTnon\-letters\-obey\-mathxx} to a pre-existing
+\centeredline{|\usepackage{mathastext}|\csb{MTnonlettersobeymathxx}}
+  to a pre-existing
   document might well create errors: 
   all these characters treated by \mst, such
   as |?|, |[|, |<| now represent (in math mode only!) \emph{two} `tokens' and
@@ -2757,8 +2778,7 @@ on page \pageref{nicodeminus}.
 \subsubsection{Two examples}
 
 I include
-here two examples which compiled successfully\footnote{some long time ago, not
-  tested since.} with \XeTeX{} and
+here two examples which compiled successfully with \XeTeX{} and
 \LuaLaTeX{}, the first one on a Linux machine, the second one on a Mac
 OS X machine.\footnote{A |tex mathastext.dtx| (in a temporary repertory) on a
   copy of |kpsewhich mathastext.dtx| will extract extended versions of
@@ -2882,7 +2902,7 @@ home:
 \fbox{DO NOT DO THIS AT HOME}\thinspace: it creates an infinite
 loop.\footnote{This seems to still be the case with Babel |3.9f| and
   frenchb.ldf |2.6e|, as tested on Sep. 2, 2013. Again tested with up-to-date
-  TL2015 Vendredi 15 janvier 2016 à 11:10:30, with same result.} This is due
+  TL2015 Jan. 15, 2016 with same result.} This is due
 to the fact that the colon is simultaneously active (this is made by
 |babel+frenchb| at begin document) and mathematically active (done by
 |mathtools| in the preamble). The interaction gives an infinite loop. Such a
@@ -2938,10 +2958,10 @@ the character was mathematically active remained true).
     entering math mode.
 
     \begin{framed}
-      \textcolor{magenta}{\bfseries New with 1.3i:} the command |\url| of
-      package |url|, and the commands |\url/\nolinkurl| of package |hyperref|
-      use math mode and a monospace font (by default). \mst patches these
-      commands in order for them to do automatically §\MTeverymathoff§.
+      \textcolor{magenta}{\bfseries New with 1.3i:} \mst patches |\url| of
+      packages |url| and |hyperref|, and also |\nolinkurl|, to force them
+      to do automatically §\MTeverymathoff§. Indeed they use math mode, and it
+      is better to turn \mst off for their dealings.
     \end{framed}
    
 \section{Package options and commands}
@@ -3071,15 +3091,13 @@ math versions.
   |$R^{*}$| and |$R^{\ast}$|. Furthermore, they will obey the
   math alphabet commands.
 
-  \item[\XeTeX{} and \LuaLaTeX{}:] for the en-dash
-and the dotless i and j, the package expects to detect
-either the EU1 encoding for \XeTeX\ or the EU2 encoding
-for \LuaLaTeX\ (this will be true if |fontspec| was
-loaded), or one of |OT1|, |LY1| or |T1|, else it
-will renounce and not attempt to access the en-dash or the
-dotless i and j glyphs. With \LaTeX{} and Pdf\LaTeX{},
-there is no such limitation and all 8bit-encodings
-(containing these glyphs) should be ok.
+\item[\XeTeX{} and \LuaLaTeX{}:] for the en-dash and the dotless i and j, the
+  package expects to detect either the |fontspec| encodings EU1 (\XeTeX), EU2
+  (\LuaLaTeX), or TU\RightNote{1.3l} (both), or one of |OT1|, |LY1| or |T1|,
+    else it will renounce and not attempt to access the en-dash (or the
+    Unicode minus) and the dotless i and j glyphs. With \LaTeX{} and
+    Pdf\LaTeX{}, there is no such limitation and all 8bit-encodings
+    (containing these glyphs) should be ok.
 
  \item[fontspec:] one more note to users of
 \XeTeX{}/\LuaLaTeX{} with |fontspec|: it has to be
@@ -3096,7 +3114,10 @@ loaded {with the option} |no-math|,
   overwritten with \cs{fouriervec}. And contrarily to
   version |1.1|, one now needs to pass the option
   §fouriervec§ to have the math accent \cs{fouriervec}
-  defined by the package.
+  defined by the package.%
+%
+\footnote{this costs a math family, as I never came back to this to try to
+  do otherwise.}
 
 
 \item[math alphabets:] 
@@ -3120,6 +3141,9 @@ loaded {with the option} |no-math|,
   alphabets to apply to non-alphabetical characters and to
   operator names. This respects the automatic white spaces
   added by \TeX{} around math symbols.
+\item the\RightNote{1.3i}
+  extra skips around letters (see \autoref{sec:mathskips} and
+  \autoref{sec:ic}) are removed in the scope of the math alphabets.
   \end{itemize}
 
 \item[math accents:] an option §mathaccents§ is
@@ -3850,7 +3874,7 @@ all the glyphs of the Euler font, if option |eulergreek| (or
  the em-dash (\textemdash, but this seems crazy) for the minus sign
  rather than {}-{}. §endash§ option is default for the package.
 \item §unicodeminus§:\RightNote{1.3q} use the |MINUS SIGN U+2212| (requires
-  |fontspec|.) In the form |unicodeminus=HHHH| with four \emph{uppercased}
+  |fontspec|.) Or, in the form |unicodeminus=HHHH| with four \emph{uppercased}
   hexadecimal digits: use the |U+HHHH| code point. As §noendash§ really means
   ``use the hyphen from the text font'', §unicodeminus§ remains without effect
   under it, or, naturally, under §nominus§. Note: without this option,
@@ -4134,7 +4158,7 @@ can be customized to change the font size or set other options therein.
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage {mathastext}
-  [2016/10/31 v1.3q Use the text font in math mode (JFB)]
+  [2016/11/06 v1.3r Use the text font in math mode (JFB)]
 %    \end{macrocode}
 % Testing for \XeTeX\ and \LuaLaTeX.
 %
@@ -4425,7 +4449,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %      using |\MTversion{normal}|, if |subdued|.
 %
 %      For some (random, legacy) reason, the handling of $\exists$ and
-%      $\forall$ is part of the things (also \cs{MTmathoperatorsobeymathxx}
+%      $\forall$ is part of the things
 %      not included inside |\everymath/\everydisplay|.
 %    \begin{macrocode}
 \newmuskip\mst@exists@muskip  %% v 1.15e
@@ -6376,7 +6400,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \DeclareMathSymbol \csname mst@#1\endcsname{\mathalpha}{mtletterfont}{`#1}%
     \expandafter\mst@addtodo@az\expandafter #1\csname mst@#1\endcsname
 }%
-\@for\mst@tmp:=a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z\do
+\@tfor\mst@tmp:=abcdefghijklmnopqrstuvwxyz\do
      {\expandafter\mst@DeclareMathLetter\mst@tmp}%
 \ifmst@frenchmath \def\mst@font@tbu{mtoperatorfont}%
    \else          \def\mst@font@tbu{mtletterfont}%
@@ -6387,7 +6411,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \DeclareMathSymbol \csname mst@#1\endcsname{\mathalpha}{\mst@font@tbu}{`#1}%
     \expandafter\mst@addtodo@AZ\expandafter #1\csname mst@#1\endcsname 
 }%
-\@for\mst@tmp:=A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z\do
+\@tfor\mst@tmp:=ABCDEFGHIJKLMNOPQRSTUVWXYZ\do
      {\expandafter\mst@DeclareMathLetter\mst@tmp}%
 \let\mst@DeclareMathLetter\relax
 %%
