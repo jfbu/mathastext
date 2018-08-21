@@ -2,12 +2,12 @@
 % N.B.: this dtx file does NOT use \DocInput (only docstrip), the
 % LaTeX source of the documentation is NOT prefixed with % signs.
 %<*dtx>
-\def\dtxtimestamp {Time-stamp: <06-11-2016 at 19:22:30 CET>}%
-\def\docdate{2016/11/06}
+\def\dtxtimestamp {Time-stamp: <21-08-2018 at 21:22:23 CEST>}%
+\def\docdate{2018/08/21}
 %</dtx>
 %<*drv|ins>
-\def\MSTpkgdate    {2016/11/06}
-\def\MSTpkgversion {1.3r}
+\def\MSTpkgdate    {2018/08/21}
+\def\MSTpkgversion {1.3s}
 %</drv|ins>
 %<*dtx>
 \iffalse % meta-comment
@@ -27,9 +27,9 @@ of the [LPPL1.3c](http://www.latex-project.org/lppl/lppl-1-3c.txt)
 
 The Author of this Work is Jean-Francois B.
 
-Copyright (C) 2011-2016 Jean-Francois B. (`2589111+jfbu@users.noreply.github.com`)
+Copyright (C) 2011-2018 Jean-Francois B. (`2589111+jfbu@users.noreply.github.com`)
 
-      Source: mathastext.dtx 1.3r 2016/11/06
+      Source: mathastext.dtx 1.3s 2018/08/21
 
 %</readme>
 %<*dtx>
@@ -45,9 +45,9 @@ not include the documented source code then, in contrast to 1a)+1b) method
 %%----------------------------------------------------------------
 %% Package: mathastext
 %% Info:    Use the text font in math mode (JFB)
-%% Version: 1.3r 2016/11/06
+%% Version: 1.3s 2018/08/21
 %% License: LPPL 1.3c (http://www.latex-project.org/lppl/lppl-1-3c.txt)
-%% Copyright (C) 2011-2016 Jean-Francois B. <2589111+jfbu@users.noreply.github.com>
+%% Copyright (C) 2011-2018 Jean-Francois B. <2589111+jfbu@users.noreply.github.com>
 %% Examples of use of mathastext:
 %%        mathastext.html
 %%        showcase.html
@@ -239,6 +239,14 @@ This produces the documentation without the source code.
 
 CHANGE LOG
 ==========
+
+1.3s \[2018/08/21\]
+----
+
+* fix to an issue with `subdued` option in a `fontspec` context.
+
+  https://tex.stackexchange.com/q/444565/4686
+
 
 1.3r \[2016/11/06\]
 ----
@@ -3011,7 +3019,7 @@ for subscripts (it also copies code from the |moresize| package to redefine
   deactivate it. Starting with version |1.12| of the
   package this `en-dash as minus' should work in all
   encodings, including Unicode (if |fontspec| has been
-  loaded).
+  loaded); see also |unicodeminus| for OpenType fonts.
 
 \item[amsmath:] \strut the behaviour of the
   \cs{DeclareMathOperator}\RLNote{changed:}{1.3n} command
@@ -3218,8 +3226,8 @@ somewhat elaborate mechanism related to these issues (see the code comments),
 installed into the list of things done by \TeX\ systematically each time
 it enters math mode. For some legacy reason the package also puts into
 this list a few other things which could arguably be done elsewhere once and
-for all. The command \csb{MTeverymathoff} cancels all such actions done by
-\mst each time math mode is entered.
+for all. The command \csb{MTeverymathoff} cancels all actions done by
+\mst.
 
 
 \newsavebox\boite
@@ -3754,8 +3762,8 @@ Formerly, it was set to |0mu|.} In the case of the option |italic|, the
 
 All further commands are usable only inside math mode.
 \begin{enumerate}[label=$\bullet$]
-\item §\hbar§: this is constructed
-  (in a way compatible with the |italic| option) from
+\item §\hbar§: this macro is by default redefined
+  (in a way compatible with the |italic| option) combining
   the |h| letter and the \={ } accent from the
   \mst font. Note that \cs{mathrm}|{\hbar}| and
   \cs{mathbf}|{\hbar}| should work and that \cs{hbar}
@@ -3877,8 +3885,8 @@ all the glyphs of the Euler font, if option |eulergreek| (or
   |fontspec|.) Or, in the form |unicodeminus=HHHH| with four \emph{uppercased}
   hexadecimal digits: use the |U+HHHH| code point. As §noendash§ really means
   ``use the hyphen from the text font'', §unicodeminus§ remains without effect
-  under it, or, naturally, under §nominus§. Note: without this option,
-  \mst uses the |EN DASH U+2013| by default.
+  under it, or, naturally, under §nominus§. Without this option,
+  \mst uses the |EN DASH U+2013| by default for OpenType fonts.
 \item §asterisk§: use the text font (or the Symbol font) asterisk in math mode. 
 \item §nohbar§: prevents \mst from defining its own
   \cs{hbar}.
@@ -4158,7 +4166,7 @@ can be customized to change the font size or set other options therein.
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage {mathastext}
-  [2016/11/06 v1.3r Use the text font in math mode (JFB)]
+  [2018/08/21 v1.3s Use the text font in math mode (JFB)]
 %    \end{macrocode}
 % Testing for \XeTeX\ and \LuaLaTeX.
 %
@@ -5301,6 +5309,15 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %
 %   |1.15f|: and also I take this opportunity to do the subdued math
 %   alphabets things in a much much easier way, see below.
+%
+%   |1.3s 2018/08/21|: I have half-forgotten the reasons for modifiying the
+%   font encoding to current |\encodingdefault|, but at any rate this should
+%   not be done in a |fontspec| context, encoding default being (now) |TU| it
+%   is very unlikely modifying from |TU| or to |TU| from something else will
+%   do any good. See
+%   \centeredline{\url{https://tex.stackexchange.com/questions/444565/mathastext-wrong-digits-in-math-mode/}}
+%   for original report. I add workaround here for case of |fontspec| being
+%   detected via the |\encodingdefault| setting.
 %    \begin{macrocode}
 \ifmst@subdued
   \def\mst@reserved#1\getanddefine@fonts\symletters#2#3\@nil{%
@@ -5316,23 +5333,23 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
         \def\mst@boldmv@operator{#2}}
   \expandafter\mst@reserved\mv@bold\@nil
 %%
-  \edef\mst@tmp{\encodingdefault}
+  \edef\mst@tmp@enc{\encodingdefault}
   \def\mst@reserved#1/#2/#3/#4/{\gdef\mst@debut{#1}\gdef\mst@reste{#2/#3/#4}}
   \begingroup\escapechar\m@ne
       \xdef\mst@funnyoti{\expandafter\string\csname OT1\endcsname}
       \expandafter\expandafter\expandafter
           \mst@reserved\expandafter\string\mst@normalmv@operator/
   \endgroup
-  \ifx\mst@debut\mst@funnyoti\ifx\mst@tmp\mst@oti\def\mst@tmp{T1}\fi\fi
+  \ifx\mst@debut\mst@funnyoti\ifx\mst@tmp@enc\mst@oti\def\mst@tmp@enc{T1}\fi\fi
   \edef\mst@normalmv@operator{\expandafter\noexpand\csname 
-                               \mst@tmp/\mst@reste\endcsname}
+       \if1\mst@OneifUniEnc\mst@debut\else\mst@tmp@enc\fi/\mst@reste\endcsname}
   \begingroup\escapechar\m@ne
       \expandafter\expandafter\expandafter
           \mst@reserved\expandafter\string\mst@boldmv@operator/
   \endgroup
-  \ifx\mst@debut\mst@funnyoti\ifx\mst@tmp\mst@oti\def\mst@tmp{T1}\fi\fi
+  \ifx\mst@debut\mst@funnyoti\ifx\mst@tmp@enc\mst@oti\def\mst@tmp@enc{T1}\fi\fi
   \edef\mst@boldmv@operator{\expandafter\noexpand\csname 
-                             \mst@tmp/\mst@reste\endcsname}
+       \if1\mst@OneifUniEnc\mst@debut\else\mst@tmp@enc\fi/\mst@reste\endcsname}
   \AtEndOfPackage{
   \typeout{** ...entering subdued mode...}
   \expandafter\SetSymbolFont@ \expandafter\mv@normal\mst@normalmv@letter\symmtletterfont
@@ -7823,7 +7840,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
   Grave accent  \`     Left brace    \{     Vertical bar  \|
   Right brace   \}     Tilde         \~}
 
-\CheckSum{5558}
+\CheckSum{5568}
 \makeatletter\check@checksum\makeatother
 \Finale
 %%

@@ -23,16 +23,16 @@
 %%----------------------------------------------------------------
 %% Package: mathastext
 %% Info:    Use the text font in math mode (JFB)
-%% Version: 1.3q 2016/10/31
+%% Version: 1.3s 2018/08/21
 %% License: LPPL 1.3c (http://www.latex-project.org/lppl/lppl-1-3c.txt)
-%% Copyright (C) 2011-2016 Jean-Francois B. <2589111+jfbu@users.noreply.github.com>
+%% Copyright (C) 2011-2018 Jean-Francois B. <2589111+jfbu@users.noreply.github.com>
 %% Examples of use of mathastext:
 %%        mathastext.html
 %%        showcase.html
 %%----------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage {mathastext}
-  [2016/10/31 v1.3q Use the text font in math mode (JFB)]
+  [2018/08/21 v1.3s Use the text font in math mode (JFB)]
   \let\mst@Umathcharnumdef\Umathcharnumdef
   \let\mst@Umathcodenum   \Umathcodenum
   \let\mst@Umathcode      \Umathcode
@@ -515,23 +515,23 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
         \def\mst@boldmv@operator{#2}}
   \expandafter\mst@reserved\mv@bold\@nil
 %%
-  \edef\mst@tmp{\encodingdefault}
+  \edef\mst@tmp@enc{\encodingdefault}
   \def\mst@reserved#1/#2/#3/#4/{\gdef\mst@debut{#1}\gdef\mst@reste{#2/#3/#4}}
   \begingroup\escapechar\m@ne
       \xdef\mst@funnyoti{\expandafter\string\csname OT1\endcsname}
       \expandafter\expandafter\expandafter
           \mst@reserved\expandafter\string\mst@normalmv@operator/
   \endgroup
-  \ifx\mst@debut\mst@funnyoti\ifx\mst@tmp\mst@oti\def\mst@tmp{T1}\fi\fi
+  \ifx\mst@debut\mst@funnyoti\ifx\mst@tmp@enc\mst@oti\def\mst@tmp@enc{T1}\fi\fi
   \edef\mst@normalmv@operator{\expandafter\noexpand\csname
-                               \mst@tmp/\mst@reste\endcsname}
+       \if1\mst@OneifUniEnc\mst@debut\else\mst@tmp@enc\fi/\mst@reste\endcsname}
   \begingroup\escapechar\m@ne
       \expandafter\expandafter\expandafter
           \mst@reserved\expandafter\string\mst@boldmv@operator/
   \endgroup
-  \ifx\mst@debut\mst@funnyoti\ifx\mst@tmp\mst@oti\def\mst@tmp{T1}\fi\fi
+  \ifx\mst@debut\mst@funnyoti\ifx\mst@tmp@enc\mst@oti\def\mst@tmp@enc{T1}\fi\fi
   \edef\mst@boldmv@operator{\expandafter\noexpand\csname
-                             \mst@tmp/\mst@reste\endcsname}
+       \if1\mst@OneifUniEnc\mst@debut\else\mst@tmp@enc\fi/\mst@reste\endcsname}
   \AtEndOfPackage{
   \typeout{** ...entering subdued mode...}
   \expandafter\SetSymbolFont@ \expandafter\mv@normal\mst@normalmv@letter\symmtletterfont
@@ -1117,7 +1117,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \DeclareMathSymbol \csname mst@#1\endcsname{\mathalpha}{mtletterfont}{`#1}%
     \expandafter\mst@addtodo@az\expandafter #1\csname mst@#1\endcsname
 }%
-\@for\mst@tmp:=a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z\do
+\@tfor\mst@tmp:=abcdefghijklmnopqrstuvwxyz\do
      {\expandafter\mst@DeclareMathLetter\mst@tmp}%
 \ifmst@frenchmath \def\mst@font@tbu{mtoperatorfont}%
    \else          \def\mst@font@tbu{mtletterfont}%
@@ -1128,7 +1128,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \DeclareMathSymbol \csname mst@#1\endcsname{\mathalpha}{\mst@font@tbu}{`#1}%
     \expandafter\mst@addtodo@AZ\expandafter #1\csname mst@#1\endcsname
 }%
-\@for\mst@tmp:=A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z\do
+\@tfor\mst@tmp:=ABCDEFGHIJKLMNOPQRSTUVWXYZ\do
      {\expandafter\mst@DeclareMathLetter\mst@tmp}%
 \let\mst@DeclareMathLetter\relax
 %%

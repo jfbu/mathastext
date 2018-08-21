@@ -1,5 +1,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html lang="en">
+<!-- Time-stamp: <09-04-2018 11:19:21 CEST> -->
+<!-- (\hyphenchar\font=127% -> \hyphenchar\font=127 dans exemple avec txvtt) -->
+<!-- (réécriture de l'introduction, \MTsetmathskips depuis 1.3 [2013/09/02]) -->
+<!-- (copyright -> 2018) -->
+<!-- Time-stamp: <08-01-2016 09:31:03 CET> -->
+<!-- (copyright -> 2016) -->
 <!-- Time-stamp: <05-02-2015 19:41:30 CET> -->
 <!-- (Raif Badawi + lien pour Charlie) -->
 <!-- Time-stamp: <18-01-2015 13:11:28 CET> -->
@@ -31,8 +37,9 @@ BLOCKQUOTE{margin-left:2ex;margin-right:4ex;text-align:left;}
 <body>
 
 <DIV style="font-size:90%" id="top">
-Last revision of the contents of this page: 20 October 2012.<br>
-Be patient, the page with all its embedded png images weighs about 5 MB...
+Last revision of the examples provided on this page: October 20, 2012.<br>
+Last revision of the accompanying text: April 9, 2018. (only the introduction)<br>
+Dated remark: be patient, the page with all its embedded png images weighs about 5 megabytes... (wow!)
 </DIV>
 
 <div style="text-align:center;">
@@ -44,7 +51,7 @@ Be patient, the page with all its embedded png images weighs about 5 MB...
 <br>
 
 <DIV CLASS="center">A LaTeX package: <b>mathastext</b><br>
-Copyright &copy; 2011-2015 Jean-Fran&ccedil;ois B..</DIV>
+Copyright &copy; 2011-2018 Jean-Fran&ccedil;ois B..</DIV>
 
 
 <DIV class="intro">
@@ -228,34 +235,45 @@ the <a href="#fc"><b>warning</b></a>)</li>
 <DIV class="intro">
 <p>
 All fonts<sup>(1)</sup> are freely available
-(the <a href="http://www.tug.dk/FontCatalogue/">LaTeX Font Catalogue</a> is a
-very useful resource), most of them being already included in the standard TeX
+(cf. <a href="http://www.tug.dk/FontCatalogue/">LaTeX Font Catalogue</a>), most of them being already included in the standard TeX
 distributions or downloadable as ready-made packages from CTAN.  In one
 instance (<a href="http://friedrichalthausen.de/?page_id=411">Vollkorn</a>)
 the fonts were available as ttf files, and were installed for LaTeX using
 the <a href="http://mirrors.ctan.org/help/Catalogue/entries/otfinst.html">otfinst</a>
 script. </p>
 <p>
-(1) most of the xelatex's examples are with fonts provided with the system on a
-mac os x machine, some use opentype fonts included in the TeXLive distribution,
-and two examples use opentype fonts bundled inside a freely distributed PDF
+(1) most of the XeLaTeX's examples are with fonts provided with the system on a
+MacOS X machine, some use OpenType fonts included in the TeXLive distribution,
+and two examples use OpenType fonts bundled inside a freely distributed PDF
 viewer. </p>
 
-<p> The examples numbered 42-52 illustrate the <b>italic</b> option of the
+<p> The examples numbered 42-52 illustrate the <i>italic</i> option of the
 package. However, when using italic letters in math mode, their protruding
-characteristics (most notable in the case of the letter `f') often lead to
+characteristics (most notable in the case of the letter <code>f</code>) often lead to
 overlapping problems with delimiters or other symbols (the math italic fonts
-reestablish sufficient kerning around letters compared to text italic). This is
-one reason why most examples here are with upright letters. The other reason
-being that the author believes that using upright letters in math mode is
-esthetically more pleasing.<sup>(2)</sup> There is no reason to have such a
-contrast as has been practiced in scientific typography (and re-inforced as the
-"no way to do otherwise" de facto default for the TeX users of the last three
-decades) between the text and the formulas, because the text is a formula in its
-own right (and vice versa). And this remark is particularly valid for the italic
-shape, whose application is inconsistent (to the point that there are battles of
-«experts» about whether the `d' in `dx' should be upright or slanted, that the
-`x' is slanted is anyhow accepted as a definitive axiom.)</p>
+reestablish sufficient kerning around letters compared to text italic). </p>
+
+<blockquote>
+<p> Since release <b>1.3</b> (2013/09/02), mathastext
+offers <code>\MTsetmathskips</code> to fine-tune spacing around letters in
+math mode. This fixes issues with letter <code>f</code>, if needed. But all
+examples on this page were produced with earlier releases
+of <b>mathastext</b>, and this explains to some extent why only a minority
+among them are with the <i>italic</i> option.</p>
+</blockquote>
+
+<p> The other reason is that the author believes that
+using upright letters in math mode is aesthetically more
+pleasing.<sup>(2)</sup> There is no reason to have such a contrast as has been
+practiced in scientific typography (and re-inforced as the "no way to do
+otherwise" de facto default for the TeX users of the last three decades)
+between the text and the formulas, because the text is a formula in its own
+right (and vice versa). And this remark is particularly valid for the italic
+shape, whose application is inconsistent (to the point that there are battles
+of «experts» about whether the `d' in `dx' should be upright or slanted, that
+the `x' is slanted is anyhow accepted as a definitive axiom without further
+discussion.) <b>Beware of all kind of normative discourses! They are very
+prevalent in LaTeX community!</b></p>
 
 <p>(2) it seems that it is only during the last few years, as a result of the
   widespread use of the <i>beamer</i> package that scientific users of TeX have
@@ -305,7 +323,7 @@ the LaTeX source is <a href="RiemannZetaPreamble.html"> here</a>.</p>
   resolution), and from pdf files with gs (with -r500 -dDownScaleFactor=5 to get
   100 pixels per inch of the original contents). The pdf files in the middle
   column above were produced via latex+dvipdfmx (some with latex+dvips+gs), or
-  via xelatex. Earlier, most had been done via pdflatex (probably because it had
+  via XeLaTeX. Earlier, most had been done via pdflatex (probably because it had
   been easier for me to do pdflatex rather than latex+dvips+gs simultaneously on
   dozens of files), but on 2012/10/07, I re-did them with dvipdfmx, which gave
   impressive size gains (indeed dvipdfmx has a compressed embedding of fonts):
@@ -1171,7 +1189,7 @@ This example uses:
 \usepackage[defaultmathsizes]{mathastext}
 </pre>
 Typeset with mathastext 1.15d (2012/10/13).<a href="showcase/comicsans-5.pdf">pdf</a><br>
-&nbsp; (compiled with XeLaTeX on Mac OS X; png images produced with gs)
+&nbsp; (compiled with XeLaTeX on MacOS X; png images produced with gs)
 
 </DIV>
 <BR>
@@ -1698,9 +1716,9 @@ was prepared, which differs from the original t1txtt.fd in the following lines
 (naturally, all occurrences of "txtt" in the \DeclareFontShape declarations were
 replaced by "txvtt"):
 <pre>
-\DeclareFontFamily{T1}{txvtt}{\hyphenchar\font=127%
-\fontdimen2\font=0.33333\fontdimen6\font%
-\fontdimen3\font=0.16666\fontdimen6\font%
+\DeclareFontFamily{T1}{txvtt}{\hyphenchar\font=127
+\fontdimen2\font=0.33333\fontdimen6\font
+\fontdimen3\font=0.16666\fontdimen6\font
 \fontdimen4\font=0.11111\fontdimen6\font}
 </pre>
 Then, the LaTeX source of the document contains:
@@ -1850,7 +1868,7 @@ from the TX fonts in upright shape),</li>
   bold series is like the medium series). The Libertine Bold Italic 
   misses the Greek glyphs (this issue arose when the libertine package, now
   called libertine-legacy, entered into its version number 5; note that these
-  tables use the font files for (pdf)latex of libertine-legacy, not the opentype
+  tables use the font files for (pdf)latex of libertine-legacy, not the OpenType
   font files now distributed with the package libertineotf). But the slanted
   shape glyphs do exist.</p>
 

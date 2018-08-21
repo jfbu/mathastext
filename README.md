@@ -12,9 +12,9 @@ of the [LPPL1.3c](http://www.latex-project.org/lppl/lppl-1-3c.txt)
 
 The Author of this Work is Jean-Francois B.
 
-Copyright (C) 2011-2016 Jean-Francois B. (`2589111+jfbu@users.noreply.github.com`)
+Copyright (C) 2011-2018 Jean-Francois B. (`2589111+jfbu@users.noreply.github.com`)
 
-      Source: mathastext.dtx 1.3q 2016/10/31
+      Source: mathastext.dtx 1.3s 2018/08/21
 
 > cumulative Change Log at bottom of this file.
 
@@ -129,13 +129,27 @@ This produces the documentation without the source code.
 CHANGE LOG
 ==========
 
+1.3s \[2018/08/21\]
+----
+
+* fix to an issue with `subdued` option in a `fontspec` context.
+
+  https://tex.stackexchange.com/q/444565/4686
+
+1.3r \[2016/11/06\]
+----
+
+* documentation tweaks.
+
 1.3q \[2016/10/31\]
 ----
 
 * new option `unicodeminus`.
 
 * the `Recent Changes` section of the documentation has been removed as it
-  was a duplicate of information available in the `Change Log`. Some other
+  was a duplicate of information available in the `Change Log`.
+
+* some other
   changes in the documentation, in particular the use of straight quotes
   in verbatim.
 

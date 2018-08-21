@@ -11,9 +11,9 @@ LPPL1.3c
 
 The Author of this Work is Jean-Francois B.
 
-Copyright (C) 2011-2016 Jean-Francois B. (2589111+jfbu@users.noreply.github.com)
+Copyright (C) 2011-2018 Jean-Francois B. (2589111+jfbu@users.noreply.github.com)
 
-      Source: mathastext.dtx 1.3r 2016/11/06
+      Source: mathastext.dtx 1.3s 2018/08/21
 
   cumulative Change Log at bottom of this file.
 
@@ -57,9 +57,9 @@ package loading time, for these characters:
 
 Main options: italic, subdued, LGRgreek.
 
--   Use the italic option to get the Latin letters in math mode be
-    in italics. Digits and log-like operator names (pre-defined as well
-    as user-defined) will be in the same shape as the text font (usually
+-   Use the italic option to get the Latin letters in math mode be in
+    italics. Digits and log-like operator names (pre-defined as well as
+    user-defined) will be in the same shape as the text font (usually
     this means upright).
 -   each \Mathastext[<name>] in the preamble defines a math version to
     be later activated in the document body via the command
@@ -131,6 +131,13 @@ This produces the documentation without the source code.
 CHANGE LOG
 
 
+1.3s [2018/08/21]
+
+-   fix to an issue with subdued option in a fontspec context.
+
+https://tex.stackexchange.com/q/444565/4686
+
+
 1.3r [2016/11/06]
 
 -   documentation tweaks.
@@ -151,8 +158,8 @@ CHANGE LOG
 
 -   bugfix: release 1.3n had forgotten to activate by default its new
     customization of the amsmath macro \newmcodes@ (it was done from
-    using \MTversion in the document body but not by default at start
-    of body.)
+    using \MTversion in the document body but not by default at start of
+    body.)
 
 -   public name \MTfixmathfonts for a 1.3o macro.
 
@@ -175,8 +182,8 @@ CHANGE LOG
     perplexing amsmath's \newmcodes@. The very recent change in
     amsopn.sty finally made it compatible with Unicode engines, but
     anyhow, mathastext must do its own patch to use the correct font.
-    All of this taking into account the various options passed to
-    the package. Lots of trouble for a tiny thing.
+    All of this taking into account the various options passed to the
+    package. Lots of trouble for a tiny thing.
 
 
 1.3m [2016/04/02]
@@ -288,8 +295,8 @@ CHANGE LOG
     versions if the subdued option was also used (this was so far the
     case only with options LGRgreek/LGRgreeks).
 
--   \newmcodes@ of amsmath is left untouched if package lualatex-math
-    is detected.
+-   \newmcodes@ of amsmath is left untouched if package lualatex-math is
+    detected.
 
 
 1.3c [2013/12/14]
@@ -341,20 +348,20 @@ CHANGE LOG
     correspondingly modified).
 
 -   the new \luatexUmathcodenum as available since TL2013 allows
-    identical treatment by mathastext of = and - under both LuaTeX
-    and XeTeX.
+    identical treatment by mathastext of = and - under both LuaTeX and
+    XeTeX.
 
 -   \newmcodes@ of amsmath is left untouched in case of option basic.
 
 -   a sentence containing | which was written to the log during the
     loading caused a problem if | was active (typically if
-    \MakeShortVerb{\|} was added to the preamble prior to the loading
-    of mathastext).
+    \MakeShortVerb{\|} was added to the preamble prior to the loading of
+    mathastext).
 
 -   some preemptive measures taken regarding things such as \mid,
     \lbrace, and \rbrace, as some packages define these things in
-    manners which made the re-definitions done by mathastext
-    issue errors.
+    manners which made the re-definitions done by mathastext issue
+    errors.
 
 
 1.2f [2013/01/21]
@@ -406,8 +413,8 @@ This is done at the entrance in math mode.
     since version 1.2 of the package. This is fixed here.
 
 -   various improvements in dealing with the asterisk and in the
-    mechanism of letting non-letter symbols obey the math
-    alphabet commands.
+    mechanism of letting non-letter symbols obey the math alphabet
+    commands.
 
 -   documentation extended and improved.
 
@@ -415,19 +422,19 @@ This is done at the entrance in math mode.
 1.2c [2012/12/31]
 
 -   mathastext now inserts automatically after all (latin) letters in
-    math mode their italic corrections, if the font used is
-    upright (sic). This improves the spacings for the positioning
-    of subscripts. The feature is de-activated inside the math alphabets
-    commands (apart from \mathnormal), so as to not prohibit the
-    formation of ligatures.
+    math mode their italic corrections, if the font used is upright
+    (sic). This improves the spacings for the positioning of subscripts.
+    The feature is de-activated inside the math alphabets commands
+    (apart from \mathnormal), so as to not prohibit the formation of
+    ligatures.
 
 -   the documentation has been extended to explain in detail the issues
     which are relevant to the new feature of added italic corrections.
 
 -   version 1.2 had some bad bugs when confronted to active characters.
     This is corrected and additionally \MTnonlettersdonotobeymathxx is
-    made the default, as the user input is too much constrained in
-    its absence.
+    made the default, as the user input is too much constrained in its
+    absence.
 
 -   a less fatal, but still annoying, typo had made the dot in 1.2 of
     type \mathpunct rather than \mathord.
@@ -438,8 +445,8 @@ This is done at the entrance in math mode.
 1.2 [2012/12/20]
 
 -   a new command sets up the amount of space to be automatically
-    inserted before the derivative glyph (useful when using an
-    upright font).
+    inserted before the derivative glyph (useful when using an upright
+    font).
 
 -   the scope of the math alphabets has been extended to apply to the
     non-alphabetical characters, and also to operator names.
@@ -482,14 +489,14 @@ This is done at the entrance in math mode.
 1.15d [2012/10/13]
 
 -   the Unicode situation is now correctly treated, throughout the code
-    (this had been left in a half-done way from version 1.14 of
-    April 2011).
+    (this had been left in a half-done way from version 1.14 of April
+    2011).
 
 -   this includes an issue related to amsmath and its
     DeclareMathOperator macro which has been fixed,
 
--   and the code related to \relbar and \Relbar (and \models) has
-    been revised.
+-   and the code related to \relbar and \Relbar (and \models) has been
+    revised.
 
 
 1.15c [2012/10/05]
@@ -509,8 +516,8 @@ This is done at the entrance in math mode.
 
 1.15 [2012/09/26]
 
--   the subdued option allows the mathastextification to act
-    only locally.
+-   the subdued option allows the mathastextification to act only
+    locally.
 
 -   some measures taken to deal with amsmath related issues when using
     xetex or luatex.
@@ -570,8 +577,8 @@ This is done at the entrance in math mode.
     mechanism of math versions also when using XeTeX or LuaTeX (with
     package fontspec.)
 
--   the en-dash and dotless i and j now work with all encodings,
-    Unicode inclusive.
+-   the en-dash and dotless i and j now work with all encodings, Unicode
+    inclusive.
 
 
 1.11 [2011/02/06]
