@@ -24,6 +24,7 @@
 <li><a href="#generating-documentation-and-test-files">Generating documentation and test files</a></li>
 </ul></li>
 <li><a href="#change-log">CHANGE LOG</a><ul>
+<li><a href="#t-20180822">1.3t [2018/08/22]</a></li>
 <li><a href="#s-20180821">1.3s [2018/08/21]</a></li>
 <li><a href="#r-20161106">1.3r [2016/11/06]</a></li>
 <li><a href="#q-20161031">1.3q [2016/10/31]</a></li>
@@ -78,7 +79,7 @@
 <p>This Work may be distributed and/or modified under the conditions of the <a href="http://www.latex-project.org/lppl/lppl-1-3c.txt">LPPL1.3c</a></p>
 <p>The Author of this Work is Jean-Francois B.</p>
 <p>Copyright (C) 2011-2018 Jean-Francois B. (<code>2589111+jfbu@users.noreply.github.com</code>)</p>
-<pre><code>  Source: mathastext.dtx 1.3s 2018/08/21</code></pre>
+<pre><code>  Source: mathastext.dtx 1.3t 2018/08/22</code></pre>
 <blockquote>
 <p>cumulative Change Log at bottom of this file.</p>
 </blockquote>
@@ -134,6 +135,13 @@ dvipdfmx mathastext.dvi</code></pre>
 <p>(One cannot use lualatex or xelatex to compile the documentation.)</p>
 </blockquote>
 <h1 id="change-log">CHANGE LOG</h1>
+<h2 id="t-20180822">1.3t [2018/08/22]</h2>
+<ul>
+<li><p>bugfix: the 1.3s bugfix about <code>subdued</code> compatibility with <code>fontspec</code> was deficient.</p></li>
+<li><p>bugfix: very old (v1.2, 2012/12/20) bug causing low-level TeX error during package loading (with pdflatex) when setting up the math minus sign to be the text font endash character, in cases with <code>\encodingdefault</code> other than OT1, T1 or LY1, e.g. something like T2A.</p></li>
+<li><p><code>\imath</code> and <code>\jmath</code> obey the <code>subdued</code> regime. And the minus sign is now handled especially to ensure perfect compatibility with the <code>subdued</code> option.</p></li>
+<li><p>breaking change: <code>mathastext</code> does not redefine anymore <code>\i</code> and <code>\j</code> to let them be usable both in text and math mode.</p></li>
+</ul>
 <h2 id="s-20180821">1.3s [2018/08/21]</h2>
 <ul>
 <li>fix to an issue with <code>subdued</code> option in a <code>fontspec</code> context.</li>

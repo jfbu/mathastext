@@ -2,12 +2,12 @@
 % N.B.: this dtx file does NOT use \DocInput (only docstrip), the
 % LaTeX source of the documentation is NOT prefixed with % signs.
 %<*dtx>
-\def\dtxtimestamp {Time-stamp: <21-08-2018 at 21:22:23 CEST>}%
-\def\docdate{2018/08/21}
+\def\dtxtimestamp {Time-stamp: <22-08-2018 at 19:31:52 CEST>}%
+\def\docdate{2018/08/22}
 %</dtx>
 %<*drv|ins>
-\def\MSTpkgdate    {2018/08/21}
-\def\MSTpkgversion {1.3s}
+\def\MSTpkgdate    {2018/08/22}
+\def\MSTpkgversion {1.3t}
 %</drv|ins>
 %<*dtx>
 \iffalse % meta-comment
@@ -29,7 +29,7 @@ The Author of this Work is Jean-Francois B.
 
 Copyright (C) 2011-2018 Jean-Francois B. (`2589111+jfbu@users.noreply.github.com`)
 
-      Source: mathastext.dtx 1.3s 2018/08/21
+      Source: mathastext.dtx 1.3t 2018/08/22
 
 %</readme>
 %<*dtx>
@@ -45,7 +45,7 @@ not include the documented source code then, in contrast to 1a)+1b) method
 %%----------------------------------------------------------------
 %% Package: mathastext
 %% Info:    Use the text font in math mode (JFB)
-%% Version: 1.3s 2018/08/21
+%% Version: 1.3t 2018/08/22
 %% License: LPPL 1.3c (http://www.latex-project.org/lppl/lppl-1-3c.txt)
 %% Copyright (C) 2011-2018 Jean-Francois B. <2589111+jfbu@users.noreply.github.com>
 %% Examples of use of mathastext:
@@ -239,6 +239,25 @@ This produces the documentation without the source code.
 
 CHANGE LOG
 ==========
+
+1.3t \[2018/08/22\]
+----
+
+* bugfix: the 1.3s bugfix about `subdued` compatibility with
+  `fontspec` was deficient.
+
+* bugfix: very old (v1.2, 2012/12/20) bug causing low-level TeX error
+  during package loading (with pdflatex) when setting up the math minus
+  sign to be the text font endash character, in cases with
+  `\encodingdefault` other than OT1, T1 or LY1, e.g. something like
+  T2A.
+
+* `\imath` and `\jmath` obey the `subdued` regime. And the minus sign
+  is now handled especially to ensure perfect compatibility with the
+  `subdued` option.
+
+* breaking change: `mathastext` does not redefine anymore
+  `\i` and `\j` to let them be usable both in text and math mode.
 
 1.3s \[2018/08/21\]
 ----
@@ -1920,7 +1939,12 @@ the standard and bold ones.
 The previous description is in fact a bit optimistic: \mst was not
 written initially in order to allow its action to be completely
 canceled, and achieving this would require a complete rewrite of
-large portions of the code. 
+large portions of the code.%
+%
+\footnote{\mst does not store mathcodes nor does it set them when
+changing math versions; only that would allow a perfect subdued
+mode. The sole exception, since \texttt{1.3t}, is for the handling of
+the minus sign.}
 
 To get the displayed math
 (almost) as if \mst had not been loaded, one must also
@@ -1928,18 +1952,28 @@ use the option §defaultmathsizes§. But this does not quite suffice,
 as, for example, the colon, the dot, and the minus sign belong
 in the default \LaTeX{} math mode set-up to three distinct fonts
 whereas \mst will pick (even subdued) the three of them in the same
-font, and although it will make a reasonable choice of this font,
+font,%
+\footnote{\CHANGED{1.3t}The minus sign is now perfectly subdued,
+because its original mathcode is stored and restored; this was only
+way to handle the case with Unicode engines
+where the math operator font is in a classic
+\TeX\ encoding, but the minus sign is configured by \mst to use a Unicode
+en-dash or minus character in non-subdued math versions.}
+%
+and although it will make a reasonable choice of this font,
 this is not a return to the previously prevailing situation. And
 then arbitrary packages could have done arbitrary things... so to
 be on the safe side one needs the §basic§ option which limits the
-mathastextification to letters and digits (and should also be
-accompanied by §defaultimath§ which prevents redefinition of the
-\cs{imath} macro, and §nohbar§ which prevents redefinition of the
-\cs{hbar} macro\dots). And even then, in some circumstances, this
-will still not suffice; for example the \emph{euler} package puts
+mathastextification to letters and digits; and also the §nohbar§ to
+avoid the redefinition of the \cs{hbar} macro.%
+\footnote{\CHANGED{1.3t}The \texttt{\string\imath} and
+\texttt{\string\jmath} now obey automatically the subdued regime.}
+
+And even then, in some circumstances, this
+may not suffice; for example the \emph{euler} package puts
 the digits in the same font as the Latin letters in math mode, but
-the subdued \mst will pick them up in the same font as used in
-operator names, and in the case of the \emph{euler} package, this
+the subdued \mst will pick them up in the same font as used for
+operator names, which for example in the case of the \emph{euler} package, is
 is the main document font. So, even subdued, \mst still kicks. But,
 as I think is illustrated by the examples given at the start of
 this document, the §subdued§ option has its utility, and works
@@ -3059,14 +3093,13 @@ math versions.
   the \cs{hbar} directly as a glyph from the font.
 
 
-\item[dotless i and j:] by default the package redefines
-  \cs{i} and \cs{j} to give the dotless i and j (if it
-  exists at all), \emph{also in math mode,} in the text
-  font. Will overwrite the default commands \cs{imath}
-  and \cs{jmath}. In version |1.12| of the package this
-  should work in all encodings, including Unicode (it
-  is then assumed that |fontspec| has been loaded, and
-  of course that the glyphs are indeed in the font).
+\item[dotless i and j:] by default the package redefines \cs{imath} and
+  \cs{jmath} to give (in math mode) the dotless i and j (if it exists at
+  all) from the text font.%
+%
+\footnote{\CHANGED{1.3t}Since \texttt{1.12} it also redefined \cs{i} and
+  \cs{j} for usability both in text and math modes, but this has been
+  dropped at \texttt{1.13t}. Breaking change!}
 
 \item[asterisk:] versions of \mst earlier than |1.2d [2013/01/02]|
   did not do anything
@@ -3789,13 +3822,20 @@ has been made of §\MTlettershape§ to specify a shape for letters
 distinct from the one for digits and operator names, or similarly
 when the math version has been declared via §\MTDeclareVersion§ with
 its optional parameter for shape of letters.
-\item §\inodot§, §\jnodot§: the corresponding glyphs in
-  the chosen font for math mode. By default, will
-  overwrite |\imath| and |\jmath|. With version |1.12|
-  by default §\i§ and §\j§ work also in math mode and
-  give then §\inodot§, resp. §\jnodot§. This should work for
-  all 8bit-encodings having these glyphs, and 
-  also in Unicode. 
+\item §\inodot§, §\jnodot§: the corresponding glyphs in the \mst-ified
+  font for use in math mode. This should work for all 8bit-encodings
+  having these glyphs, and also with Unicode engines (except for the
+  latter if the font encoding is an 8-bit one distinct from |OT1|, |T1|
+  or |LY1|). By default, |\imath| and |\jmath| are redefined to use
+  them. Since \texttt{1.3t}, these macros obey the \texttt{subdued}
+  regime.
+%
+\footnote{\CHANGED{1.3t}Formerly (i.e. since \texttt{1.12}) \mst
+  redefined the \texttt{\string\i} and \texttt{\string\j} as robust
+  commands usable both in text and math mode and using the above macros
+  in the latter. I have decided it wasn't such a good idea and there is
+  from now on \texttt{1.3t} no such redefinition of \texttt{\string\i}
+  and \texttt{\string\j}!}
 \item §\MathEuler§, §\MathEulerBold§: math alphabets to access
 all the glyphs of the Euler font, if option |eulergreek| (or
 |eulerdigits| was passed to the package.
@@ -3969,7 +4009,7 @@ mathastextified fonts in each math version.
 \item §defaultalphabets§: all the §defaultxx§ options together, and
 additionally tells \mst not to create the \cs{mathnormalbold} alphabet either.
  \item §defaultimath§: do not overwrite \cs{imath} and
- \cs{jmath}, do not extend \cs{i} and \cs{j} to math mode use.
+ \cs{jmath} to use \cs{inodot} and \cs{jnodot}.
  \item §defaultmathsizes§: do not change the \LaTeX{} defaults for the sizes
  of exponents and subscripts.
  \item §fouriervec§: provides a \cs{fouriervec} command. The user can then
@@ -4166,7 +4206,7 @@ can be customized to change the font size or set other options therein.
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage {mathastext}
-  [2018/08/21 v1.3s Use the text font in math mode (JFB)]
+  [2018/08/22 v1.3t Use the text font in math mode (JFB)]
 %    \end{macrocode}
 % Testing for \XeTeX\ and \LuaLaTeX.
 %
@@ -4952,14 +4992,23 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %
 % And |1.3p| adds here \cs{MTcustomizenewmcodes} which had been regrettably
 % forgotten by |1.3n|.
+%
+% |1.3t| adds some extras to handle correctly the minus sign and
+% dotless i and j in subdued mode, even in case of usage with fontspec.
 %    \begin{macrocode}
   \MTcustomizenewmcodes
+  \let\mst@imath\imath
+  \let\mst@jmath\jmath
   \ifmst@subdued
     \MTeverymathoff
     \MTresetnewmcodes
     \MTnoicinmath
     \MTmathoperatorsdonotobeymathxx
+    \let\inodot\mst@imath
+    \let\jnodot\mst@jmath
+    \mst@subduedminus
   \else
+     \mst@nonsubduedminus
 %    \end{macrocode}
 % |1.3j|: an earlier version of this code was earlier part of \cs{Mathastext@}.
 % As we are now in \cs{AtBeginDocument} we try to be careful not to overwrite
@@ -5318,6 +5367,9 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %   \centeredline{\url{https://tex.stackexchange.com/questions/444565/mathastext-wrong-digits-in-math-mode/}}
 %   for original report. I add workaround here for case of |fontspec| being
 %   detected via the |\encodingdefault| setting.
+%
+%   |1.3t 2018/08/22|: the |1.3s| fix erroneously removed the
+%   |OT1->T1| replacement in |TU| context.
 %    \begin{macrocode}
 \ifmst@subdued
   \def\mst@reserved#1\getanddefine@fonts\symletters#2#3\@nil{%
@@ -5342,14 +5394,22 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
   \endgroup
   \ifx\mst@debut\mst@funnyoti\ifx\mst@tmp@enc\mst@oti\def\mst@tmp@enc{T1}\fi\fi
   \edef\mst@normalmv@operator{\expandafter\noexpand\csname 
-       \if1\mst@OneifUniEnc\mst@debut\else\mst@tmp@enc\fi/\mst@reste\endcsname}
+       \if1\mst@OneifUniEnc
+         \ifx\mst@debut\mst@funnyoti T1\else\mst@debut\fi
+       \else
+         \mst@tmp@enc
+       \fi/\mst@reste\endcsname}
   \begingroup\escapechar\m@ne
       \expandafter\expandafter\expandafter
           \mst@reserved\expandafter\string\mst@boldmv@operator/
   \endgroup
   \ifx\mst@debut\mst@funnyoti\ifx\mst@tmp@enc\mst@oti\def\mst@tmp@enc{T1}\fi\fi
   \edef\mst@boldmv@operator{\expandafter\noexpand\csname 
-       \if1\mst@OneifUniEnc\mst@debut\else\mst@tmp@enc\fi/\mst@reste\endcsname}
+       \if1\mst@OneifUniEnc
+         \ifx\mst@debut\mst@funnyoti T1\else\mst@debut\fi
+       \else
+         \mst@tmp@enc
+       \fi/\mst@reste\endcsname}
   \AtEndOfPackage{
   \typeout{** ...entering subdued mode...}
   \expandafter\SetSymbolFont@ \expandafter\mv@normal\mst@normalmv@letter\symmtletterfont
@@ -6355,7 +6415,14 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
         \MTnormalexists
         \MTnormalforall
         \MTeverymathoff
-        \MTresetnewmcodes    
+        \MTresetnewmcodes
+%    \end{macrocode}
+% |1.3t| adds better compatibility with |subdued| mode for
+% |\imath/\jmath| and perfect compatibility for the minus sign.
+%    \begin{macrocode}
+        \let\inodot\mst@imath
+        \let\jnodot\mst@jmath
+        \mst@subduedminus
       \else
         \def\mst@tmpa{bold}%
         \ifx\mst@tmp\mst@tmpa
@@ -6365,10 +6432,16 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
           \MTnormalexists
           \MTnormalforall
           \MTeverymathoff
-          \MTresetnewmcodes    
+          \MTresetnewmcodes
+          \let\inodot\mst@imath
+          \let\jnodot\mst@jmath
+          \mst@subduedminus
         \else
           \mst@setalphabets
           \MTcustomgreek
+          \let\inodot\mst@inodot
+          \let\jnodot\mst@jnodot
+          \mst@nonsubduedminus
         \fi
       \fi
     \else
@@ -6633,6 +6706,24 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %   problem with unicode engines.
 %
 % |1.3l| |2016/01/29|: anticipating TL2016 fontspec's switch to |TU|.
+%
+% |1.3t| |2018/08/22|: fix to very ancient (|2012/12/20|) bug with
+% |\DeclareMathSymbol| lacking last argument if encoding not T1, OT1 or
+% LY1 when setting up math mode to use the en-dash character as minus
+% sign (PDF\TeX\ engine).
+%
+% \begin{macro}{\mst@subduedminus}
+% \begin{macro}{\mst@nonsubduedminus}
+% |1.3t| Further, new macros |\mst@subduedminus| and |\mst@nonsubduedminus|,
+% for the good functioning of the subdued option also in case of
+% presence of fontspec. This is the only character for which subdued
+% option works (now) by setting the mathcode on each math version
+% change. Indeed, a typical issue is when the Unicode EN DASH or MINUS
+% is used, but the actual font in subdued normal math version is
+% originally in OT1 or T1 encoding. The only reasonable way to address
+% this is by actually modifying the assigned mathcode at each version
+% change. This means also that |\MTversion| and not |\mathversion|
+% must be used for good functioning.
 %    \begin{macrocode}
 \def\mst@dothe@endashstuff{\edef\mst@tmp@enc{\encodingdefault}
 \if1\mst@OneifUniEnc
@@ -6656,6 +6747,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
  \ifmst@XeOrLua\mst@aborttrue
  \else
    \DeclareMathSymbol{-}{\mathbin}{mtoperatorfont}
+{\expandafter\the\expandafter\csname\mst@tmp@enc\string\textendash\endcsname}
    \DeclareMathSymbol{\mst@varfam@minus}{\mathalpha}{mtoperatorfont}
 {\expandafter\the\expandafter\csname\mst@tmp@enc\string\textendash\endcsname}
  \fi
@@ -6682,25 +6774,50 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
  \ifmst@XeOrLua\mst@aborttrue
  \else
    \DeclareMathSymbol{-}{\mathbin}{mtoperatorfont}
+{\expandafter\the\expandafter\csname\mst@tmp@enc\string\textemdash\endcsname}
    \DeclareMathSymbol{\mst@varfam@minus}{\mathalpha}{mtoperatorfont}
 {\expandafter\the\expandafter\csname\mst@tmp@enc\string\textemdash\endcsname}
  \fi
 \fi\fi\fi\fi}
+\let\mst@subduedminus\empty
+\let\mst@nonsubduedminus\empty
 \ifmst@nominus\else\typeout{** minus as endash}
-\mst@abortfalse
-\ifmst@endash\mst@dothe@endashstuff\else
-\ifmst@emdash\mst@dothe@emdashstuff\else
-   \DeclareMathSymbol{-}{\mathbin}{\mst@font@tbu}{"2D}
-   \DeclareMathSymbol{\mst@varfam@minus}{\mathalpha}{\mst@font@tbu}{"2D}
-\fi\fi
-\ifmst@abort
+  \edef\mst@tmp@enc{\encodingdefault}
+  \ifmst@XeOrLua
+    \if1\mst@OneifUniEnc\expandafter\AtBeginDocument
+          \else\expandafter\@firstofone
+    \fi
+    {\edef\mst@subduedminus
+       {\mst@Umathcodenum`\noexpand\-=\the\mst@Umathcodenum`\-\relax}}%
+  \else
+    \edef\mst@subduedminus{\mathcode`\noexpand\-=\the\mathcode`\-\relax}%
+  \fi
+  \mst@abortfalse
+  \ifmst@endash\mst@dothe@endashstuff\else
+  \ifmst@emdash\mst@dothe@emdashstuff\else
+     \if1\mst@OneifUniEnc\expandafter\AtBeginDocument
+         \else\expandafter\@firstofone
+     \fi
+     {\DeclareMathSymbol{-}{\mathbin}{\mst@font@tbu}{"2D}%
+      \DeclareMathSymbol{\mst@varfam@minus}{\mathalpha}{\mst@font@tbu}{"2D}}%
+  \fi\fi
+  \ifmst@abort
     \DeclareMathSymbol{-}{\mathbin}{\mst@font@tbu}{"2D}
     \DeclareMathSymbol{\mst@varfam@minus}{\mathalpha}{\mst@font@tbu}{"2D}
-\fi
-\expandafter\mst@addtodo@nonletters\string-\mathbin\mst@varfam@minus
+  \fi
+  \expandafter\mst@addtodo@nonletters\string-\mathbin\mst@varfam@minus
+  \ifmst@XeOrLua
+     \if1\mst@OneifUniEnc\expandafter\AtBeginDocument
+         \else\expandafter\@firstofone
+     \fi
+     {\edef\mst@nonsubduedminus
+        {\mst@Umathcodenum`\noexpand\-=\the\mst@Umathcodenum`\-\relax}}%
+  \else
+    \edef\mst@nonsubduedminus{\mathcode`\noexpand\-=\the\mathcode`\-\relax}%
+  \fi
 \fi
 %    \end{macrocode}
-% \end{macro}
+% \end{macro}\end{macro}\end{macro}
 % \begin{macro}{\hbar}
 % \begin{macro}{\mst@ltbar}
 %   |2011/01/31|, |1.1| I decide to settle the question of the |\hbar|. First, the
@@ -7637,6 +7754,9 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 % code redefining \$ etc in math mode (see above). Fixed.
 %
 % |1.3l| |2016/01/29|: anticipating TL2016 fontspec's switch to |TU|.
+%
+% |1.3t| |2018/08/22| removes the definitions done of |\i| and |\j|
+% since |1.12| (as robust commands usable both in text and math mode).
 %    \begin{macrocode}
 \edef\mst@tmp@enc{\encodingdefault}
 \mst@goaheadtrue
@@ -7664,13 +7784,14 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 {\expandafter\the\expandafter\csname\mst@tmp@enc\string\j\endcsname}
    \fi
 \fi\fi\fi\fi
-\ifmst@defaultimath\else\typeout{** \string\i\space and \string\j\space}
+\let\mst@inodot\inodot
+\let\mst@jnodot\jnodot
+\ifmst@defaultimath\else\typeout{** \string\imath\space and \string\jmath\space}
   \ifmst@goahead
-    \renewcommand*{\imath}{\inodot}
-    \renewcommand*{\jmath}{\jnodot}
-    \let\mst@oldi\i \let\mst@oldj\j
-    \DeclareRobustCommand*{\i}{\ifmmode\inodot\else\mst@oldi\fi}
-    \DeclareRobustCommand*{\j}{\ifmmode\jnodot\else\mst@oldj\fi}
+    \AtEndOfPackage{\AtBeginDocument{%
+        \renewcommand*{\imath}{\inodot}%
+        \renewcommand*{\jmath}{\jnodot}%
+    }}%
   \fi
 \fi
 %    \end{macrocode}
@@ -7840,7 +7961,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
   Grave accent  \`     Left brace    \{     Vertical bar  \|
   Right brace   \}     Tilde         \~}
 
-\CheckSum{5568}
+\CheckSum{5692}
 \makeatletter\check@checksum\makeatother
 \Finale
 %%

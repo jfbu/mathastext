@@ -23,7 +23,7 @@
 %%----------------------------------------------------------------
 %% Package: mathastext
 %% Info:    Use the text font in math mode (JFB)
-%% Version: 1.3s 2018/08/21
+%% Version: 1.3t 2018/08/22
 %% License: LPPL 1.3c (http://www.latex-project.org/lppl/lppl-1-3c.txt)
 %% Copyright (C) 2011-2018 Jean-Francois B. <2589111+jfbu@users.noreply.github.com>
 %% Examples of use of mathastext:
@@ -32,7 +32,7 @@
 %%----------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage {mathastext}
-  [2018/08/21 v1.3s Use the text font in math mode (JFB)]
+  [2018/08/22 v1.3t Use the text font in math mode (JFB)]
   \let\mst@Umathcharnumdef\Umathcharnumdef
   \let\mst@Umathcodenum   \Umathcodenum
   \let\mst@Umathcode      \Umathcode
@@ -346,12 +346,18 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \mst@thef\mst@do@az \let\mst@thef\@gobble
     \mst@theF\mst@do@AZ \let\mst@theF\@gobble}%
   \MTcustomizenewmcodes
+  \let\mst@imath\imath
+  \let\mst@jmath\jmath
   \ifmst@subdued
     \MTeverymathoff
     \MTresetnewmcodes
     \MTnoicinmath
     \MTmathoperatorsdonotobeymathxx
+    \let\inodot\mst@imath
+    \let\jnodot\mst@jmath
+    \mst@subduedminus
   \else
+     \mst@nonsubduedminus
      \ifx\mst@itcorr\@undefined
          \def\mst@itcorr{\ifnum\fam=\m@ne\/\fi}%
          \@for\mst@tmp:=it,sl\do
@@ -524,14 +530,22 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
   \endgroup
   \ifx\mst@debut\mst@funnyoti\ifx\mst@tmp@enc\mst@oti\def\mst@tmp@enc{T1}\fi\fi
   \edef\mst@normalmv@operator{\expandafter\noexpand\csname
-       \if1\mst@OneifUniEnc\mst@debut\else\mst@tmp@enc\fi/\mst@reste\endcsname}
+       \if1\mst@OneifUniEnc
+         \ifx\mst@debut\mst@funnyoti T1\else\mst@debut\fi
+       \else
+         \mst@tmp@enc
+       \fi/\mst@reste\endcsname}
   \begingroup\escapechar\m@ne
       \expandafter\expandafter\expandafter
           \mst@reserved\expandafter\string\mst@boldmv@operator/
   \endgroup
   \ifx\mst@debut\mst@funnyoti\ifx\mst@tmp@enc\mst@oti\def\mst@tmp@enc{T1}\fi\fi
   \edef\mst@boldmv@operator{\expandafter\noexpand\csname
-       \if1\mst@OneifUniEnc\mst@debut\else\mst@tmp@enc\fi/\mst@reste\endcsname}
+       \if1\mst@OneifUniEnc
+         \ifx\mst@debut\mst@funnyoti T1\else\mst@debut\fi
+       \else
+         \mst@tmp@enc
+       \fi/\mst@reste\endcsname}
   \AtEndOfPackage{
   \typeout{** ...entering subdued mode...}
   \expandafter\SetSymbolFont@ \expandafter\mv@normal\mst@normalmv@letter\symmtletterfont
@@ -1075,6 +1089,9 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
         \MTnormalforall
         \MTeverymathoff
         \MTresetnewmcodes
+        \let\inodot\mst@imath
+        \let\jnodot\mst@jmath
+        \mst@subduedminus
       \else
         \def\mst@tmpa{bold}%
         \ifx\mst@tmp\mst@tmpa
@@ -1085,9 +1102,15 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
           \MTnormalforall
           \MTeverymathoff
           \MTresetnewmcodes
+          \let\inodot\mst@imath
+          \let\jnodot\mst@jmath
+          \mst@subduedminus
         \else
           \mst@setalphabets
           \MTcustomgreek
+          \let\inodot\mst@inodot
+          \let\jnodot\mst@jnodot
+          \mst@nonsubduedminus
         \fi
       \fi
     \else
@@ -1275,6 +1298,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
  \ifmst@XeOrLua\mst@aborttrue
  \else
    \DeclareMathSymbol{-}{\mathbin}{mtoperatorfont}
+{\expandafter\the\expandafter\csname\mst@tmp@enc\string\textendash\endcsname}
    \DeclareMathSymbol{\mst@varfam@minus}{\mathalpha}{mtoperatorfont}
 {\expandafter\the\expandafter\csname\mst@tmp@enc\string\textendash\endcsname}
  \fi
@@ -1301,22 +1325,47 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
  \ifmst@XeOrLua\mst@aborttrue
  \else
    \DeclareMathSymbol{-}{\mathbin}{mtoperatorfont}
+{\expandafter\the\expandafter\csname\mst@tmp@enc\string\textemdash\endcsname}
    \DeclareMathSymbol{\mst@varfam@minus}{\mathalpha}{mtoperatorfont}
 {\expandafter\the\expandafter\csname\mst@tmp@enc\string\textemdash\endcsname}
  \fi
 \fi\fi\fi\fi}
+\let\mst@subduedminus\empty
+\let\mst@nonsubduedminus\empty
 \ifmst@nominus\else\typeout{** minus as endash}
-\mst@abortfalse
-\ifmst@endash\mst@dothe@endashstuff\else
-\ifmst@emdash\mst@dothe@emdashstuff\else
-   \DeclareMathSymbol{-}{\mathbin}{\mst@font@tbu}{"2D}
-   \DeclareMathSymbol{\mst@varfam@minus}{\mathalpha}{\mst@font@tbu}{"2D}
-\fi\fi
-\ifmst@abort
+  \edef\mst@tmp@enc{\encodingdefault}
+  \ifmst@XeOrLua
+    \if1\mst@OneifUniEnc\expandafter\AtBeginDocument
+          \else\expandafter\@firstofone
+    \fi
+    {\edef\mst@subduedminus
+       {\mst@Umathcodenum`\noexpand\-=\the\mst@Umathcodenum`\-\relax}}%
+  \else
+    \edef\mst@subduedminus{\mathcode`\noexpand\-=\the\mathcode`\-\relax}%
+  \fi
+  \mst@abortfalse
+  \ifmst@endash\mst@dothe@endashstuff\else
+  \ifmst@emdash\mst@dothe@emdashstuff\else
+     \if1\mst@OneifUniEnc\expandafter\AtBeginDocument
+         \else\expandafter\@firstofone
+     \fi
+     {\DeclareMathSymbol{-}{\mathbin}{\mst@font@tbu}{"2D}%
+      \DeclareMathSymbol{\mst@varfam@minus}{\mathalpha}{\mst@font@tbu}{"2D}}%
+  \fi\fi
+  \ifmst@abort
     \DeclareMathSymbol{-}{\mathbin}{\mst@font@tbu}{"2D}
     \DeclareMathSymbol{\mst@varfam@minus}{\mathalpha}{\mst@font@tbu}{"2D}
-\fi
-\expandafter\mst@addtodo@nonletters\string-\mathbin\mst@varfam@minus
+  \fi
+  \expandafter\mst@addtodo@nonletters\string-\mathbin\mst@varfam@minus
+  \ifmst@XeOrLua
+     \if1\mst@OneifUniEnc\expandafter\AtBeginDocument
+         \else\expandafter\@firstofone
+     \fi
+     {\edef\mst@nonsubduedminus
+        {\mst@Umathcodenum`\noexpand\-=\the\mst@Umathcodenum`\-\relax}}%
+  \else
+    \edef\mst@nonsubduedminus{\mathcode`\noexpand\-=\the\mathcode`\-\relax}%
+  \fi
 \fi
 %%\def\hbar{{\mathchar'26\mkern-9muh}} % (original definition from latex.ltx)
 \def\mst@mathrlap{\mathpalette\mst@mathrlapinternal}
@@ -1980,13 +2029,14 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 {\expandafter\the\expandafter\csname\mst@tmp@enc\string\j\endcsname}
    \fi
 \fi\fi\fi\fi
-\ifmst@defaultimath\else\typeout{** \string\i\space and \string\j\space}
+\let\mst@inodot\inodot
+\let\mst@jnodot\jnodot
+\ifmst@defaultimath\else\typeout{** \string\imath\space and \string\jmath\space}
   \ifmst@goahead
-    \renewcommand*{\imath}{\inodot}
-    \renewcommand*{\jmath}{\jnodot}
-    \let\mst@oldi\i \let\mst@oldj\j
-    \DeclareRobustCommand*{\i}{\ifmmode\inodot\else\mst@oldi\fi}
-    \DeclareRobustCommand*{\j}{\ifmmode\jnodot\else\mst@oldj\fi}
+    \AtEndOfPackage{\AtBeginDocument{%
+        \renewcommand*{\imath}{\inodot}%
+        \renewcommand*{\jmath}{\jnodot}%
+    }}%
   \fi
 \fi
 \edef\mst@tmp@enc{\encodingdefault} %% rather one too many than sorry

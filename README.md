@@ -14,7 +14,7 @@ The Author of this Work is Jean-Francois B.
 
 Copyright (C) 2011-2018 Jean-Francois B. (`2589111+jfbu@users.noreply.github.com`)
 
-      Source: mathastext.dtx 1.3s 2018/08/21
+      Source: mathastext.dtx 1.3t 2018/08/22
 
 > cumulative Change Log at bottom of this file.
 
@@ -128,6 +128,25 @@ This produces the documentation without the source code.
 
 CHANGE LOG
 ==========
+
+1.3t \[2018/08/22\]
+----
+
+* bugfix: the 1.3s bugfix about `subdued` compatibility with
+  `fontspec` was deficient.
+
+* bugfix: very old (v1.2, 2012/12/20) bug causing low-level TeX error
+  during package loading (with pdflatex) when setting up the math minus
+  sign to be the text font endash character, in cases with
+  `\encodingdefault` other than OT1, T1 or LY1, e.g. something like
+  T2A.
+
+* `\imath` and `\jmath` obey the `subdued` regime. And the minus sign
+  is now handled especially to ensure perfect compatibility with the
+  `subdued` option.
+
+* breaking change: `mathastext` does not redefine anymore
+  `\i` and `\j` to let them be usable both in text and math mode.
 
 1.3s \[2018/08/21\]
 ----
