@@ -2,12 +2,12 @@
 % N.B.: this dtx file does NOT use \DocInput, it only uses docstrip.
 % The LaTeX source of the documentation is NOT prefixed with percent characters.
 %<*dtx>
-\def\dtxtimestamp {Time-stamp: <20-08-2019 at 11:13:40 CEST>}%
-\def\docdate{2019/08/20}
+\def\dtxtimestamp {Time-stamp: <19-09-2019 at 22:52:52 CEST>}%
+\def\docdate{2019/09/19}
 %</dtx>
 %<*drv>
-\def\MSTpkgdate    {2019/08/20}
-\def\MSTpkgversion {1.3u}
+\def\MSTpkgdate    {2019/09/19}
+\def\MSTpkgversion {1.3v}
 %</drv>
 %<*dtx>
 \iffalse % meta-comment
@@ -29,7 +29,7 @@ The Author of this Work is Jean-Francois B.
 
 Copyright (C) 2011-2019 Jean-Francois B. (`2589111+jfbu@users.noreply.github.com`)
 
-      Source: mathastext.dtx 1.3u 2019/08/20
+      Source: mathastext.dtx 1.3v 2019/09/19
 
 %</readme>
 %<*dtx>
@@ -45,7 +45,7 @@ not include the documented source code then, in contrast to 1a)+1b) method
 %%----------------------------------------------------------------
 %% Package: mathastext
 %% Info:    Use the text font in math mode (JFB)
-%% Version: 1.3u 2019/08/20
+%% Version: 1.3v 2019/09/19
 %% License: LPPL 1.3c (http://www.latex-project.org/lppl/lppl-1-3c.txt)
 %% Copyright (C) 2011-2019 Jean-Francois B. <2589111+jfbu@users.noreply.github.com>
 %% Examples of use of mathastext:
@@ -193,6 +193,53 @@ Main options: `italic`, `subdued`, `LGRgreek`.
 RECENT CHANGES
 ==============
 
+1.3v \[2019/09/19\]
+----
+
+* LaTeX 2019-10-01 release has made more math macros robust.
+  This applies in particular to the math accents and to the
+  `\hbar`. This required for mathastext to adapt. Also
+  `\leftarrowfill` and `\rightarrowfill` are now defined
+  robust by the kernel, hence mathastext does the same. These
+  changes are dropped if mathastext detects an older LaTeX
+  format.
+
+* These LaTeX kernel changes motivated an examination of some
+  redefinitions done (optionally) by mathastext:
+  - The user math alphabet macros got redefined as expanding
+    to some other (robust) math alphabet macros, but were not
+    robust in the strict sense. This does cause some issues
+    for moving arguments in the context of multiple math
+    versions, hence it was a bug. The special behaviour of the
+    math alphabet commands (they redefine themselves and other
+    macros on first use) makes is somewhat problematic for
+    mathastext to keep them updated across math versions and
+    at the same time strictly LaTeX2e robust. Thus mathastext
+    now requires the e-TeX primitive `\protected` and uses it
+    for the definitions of the user level math alphabet
+    macros.
+  - There are a number of `\mathchardef` tokens which (under
+    certain options and/or configuration via the package user
+    interface), mathastext redefines as macros. These macros
+    cause no issue in moving arguments (they are not
+    "fragile"), still it is probably better if they expand
+    only at the time of typesetting. To this effect they are
+    now also `\protected`: `\exists`, `\forall`, `\colon`,
+    `\setminus`, `\mid`, `\prod`, `\sum`, `\imath`, `\jmath`.
+  - The macro `\vert` (which expands to a `\delimiter`) is now
+    defined robust by LaTeX. Its mathastext redefinition is a
+    `\protected` one rather.
+  - The `\{` and `\}` (which get redefined only under
+    `\MTexplicitbracesobeymathxx` regime) are now strictly
+    robust in the LaTeX2e sense (formerly they were `\let` to
+    some robust macros, and this did not make them strictly
+    LaTeX2e-robust entities).
+
+* The various changes in mathastext described in the previous item
+  apply independently of the LaTeX release version. The
+  LaTeX format itself requires the e-TeX extensions since 2015.
+
+
 1.3u (2019/08/20)
 ---
 
@@ -241,6 +288,56 @@ RECENT CHANGES
 %<*changelog>
 MATHASTEXT CHANGE LOG
 =====================
+
+1.3v \[2019/09/19\]
+----
+
+* LaTeX 2019-10-01 release has made more math macros robust.
+  This applies in particular to the math accents and to the
+  `\hbar`. This required for mathastext to adapt. Also
+  `\leftarrowfill` and `\rightarrowfill` are now defined
+  robust by the kernel, hence mathastext does the same. These
+  changes are dropped if mathastext detects an older LaTeX
+  format.
+
+* These LaTeX kernel changes motivated an examination of some
+  redefinitions done (optionally) by mathastext:
+
+  - The user math alphabet macros got redefined as expanding
+  to some other (robust) math alphabet macros, but were not
+  robust in the strict sense. This does cause some issues for
+  moving arguments in the context of multiple math versions,
+  hence it was a bug. The special behaviour of the math
+  alphabet commands (they redefine themselves and other macros
+  on first use) makes is somewhat problematic for mathastext
+  to keep them updated across math versions and at the same
+  time strictly LaTeX2e robust. Thus mathastext now requires
+  the e-TeX primitive `\protected` and uses it for the
+  definitions of the user level math alphabet macros.
+
+  - There are a number of `\mathchardef` tokens which (under
+  certain options and/or configuration via the package user
+  interface), mathastext redefines as macros. These macros
+  cause no issue in moving arguments (they are not "fragile"),
+  still it is probably better if they expand only at the time
+  of typesetting. To this effect they are now also
+  `\protected`: `\exists`, `\forall`, `\colon`, `\setminus`,
+  `\mid`, `\prod`, `\sum`, `\imath`, `\jmath`.
+
+  - The macro `\vert` (which expands to a `\delimiter`) is now
+  defined robust by LaTeX. Its mathastext redefinition is a
+  `\protected` one rather.
+
+  - The `\{` and `\}` (which get redefined only under
+  `\MTexplicitbracesobeymathxx` regime) are now strictly
+  robust in the LaTeX2e sense (formerly they were `\let` to
+  some robust macros, and this did not make them strictly
+  LaTeX2e-robust entities).
+
+* The various changes in mathastext described in the previous item
+  apply independently of the LaTeX release version. The
+  LaTeX format itself requires the e-TeX extensions since 2015.
+
 
 1.3u \[2019/08/20\]
 ----
@@ -2442,8 +2539,8 @@ exists}, \texorpdfstring{\cs{forall}}{\textbackslash forall}, and before the pri
 
 \begingroup\MTversion{upright}\renewcommand\familydefault\sfdefault
 \makeatletter % c'est parce que sinon ils sont pris dans Symbol
-\let\mst@stdexists\oldexists
-\let\mst@stdforall\oldforall
+\let\mst@exists@original\oldexists
+\let\mst@forall@original\oldforall
 \makeatother
 
 \csb{MTforallskip}, \csb{MTexistsskip}, and \csb{MTprimeskip} are three
@@ -4286,10 +4383,19 @@ Numerous examples will be found there:\\
 % partial efforts to achieve some sort of coherence; as a result some are a
 % bit strange or obsolete to various degrees. And the similar remark
 % applies to some ancient parts of the code itself!
+%
+% Should I require |2005/12/01| \LaTeX? (not sure about the month).
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage {mathastext}
-  [2019/08/20 v1.3u Use the text font in math mode (JFB)]
+  [2019/09/19 v1.3v Use the text font in math mode (JFB)]
+%    \end{macrocode}
+% \LaTeX{} |2019-10-01| release has made robust math macros such as the math
+% accents and \cs{hbar}. 
+%    \begin{macrocode}
+\newif\ifmst@robust@obsessed@LaTeX@era
+\@ifl@t@r\fmtversion{2019/10/01}{\mst@robust@obsessed@LaTeX@eratrue}{}
+\edef\mst@robustifyingspace{\ifmst@robust@obsessed@LaTeX@era\space\fi}
 %    \end{macrocode}
 % Testing for \XeTeX\ and \LuaLaTeX.
 %
@@ -4567,7 +4673,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %      |1.3j| adds \cs{MTnormalexists}, \cs{MTexistsdoesskip},
 %      \cs{MTnormalforall}, \cs{MTforalldoesskip}.
 %
-%      Earlier to |1.3j|, |\let\mst@stdexists\exists| was done at End of
+%      Earlier to |1.3j|, |\let\mst@exists@original\exists| was done at End of
 %      Package, now it is done at Begin Document, and same for |\forall|. We
 %      pay attention that use of \cs{MTnormalexists} etc... inside the
 %      preamble does not create self-let's.
@@ -4579,6 +4685,11 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %      For some (random, legacy) reason, the handling of $\exists$ and
 %      $\forall$ is part of the things
 %      not included inside |\everymath/\everydisplay|.
+%
+%      |1.3v| The \mst-defined \cs{exists} and \cs{forall} are created
+%      \cs{protected}. We feel this matches better with their default
+%      definition as \cs{mathchardef} tokens than dealing with \LaTeX2e robust
+%      macros. Besides, the coding is simpler.
 %    \begin{macrocode}
 \newmuskip\mst@exists@muskip  %% v 1.15e
 \newmuskip\mst@forall@muskip
@@ -4589,15 +4700,15 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \def\mst@forall@skip{0mu}
     \def\mst@prime@skip {0mu}
 \fi\fi
-\def\mst@exists{\mst@stdexists\mskip\mst@exists@muskip}
-\def\mst@forall{\mst@stdforall\mskip\mst@forall@muskip}
+\protected\def\mst@exists{\mst@exists@original\mskip\mst@exists@muskip}
+\protected\def\mst@forall{\mst@forall@original\mskip\mst@forall@muskip}
 \AtBeginDocument{%
-   \let\mst@stdexists\exists
-   \let\mst@stdforall\forall
-   \def\MTnormalexists {\let\exists\mst@stdexists }%
-   \def\MTexistsdoesskip  {\let\exists\mst@exists }%
-   \def\MTnormalforall {\let\forall\mst@stdforall }%
-   \def\MTforalldoesskip  {\let\forall\mst@forall }%
+   \let\mst@exists@original\exists
+   \let\mst@forall@original\forall
+   \def\MTnormalexists   {\let\exists\mst@exists@original }%
+   \def\MTexistsdoesskip {\let\exists\mst@exists }%
+   \def\MTnormalforall   {\let\forall\mst@forall@original }%
+   \def\MTforalldoesskip {\let\forall\mst@forall }%
 %    \end{macrocode}
 % The document body starts in the normal math version, whether or not
 % \cs{Mathastext} command as been used in the preamble (which either re-defines
@@ -5300,11 +5411,13 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 % All in all this is a great deal of trouble and I understand I postponed back
 % in 2012! I spent some hours on this small thing, with consequent testing and
 % for example this TeX Ligature issue with Unicode engines.
+%
+% Since |1.3v| we require e-\TeX{} extensions, so a test for
+% \cs{numexpr} has been dropped here.
 %    \begin{macrocode}
-\ifmst@basic\else
-\ifx\numexpr\undefined
+\ifmst@basic
 \else
-  \ifmst@XeOrLua
+ \ifmst@XeOrLua
   \AtBeginDocument {%
   \ifx\newmcodes@\@undefined\else
   \edef\mst@newmcodes@{%
@@ -5329,8 +5442,8 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
   }%
   \let\mst@originalnewmcodes@\newmcodes@
   \fi
-  }
-  \else
+  }% end of AtBeginDocument
+ \else
   \AtBeginDocument {%
   \ifx\newmcodes@\@undefined\else
   \edef\mst@newmcodes@{%
@@ -5349,9 +5462,9 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     }%
   \let\mst@originalnewmcodes@\newmcodes@
   \fi
-  }
-  \fi
-\fi\fi
+  }% end of second AtBeginDocument
+ \fi % mst@XeOrLua
+\fi % mst@basic
 \newcommand*\MTresetnewmcodes{\ifx\mst@originalnewmcodes@\undefined\else
                                \let\newmcodes@\mst@originalnewmcodes@\fi}
 \newcommand*\MTcustomizenewmcodes{\ifx\mst@originalnewmcodes@\undefined\else
@@ -5486,9 +5599,8 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 % \begin{macro}{\Mathtt}
 % \begin{macro}{\mathnormalbold}
 %   We redefine the default normal, rm, bf, it, sf, and tt alphabets,
-%   but this will be done via |\renewcommand{\mathrm}{\Mathrm}| etc\dots
-%   and (|1.15f|) the previous status of the math alphabets is recorded for the
-%   sake of the |subdued| option. 
+%   but this will be done via |\renewcommand*{\mathrm}{\Mathrm}| etc\dots
+%   (not anymore, see comment below).
 %
 %   We follow the standard \LaTeX{} behavior for \cs{mathbf}, which is
 %   to pick up the bold series of the roman font (digits and operator
@@ -5499,6 +5611,29 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %   upright option does not have an upright omicron obtainable by simply
 %   typing \cs{mathnormal}|{o}|. So if |fourier| is loaded we use
 %   \cs{mathrm} and not \cs{mathnormal}.
+%
+%   Actually math alphabet macros are created robust since \LaTeX{} from 2005,
+%   so at |1.3v 2019/09/19| I decided to modify the old \mst approach a bit.
+%   Indeed with the old approach a \cs{mathtt} in a moving argument translates
+%   ultimately into \cs{Mathtt} but if for example the new context where it
+%   gets expanded is a subdued normal math version, this does not give the same
+%   as \cs{mathtt} would have given there. This was a bug: imagine
+%   |\section{$\mathtt{X}$}| issued in a math version, but the TOC is done in
+%   subdued normal version; the output in TOC will often differ (fontsize being
+%   put aside) both from out it looked at the section title and from what
+%   direct usage of \cs{mathtt} in the TOC would have given. I have no strong
+%   preference between the two possibilities (to be as in section title, or to
+%   be as if \cs{mathtt} gets executed in TOC and obeys its local regime), but
+%   it is a bug if the result is still a third one. Thus I decided to follow
+%   \LaTeX2e and that \cs{mathtt} had to remain \cs{mathtt} when moving.
+%
+%   But a math alphabet command such as \cs{Mathtt} redefines its unprotected
+%   meaning on first use as well as the one of the math version macro, hence a
+%   |\letrobustmacro\mathtt\Mathtt| of sorts is no good at all. I thus opted to
+%   not hack into the math \LaTeX{} font support across math versions and to
+%   simply use |\protected\def| in place of obeying strictly \LaTeX2e
+%   robustness (except of course in the subdued math versions as there the math
+%   alphabets acquire back their original robust meanings.)
 %    \begin{macrocode}
 \let\mst@alph@omicron\mathnormal 
 \@ifpackageloaded{fourier}{\ifsloped\else\let\mst@alph@omicron\mathrm\fi}{}
@@ -5519,6 +5654,10 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \ifmst@defaulttt\else
    \DeclareMathAlphabet{\Mathtt}{\mst@enc}{\ttdefault}{\mst@ser}{\mst@opsh}
 \fi
+%    \end{macrocode}
+% The \cs{mathxx} macros being \LaTeX2e robust, or course the meanings here
+% are known, and «original» macros are sort of superfluous but well it works.
+%    \begin{macrocode}
 \let\mst@original@normal\mathnormal
 \let\mst@original@rm\mathrm
 \let\mst@original@bf\mathbf
@@ -5533,12 +5672,12 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \let\mathsf\mst@original@sf
     \let\mathtt\mst@original@tt}
 \def\mst@setalphabets{%
-    \ifmst@defaultnormal\else\renewcommand{\mathnormal}{\Mathnormal}\fi
-    \ifmst@defaultrm\else\renewcommand{\mathrm}{\Mathrm}\fi
-    \ifmst@defaultbf\else\renewcommand{\mathbf}{\Mathbf}\fi
-    \ifmst@defaultit\else\renewcommand{\mathit}{\Mathit}\fi
-    \ifmst@defaultsf\else\renewcommand{\mathsf}{\Mathsf}\fi
-    \ifmst@defaulttt\else\renewcommand{\mathtt}{\Mathtt}\fi}
+    \ifmst@defaultnormal\else\protected\def\mathnormal{\Mathnormal}\fi
+    \ifmst@defaultrm\else\protected\def\mathrm{\Mathrm}\fi
+    \ifmst@defaultbf\else\protected\def\mathbf{\Mathbf}\fi
+    \ifmst@defaultit\else\protected\def\mathit{\Mathit}\fi
+    \ifmst@defaultsf\else\protected\def\mathsf{\Mathsf}\fi
+    \ifmst@defaulttt\else\protected\def\mathtt{\Mathtt}\fi}
 \ifmst@subdued\else\mst@setalphabets\fi
 %    \end{macrocode}
 % \end{macro}
@@ -5955,7 +6094,10 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
   % shamelessly overwrite...)
     \DeclareMathSymbol{\colon}{\mathpunct}{\mst@font@tbu}{"3A}
     \mst@do@nonletters\expandafter{\the\mst@do@nonletters
-        \def\colon{\mathpunct{\mst@varfam@colon}}}} 
+%    \end{macrocode}
+% |1.3v| uses \cs{protected} for the (optional) \cs{colon} redefinition.
+%    \begin{macrocode}
+        \protected\def\colon{\mathpunct{\mst@varfam@colon}}}} 
 \DeclareMathSymbol{;}{\mathpunct}{\mst@font@tbu}{"3B}
 \DeclareMathSymbol{\mst@varfam@pointvirgule}{\mathalpha}{\mst@font@tbu}{"3B}
 \expandafter\mst@addtodo@nonletters\string;\mathpunct\mst@varfam@pointvirgule
@@ -5971,23 +6113,34 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 % However, for the time being I can do it in an easy way only for
 % \XeTeX, not for \LuaLaTeX. Also I do my modifications to \cs{relbar}
 % in a manner testing for the presence of amsmath.
+%
+% |1.3v 2019/09/19|: \LaTeX{} of |2019-10-01| defines \cs{leftarrowfill}
+% and \cs{rightarrowfill} as robust macros, so we do the same.
+%
+% I need to put amsmath under surveillance to check if it decides to
+% robustify \cs{relbar} at some point, now that the \LaTeX\ team has
+% taken over maintenance.
 %    \begin{macrocode}
 \ifmst@nominus
 \else
   \ifmst@XeOrLua
     \mst@Umathcharnumdef\mst@minus@sign=\mst@Umathcodenum`\-\relax
-%% I used this prior to the new \luatexUmathcodenum, as available since TL2013:
-%% \mathchardef\mst@minus@sign=8704\relax % "2200
+%^^A I used this prior to the new \luatexUmathcodenum, as available since TL2013:
+%^^A \mathchardef\mst@minus@sign=8704\relax % "2200
   \else
     \mathchardef\mst@minus@sign=\mathcode`\-\relax
   \fi
-\@ifpackageloaded{amsmath}
-{\def\relbar{\mathrel{\mathpalette\mathsm@sh\mst@minus@sign}}}
-{\DeclareRobustCommand\relbar{\mathrel{\smash\mst@minus@sign}}}
-\def\rightarrowfill{$\m@th\mathord{\relbar}\mkern-7mu%
+  \@ifpackageloaded{amsmath}
+    {\def\relbar{\mathrel{\mathpalette\mathsm@sh\mst@minus@sign}}}
+    {\DeclareRobustCommand\relbar{\mathrel{\smash\mst@minus@sign}}}
+  \ifmst@robust@obsessed@LaTeX@era\expandafter\DeclareRobustCommand
+   \else\expandafter\def\fi
+  \rightarrowfill{$\m@th\mathord{\relbar}\mkern-7mu%
   \cleaders\hbox{$\mkern-2mu\relbar\mkern-2mu$}\hfill
   \mkern-7mu\mathord\rightarrow$}
-\def\leftarrowfill{$\m@th\mathord\leftarrow\mkern-7mu%
+  \ifmst@robust@obsessed@LaTeX@era\expandafter\DeclareRobustCommand
+   \else\expandafter\def\fi
+  \leftarrowfill{$\m@th\mathord\leftarrow\mkern-7mu%
   \cleaders\hbox{$\mkern-2mu\relbar\mkern-2mu$}\hfill
   \mkern-7mu\mathord{\relbar}$}
 \fi
@@ -6100,13 +6253,24 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %
 %   On this occasion I replace |h| by |\mst@h| because the mechanism for
 %   before and after skips does not interact well with the rlap construct.
+%
+%   |1.3v 2019/09/19| adapts to maintain the robustness of \cs{hbar} which now
+%   applies with \LaTeX{} |2019-10-01|. The \cs{mst@original@hbar} is a
+%   meaning holder and there is no need for this macro to be robust in
+%   \LaTeX{} sense. Same for the hbar-macros whose names get indexed by math
+%   version names. We use them as meaning-holders and suitably access them via
+%   \cs{let}. The \cs{mst@ltbar@mv<version>} macros will be robust as they get
+%   declared via \cs{DeclareMathAccent}, but this is other matter.
 %    \begin{macrocode}
 \let\mst@subduedhbar\@empty
 \let\mst@nonsubduedhbar\@empty
 \ifmst@nohbar\else
-  \def\mst@subduedhbar{\let\hbar\mst@original@hbar}%
+  \def\mst@subduedhbar{%
+      \expandafter\let\csname hbar\mst@robustifyingspace\endcsname
+                  \mst@original@hbar
+  }%
   \def\mst@nonsubduedhbar{%
-      \expandafter\let\expandafter\hbar
+      \expandafter\let\csname hbar\mst@robustifyingspace\expandafter\endcsname
                   \csname mst@hbar@mv\math@version\endcsname
   }%
 \fi
@@ -6264,8 +6428,11 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
             \let\backslash\mst@varfam@backslash}
 \DeclareMathSymbol{\setminus}{\mathbin}{mtoperatorfont}{"5C}
 \DeclareMathSymbol{\mst@varfam@setminus}{\mathalpha}{mtoperatorfont}{"5C}
+%    \end{macrocode}
+% |1.3v| adds a \cs{protected} here for \cs{setminus}.
+%    \begin{macrocode}
 \mst@do@nonletters\expandafter{\the\mst@do@nonletters
-            \def\setminus{\mathbin{\mst@varfam@setminus}}}
+            \protected\def\setminus{\mathbin{\mst@varfam@setminus}}}
 %    \end{macrocode}
 % \end{macro}\end{macro}\end{macro}
 % \begin{macro}{\models}
@@ -6282,20 +6449,27 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 % \begin{macro}{|,\mid,\vert}
 %   (2011) I did not do anything then to try to emulate \cs{Vert} with the
 %   vertical bar from the text font... and now (2012) \mst is not as radical as
-%   it used to be anyhow, so it is too late.
+%   it used to be anyhow, so it is too late. Or not (2019)? maybe I
+%   \emph{should} do something here...
+%
+%   |1.3v 2019/09/19|: I discover this rather radical legacy
+%   \verb+\def\vert{|}+, which is done here once in the preamble, but I leave
+%   it unmodified apart from prefixing it with \cs{protected}. I also add a
+%   \cs{protected} for the definition of \cs{mid} (which applies only under
+%   \cs{MTnonlettersobeymathxx} regime).
 %    \begin{macrocode}
 \ifmst@nosmalldelims
     \DeclareMathSymbol{|}{\mathord}{\mst@font@tbu}{124}
 \else
     \DeclareMathDelimiter{|}{\mathord}{\mst@font@tbu}{124}{largesymbols}{"0C}
 \fi    
-\def\vert{|}
+\protected\def\vert{|}
 \DeclareMathSymbol{\mst@varfam@vbar}{\mathalpha}{\mst@font@tbu}{124}
 \mst@addtodo@easynonletters\|\mst@varfam@vbar
 \let\mid\undefined % 1.3: to avoid problems with some packages
 \DeclareMathSymbol{\mid}{\mathrel}{\mst@font@tbu}{124}
 \mst@do@nonletters\expandafter{\the\mst@do@nonletters
-    \def\mid{\mathrel\mst@varfam@vbar}}
+    \protected\def\mid{\mathrel\mst@varfam@vbar}}
 %    \end{macrocode}
 % \begin{macro}{\MTexplicitbraces-}\begin{macro}{obeymathxx}
 % \begin{macro}{\MTexplicitbraces-}\begin{macro}{donotobeymathxx}
@@ -6305,9 +6479,21 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %       preserve robustness.
 %
 %       For |1.3| I make |\lbrace| and |\rbrace| undefined first, else problems
-%       may arise with some packages. |1.3e| suppresses under option
+%       may arise with some packages.
+%
+%       |1.3e| suppresses under option
 %       |nosmalldelims| the definitions of |\lbrace| and |\rbrace| as math
-%       symbols as this bug made |\left\lbrace| cause an error, naturally.
+%       symbols as this made |\left\lbrace| cause an error, it was a bug.
+%
+%       LaTeX2e defines |\{| and |\}| as robust commands for a long time
+%       (I don't know since when). The \mst redefinition is done only if user
+%       has executed \cs{MTexplicitbracesobeymathxx}, and it is done only when
+%       entering math mode, but there could be some |\hbox| inside math, hence
+%       it has to be careful to be valid in text too.
+%
+%       |1.3v| maintains strict \LaTeX2e robustness for |\{| and |\}|.
+%       This assumes no one fiddled with |\{| and |\}| proper (without space
+%       in the name).
 %    \begin{macrocode}
   \ifmst@nosmalldelims
   \else
@@ -6324,7 +6510,10 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \DeclareRobustCommand*{\mst@rbrace}
         {\ifmmode\mathclose\mst@varfam@rbrace\else\textbraceright\fi}
 \mst@do@nonletters\expandafter{\the\mst@do@nonletters
-    \mst@dobraces{\let\{\mst@lbrace\let\}\mst@rbrace}}
+    \mst@dobraces{\expandafter\let\csname\string{ \expandafter\endcsname
+                                  \csname mst@lbrace \endcsname
+                  \expandafter\let\csname\string} \expandafter\endcsname
+                                  \csname mst@rbrace \endcsname}}
 \fi % end of \ifmst@alldelims
 \newcommand*{\MTexplicitbracesobeymathxx}{\let\mst@dobraces\@firstofone}
 \newcommand*{\MTexplicitbracesdonotobeymathxx}{\let\mst@dobraces\@gobble}
@@ -6432,20 +6621,24 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %   |\renewcommand{\prod}{\mathchoice{\mst@prod}{\prodpsy}{\prodpsy}{\prodpsy}}|\\
 %   but this did not go well with subscripts and exponents. 
 %    
-% Note oct 2012: maybe I should re-examine what I did?
+% October 2012: maybe I should re-examine what I did?
+%
 % |1.3c| (|2013/12/14|) renames |\defaultprod| to |\MToriginalprod| and
 % |\defaultsum| to 
-% |\MToriginalsum|. 
+% |\MToriginalsum|.
+%
+% |1.3v| hesitates about making robust here \cs{prod} and \cs{sum}. Finally I
+% use \cs{protected} for them.
 %    \begin{macrocode}
 \ifmst@symbolmisc\typeout{** symbolmisc: miscellaneous math symbols from Symbol font}
 \let\mst@prod\prod
 \let\MToriginalprod\prod
 \DeclareMathSymbol{\prodpsy}{\mathop}{mtpsymbol}{213}
-\renewcommand*{\prod}{\ifinner\prodpsy\else\mst@prod\fi}
+\protected\def\prod{\ifinner\prodpsy\else\mst@prod\fi}
 \let\mst@sum\sum
 \let\MToriginalsum\sum
 \DeclareMathSymbol{\sumpsy}{\mathop}{mtpsymbol}{229}
-\renewcommand*{\sum}{\ifinner\sumpsy\else\mst@sum\fi}
+\protected\def\sum{\ifinner\sumpsy\else\mst@sum\fi}
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
@@ -7021,6 +7214,8 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %
 % |1.3u| lets the \cs{imath} and \cs{jmath} react to the font encoding at each
 % math version.
+%
+% |1.3v| lets the redefined \cs{imath} and \cs{jmath} be \cs{protected}.
 %    \begin{macrocode}
 \def\mst@subduedinodot{%
    \let\inodot\mst@original@imath
@@ -7046,8 +7241,8 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
   \fi}% \mst@dothe@inodotstuff
 \ifmst@defaultimath\else\typeout{** \string\imath\space and \string\jmath\space}
     \AtEndOfPackage{\AtBeginDocument{%
-        \renewcommand*{\imath}{\inodot}%
-        \renewcommand*{\jmath}{\jnodot}%
+        \protected\def\imath{\inodot}%
+        \protected\def\jmath{\jnodot}%
     }}%
 \fi
 %    \end{macrocode}
@@ -7080,6 +7275,14 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %
 %   Also at |1.3u| the math accents adapt to the font encoding at each math
 %   version.
+%
+%   |1.3v| adapts to \LaTeX{} |2019-10-01| which now comes with robust math
+%   accent macros. The «original»-named macros are without the robustifying
+%   space, as they only serve as meaning holders. On the other hand the macros
+%   indexed by math version names are (in the pdflatex branch) always defined
+%   via \cs{DeclareMathAccent} hence they will be robust with |2019-10-01| or
+%   later and we must use the \cs{mst@robustifyingspace} with them to access
+%   their real meaning (this thus differs from the situation with \cs{hbar}).
 %    \begin{macrocode}
 \let\mst@subduedmathaccents\@empty
 \let\mst@nonsubduedmathaccents\@empty
@@ -7088,15 +7291,15 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
   \@tfor\@tempa:={grave}{acute}{check}{breve}{bar}%
                  {dot}{ddot}{mathring}{hat}{tilde}%
   \do
-  {\expandafter\let\csname\@tempa\expandafter\endcsname
+  {\expandafter\let\csname\@tempa\mst@robustifyingspace\expandafter\endcsname
                    \csname mst@original@\@tempa\endcsname}%
 }%
 \def\mst@nonsubduedmathaccents{%
   \@tfor\@tempa:={grave}{acute}{check}{breve}{bar}%
                  {dot}{ddot}{mathring}{hat}{tilde}%
   \do
-  {\expandafter\let\csname\@tempa\expandafter\endcsname
-                   \csname mst@\@tempa @mv\math@version\endcsname}%
+  {\expandafter\let\csname\@tempa\mst@robustifyingspace\expandafter\endcsname
+                   \csname mst@\@tempa @mv\math@version\mst@robustifyingspace\endcsname}%
 }%
 \def\mst@dothe@mathaccentsstuff#1#2{%
   \begingroup
@@ -7107,73 +7310,119 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
   \if1\mst@OneifUniEnc
     \ifmst@unimathaccents
       % \` -> \grave
-      \expandafter\xdef\csname mst@grave@mv#1\endcsname
+      \expandafter\xdef\csname mst@grave@mv#1\mst@robustifyingspace\endcsname
        {\mst@Umathaccent
         7
         \number\symmtoperatorfont\space
         \csname#2\string\`\endcsname{}\relax}%
       % \' -> \acute
-      \expandafter\xdef\csname mst@acute@mv#1\endcsname
+      \expandafter\xdef\csname mst@acute@mv#1\mst@robustifyingspace\endcsname
        {\mst@Umathaccent
         7
         \number\symmtoperatorfont\space
         \csname#2\string\'\endcsname{}\relax}%
       % \v -> \check
-      \expandafter\xdef\csname mst@check@mv#1\endcsname
+      \expandafter\xdef\csname mst@check@mv#1\mst@robustifyingspace\endcsname
        {\mst@Umathaccent
         7
         \number\symmtoperatorfont\space
         \csname#2\string\v\endcsname{}\relax}%
       % \u -> \breve
-      \expandafter\xdef\csname mst@breve@mv#1\endcsname
+      \expandafter\xdef\csname mst@breve@mv#1\mst@robustifyingspace\endcsname
        {\mst@Umathaccent
         7
         \number\symmtoperatorfont\space
         \csname#2\string\u\endcsname{}\relax}%
       % \= -> \bar
-      \expandafter\xdef\csname mst@bar@mv#1\endcsname
+      \expandafter\xdef\csname mst@bar@mv#1\mst@robustifyingspace\endcsname
        {\mst@Umathaccent
         7
         \number\symmtoperatorfont\space
         \csname#2\string\=\endcsname{}\relax}%
       % \. -> \dot
-      \expandafter\xdef\csname mst@dot@mv#1\endcsname
+      \expandafter\xdef\csname mst@dot@mv#1\mst@robustifyingspace\endcsname
        {\mst@Umathaccent
         7
         \number\symmtoperatorfont\space
         \csname#2\string\.\endcsname{}\relax}%
       % \" -> \ddot
-      \expandafter\xdef\csname mst@ddot@mv#1\endcsname
+      \expandafter\xdef\csname mst@ddot@mv#1\mst@robustifyingspace\endcsname
        {\mst@Umathaccent
         7
         \number\symmtoperatorfont\space
         \csname#2\string\"\endcsname{}\relax}%
       % \r -> \mathring
-      \expandafter\xdef\csname mst@mathring@mv#1\endcsname
+      \expandafter\xdef\csname mst@mathring@mv#1\mst@robustifyingspace\endcsname
        {\mst@Umathaccent
         7
         \number\symmtoperatorfont\space
         \csname#2\string\r\endcsname{}\relax}%
       % \^ -> \hat
-      \expandafter\xdef\csname mst@hat@mv#1\endcsname
+      \expandafter\xdef\csname mst@hat@mv#1\mst@robustifyingspace\endcsname
        {\mst@Umathaccent
         7
         \number\symmtoperatorfont\space
         \csname#2\string\^\endcsname{}\relax}%
       % \~ -> \tilde
-      \expandafter\xdef\csname mst@tilde@mv#1\endcsname
+      \expandafter\xdef\csname mst@tilde@mv#1\mst@robustifyingspace\endcsname
        {\mst@Umathaccent
         7
         \number\symmtoperatorfont\space
         \csname#2\string\~\endcsname{}\relax}%
-    \else
+    \else % false branch of ifmst@unimathaccents
+%    \end{macrocode}
+% |1.3u| used some \cs{def} but this made the accent macro meanings look
+% slightly different depending on whether the math version being set-up was
+% with an 8bit encoding or TU encoding.
+%
+% For the sake of uniform treatment we modify this at |1.3v|, but this is a
+% bit complicated regarding timing: we need, in absence of |unimathaccents|
+% option, in math versions with an OpenType font, to let the \cs{acute} etc...
+% acquire back some prior non-\mst meanings. To allow maximal flexibility,
+% these original meaning get stored at begin document only. But
+% \cs{mst@nonsubduedmathaccents} assigns to \cs{acute} etc... (in the robust
+% sense with \LaTeX{} |2019-10-01| or later) the meaning stored in the macros
+% with the math version in their names. Such \cs{mst@acute@mvnormal} etc...
+% must thus be ready before \cs{mst@nonsubduedmathaccents} (or at least before
+% the last such) execution: the code here must get executed after the
+% definition of the «original»-named macros but prior to the (last one, if
+% multiple) \cs{mst@nonsubduedmathaccents}.
+%
+% Hence |1.3v| delayed a bit the initial execution of this macro (see further
+% down in the code) compared to what happened in |1.3u|.
+%
+% We are in a group but \cs{AtEndOfPackage} does the right thing.
+%    \begin{macrocode}
+      \AtEndOfPackage{\AtBeginDocument{%
       \@tfor\@tempa:={grave}{acute}{check}{breve}{bar}%
                      {dot}{ddot}{mathring}{hat}{tilde}%
       \do
-      {\expandafter\gdef\csname mst@\@tempa @mv#1\expandafter\endcsname
-                   \expandafter{\csname mst@original@\@tempa\endcsname}}%
+      {\expandafter\let
+          \csname mst@\@tempa @mv#1\mst@robustifyingspace\expandafter\endcsname
+          \csname mst@original@\@tempa\endcsname}%
+      }}%
     \fi
-  \else
+%    \end{macrocode}
+% This is needed because the pdflatex engine branch will use
+% \cs{DeclareMathAccent} and it creates robust macros with \LaTeX{}
+% |2019-10-01| or later. As we want elsewhere in the package code not to have
+% to check if under Unicode engine or not, we need to handle here also some
+% definition of robust macros.
+%    \begin{macrocode}
+    \ifmst@robust@obsessed@LaTeX@era
+      \@tfor\@tempa:={grave}{acute}{check}{breve}{bar}%
+                     {dot}{ddot}{mathring}{hat}{tilde}%
+      \do
+      {\expandafter\xdef\csname mst@\@tempa @mv#1\endcsname
+         {\noexpand\protect
+          \expandafter\noexpand\csname mst@\@tempa @mv#1 \endcsname}%
+      }%
+    \fi
+  \else % false branch of ifUniEnc
+%    \end{macrocode}
+% \cs{DeclareMathAccent} works \cs{global}ly. And with \LaTeX{} |2019-10-01|
+% or later it creates robust macros.
+%    \begin{macrocode}
     % \` -> \grave
     \expandafter\DeclareMathAccent\expandafter
                {\csname mst@grave@mv#1\endcsname}{\mathalpha}{mtoperatorfont}%
@@ -8034,16 +8283,22 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 % dotless i and j in subdued mode, even in case of usage with fontspec.
 %
 % |1.3u| similarly lets math accents be correctly subdued.
+%
+% |1.3v| adapts to \cs{hbar} and math accents now being robust with \LaTeX{}
+% |2019-10-01| or later.
 %    \begin{macrocode}
   \MTcustomizenewmcodes
-  \let\mst@original@hbar\hbar
+  \expandafter\let\expandafter
+              \mst@original@hbar
+              \csname hbar\mst@robustifyingspace\endcsname
   \let\mst@original@imath\imath
   \let\mst@original@jmath\jmath
   \@tfor\@tempa:={grave}{acute}{check}{breve}{bar}%
                  {dot}{ddot}{mathring}{hat}{tilde}%
   \do
   {\expandafter\let\csname mst@original@\@tempa\expandafter\endcsname
-                   \csname \@tempa\endcsname}%
+                   \csname \@tempa\mst@robustifyingspace\endcsname
+  }%
   \ifmst@XeOrLua
      \edef\mst@subduedminus
          {\mst@Umathcodenum`\noexpand\-=\the\mst@Umathcodenum`\-\relax}%
@@ -8062,7 +8317,11 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \mst@subduedminus
   \else
      \mst@nonsubduedhbar
-     \mst@nonsubduedmathaccents
+%    \end{macrocode}
+% |1.3v| needs this \cs{mst@nonsubduedmathaccents} to get executed later (see
+% code comments for \cs{mst@dothe@mathaccentsstuff}).
+%    \begin{macrocode}
+     % \mst@nonsubduedmathaccents % will get executed later
      \mst@nonsubduedminus
 %    \end{macrocode}
 % |1.3j|: an earlier version of this code was earlier part of \cs{Mathastext@}.
@@ -8087,6 +8346,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
      \fi
   \fi
 }% \AtBeginDocument
+\AtEndOfPackage{\AtBeginDocument{\ifmst@subdued\else\mst@nonsubduedmathaccents\fi}}%
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{subdued}
@@ -8100,8 +8360,9 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %   math families of `a' and `1', respectively$^1$. Due to the
 %   reassignements done for characters by |mathastext| I also had
 %   decided in 2011 that the OT1 encoding, if detected, should be
-%   replaced by T1 ($(1)$: but the \emph{euler} package for example
-%   assigns the digits to the \emph{letters} symbol font...)
+%   replaced by T1\newline
+%   $^1$but the \emph{euler} package for example
+%   assigns the digits to the \emph{letters} symbol font...
 %
 %   |1.15d|: Oct 13, 2012. The \cs{mathcode} thing has to be used with care
 %   under Unicode engines. Unfortunately the \cs{luatexUmathcode} macro is
@@ -8269,7 +8530,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
   Grave accent  \`     Left brace    \{     Vertical bar  \|
   Right brace   \}     Tilde         \~}
 
-\CheckSum{6010}
+\CheckSum{6101}
 \makeatletter\check@checksum\makeatother
 \Finale
 %%

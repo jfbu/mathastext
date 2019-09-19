@@ -26,6 +26,7 @@
 <li><a>DESCRIPTION</a></li>
 <li><a>USAGE</a></li>
 <li><a>RECENT CHANGES</a><ul>
+<li><a>1.3v [2019/09/19]</a></li>
 <li><a>1.3u (2019/08/20)</a></li>
 </ul></li>
 </ul>
@@ -41,7 +42,7 @@
 <p>This Work may be distributed and/or modified under the conditions of the <a href="http://www.latex-project.org/lppl/lppl-1-3c.txt">LPPL1.3c</a></p>
 <p>The Author of this Work is Jean-Francois B.</p>
 <p>Copyright (C) 2011-2019 Jean-Francois B. (<code>2589111+jfbu@users.noreply.github.com</code>)</p>
-<pre><code>  Source: mathastext.dtx 1.3u 2019/08/20</code></pre>
+<pre><code>  Source: mathastext.dtx 1.3v 2019/09/19</code></pre>
 <h1>DESCRIPTION</h1>
 <p>Optimal typographical results for documents containing mathematical symbols can only be hoped for with math fonts specifically designed to match a given text typeface. Although the list of freely available math fonts (alongside the Computer Modern and AMS extension fonts) is slowly expanding (fourier, kpfonts, mathdesign, pxfonts, txfonts, newpx, newtx, ...) it remains limited, and the situation is even worse with Unicode fonts (XeTeX/LuaTeX). So if you can't find a math font which fits well with your favorite text font, and wish to still be able to typeset mathematical documents, perhaps not of the highest typographical quality, but at least not subjected to obvious visual incompatibilities between your text font and the math fonts, try out mathastext: it will simply use the text font also for the math!</p>
 <ul>
@@ -72,6 +73,18 @@
 <li><code>\MTsetmathskips</code> allows to set up extra spacings around letters.</li>
 </ul>
 <h1>RECENT CHANGES</h1>
+<h2>1.3v [2019/09/19]</h2>
+<ul>
+<li><p>LaTeX 2019-10-01 release has made more math macros robust. This applies in particular to the math accents and to the <code>\hbar</code>. This required for mathastext to adapt. Also <code>\leftarrowfill</code> and <code>\rightarrowfill</code> are now defined robust by the kernel, hence mathastext does the same. These changes are dropped if mathastext detects an older LaTeX format.</p></li>
+<li>These LaTeX kernel changes motivated an examination of some redefinitions done (optionally) by mathastext:
+<ul>
+<li>The user math alphabet macros got redefined as expanding to some other (robust) math alphabet macros, but were not robust in the strict sense. This does cause some issues for moving arguments in the context of multiple math versions, hence it was a bug. The special behaviour of the math alphabet commands (they redefine themselves and other macros on first use) makes is somewhat problematic for mathastext to keep them updated across math versions and at the same time strictly LaTeX2e robust. Thus mathastext now requires the e-TeX primitive <code>\protected</code> and uses it for the definitions of the user level math alphabet macros.</li>
+<li>There are a number of <code>\mathchardef</code> tokens which (under certain options and/or configuration via the package user interface), mathastext redefines as macros. These macros cause no issue in moving arguments (they are not &quot;fragile&quot;), still it is probably better if they expand only at the time of typesetting. To this effect they are now also <code>\protected</code>: <code>\exists</code>, <code>\forall</code>, <code>\colon</code>, <code>\setminus</code>, <code>\mid</code>, <code>\prod</code>, <code>\sum</code>, <code>\imath</code>, <code>\jmath</code>.</li>
+<li>The macro <code>\vert</code> (which expands to a <code>\delimiter</code>) is now defined robust by LaTeX. Its mathastext redefinition is a <code>\protected</code> one rather.</li>
+<li>The <code>\{</code> and <code>\}</code> (which get redefined only under <code>\MTexplicitbracesobeymathxx</code> regime) are now strictly robust in the LaTeX2e sense (formerly they were <code>\let</code> to some robust macros, and this did not make them strictly LaTeX2e-robust entities).</li>
+</ul></li>
+<li><p>The various changes in mathastext described in the previous item apply independently of the LaTeX release version. The LaTeX format itself requires the e-TeX extensions since 2015.</p></li>
+</ul>
 <h2>1.3u (2019/08/20)</h2>
 <ul>
 <li><p>new feature: the initial release dealt with only one font, and although shortly thereafter the 1.11 version added support for extended math versions, it was documented that some font-dependent set-up (minus as endash, dotless i and j, hbar, math accents) was done only once. This release makes the relevant characters font encoding savvy in each mathastext-extended math version. Thus, they should render correctly even with multiple math versions using fonts with varying encodings.</p>

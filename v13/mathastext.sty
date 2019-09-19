@@ -23,7 +23,7 @@
 %%----------------------------------------------------------------
 %% Package: mathastext
 %% Info:    Use the text font in math mode (JFB)
-%% Version: 1.3u 2019/08/20
+%% Version: 1.3v 2019/09/19
 %% License: LPPL 1.3c (http://www.latex-project.org/lppl/lppl-1-3c.txt)
 %% Copyright (C) 2011-2019 Jean-Francois B. <2589111+jfbu@users.noreply.github.com>
 %% Examples of use of mathastext:
@@ -32,7 +32,10 @@
 %%----------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage {mathastext}
-  [2019/08/20 v1.3u Use the text font in math mode (JFB)]
+  [2019/09/19 v1.3v Use the text font in math mode (JFB)]
+\newif\ifmst@robust@obsessed@LaTeX@era
+\@ifl@t@r\fmtversion{2019/10/01}{\mst@robust@obsessed@LaTeX@eratrue}{}
+\edef\mst@robustifyingspace{\ifmst@robust@obsessed@LaTeX@era\space\fi}
   \let\mst@Umathcharnumdef\Umathcharnumdef
   \let\mst@Umathcodenum   \Umathcodenum
   \let\mst@Umathcode      \Umathcode
@@ -213,15 +216,15 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \def\mst@forall@skip{0mu}
     \def\mst@prime@skip {0mu}
 \fi\fi
-\def\mst@exists{\mst@stdexists\mskip\mst@exists@muskip}
-\def\mst@forall{\mst@stdforall\mskip\mst@forall@muskip}
+\protected\def\mst@exists{\mst@exists@original\mskip\mst@exists@muskip}
+\protected\def\mst@forall{\mst@forall@original\mskip\mst@forall@muskip}
 \AtBeginDocument{%
-   \let\mst@stdexists\exists
-   \let\mst@stdforall\forall
-   \def\MTnormalexists {\let\exists\mst@stdexists }%
-   \def\MTexistsdoesskip  {\let\exists\mst@exists }%
-   \def\MTnormalforall {\let\forall\mst@stdforall }%
-   \def\MTforalldoesskip  {\let\forall\mst@forall }%
+   \let\mst@exists@original\exists
+   \let\mst@forall@original\forall
+   \def\MTnormalexists   {\let\exists\mst@exists@original }%
+   \def\MTexistsdoesskip {\let\exists\mst@exists }%
+   \def\MTnormalforall   {\let\forall\mst@forall@original }%
+   \def\MTforalldoesskip {\let\forall\mst@forall }%
    \ifmst@subdued
    \else
      \MTexistsdoesskip
@@ -430,10 +433,9 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \def\mst@addtodo@AZ#1#2{%
   \mst@do@AZ\expandafter{\the\mst@do@AZ\mst@mathactivate#1#2\mst@ITcorr}%
 }
-\ifmst@basic\else
-\ifx\numexpr\undefined
+\ifmst@basic
 \else
-  \ifmst@XeOrLua
+ \ifmst@XeOrLua
   \AtBeginDocument {%
   \ifx\newmcodes@\@undefined\else
   \edef\mst@newmcodes@{%
@@ -458,8 +460,8 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
   }%
   \let\mst@originalnewmcodes@\newmcodes@
   \fi
-  }
-  \else
+  }% end of AtBeginDocument
+ \else
   \AtBeginDocument {%
   \ifx\newmcodes@\@undefined\else
   \edef\mst@newmcodes@{%
@@ -478,9 +480,9 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     }%
   \let\mst@originalnewmcodes@\newmcodes@
   \fi
-  }
-  \fi
-\fi\fi
+  }% end of second AtBeginDocument
+ \fi % mst@XeOrLua
+\fi % mst@basic
 \newcommand*\MTresetnewmcodes{\ifx\mst@originalnewmcodes@\undefined\else
                                \let\newmcodes@\mst@originalnewmcodes@\fi}
 \newcommand*\MTcustomizenewmcodes{\ifx\mst@originalnewmcodes@\undefined\else
@@ -561,12 +563,12 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \let\mathsf\mst@original@sf
     \let\mathtt\mst@original@tt}
 \def\mst@setalphabets{%
-    \ifmst@defaultnormal\else\renewcommand{\mathnormal}{\Mathnormal}\fi
-    \ifmst@defaultrm\else\renewcommand{\mathrm}{\Mathrm}\fi
-    \ifmst@defaultbf\else\renewcommand{\mathbf}{\Mathbf}\fi
-    \ifmst@defaultit\else\renewcommand{\mathit}{\Mathit}\fi
-    \ifmst@defaultsf\else\renewcommand{\mathsf}{\Mathsf}\fi
-    \ifmst@defaulttt\else\renewcommand{\mathtt}{\Mathtt}\fi}
+    \ifmst@defaultnormal\else\protected\def\mathnormal{\Mathnormal}\fi
+    \ifmst@defaultrm\else\protected\def\mathrm{\Mathrm}\fi
+    \ifmst@defaultbf\else\protected\def\mathbf{\Mathbf}\fi
+    \ifmst@defaultit\else\protected\def\mathit{\Mathit}\fi
+    \ifmst@defaultsf\else\protected\def\mathsf{\Mathsf}\fi
+    \ifmst@defaulttt\else\protected\def\mathtt{\Mathtt}\fi}
 \ifmst@subdued\else\mst@setalphabets\fi
 \def\mst@update@greeksh{
   \def\mst@greek@lsh{\mst@ltsh} %% default behavior
@@ -764,7 +766,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
   % shamelessly overwrite...)
     \DeclareMathSymbol{\colon}{\mathpunct}{\mst@font@tbu}{"3A}
     \mst@do@nonletters\expandafter{\the\mst@do@nonletters
-        \def\colon{\mathpunct{\mst@varfam@colon}}}}
+        \protected\def\colon{\mathpunct{\mst@varfam@colon}}}}
 \DeclareMathSymbol{;}{\mathpunct}{\mst@font@tbu}{"3B}
 \DeclareMathSymbol{\mst@varfam@pointvirgule}{\mathalpha}{\mst@font@tbu}{"3B}
 \expandafter\mst@addtodo@nonletters\string;\mathpunct\mst@varfam@pointvirgule
@@ -773,18 +775,20 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \else
   \ifmst@XeOrLua
     \mst@Umathcharnumdef\mst@minus@sign=\mst@Umathcodenum`\-\relax
-%% I used this prior to the new \luatexUmathcodenum, as available since TL2013:
-%% \mathchardef\mst@minus@sign=8704\relax % "2200
   \else
     \mathchardef\mst@minus@sign=\mathcode`\-\relax
   \fi
-\@ifpackageloaded{amsmath}
-{\def\relbar{\mathrel{\mathpalette\mathsm@sh\mst@minus@sign}}}
-{\DeclareRobustCommand\relbar{\mathrel{\smash\mst@minus@sign}}}
-\def\rightarrowfill{$\m@th\mathord{\relbar}\mkern-7mu%
+  \@ifpackageloaded{amsmath}
+    {\def\relbar{\mathrel{\mathpalette\mathsm@sh\mst@minus@sign}}}
+    {\DeclareRobustCommand\relbar{\mathrel{\smash\mst@minus@sign}}}
+  \ifmst@robust@obsessed@LaTeX@era\expandafter\DeclareRobustCommand
+   \else\expandafter\def\fi
+  \rightarrowfill{$\m@th\mathord{\relbar}\mkern-7mu%
   \cleaders\hbox{$\mkern-2mu\relbar\mkern-2mu$}\hfill
   \mkern-7mu\mathord\rightarrow$}
-\def\leftarrowfill{$\m@th\mathord\leftarrow\mkern-7mu%
+  \ifmst@robust@obsessed@LaTeX@era\expandafter\DeclareRobustCommand
+   \else\expandafter\def\fi
+  \leftarrowfill{$\m@th\mathord\leftarrow\mkern-7mu%
   \cleaders\hbox{$\mkern-2mu\relbar\mkern-2mu$}\hfill
   \mkern-7mu\mathord{\relbar}$}
 \fi
@@ -841,9 +845,12 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \let\mst@subduedhbar\@empty
 \let\mst@nonsubduedhbar\@empty
 \ifmst@nohbar\else
-  \def\mst@subduedhbar{\let\hbar\mst@original@hbar}%
+  \def\mst@subduedhbar{%
+      \expandafter\let\csname hbar\mst@robustifyingspace\endcsname
+                  \mst@original@hbar
+  }%
   \def\mst@nonsubduedhbar{%
-      \expandafter\let\expandafter\hbar
+      \expandafter\let\csname hbar\mst@robustifyingspace\expandafter\endcsname
                   \csname mst@hbar@mv\math@version\endcsname
   }%
 \fi
@@ -937,7 +944,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \DeclareMathSymbol{\setminus}{\mathbin}{mtoperatorfont}{"5C}
 \DeclareMathSymbol{\mst@varfam@setminus}{\mathalpha}{mtoperatorfont}{"5C}
 \mst@do@nonletters\expandafter{\the\mst@do@nonletters
-            \def\setminus{\mathbin{\mst@varfam@setminus}}}
+            \protected\def\setminus{\mathbin{\mst@varfam@setminus}}}
 \ifmst@XeOrLua
   \mst@Umathcharnumdef\mst@vert@bar=\mst@Umathcodenum`\|\relax
 \else
@@ -949,13 +956,13 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \else
     \DeclareMathDelimiter{|}{\mathord}{\mst@font@tbu}{124}{largesymbols}{"0C}
 \fi
-\def\vert{|}
+\protected\def\vert{|}
 \DeclareMathSymbol{\mst@varfam@vbar}{\mathalpha}{\mst@font@tbu}{124}
 \mst@addtodo@easynonletters\|\mst@varfam@vbar
 \let\mid\undefined % 1.3: to avoid problems with some packages
 \DeclareMathSymbol{\mid}{\mathrel}{\mst@font@tbu}{124}
 \mst@do@nonletters\expandafter{\the\mst@do@nonletters
-    \def\mid{\mathrel\mst@varfam@vbar}}
+    \protected\def\mid{\mathrel\mst@varfam@vbar}}
   \ifmst@nosmalldelims
   \else
      \let\lbrace\undefined \let\rbrace\undefined
@@ -971,7 +978,10 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \DeclareRobustCommand*{\mst@rbrace}
         {\ifmmode\mathclose\mst@varfam@rbrace\else\textbraceright\fi}
 \mst@do@nonletters\expandafter{\the\mst@do@nonletters
-    \mst@dobraces{\let\{\mst@lbrace\let\}\mst@rbrace}}
+    \mst@dobraces{\expandafter\let\csname\string{ \expandafter\endcsname
+                                  \csname mst@lbrace \endcsname
+                  \expandafter\let\csname\string} \expandafter\endcsname
+                                  \csname mst@rbrace \endcsname}}
 \fi % end of \ifmst@alldelims
 \newcommand*{\MTexplicitbracesobeymathxx}{\let\mst@dobraces\@firstofone}
 \newcommand*{\MTexplicitbracesdonotobeymathxx}{\let\mst@dobraces\@gobble}
@@ -1024,11 +1034,11 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \let\mst@prod\prod
 \let\MToriginalprod\prod
 \DeclareMathSymbol{\prodpsy}{\mathop}{mtpsymbol}{213}
-\renewcommand*{\prod}{\ifinner\prodpsy\else\mst@prod\fi}
+\protected\def\prod{\ifinner\prodpsy\else\mst@prod\fi}
 \let\mst@sum\sum
 \let\MToriginalsum\sum
 \DeclareMathSymbol{\sumpsy}{\mathop}{mtpsymbol}{229}
-\renewcommand*{\sum}{\ifinner\sumpsy\else\mst@sum\fi}
+\protected\def\sum{\ifinner\sumpsy\else\mst@sum\fi}
 \DeclareMathSymbol{\mst@implies}{\mathrel}{mtpsymbol}{222}
 \DeclareRobustCommand*{\implies}{\;\mst@implies\;}
 \DeclareMathSymbol{\mst@impliedby}{\mathrel}{mtpsymbol}{220}
@@ -1507,8 +1517,8 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
   \fi}% \mst@dothe@inodotstuff
 \ifmst@defaultimath\else\typeout{** \string\imath\space and \string\jmath\space}
     \AtEndOfPackage{\AtBeginDocument{%
-        \renewcommand*{\imath}{\inodot}%
-        \renewcommand*{\jmath}{\jnodot}%
+        \protected\def\imath{\inodot}%
+        \protected\def\jmath{\jnodot}%
     }}%
 \fi
 \let\mst@subduedmathaccents\@empty
@@ -1518,15 +1528,15 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
   \@tfor\@tempa:={grave}{acute}{check}{breve}{bar}%
                  {dot}{ddot}{mathring}{hat}{tilde}%
   \do
-  {\expandafter\let\csname\@tempa\expandafter\endcsname
+  {\expandafter\let\csname\@tempa\mst@robustifyingspace\expandafter\endcsname
                    \csname mst@original@\@tempa\endcsname}%
 }%
 \def\mst@nonsubduedmathaccents{%
   \@tfor\@tempa:={grave}{acute}{check}{breve}{bar}%
                  {dot}{ddot}{mathring}{hat}{tilde}%
   \do
-  {\expandafter\let\csname\@tempa\expandafter\endcsname
-                   \csname mst@\@tempa @mv\math@version\endcsname}%
+  {\expandafter\let\csname\@tempa\mst@robustifyingspace\expandafter\endcsname
+                   \csname mst@\@tempa @mv\math@version\mst@robustifyingspace\endcsname}%
 }%
 \def\mst@dothe@mathaccentsstuff#1#2{%
   \begingroup
@@ -1537,73 +1547,85 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
   \if1\mst@OneifUniEnc
     \ifmst@unimathaccents
       % \` -> \grave
-      \expandafter\xdef\csname mst@grave@mv#1\endcsname
+      \expandafter\xdef\csname mst@grave@mv#1\mst@robustifyingspace\endcsname
        {\mst@Umathaccent
         7
         \number\symmtoperatorfont\space
         \csname#2\string\`\endcsname{}\relax}%
       % \' -> \acute
-      \expandafter\xdef\csname mst@acute@mv#1\endcsname
+      \expandafter\xdef\csname mst@acute@mv#1\mst@robustifyingspace\endcsname
        {\mst@Umathaccent
         7
         \number\symmtoperatorfont\space
         \csname#2\string\'\endcsname{}\relax}%
       % \v -> \check
-      \expandafter\xdef\csname mst@check@mv#1\endcsname
+      \expandafter\xdef\csname mst@check@mv#1\mst@robustifyingspace\endcsname
        {\mst@Umathaccent
         7
         \number\symmtoperatorfont\space
         \csname#2\string\v\endcsname{}\relax}%
       % \u -> \breve
-      \expandafter\xdef\csname mst@breve@mv#1\endcsname
+      \expandafter\xdef\csname mst@breve@mv#1\mst@robustifyingspace\endcsname
        {\mst@Umathaccent
         7
         \number\symmtoperatorfont\space
         \csname#2\string\u\endcsname{}\relax}%
       % \= -> \bar
-      \expandafter\xdef\csname mst@bar@mv#1\endcsname
+      \expandafter\xdef\csname mst@bar@mv#1\mst@robustifyingspace\endcsname
        {\mst@Umathaccent
         7
         \number\symmtoperatorfont\space
         \csname#2\string\=\endcsname{}\relax}%
       % \. -> \dot
-      \expandafter\xdef\csname mst@dot@mv#1\endcsname
+      \expandafter\xdef\csname mst@dot@mv#1\mst@robustifyingspace\endcsname
        {\mst@Umathaccent
         7
         \number\symmtoperatorfont\space
         \csname#2\string\.\endcsname{}\relax}%
       % \" -> \ddot
-      \expandafter\xdef\csname mst@ddot@mv#1\endcsname
+      \expandafter\xdef\csname mst@ddot@mv#1\mst@robustifyingspace\endcsname
        {\mst@Umathaccent
         7
         \number\symmtoperatorfont\space
         \csname#2\string\"\endcsname{}\relax}%
       % \r -> \mathring
-      \expandafter\xdef\csname mst@mathring@mv#1\endcsname
+      \expandafter\xdef\csname mst@mathring@mv#1\mst@robustifyingspace\endcsname
        {\mst@Umathaccent
         7
         \number\symmtoperatorfont\space
         \csname#2\string\r\endcsname{}\relax}%
       % \^ -> \hat
-      \expandafter\xdef\csname mst@hat@mv#1\endcsname
+      \expandafter\xdef\csname mst@hat@mv#1\mst@robustifyingspace\endcsname
        {\mst@Umathaccent
         7
         \number\symmtoperatorfont\space
         \csname#2\string\^\endcsname{}\relax}%
       % \~ -> \tilde
-      \expandafter\xdef\csname mst@tilde@mv#1\endcsname
+      \expandafter\xdef\csname mst@tilde@mv#1\mst@robustifyingspace\endcsname
        {\mst@Umathaccent
         7
         \number\symmtoperatorfont\space
         \csname#2\string\~\endcsname{}\relax}%
-    \else
+    \else % false branch of ifmst@unimathaccents
+      \AtEndOfPackage{\AtBeginDocument{%
       \@tfor\@tempa:={grave}{acute}{check}{breve}{bar}%
                      {dot}{ddot}{mathring}{hat}{tilde}%
       \do
-      {\expandafter\gdef\csname mst@\@tempa @mv#1\expandafter\endcsname
-                   \expandafter{\csname mst@original@\@tempa\endcsname}}%
+      {\expandafter\let
+          \csname mst@\@tempa @mv#1\mst@robustifyingspace\expandafter\endcsname
+          \csname mst@original@\@tempa\endcsname}%
+      }}%
     \fi
-  \else
+    \ifmst@robust@obsessed@LaTeX@era
+      \@tfor\@tempa:={grave}{acute}{check}{breve}{bar}%
+                     {dot}{ddot}{mathring}{hat}{tilde}%
+      \do
+      {\expandafter\xdef\csname mst@\@tempa @mv#1\endcsname
+         {\noexpand\protect
+          \expandafter\noexpand\csname mst@\@tempa @mv#1 \endcsname}%
+      }%
+    \fi
+  \else % false branch of ifUniEnc
     % \` -> \grave
     \expandafter\DeclareMathAccent\expandafter
                {\csname mst@grave@mv#1\endcsname}{\mathalpha}{mtoperatorfont}%
@@ -2166,14 +2188,17 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \mst@thef\mst@do@az \let\mst@thef\@gobble
     \mst@theF\mst@do@AZ \let\mst@theF\@gobble}%
   \MTcustomizenewmcodes
-  \let\mst@original@hbar\hbar
+  \expandafter\let\expandafter
+              \mst@original@hbar
+              \csname hbar\mst@robustifyingspace\endcsname
   \let\mst@original@imath\imath
   \let\mst@original@jmath\jmath
   \@tfor\@tempa:={grave}{acute}{check}{breve}{bar}%
                  {dot}{ddot}{mathring}{hat}{tilde}%
   \do
   {\expandafter\let\csname mst@original@\@tempa\expandafter\endcsname
-                   \csname \@tempa\endcsname}%
+                   \csname \@tempa\mst@robustifyingspace\endcsname
+  }%
   \ifmst@XeOrLua
      \edef\mst@subduedminus
          {\mst@Umathcodenum`\noexpand\-=\the\mst@Umathcodenum`\-\relax}%
@@ -2192,7 +2217,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \mst@subduedminus
   \else
      \mst@nonsubduedhbar
-     \mst@nonsubduedmathaccents
+     % \mst@nonsubduedmathaccents % will get executed later
      \mst@nonsubduedminus
      \ifx\mst@itcorr\@undefined
          \def\mst@itcorr{\ifnum\fam=\m@ne\/\fi}%
@@ -2209,6 +2234,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
      \fi
   \fi
 }% \AtBeginDocument
+\AtEndOfPackage{\AtBeginDocument{\ifmst@subdued\else\mst@nonsubduedmathaccents\fi}}%
 \ifmst@subdued
 \AtBeginDocument{%
   \def\mst@reserved#1\getanddefine@fonts\symletters#2#3\@nil{%
