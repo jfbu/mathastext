@@ -23,7 +23,7 @@
 %%----------------------------------------------------------------
 %% Package: mathastext
 %% Info:    Use the text font in math mode (JFB)
-%% Version: 1.3v 2019/09/19
+%% Version: 1.3w 2019/11/16
 %% License: LPPL 1.3c (http://www.latex-project.org/lppl/lppl-1-3c.txt)
 %% Copyright (C) 2011-2019 Jean-Francois B. <2589111+jfbu@users.noreply.github.com>
 %% Examples of use of mathastext:
@@ -32,7 +32,7 @@
 %%----------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage {mathastext}
-  [2019/09/19 v1.3v Use the text font in math mode (JFB)]
+  [2019/11/16 v1.3w Use the text font in math mode (JFB)]
 \newif\ifmst@robust@obsessed@LaTeX@era
 \@ifl@t@r\fmtversion{2019/10/01}{\mst@robust@obsessed@LaTeX@eratrue}{}
 \edef\mst@robustifyingspace{\ifmst@robust@obsessed@LaTeX@era\space\fi}
@@ -207,6 +207,12 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \DeclareOption*%
   {\expandafter\mst@checkoption\CurrentOption\mst@ unicodeminus\mst@\mst@@}
 \ProcessOptions\relax
+\def\mst@DeclareMathAccent#1{\let#1\mst@undefined
+  \expandafter
+  \let\csname\expandafter\@gobble\string#1\space\endcsname\mst@undefined
+  \DeclareMathAccent{#1}}
+\def\mst@normalversionname{normal}%
+\def\mst@boldversionname{bold}%
 \newmuskip\mst@exists@muskip  %% v 1.15e
 \newmuskip\mst@forall@muskip
 \def\mst@exists@skip{1mu}
@@ -293,11 +299,9 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 }%
 \def\mst@OnlyIfNotSubdued#1{%
     \ifmst@subdued
-      \def\mst@tmpa{normal}%
-      \ifx\math@version\mst@tmpa
+      \ifx\math@version\mst@normalversionname
       \else
-        \def\mst@tmpa{bold}%
-        \ifx\math@version\mst@tmpa
+        \ifx\math@version\mst@boldversionname
         \else
           #1%
         \fi
@@ -622,7 +626,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
   \DeclareFontSubstitution{FML}{futm}{m}{it}
   \DeclareSymbolFont{mathastextfourier}{FML}{futm}{m}{it}
   \SetSymbolFont{mathastextfourier}{bold}{FML}{futm}{b}{it}
-  \DeclareMathAccent{\fouriervec}{\mathord}{mathastextfourier}{"7E}
+  \mst@DeclareMathAccent{\fouriervec}{\mathord}{mathastextfourier}{"7E}
 \fi
 \newcommand*\MTencoding[1]{\def\mst@enc{#1}}
 \newcommand*\MTfamily[1]{\def\mst@fam{#1}}
@@ -827,10 +831,6 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \edef\mst@tmp@enc{\csname mst@encoding@\math@version\endcsname}%
     \if1\mst@OneifUniEnc
      \mst@Umathcode`\-=\expandafter
-     % Working around a bug (or feature...) of XeTeX/LuaTeX: afaict it is
-     % impossible to use straightforwardly in extended mathcode assignments
-     % a control sequence as created by \Umathchardef.
-     % This is counter-intuitive and breaks expectations.
                        \mst@UmathchardefWorkAround@i
                        \csname mst@minus@mv\math@version\endcsname
                        \relax
@@ -838,6 +838,11 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
      \mathcode`\-=\@nameuse{mst@minus@mv\math@version}% self-delimiting
     \fi
    }% \mst@nonsubduedminus
+  \ifmst@endash\else\ifmst@emdash\else
+    \def\mst@nonsubduedminus{%
+      \mathcode`\-=\@nameuse{mst@minus@mv\math@version}% self-delimiting
+      }% non Umathchardef \mst@minus@mv<mathversion> macros
+  \fi\fi
 \fi
 \def\mst@UmathchardefWorkAround@i
     {\expandafter\mst@UmathchardefWorkAround@ii\meaning}%
@@ -845,14 +850,9 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \let\mst@subduedhbar\@empty
 \let\mst@nonsubduedhbar\@empty
 \ifmst@nohbar\else
-  \def\mst@subduedhbar{%
-      \expandafter\let\csname hbar\mst@robustifyingspace\endcsname
-                  \mst@original@hbar
-  }%
-  \def\mst@nonsubduedhbar{%
-      \expandafter\let\csname hbar\mst@robustifyingspace\expandafter\endcsname
-                  \csname mst@hbar@mv\math@version\endcsname
-  }%
+  \def\mst@subduedhbar{\let\hbar\mst@original@hbar}%
+  \def\mst@nonsubduedhbar{\expandafter
+       \let\expandafter\hbar\csname mst@hbar@mv\math@version\endcsname}%
 \fi
 \def\mst@mathrlap{\mathpalette\mst@mathrlapinternal}
 \def\mst@mathrlapinternal#1#2{\rlap{$\mathsurround=0pt#1{#2}$}}
@@ -864,10 +864,10 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \begingroup
     \def\@text@composite##1\@text@composite##2{##2}%
     \let\add@accent\@firstoftwo
-    \DeclareMathAccent{#2}{\mathalpha}{mtletterfont}%
+    \mst@DeclareMathAccent{#2}{\mathalpha}{mtletterfont}%
                       {\csname\mst@tmp@enc\string\=\endcsname{}}%
     \endgroup
-    \def#1{\mst@mathrlap{#2{\ }}\mst@h}%
+    \protected\def#1{\mst@mathrlap{#2{\ }}\mst@h}%
   \fi
 }% end of \mst@dothe@hbarstuff
 \ifmst@noplus\else\typeout{** \string+ and \string=}
@@ -1528,15 +1528,21 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
   \@tfor\@tempa:={grave}{acute}{check}{breve}{bar}%
                  {dot}{ddot}{mathring}{hat}{tilde}%
   \do
-  {\expandafter\let\csname\@tempa\mst@robustifyingspace\expandafter\endcsname
-                   \csname mst@original@\@tempa\endcsname}%
+  {\expandafter\let\csname\@tempa\expandafter\endcsname
+                   \csname mst@original@\@tempa\endcsname
+   \expandafter\let\csname\@tempa\space\expandafter\endcsname
+                   \csname mst@original@\@tempa\space\endcsname
+   }%
 }%
 \def\mst@nonsubduedmathaccents{%
   \@tfor\@tempa:={grave}{acute}{check}{breve}{bar}%
                  {dot}{ddot}{mathring}{hat}{tilde}%
   \do
-  {\expandafter\let\csname\@tempa\mst@robustifyingspace\expandafter\endcsname
-                   \csname mst@\@tempa @mv\math@version\mst@robustifyingspace\endcsname}%
+  {\expandafter\let\csname\@tempa\expandafter\endcsname
+                   \csname mst@\@tempa @mv\math@version\endcsname
+   \expandafter\let\csname\@tempa\space\expandafter\endcsname
+                   \csname mst@\@tempa @mv\math@version\space\endcsname
+}%
 }%
 \def\mst@dothe@mathaccentsstuff#1#2{%
   \begingroup
@@ -1612,8 +1618,11 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
                      {dot}{ddot}{mathring}{hat}{tilde}%
       \do
       {\expandafter\let
-          \csname mst@\@tempa @mv#1\mst@robustifyingspace\expandafter\endcsname
-          \csname mst@original@\@tempa\endcsname}%
+          \csname mst@\@tempa @mv#1\expandafter\endcsname
+          \csname mst@original@\@tempa\endcsname
+       \expandafter\let
+          \csname mst@\@tempa @mv#1\space\expandafter\endcsname
+          \csname mst@original@\@tempa\space\endcsname}%
       }}%
     \fi
     \ifmst@robust@obsessed@LaTeX@era
@@ -1627,43 +1636,43 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \fi
   \else % false branch of ifUniEnc
     % \` -> \grave
-    \expandafter\DeclareMathAccent\expandafter
+    \expandafter\mst@DeclareMathAccent\expandafter
                {\csname mst@grave@mv#1\endcsname}{\mathalpha}{mtoperatorfont}%
                {\csname#2\string\`\endcsname{}}
     % \' -> \acute
-    \expandafter\DeclareMathAccent\expandafter
+    \expandafter\mst@DeclareMathAccent\expandafter
                {\csname mst@acute@mv#1\endcsname}{\mathalpha}{mtoperatorfont}%
                {\csname#2\string\'\endcsname{}}
     % \v -> \check
-    \expandafter\DeclareMathAccent\expandafter
+    \expandafter\mst@DeclareMathAccent\expandafter
                {\csname mst@check@mv#1\endcsname}{\mathalpha}{mtoperatorfont}%
                {\csname#2\string\v\endcsname{}}
     % \u -> \breve
-    \expandafter\DeclareMathAccent\expandafter
+    \expandafter\mst@DeclareMathAccent\expandafter
                {\csname mst@breve@mv#1\endcsname}{\mathalpha}{mtoperatorfont}%
                {\csname#2\string\u\endcsname{}}
     % \= -> \bar
-    \expandafter\DeclareMathAccent\expandafter
+    \expandafter\mst@DeclareMathAccent\expandafter
                {\csname mst@bar@mv#1\endcsname}{\mathalpha}{mtoperatorfont}%
                {\csname#2\string\=\endcsname{}}
     % \. -> \dot
-    \expandafter\DeclareMathAccent\expandafter
+    \expandafter\mst@DeclareMathAccent\expandafter
                {\csname mst@dot@mv#1\endcsname}{\mathalpha}{mtoperatorfont}%
                {\csname#2\string\.\endcsname{}}
     % \" -> \ddot
-    \expandafter\DeclareMathAccent\expandafter
+    \expandafter\mst@DeclareMathAccent\expandafter
                {\csname mst@ddot@mv#1\endcsname}{\mathalpha}{mtoperatorfont}%
                {\csname#2\string\"\endcsname{}}
     % \r -> \mathring
-    \expandafter\DeclareMathAccent\expandafter
+    \expandafter\mst@DeclareMathAccent\expandafter
                {\csname mst@mathring@mv#1\endcsname}{\mathalpha}{mtoperatorfont}%
                {\csname#2\string\r\endcsname{}}
     % \^ -> \hat
-    \expandafter\DeclareMathAccent\expandafter
+    \expandafter\mst@DeclareMathAccent\expandafter
                {\csname mst@hat@mv#1\endcsname}{\mathalpha}{mtoperatorfont}%
                {\csname#2\string\^\endcsname{}}
     % \~ -> \tilde
-    \expandafter\DeclareMathAccent\expandafter
+    \expandafter\mst@DeclareMathAccent\expandafter
                {\csname mst@tilde@mv#1\endcsname}{\mathalpha}{mtoperatorfont}%
                {\csname#2\string\~\endcsname{}}
   \fi
@@ -1673,9 +1682,21 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \newcommand*\MTDeclareVersion[6][]{%
   \edef\mst@declareversionargs{{#1}{#2}{#3}{#4}{#5}{#6}}%
   \edef\mst@version{#2}%
-  \DeclareMathVersion{\mst@version}%
-  \MTDeclareVersion@
+  \if0\ifx\mst@version\mst@normalversionname0\else
+      \ifx\mst@version\mst@boldversionname0\else
+      1\fi\fi
+   \expandafter\expandafter\expandafter
+   \MTDoNotDeclareVersion@\expandafter\@gobblefour
+  \fi
+  \relax\DeclareMathVersion{\mst@version}\MTDeclareVersion@
 }% \MTDeclareVersion
+\newcommand*\MTDoNotDeclareVersion@[1][]{%
+   \PackageWarningNoLine{mathastext}{You asked to declare a version with name
+   `\mst@version'.^^J%
+   \@spaces Sorry but you are not allowed to do that.^^J%
+   \@spaces \ifmst@subdued Anyway the `subdued' option is in force\else
+         Use rather \string\Mathastext\space macro (with no optional argument)\fi
+}}%\MTDoNotDeclareVersion@
 \newcommand*\MTDeclareVersion@[1][]{%
     \edef\mst@tmp{#1}%
     \ifx\mst@tmp\empty\else
@@ -1842,8 +1863,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
       \@for\mst@tmpc:=it,sl\do{\ifx\mst@tmpc\mst@tmpb\MTnoICinmath\fi}%
     \fi
     \ifmst@subdued
-      \def\mst@tmpa{normal}%
-      \ifx\math@version\mst@tmpa
+      \ifx\math@version\mst@normalversionname
         \mst@restorealphabets
         \MTstandardgreek
         \MTmathoperatorsdonotobeymathxx
@@ -1856,8 +1876,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
         \mst@subduedmathaccents
         \mst@subduedminus
       \else
-        \def\mst@tmpa{bold}%
-        \ifx\math@version\mst@tmpa
+        \ifx\math@version\mst@boldversionname
           \mst@restorealphabets
           \MTstandardgreek
           \MTmathoperatorsdonotobeymathxx
@@ -2188,16 +2207,16 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \mst@thef\mst@do@az \let\mst@thef\@gobble
     \mst@theF\mst@do@AZ \let\mst@theF\@gobble}%
   \MTcustomizenewmcodes
-  \expandafter\let\expandafter
-              \mst@original@hbar
-              \csname hbar\mst@robustifyingspace\endcsname
+  \let\mst@original@hbar\hbar
   \let\mst@original@imath\imath
   \let\mst@original@jmath\jmath
   \@tfor\@tempa:={grave}{acute}{check}{breve}{bar}%
                  {dot}{ddot}{mathring}{hat}{tilde}%
   \do
   {\expandafter\let\csname mst@original@\@tempa\expandafter\endcsname
-                   \csname \@tempa\mst@robustifyingspace\endcsname
+                   \csname \@tempa\endcsname
+   \expandafter\let\csname mst@original@\@tempa\space\expandafter\endcsname
+                   \csname \@tempa\space\endcsname
   }%
   \ifmst@XeOrLua
      \edef\mst@subduedminus

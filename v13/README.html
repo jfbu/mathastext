@@ -26,6 +26,7 @@
 <li><a>DESCRIPTION</a></li>
 <li><a>USAGE</a></li>
 <li><a>RECENT CHANGES</a><ul>
+<li><a>1.3w [2019/11/16]</a></li>
 <li><a>1.3v [2019/09/19]</a></li>
 <li><a>1.3u (2019/08/20)</a></li>
 </ul></li>
@@ -42,7 +43,7 @@
 <p>This Work may be distributed and/or modified under the conditions of the <a href="http://www.latex-project.org/lppl/lppl-1-3c.txt">LPPL1.3c</a></p>
 <p>The Author of this Work is Jean-Francois B.</p>
 <p>Copyright (C) 2011-2019 Jean-Francois B. (<code>2589111+jfbu@users.noreply.github.com</code>)</p>
-<pre><code>  Source: mathastext.dtx 1.3v 2019/09/19</code></pre>
+<pre><code>  Source: mathastext.dtx 1.3w 2019/11/16</code></pre>
 <h1>DESCRIPTION</h1>
 <p>Optimal typographical results for documents containing mathematical symbols can only be hoped for with math fonts specifically designed to match a given text typeface. Although the list of freely available math fonts (alongside the Computer Modern and AMS extension fonts) is slowly expanding (fourier, kpfonts, mathdesign, pxfonts, txfonts, newpx, newtx, ...) it remains limited, and the situation is even worse with Unicode fonts (XeTeX/LuaTeX). So if you can't find a math font which fits well with your favorite text font, and wish to still be able to typeset mathematical documents, perhaps not of the highest typographical quality, but at least not subjected to obvious visual incompatibilities between your text font and the math fonts, try out mathastext: it will simply use the text font also for the math!</p>
 <ul>
@@ -73,6 +74,13 @@
 <li><code>\MTsetmathskips</code> allows to set up extra spacings around letters.</li>
 </ul>
 <h1>RECENT CHANGES</h1>
+<h2>1.3w [2019/11/16]</h2>
+<ul>
+<li><p>LaTeX 2019-10-01 release (up to patch level 3 inclusive) together with <code>amsmath</code> conspired <code>:-)</code> to break <code>mathastext</code>, in connexion with math accents. This has been fixed upstream, but I am releasing nevertheless a hot fix to this <a href="https://github.com/latex3/latex2e/issues/216">issue</a> (this is compatible with future LaTeX releases).</p></li>
+<li><p>Fix: the <code>\hbar</code> is originally a robust command but becomes a <code>\mathchardef</code> token if (e.g.) <code>amsfonts</code> is loaded and then with recent LaTeX <code>\hbar&lt;space&gt;</code> is made undefined and <code>mathastext</code> definition of it remained without effect. The <code>\mathastext</code> own <code>\hbar</code> is now defined <code>\protected</code>.</p></li>
+<li><p>Fix: option <code>noendash</code> (or <code>symboldelimiters</code> which implies it) caused (since <code>1.3u</code>) a bug under Unicode engines when setting up the minus sign.</p></li>
+<li><p>Version names declared via the optional argument of <code>\Mathastext</code> or as first argument of <code>\MTDeclareVersion</code> must not be <code>normal</code> or <code>bold</code>. Enforce that! (this was marked as a bug to fix since <code>2012/10/24</code>...)</p></li>
+</ul>
 <h2>1.3v [2019/09/19]</h2>
 <ul>
 <li><p>LaTeX 2019-10-01 release has made more math macros robust. This applies in particular to the math accents and to the <code>\hbar</code>. This required for mathastext to adapt. Also <code>\leftarrowfill</code> and <code>\rightarrowfill</code> are now defined robust by the kernel, hence mathastext does the same. These changes are dropped if mathastext detects an older LaTeX format.</p></li>

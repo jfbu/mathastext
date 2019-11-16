@@ -1,6 +1,32 @@
 MATHASTEXT CHANGE LOG
 =====================
 
+1.3w \[2019/11/16\]
+----
+
+* LaTeX 2019-10-01 release (up to patch level 3 inclusive)
+  together with `amsmath` conspired `:-)` to break `mathastext`,
+  in connexion with math accents. This has been fixed upstream,
+  but I am releasing nevertheless a hot fix to this
+  https://github.com/latex3/latex2e/issues/216 issue
+  (this is compatible with future LaTeX releases).
+
+* Fix: the `\hbar` is originally a robust command but
+  becomes a `\mathchardef` token if (e.g.) `amsfonts` is
+  loaded and then with recent LaTeX `\hbar<space>` is
+  made undefined and `mathastext` definition of it
+  remained without effect. The `\mathastext` own `\hbar`
+  is now defined `\protected`.
+
+* Fix: option `noendash` (or `symboldelimiters` which implies
+  it) caused (since `1.3u`) a bug under Unicode engines when
+  setting up the minus sign.
+
+* Version names declared via the optional argument of
+  `\Mathastext` or as first argument of `\MTDeclareVersion`
+  must not be `normal` or `bold`. Enforce that! (this was
+  marked as a bug to fix since `2012/10/24`...)
+
 1.3v \[2019/09/19\]
 ----
 
