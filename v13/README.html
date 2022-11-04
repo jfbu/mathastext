@@ -4,31 +4,177 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>README</title>
-  <style type="text/css">
-      code{white-space: pre-wrap;}
-      span.smallcaps{font-variant: small-caps;}
-      span.underline{text-decoration: underline;}
-      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  <title>mathastext README</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
   <style type="text/css">body{font-size: 14pt;}</style>
   <style type="text/css">
       code {white-space: pre-wrap;}
       pre  {white-space: pre-wrap;}
   </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
 </head>
 <body>
-<nav id="TOC">
+<header id="title-block-header">
+<h1 class="title">mathastext README</h1>
+</header>
+<nav id="TOC" role="doc-toc">
 <ul>
-<li><a>DESCRIPTION</a></li>
-<li><a>USAGE</a></li>
-<li><a>RECENT CHANGES</a><ul>
-<li><a>1.3w [2019/11/16]</a></li>
-<li><a>1.3v [2019/09/19]</a></li>
-<li><a>1.3u (2019/08/20)</a></li>
+<li><a href="#description" id="toc-description">DESCRIPTION</a></li>
+<li><a href="#usage" id="toc-usage">USAGE</a></li>
+<li><a href="#recent-changes" id="toc-recent-changes">RECENT CHANGES</a>
+<ul>
+<li><a href="#13y-20221104" id="toc-13y-20221104">1.3y
+[2022/11/04]</a></li>
 </ul></li>
 </ul>
 </nav>
@@ -40,68 +186,116 @@
         +     &#39;Use the text font in math mode&#39;      +
         +                                           +
         +-------------------------------------------+</code></pre>
-<p>This Work may be distributed and/or modified under the conditions of the <a href="http://www.latex-project.org/lppl/lppl-1-3c.txt">LPPL1.3c</a></p>
+<p>This Work may be distributed and/or modified under the conditions of
+the <a
+href="http://www.latex-project.org/lppl/lppl-1-3c.txt">LPPL1.3c</a></p>
 <p>The Author of this Work is Jean-Francois B.</p>
-<p>Copyright (C) 2011-2019 Jean-Francois B. (<code>2589111+jfbu@users.noreply.github.com</code>)</p>
-<pre><code>  Source: mathastext.dtx 1.3w 2019/11/16</code></pre>
-<h1>DESCRIPTION</h1>
-<p>Optimal typographical results for documents containing mathematical symbols can only be hoped for with math fonts specifically designed to match a given text typeface. Although the list of freely available math fonts (alongside the Computer Modern and AMS extension fonts) is slowly expanding (fourier, kpfonts, mathdesign, pxfonts, txfonts, newpx, newtx, ...) it remains limited, and the situation is even worse with Unicode fonts (XeTeX/LuaTeX). So if you can't find a math font which fits well with your favorite text font, and wish to still be able to typeset mathematical documents, perhaps not of the highest typographical quality, but at least not subjected to obvious visual incompatibilities between your text font and the math fonts, try out mathastext: it will simply use the text font also for the math!</p>
+<p>Copyright (C) 2011-2019, 2022 Jean-Francois B.
+(<code>2589111+jfbu@users.noreply.github.com</code>)</p>
+<pre><code>  Source: mathastext.dtx 1.3y 2022/11/04</code></pre>
+<h1 id="description">DESCRIPTION</h1>
+<p>Optimal typographical results for documents containing mathematical
+symbols can only be hoped for with math fonts specifically designed to
+match a given text typeface. Although the list of freely available math
+fonts (alongside the Computer Modern and AMS extension fonts) is slowly
+expanding (fourier, kpfonts, mathdesign, pxfonts, txfonts, newpx, newtx,
+...) it remains limited, and the situation is even worse with Unicode
+fonts (XeTeX/LuaTeX). So if you can't find a math font which fits well
+with your favorite text font, and wish to still be able to typeset
+mathematical documents, perhaps not of the highest typographical
+quality, but at least not subjected to obvious visual incompatibilities
+between your text font and the math fonts, try out mathastext: it will
+simply use the text font also for the math!</p>
 <ul>
-<li><a href="mathastext.html" class="uri">mathastext.html</a></li>
-<li><a href="showcase.html" class="uri">showcase.html</a></li>
+<li><a href="mathastext.html"
+class="uri">mathastext.html</a></li>
+<li><a href="showcase.html"
+class="uri">showcase.html</a></li>
 </ul>
-<h1>USAGE</h1>
+<h1 id="usage">USAGE</h1>
 <p><code>mathastext</code> is a LaTeX package</p>
 <pre><code>  \usepackage{mathastext}</code></pre>
-<p>The document will use in math mode the text font as configured at package loading time, for these characters:</p>
+<p>The document will use in math mode the text font as configured at
+package loading time, for these characters:</p>
 <pre><code>  abcdefghijklmnopqrstuvwxyz
   ABCDEFGHIJKLMNOPQRSTUVWXYZ
   0123456789
   !?,.:;+-=()[]/#$%&amp;&lt;&gt;|{}\</code></pre>
-<p>Main options: <code>italic</code>, <code>subdued</code>, <code>LGRgreek</code>.</p>
+<p>Main options: <code>italic</code>, <code>subdued</code>,
+<code>LGRgreek</code>.</p>
 <ul>
-<li>Use the <code>italic</code> option to get the Latin letters in math mode be in italics. Digits and log-like operator names (pre-defined as well as user-defined) will be in the same shape as the text font (usually this means upright).</li>
-<li>each <code>\Mathastext[&lt;name&gt;]</code> in the preamble defines a math version to be later activated in the document body via the command <code>\MTversion{&lt;name&gt;}</code>.</li>
-<li>With the <code>subdued</code> option, mathastext will be active only inside such math versions.</li>
+<li>Use the <code>italic</code> option to get the Latin letters in math
+mode be in italics. Digits and log-like operator names (pre-defined as
+well as user-defined) will be in the same shape as the text font
+(usually this means upright).</li>
+<li>each <code>\Mathastext[&lt;name&gt;]</code> in the preamble defines
+a math version to be later activated in the document body via the
+command <code>\MTversion{&lt;name&gt;}</code>.</li>
+<li>With the <code>subdued</code> option, mathastext will be active only
+inside such math versions.</li>
 <li>For documents needing Greek letters the following is possible:
 <ul>
 <li>no option: Greek letters defined by other packages,</li>
-<li><code>eulergreek</code>: use the Euler font for the Greek letters,</li>
-<li><code>symbolgreek</code>: use the Postscript Symbol font for the Greek letters.</li>
-<li><code>LGRgreek</code>: use the document text font in LGR encoding. Further options specify the shape of the lowercase and uppercase Greek glyphs; starting with v1.15c it is possible to use multiple distinct LGR fonts in the same document.</li>
+<li><code>eulergreek</code>: use the Euler font for the Greek
+letters,</li>
+<li><code>symbolgreek</code>: use the Postscript Symbol font for the
+Greek letters.</li>
+<li><code>LGRgreek</code>: use the document text font in LGR encoding.
+Further options specify the shape of the lowercase and uppercase Greek
+glyphs; starting with v1.15c it is possible to use multiple distinct LGR
+fonts in the same document.</li>
 </ul></li>
-<li>Commands are provided to scale the Euler and Symbol fonts by an arbitrary factor to let them fit better with the document text font.</li>
-<li><code>\MTsetmathskips</code> allows to set up extra spacings around letters.</li>
+<li>Commands are provided to scale the Euler and Symbol fonts by an
+arbitrary factor to let them fit better with the document text
+font.</li>
+<li><code>\MTsetmathskips</code> allows to set up extra spacings around
+letters.</li>
 </ul>
-<h1>RECENT CHANGES</h1>
-<h2>1.3w [2019/11/16]</h2>
+<h1 id="recent-changes">RECENT CHANGES</h1>
+<h2 id="13y-20221104">1.3y [2022/11/04]</h2>
+<p>(the 1.3x had an annoying documentation bug, and had already been
+pushed to CTAN, hence the version increase to 1.3y)</p>
 <ul>
-<li><p>LaTeX 2019-10-01 release (up to patch level 3 inclusive) together with <code>amsmath</code> conspired <code>:-)</code> to break <code>mathastext</code>, in connexion with math accents. This has been fixed upstream, but I am releasing nevertheless a hot fix to this <a href="https://github.com/latex3/latex2e/issues/216">issue</a> (this is compatible with future LaTeX releases).</p></li>
-<li><p>Fix: the <code>\hbar</code> is originally a robust command but becomes a <code>\mathchardef</code> token if (e.g.) <code>amsfonts</code> is loaded and then with recent LaTeX <code>\hbar&lt;space&gt;</code> is made undefined and <code>mathastext</code> definition of it remained without effect. The <code>\mathastext</code> own <code>\hbar</code> is now defined <code>\protected</code>.</p></li>
-<li><p>Fix: option <code>noendash</code> (or <code>symboldelimiters</code> which implies it) caused (since <code>1.3u</code>) a bug under Unicode engines when setting up the minus sign.</p></li>
-<li><p>Version names declared via the optional argument of <code>\Mathastext</code> or as first argument of <code>\MTDeclareVersion</code> must not be <code>normal</code> or <code>bold</code>. Enforce that! (this was marked as a bug to fix since <code>2012/10/24</code>...)</p></li>
+<li><p>mathastext now requires the <code>\expanded</code> primitive
+(which is available with all major engines since TeXLive 2019).</p></li>
+<li><p>Revisit parts of the documentation (mainly the Examples, and the
+section on Greek letters) and shuffle the other parts to surely improve
+things. Mention the <a href="https://ctan.org/pkg/mathfont">mathfont</a>
+and <a href="https://ctan.org/pkg/frenchmath">frenchmath</a>
+packages.</p></li>
+<li><p>Add the <code>ncccomma</code> option which loads the <a
+href="https://ctan.org/pkg/ncccomma">ncccomma</a> package to allow the
+comma as decimal separator.</p></li>
+<li><p>Add the <code>binarysemicolon</code> option to let the semi-colon
+be of type <code>\mathbin</code>, not <code>\mathpunct</code>.</p></li>
+<li><p>Add the <code>frenchmath*</code> option which does all three of
+<code>frenchmath</code>, <code>ncccomma</code> and
+<code>binarysemicolon</code>.</p></li>
+<li><p>Under the <code>LGRgreek</code> and <code>LGRgreeks</code>
+options only:</p>
+<ul>
+<li><p>make available upright and italic Greek letters in math mode via
+<code>\alphaup</code>, <code>\alphait</code>, ... control sequences, in
+addition to those not using such postfixed-names.</p></li>
+<li><p>add <code>\mathgreekup</code> and <code>\mathgreekit</code> math
+alphabets.</p></li>
+<li><p>add <code>\MTgreekupdefault</code> and
+<code>\MTgreekitdefault</code>. The former replaces
+<code>\updefault</code> which was used in some places and since LaTeX
+2020-02-02 caused systematic Font Warnings about the substitution of
+<code>up</code> by <code>n</code>.</p></li>
 </ul>
-<h2>1.3v [2019/09/19]</h2>
-<ul>
-<li><p>LaTeX 2019-10-01 release has made more math macros robust. This applies in particular to the math accents and to the <code>\hbar</code>. This required for mathastext to adapt. Also <code>\leftarrowfill</code> and <code>\rightarrowfill</code> are now defined robust by the kernel, hence mathastext does the same. These changes are dropped if mathastext detects an older LaTeX format.</p></li>
-<li>These LaTeX kernel changes motivated an examination of some redefinitions done (optionally) by mathastext:
-<ul>
-<li>The user math alphabet macros got redefined as expanding to some other (robust) math alphabet macros, but were not robust in the strict sense. This does cause some issues for moving arguments in the context of multiple math versions, hence it was a bug. The special behaviour of the math alphabet commands (they redefine themselves and other macros on first use) makes is somewhat problematic for mathastext to keep them updated across math versions and at the same time strictly LaTeX2e robust. Thus mathastext now requires the e-TeX primitive <code>\protected</code> and uses it for the definitions of the user level math alphabet macros.</li>
-<li>There are a number of <code>\mathchardef</code> tokens which (under certain options and/or configuration via the package user interface), mathastext redefines as macros. These macros cause no issue in moving arguments (they are not &quot;fragile&quot;), still it is probably better if they expand only at the time of typesetting. To this effect they are now also <code>\protected</code>: <code>\exists</code>, <code>\forall</code>, <code>\colon</code>, <code>\setminus</code>, <code>\mid</code>, <code>\prod</code>, <code>\sum</code>, <code>\imath</code>, <code>\jmath</code>.</li>
-<li>The macro <code>\vert</code> (which expands to a <code>\delimiter</code>) is now defined robust by LaTeX. Its mathastext redefinition is a <code>\protected</code> one rather.</li>
-<li>The <code>\{</code> and <code>\}</code> (which get redefined only under <code>\MTexplicitbracesobeymathxx</code> regime) are now strictly robust in the LaTeX2e sense (formerly they were <code>\let</code> to some robust macros, and this did not make them strictly LaTeX2e-robust entities).</li>
-</ul></li>
-<li><p>The various changes in mathastext described in the previous item apply independently of the LaTeX release version. The LaTeX format itself requires the e-TeX extensions since 2015.</p></li>
-</ul>
-<h2>1.3u (2019/08/20)</h2>
-<ul>
-<li><p>new feature: the initial release dealt with only one font, and although shortly thereafter the 1.11 version added support for extended math versions, it was documented that some font-dependent set-up (minus as endash, dotless i and j, hbar, math accents) was done only once. This release makes the relevant characters font encoding savvy in each mathastext-extended math version. Thus, they should render correctly even with multiple math versions using fonts with varying encodings.</p>
-<p>This reinforces importance of using <code>\MTversion</code> and not the LaTeX <code>\mathversion</code> when switching to a new math version (which got declared via the package interface). The implementation is compatible with Unicode engines and mixed usage of <code>TU</code> encoding (OpenType fonts) with traditional 8bits TeX font encodings. For all engines, all used (8bits) encodings must have been passed as options to the <code>fontenc</code> package.</p>
-<p>Thanks to Falk Hanisch for feature request and code suggestions.</p></li>
-<li><p>new option <code>unimathaccents</code>: this adds to option <code>mathaccents</code> the demand to use the text font accents for OpenType fonts in math mode via the <code>\Umathaccent</code> primitive. Indeed, as my testing showed that this gave non-satisfactory results both with XeTeX and LuaTeX regarding the horizontal placement of the accents, the main option <code>mathaccents</code> acts only on 8bits encoded fonts.</p></li>
-<li><p>bugfix: the <code>\Mathastext</code> without optional argument forgot to repeat some font-encoding dependent initialization set-up done originally during package loading.</p></li>
-<li><p>bugfix: under the <code>subdued</code> option macros <code>\MTmathactiveletters</code> or <code>\MTnonlettersobeymathxx</code> now act like no-ops if issued explicitly while in the <code>normal</code> or <code>bold</code> math version. Formerly, this was not the case and could cause bugs such as a disappearing minus sign in math mode.</p></li>
-<li><p>bugfix: the letter <code>h</code> used in the <code>\hbar</code> obeyed the extra skips as set-up by <code>\MTsetmathskips</code>, badly interfering with the horizontal positioning of the bar accent. They are now ignored (as well as the added italic correction).</p></li>
+<p>These new features required an extensive internal refactoring which
+is expected to not induce changes to most existing documents. But it may
+induce changes to those using some unusual configuration in the
+preamble, as made possible via the package macros; this can apply only
+to documents authored by those few people who actually read the
+documentation. For full details make sure to read the PDF documentation
+about this change.</p></li>
+<li><p>Fix "<code>\Digamma</code> under <code>LGRgreek</code> option
+uses the shape for lowercase not uppercase Greek".</p></li>
+<li><p>Fix some incongruities in log messages related to Greek letters
+and emitted during math version creation in the preamble.</p></li>
 </ul>
 </body>
 </html>

@@ -1,6 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html lang="en">
-<!-- Time-stamp: <10-09-2022 16:02:50 CEST> -->
+<!-- Time-stamp: <04-11-2022 12:20:20 CET> -->
+<!-- (1.3y) car le (1.3x) avait un bug idiot de documentation -->
 <!-- Time-stamp: <16-11-2019 17:13:04 CET> -->
 <!-- (1.3w) -->
 <!-- Time-stamp: <19-09-2019 22:26:36 CEST> -->
@@ -75,15 +76,17 @@ BLOCKQUOTE{margin-left:4ex;margin-right:4ex;text-align:left;}
 <body>
 
 <DIV CLASS="center">A LaTeX package: <b>mathastext</b><br>
-Copyright &copy; 2011-2019 Jean-Fran&ccedil;ois B..<br>
-Current version is <b>1.3w</b> (2019/11/16)<br>
-  <a href="v13/README">README</a>, 
-  <a href="v13/README.html">README (html)</a>, 
-  <a href="v13/ChangeLog.md">ChangeLog.md</a>, 
-  <a href="v13/mathastext.pdf">pdf</a>, 
-  <a href="v13/mathastext.sty">sty</a>, 
-  <a href="v13/mathastext.dtx">dtx</a>, 
+Copyright &copy; 2011-2019, 2022 Jean-Fran&ccedil;ois B..<br>
+Current version is <b>1.3y</b> (2022/11/04)<br>
+  <a href="v13/README">README</a>,
+  <a href="v13/README.html">README.html</a>,
+  <a href="v13/INSTALL.txt">INSTALL.txt</a>,
+  <a href="v13/ChangeLog.md">ChangeLog.md</a>,
+  <a href="v13/mathastext.pdf">pdf</a>,
+  <a href="v13/mathastext.sty">sty</a>,
+  <a href="v13/mathastext.dtx">dtx</a>,
   <a href="v13/mathastext.tds.zip">mathastext.tds.zip</a>,
+  <a href="v13/mathastexttestalphabets.pdf">mathastexttestalphabets.pdf</a>,
 <a href="showcase.html">showcase page</a>.</DIV>
 
 
@@ -150,17 +153,19 @@ between atoms.</p>
 <CENTER>
 <table WIDTH="500"  border="0" cellpadding="10">
 <tr><td>
-Current version is <b>1.3w</b> (2019/11/16)<br>
+Current version is <b>1.3y</b> (2022/11/04)<br>
 <ul>
 <li><a href="v13/README">README</a></li>
-<li><a href="v13/README.html">README (html)</a></li>
+<li><a href="v13/README.html">README.html</a></li>
+<li><a href="v13/INSTALL.txt">INSTALL.txt</a></li>
 <li><a href="v13/ChangeLog.md">ChangeLog.md</a></li>
-<li> Download from the <a href="http://www.ctan.org/tex-archive/macros/latex/contrib/mathastext">CTAN portal</a> or the
-  <a href="http://mirrors.ctan.org/help/Catalogue/entries/mathastext.html">TeX catalogue</a>.</li>
+<li><a href="v13/mathastext.tds.zip">tds.zip archive</a> (for manual installation)</li>
+<li><a href="https://ctan.org/pkg/mathastext">CTAN page</a></li>
 <li><a href="v13/mathastext.pdf">PDF Documentation</a></li>
 <li>Package file: <a href="v13/mathastext.sty">mathastext.sty</a></li>
 <li>Documented source: <a href="v13/mathastext.dtx">dtx</a>.</li>
-<li>Installation:
+<li>Compiled test file: <a href="v13/mathastexttestalphabets.pdf">pdf</a>.</li>
+<!--
   <ol>
     <li>easiest is with <a href="v13/mathastext.tds.zip">mathastext.tds.zip</a>:
   <code>unzip -d &lt;foo&gt; mathastext.tds.zip</code>
@@ -182,6 +187,7 @@ Current version is <b>1.3w</b> (2019/11/16)<br>
   is also possible to run directly <code>pdflatex mathastext.dtx</code>. Move
   the various files to the correct <code>TDS</code> locations.</li>
    </ol>
+-->
 <!--Here are those test
   files after compilation to PDF format:
   <ol>
@@ -191,7 +197,6 @@ Current version is <b>1.3w</b> (2019/11/16)<br>
 	<li> <a href="v12/testmathastextmathversions.pdf">testmathastextmathversions.pdf</a>
 </li>
 	</ol>-->
-</li>
 </ul>
 <a href="showcase.html">Examples</a> (be patient, the page with its embedded png
 images weighs circa 5 Mo! It contains about 70 examples, as png images and/or as
@@ -205,14 +210,28 @@ pdf files.)
 <li>New with the latest versions:
 <ul>
 <li>
+  (1.3y) fixed an annoying documentation bug in 1.3x,
+         which had already been pushed to CTAN
+         hence the version number increase.
+</li>
+<li>
+  (1.3x) <ul>
+         <li>options <code>ncccomma</code>, <code>binarysemicolon</code> and <code>frenchmath*</code>.</li>
+         <li><code>\mathgreekup</code> and <code>\mathgreekit</code> alpphabets if LGRgreek option.</li>
+         <li>under LGRgreek, all Greek letters also have <code>\...up</code> and <code>\...it</code> variants.</li>
+         <li>the actual shapes referred to in the previous two items are configurable via
+             <code>\MTgreekupdefault</code> and <code>\MTgreekitdefault</code>.</li>
+         </ul>
+</li>
+<li>
   (1.3w) workaround an upstream LaTeX+amsmath bug regarding math accents.
-</li> 
+</li>
 <li>
   (1.3v) update to match upcoming LaTeX release (dated 2019-10-01) which has more "robust" math macros.
-</li> 
+</li>
 <li>
   (1.3u) allows math versions with distinct font encodings (i.e. the minus sign as text en dash, the dotless i and j, the hbar and the text accents as math accents work across math versions).
-</li> 
+</li>
 <li>
   (1.3t) fixes the 1.3s fix and a very old bug (1.2) which broke compilation in case the font encoding default was other than OT1, T1 or LY1 (with pdflatex). Breaking change: no redefinitions of <code>\i</code> and <code>\j</code> anymore, only of <code>\imath</code> and <code>\jmath</code>.
 </li>
@@ -253,13 +272,13 @@ only do the math set-up and not modify the text fonts.</li>
 \MTDeclareVersion, to transfer settings for things not otherwise changed
 by mathastext from a math version to the one declared. This is mainly
 for helping set in bold face also symbols and large symbols when the used font
-	 for letters has been chosen bold in the declared version.</li>
+for letters has been chosen bold in the declared version.</li>
     </ol>
 <li>(1.3a)
 <ol>
 <li>new command \MTsetmathskips allows to specify on a letter by
   letter basis some extra skips to be automatically inserted in math mode before
-  and after each occurrence of the given letter,</li> 
+  and after each occurrence of the given letter,</li>
 <li>the package when running
   under lualatex requires it in a version at least as recent as the one distributed with TL2013,</li>
 <li> the documentation is better
@@ -267,13 +286,13 @@ for helping set in bold face also symbols and large symbols when the used font
 </ol>
 <li>(1.2f) "change log" added to the user manual. Minor code improvements.</li>
 <li>(1.2e) remaining technical issues introduced with the version 1.2 have been
-  solved; the documentation and the test files have been extended. 
+  solved; the documentation and the test files have been extended.
 <li>(1.2d) an incompatibility with <i>amsmath</i> introduced in 1.2 is
       fixed. </li>
 <li>(1.2b) The package achieves a slight improvement in the positioning of
   subscripts when using an upright text font for letters in text mode and
   it corrects bugs with active characters which were introduced in 1.2. </li>
-<li>(1.2) 
+<li>(1.2)
 <ol>
    <li> A new command sets up the amount of space to be automatically
       inserted before the derivative glyph (useful when using an
@@ -306,16 +325,22 @@ for helping set in bold face also symbols and large symbols when the used font
 </ul><br>
 </li>
 <li>Related packages by the
-author: 
+author:
 <ul>
 <li>
-<a href="http://mirrors.ctan.org/help/Catalogue/entries/libgreek.html">libgreek</a>
-(use the Linux Libertine or Biolinum fonts for Greek in math mode)</li>
+<p><a href="https://ctan.org/pkg/libgreek">libgreek</a>
+(use the Linux Libertine or Biolinum fonts for Greek in math mode)</p>
+<p>
+This package is currently (since the 2018 release of the latest version of package <a href="https://ctan.org/pkg/libertine">libertine</a>) broken as it needs <a href="https://ctan.org/pkg/libertine-legacy">libertine-legacy</a> to be on the user system, but the latter is not distributed by TeXLive as it is in the obsolete section of CTAN, and it does not come with a <code>tds.zip</code> for that very same reason, making installation a bit involved, in particular it may be needed to rename the <code>libertine.map</code> file to avoid incompatibility with the existing one from installed <a href="https://ctan.org/pkg/libertine">libertine</a> package.
+</p>
+<p>The author will perhaps release a new version using the files from <a href="https://ctan.org/pkg/libertinus-type1">libertinus-type1</a>.
+</p>
+</li>
 <li>
-<a href="http://mirrors.ctan.org/help/Catalogue/entries/pxgreeks.html">pxgreeks</a>
+<a href="https://ctan.org/pkg/pxgreeks">pxgreeks</a>
 (select upright/italic shape for the Greek letters from the PX
 fonts)</li>
-<li> <a href="http://mirrors.ctan.org/help/Catalogue/entries/txgreeks.html">txgreeks</a>
+<li> <a href="https://ctan.org/pkg/txgreeks">txgreeks</a>
 (select upright/italic shape for the Greek letters from the TX fonts).</li>
 </ul><br>
 </li>
@@ -335,12 +360,12 @@ taste!).</li>
 \usepackage{my_nice_font}
 \renewcommand{\familydefault}{cmr} % or cmss or cmtt for sans resp. mono
 \usepackage[LGRgreek, further options]{mathastext}
-\renewcommand{\familydefault}{\rmdefault} 
+\renewcommand{\familydefault}{\rmdefault}
 \Mathastext
 \begin{document}
 </pre>
 The Greek letters will be from the LGR encoded CM
-font (and will be in upright shape, except if 
+font (and will be in upright shape, except if
  <i>italic</i> was among
  the  <span class="mono">mathastext</span> options). <br>
 <li>The previous trick works for (pdf)LaTeX as well as for XeLaTeX or LuaLaTeX.
@@ -367,11 +392,11 @@ font (and will be in upright shape, except if
   designed for polytonic Greek in text mode). After
   loading <span class="mono">mathastext</span> with option LGRgreek one should
   take note  that <span class="mono">\varphi</span> and other `var' letters
- (except <span class="mono">\varsigma</span>) are not provided by this encoding, so the package does not make any specific assignments to such `var' macros. 
+ (except <span class="mono">\varsigma</span>) are not provided by this encoding, so the package does not make any specific assignments to such `var' macros.
 </li>
 </ul><br></li>
 <!--
-<li>Known limitations and bugs: 
+<li>Known limitations and bugs:
 <ul>
 <li>Some characters from fonts having complex ligature rules may not
 display correctly in math mode (here is
@@ -410,17 +435,17 @@ an <a href="showcase.html#fc">example</a>).</li>
 2012/10/25 1.15g improvements in \#,\&,\$,\%; code cleaned up and better documented.
 2012/12/20 1.2   extended scope of the math alphabets; automatic space before
                  the derivative glyph; documentation improved.
-2013/12/31 1.2b  automatic italic corrections in math mode. 
+2013/12/31 1.2b  automatic italic corrections in math mode.
 2013/01/10 1.2e  remaining technical issues with active characters in v1.2 and v1.2b
                  solved; extended test files, documentation, and source code comments
-2013/09/02 1.3   new command \MTsetmathskips. 
+2013/09/02 1.3   new command \MTsetmathskips.
 2013/12/14 1.3c  mechanism of "inheritance" in the declaration of mathastext math versions.
                  starred variant of \MTversion leaves untouched the text font.
 2014/05/23 1.3d  new commands \MTstandardgreek and \MTcustomgreek.
 2015/09/10 1.3e  bugfix (option nosmalldelims badly redefined \lbrace and \rbrace).
-2015/09/12 1.3f  Info rather than Warning viz. amsmath's \resetMathstrut@.
+2015/09/12 1.3f  info rather than warning viz. amsmath's \resetMathstrut@.
                  self extracting README.md with Markdown syntax.
-2015/10/15 1.3g  Compatibility patch with LaTeX 2015/10/01 regarding LuaLaTeX.
+2015/10/15 1.3g  compatibility patch with LaTeX 2015/10/01 regarding LuaLaTeX.
 2015/10/31 1.3h  bugfix regarding options symbolgreek/selfGreek/selfGreeks.
 2016/01/06 1.3i  compatibility layer with \url's use of math mode.
 2016/01/15 1.3j  stronger subdued mode and related under-the-hood changes.
@@ -433,6 +458,11 @@ an <a href="showcase.html#fc">example</a>).</li>
                  no more redefinitions of \i and \j, only \imath and \jmath.
 2019/08/20 1.3u  support for math versions with varying font encodings.
 2019/09/19 1.3v  robust and protected math macros to match LaTeX 2019-10-01
+2019/11/16 1.3w  workaround to a (provisory) LaTeX+amsmath bug regarding
+                 math accents
+2022/11/04 1.3y  options ncccomma, binarysemicolon and frenchmath*.
+                 with LGRgreek: \...up and \...it variants for Greek letters
+                 and \mathgreekup/\mathgreekit alphabets.
 </pre>
 </li>
 </ul>
@@ -440,10 +470,10 @@ an <a href="showcase.html#fc">example</a>).</li>
 
 
 <p>
-    <a href="http://validator.w3.org/check?uri=referer"><img style="border:0;width:88px;height:31px"
-    src="valid-html401-blue.png"
-    alt="Valid HTML 4.01 Transitional"></a>
+    <a href="http://validator.w3.org/check?uri=referer"><img
+      src="http://www.w3.org/Icons/valid-html401-blue"
+      alt="Valid HTML 4.01 Transitional" height="31" width="88"></a>
 </p>
 
-</body> 
+</body>
 </html>

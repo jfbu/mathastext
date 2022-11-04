@@ -1,6 +1,60 @@
 MATHASTEXT CHANGE LOG
 =====================
 
+1.3y \[2022/11/04\]
+----
+
+(the 1.3x had an annoying documentation bug, and had already
+been pushed to CTAN, hence the version increase to 1.3y)
+
+* mathastext now requires the `\expanded` primitive (which is
+  available with all major engines since TeXLive 2019).
+
+* Revisit parts of the documentation (mainly
+  the Examples, and the section on Greek letters) and shuffle
+  the other parts to surely improve things. Mention
+  the [mathfont](https://ctan.org/pkg/mathfont)
+  and [frenchmath](https://ctan.org/pkg/frenchmath) packages.
+
+* Add the `ncccomma` option which loads the
+  [ncccomma](https://ctan.org/pkg/ncccomma)
+  package to allow the comma as decimal separator.
+
+* Add the `binarysemicolon` option to let the semi-colon
+  be of type `\mathbin`, not `\mathpunct`.
+
+* Add the `frenchmath*` option which does all three of
+  `frenchmath`, `ncccomma` and `binarysemicolon`.
+
+* Under the `LGRgreek` and `LGRgreeks` options only:
+
+  - make available upright and italic Greek letters in math mode
+    via `\alphaup`, `\alphait`, ...  control sequences, in
+    addition to those not using such postfixed-names.
+
+  - add `\mathgreekup` and `\mathgreekit` math alphabets.
+
+  - add `\MTgreekupdefault` and `\MTgreekitdefault`.  The former
+    replaces `\updefault` which was used in some places and since
+    LaTeX 2020-02-02 caused systematic Font Warnings about the
+    substitution of `up` by `n`.
+
+  These new features required an extensive internal refactoring
+  which is expected to not induce changes to most existing
+  documents.  But it may induce changes to those using some
+  unusual configuration in the preamble, as made possible via the
+  package macros; this can apply only to documents authored by
+  those few people who actually read the documentation.  For full
+  details make sure to read the PDF documentation about this
+  change.
+
+* Fix "`\Digamma` under `LGRgreek` option uses the shape for
+  lowercase not uppercase Greek".
+
+* Fix some incongruities in log messages related to Greek
+  letters and emitted during math version creation in the
+  preamble.
+
 1.3w \[2019/11/16\]
 ----
 
@@ -342,7 +396,7 @@ MATHASTEXT CHANGE LOG
 
 * the amsmath `\resetMathstrut@`, which is incompatible with a
   mathematically active parenthesis ( is now modified only if
-  necessary (i.e. only when `\MTnonlettersobeymathxx` is issued) and
+  necessary (i.e.\@ only when `\MTnonlettersobeymathxx` is issued) and
   is restored to its original value if not needed anymore (i.e.
   after `\MTnonlettersdonotobeymathxx`, as for example when
   switching to the normal version under option subdued).
