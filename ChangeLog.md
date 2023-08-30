@@ -1,6 +1,12 @@
 MATHASTEXT CHANGE LOG
 =====================
 
+1.3z \[2023/09/01\]
+----
+
+Fix 1.3y regression which broke `selfGreek` option due to internal
+renamings.  Thanks to Stephan Korell for report.
+
 1.3y \[2022/11/04\]
 ----
 

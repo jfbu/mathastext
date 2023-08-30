@@ -1,9 +1,9 @@
-% -*- coding: iso-latin-1; time-stamp-format: "%02d-%02m-%:y at %02H:%02M:%02S %Z" -*-
+% -*- coding: iso-latin-1; time-stamp-format: "%02d-%02m-%:y at %02H:%02M:%02S %Z"; time-stamp-active: nil -*-
 % N.B.: this dtx file does NOT use \DocInput, it only uses docstrip.
 % The LaTeX source of the documentation is NOT prefixed with %'s.
 %<*dtx>
-\def\dtxtimestamp {Time-stamp: <04-11-2022 at 12:36:29 CET>}
-\def\docdate{2022/11/04}
+\def\dtxtimestamp {Time-stamp: <30-08-2023 at 21:41:24 CEST>}
+\def\docdate{2023/09/01}
 % To extract run etex on this file, then to build documentation run
 % latexmk on mathastext.tex then dvipdfmx on the dvi.
 % For more information see v13/INSTALL.txt
@@ -11,8 +11,8 @@
 % due to usage of § (<A7>) as an active character.
 %</dtx>
 %<*drv>
-\def\MSTpkgdate    {2022/11/04}
-\def\MSTpkgversion {1.3y}
+\def\MSTpkgdate    {2023/09/01}
+\def\MSTpkgversion {1.3z}
 %</drv>
 %<*dtx>
 \iffalse % meta-comment
@@ -30,11 +30,11 @@
 This Work may be distributed and/or modified under the conditions
 of the [LPPL1.3c](http://www.latex-project.org/lppl/lppl-1-3c.txt)
 
-The Author of this Work is Jean-Francois B.
+The Author of this Work is Jean-Francois B. (`2589111+jfbu@users.noreply.github.com`)
 
-Copyright (C) 2011-2019, 2022 Jean-Francois B. (`2589111+jfbu@users.noreply.github.com`)
+Copyright (C) 2011-2016, 2018, 2019, 2022, 2023 Jean-Francois B.
 
-      Source: mathastext.dtx 1.3y 2022/11/04
+      Source: mathastext.dtx 1.3z 2023/09/01
 
 %</readme>
 %<*dtx>
@@ -44,9 +44,10 @@ Copyright (C) 2011-2019, 2022 Jean-Francois B. (`2589111+jfbu@users.noreply.gith
 %%----------------------------------------------------------------
 %% Package: mathastext
 %% Info:    Use the text font in math mode (JFB)
-%% Version: 1.3y 2022/11/04
+%% Version: 1.3z 2023/09/01
 %% License: LPPL 1.3c (http://www.latex-project.org/lppl/lppl-1-3c.txt)
-%% Copyright (C) 2011-2019, 2022 Jean-Francois B. <2589111+jfbu@users.noreply.github.com>
+%% Copyright (C) 2011-2016, 2018, 2019, 2022, 2023 Jean-Francois B.
+%%                                                <2589111+jfbu@users.noreply.github.com>
 %% Examples of use of mathastext:
 %%        mathastext.html
 %%        showcase.html
@@ -199,6 +200,12 @@ MATHASTEXT CHANGE LOG
 
 %</changelog>
 %<*readme|changelog>
+1.3z \[2023/09/01\]
+----
+
+Fix 1.3y regression which broke `selfGreek` option due to internal
+renamings.  Thanks to Stephan Korell for report.
+
 1.3y \[2022/11/04\]
 ----
 
@@ -1413,7 +1420,7 @@ $\mathnormal{ff}$, $\mathrm{ff}$, $\mathit{ff}$, $\mathbf{ff}$, $\mathtt{ff}$
 %<*dtx>
 ^^Afi^^Aendgroup % end of big \iffalse block including generated files
 % customization should be done in mathastext.tex, not here.
-\documentclass[abstract]{scrartcl}
+\documentclass{scrartcl}
 \makeatletter
 %%% START OF CUSTOM doc.sty LOADING (May 21, 2022 in xint.dtx)
 %%% (October 29, 2022 here, comments trimmed)
@@ -1533,8 +1540,10 @@ $\mathnormal{ff}$, $\mathrm{ff}$, $\mathit{ff}$, $\mathbf{ff}$, $\mathtt{ff}$
 \SetSymbolFont{largesymbols}{bold}{OMX}{txex}{bx}{n}
 \DeclareFontSubstitution{OMX}{txex}{m}{n}
 
-% in order to cancel the removal done by ltxdoc
-% of comment characters inside verbatim blocks.
+% in order to cancel the removal of comment characters
+% inside verbatim blocks caused by doc.sty's redefinition
+% of \@verbatim (a macro which is not used by tagging code,
+% by the way)
 \makeatletter\let\check@percent\relax\makeatother
 
 \usepackage{color}
@@ -1546,15 +1555,13 @@ $\mathnormal{ff}$, $\mathrm{ff}$, $\mathit{ff}$, $\mathbf{ff}$, $\mathtt{ff}$
 
 \usepackage[hscale=0.66]{geometry}
 
-\usepackage[pdfencoding=pdfdoc]{hyperref}
+\usepackage{hyperref}
 
 \hypersetup{linktoc=all,%
-%hidelinks,%
 colorlinks=true,%
-breaklinks=true,%
 linkcolor={blue},%
 urlcolor={joli},
-pdfauthor={Jean-Fran\c cois B.},%
+pdfauthor={Jean-François B.},%
 pdftitle={The mathastext package},%
 pdfsubject={LaTeX, math fonts},%
 pdfkeywords={LaTeX, Fonts},%
@@ -1580,7 +1587,7 @@ pdfpagemode=UseOutlines,%
 % plus loin \@jfendshrtverb
 \catcode`\§=13
 \makeatletter
-\def§{\begingroup
+\def§{\leavevmode\begingroup
            \let\do\@makeother\dospecials
       \@jfendshrtverb }
 \def\@jfendshrtverb #1#2§{\hyperref[#2]{\ttfamily\hyphenchar\font=127 #1#2}\endgroup}
@@ -1591,13 +1598,14 @@ pdfpagemode=UseOutlines,%
 {mathastext}\xspace}
 
 \let\oldexists\exists\let\oldforall\forall
-
+\let\originalbullet\bullet
 \usepackage[subdued,%
             asterisk,%
             defaultmathsizes,%
             symbolmisc,symbolre,%
             LGRgreek]{mathastext}
-
+\let\symbolbullet\bullet
+\let\bullet\originalbullet
 % This version will use the mlmodern font which is current
 % last loaded font package in preamble
 \Mathastext[upright]
@@ -2335,7 +2343,7 @@ reasons of PDF file size.}%
 
 \subsection{Main options}
 
-   \subsubsection{The \blueit{italic} option}
+   \subsubsection[The italic option]{The \blueit{italic} option}
 
 In the initial version |1.0|, the Latin letters in
 mathematical mode assumed the exact same shape as in
@@ -2363,7 +2371,7 @@ traditional French mathematical typography.\footnote{more precisely
 stated, the value of \cs{shapedefault} is used.}
 
 
-\subsubsection{The \blueit{defaultmathsizes} option}
+\subsubsection[The defaultmathsizes option]{The \blueit{defaultmathsizes} option}
 
 The default sizes give for subscripts of subscripts barely legible glyphs
 (author's opinion!). So \mst makes more reasonable choices. It  also
@@ -2371,7 +2379,7 @@ redefines \cs{Huge} and defines a \cs{HUGE} size, copied from
 the |moresize| package. To cancel all of this use option
 §defaultmathsizes§.
 
-\subsubsection{The \blueit{subdued} option}\label{sec:subdued}
+\subsubsection[The subdued option]{The \blueit{subdued} option}\label{sec:subdued}
 
 This option was introduced in |v1.15|.\RightNote{1.15} It provides a manner to
 switch on the \mst-\emph{ification} only for limited portions of
@@ -2446,7 +2454,7 @@ the subdued \mst will pick them up in the same font as used for
 operator names, which for example in the case of the \emph{euler} package, is
 the main document font.
 
-\subsubsection{The \blueit{LGRgreek} option}
+\subsubsection[The LGRgreek option]{The \blueit{LGRgreek} option}
 
   There is the issue of Greek letters. Sometimes the text font has
   Greek glyphs, in |LGR| encoding%
@@ -2531,7 +2539,7 @@ text.
 \begin{document}
 \end{verbatim}
 
-\subsubsection{using \mst with \href{https://ctan.org/pkg/beamer}{beamer}}\label{ssec:beamer}
+\subsubsection[using \mst with beamer]{using \mst with \href{https://ctan.org/pkg/beamer}{beamer}}\label{ssec:beamer}
 
 %\noindent\llap{\textcolor{green}{\bfseries 2015/02/26}\hspace{1em}}
 
@@ -2590,7 +2598,7 @@ with release |3.34| of \href{https://ctan.org/pkg/beamer}{beamer}%
   |LY1|.
 \end{framed}
 
-\subsubsection{using \mst with \href{https://ctan.org/pkg/frenchmath}{frenchmath}}\label{ssec:frenchmath}
+\subsubsection[using \mst with frenchmath]{using \mst with \href{https://ctan.org/pkg/frenchmath}{frenchmath}}\label{ssec:frenchmath}
 
 To use \mst concurrently with the
 \href{https://ctan.org/pkg/frenchmath}{frenchmath} package%
@@ -3254,11 +3262,12 @@ correction:\par
 \rlap{\texttt{text italic in math}}\break
 $abcdefghijklmnopqrstuvwxyz$\hfill
 \rlap{\texttt{math italic in math}}\break
-  {\usefont{OML}{cmm}{m}{it}abcdefghijklmnopqrstuvwxyz}\hfill 
+  {\usefont{OML}{mlmm}{m}{it}abcdefghijklmnopqrstuvwxyz}\hfill 
 \rlap{\texttt{math italic in text}}\par} 
 Where are our italic corrections gone? the last line
-was done with \cs{usefont\{OML\}\{lmm\}\{m\}\{it\}} and confirms that italic
-corrections have been used for the math italic in math.
+was done with \cs{usefont\{OML\}\{mlmm\}\{m\}\{it\}} and the
+line before that using math mode is longer and confirms that italic
+corrections have been used for the math italic in math mode.
 
 Turning to the \TeX book (and its Appendix G) we learn that in such
 circumstances, for the italic corrections to be put in from the font, one of its
@@ -3416,18 +3425,15 @@ $\mathit{f_i^i}$\par $\mathrm{f_i^i}$
 \emph{Comment out the} |fontspec| \emph{line and use pdf\LaTeX{}. All
   three outputs are different on my \TeX{} installation. \XeTeX{} does not have
   the italic corrections. \LuaLaTeX{} does, but only for the italic font.
-  pdf\LaTeX{} has them for both the italic and the upright font.%
-\footnotemark}
-%\tracingmacros1 % pour extraire le -0.5em du code de scrartcl...
-\footnotetext {2016/11/04: the situation hasn't changed,
+  pdf\LaTeX{} has them for both the italic and the upright font.}%
+\footnote{2016/11/04: the situation hasn't changed,
 at least on current TL2016.
 
 \noindent\kern-0.5em\relax2022/10/29: no change with current TL2022.}
-%\tracingmacros0
 
 % For more see
 % \url{http://tex.stackexchange.com/a/337076} which explores also the differences
-% between the two Unicode engines regarding italic corrections in pure text mode.}
+% between the two Unicode engines regarding italic corrections in pure text mode.
 
 \subsection{Extra  glue after \texorpdfstring{\cs{exists}}{\textbackslash
 exists}, \texorpdfstring{\cs{forall}}{\textbackslash forall}, and before the prime glyph}
@@ -4232,7 +4238,7 @@ all the glyphs of the Euler font, if option |eulergreek| (or
   \cs{neg}~$\neg$ \cs{clubsuit}~$\clubsuit$ \cs{diamondsuit}~$\diamondsuit$
   \cs{heartsuit}~$\heartsuit$ \cs{spadesuit}~$\spadesuit$
   \cs{smallint}~$\smallint$ \cs{wedge}~$\wedge$ \cs{vee}~$\vee$ \cs{cap}~$\cap$
-  \cs{cup}~$\cup$ \cs{bullet}~$\bullet$ \cs{div}~$\div$ \cs{otimes}~$\otimes$
+  \cs{cup}~$\cup$ \cs{bullet}~$\symbolbullet$ \cs{div}~$\div$ \cs{otimes}~$\otimes$
   \cs{oplus}~$\oplus$ \cs{pm}~$\pm$ \cs{ast}~$\ast$ \cs{times}~$\times$
   \cs{proptopsy}~$\proptopsy$ \cs{mid}~$\mid$ \cs{leq}~$\leq$ \cs{geq}~$\geq$
   \cs{approx}~$\approx$ \cs{supset}~$\supset$ \cs{subset}~$\subset$
@@ -4479,8 +4485,8 @@ Formerly, it was set to |0mu|.} In the case of the option |italic|, the
   (without the quotes).  See
   \autoref{sec:newgreek}.
 
-  This command can also be defined \emph{prior} to loading the package.
-  Indeed it is defined this way:
+  This command can also be defined \emph{prior} to loading the package,
+  as the package itself only does:
   \centeredline{|\providecommand*\MTgreekupdefault{n}|}
 
 \item §\MTgreekitdefault§:\RLNote{new:}{1.3x} a command with
@@ -4492,8 +4498,8 @@ Formerly, it was set to |0mu|.} In the case of the option |italic|, the
   (without the quotes).
   See \autoref{sec:newgreek}.
 
-  This command can also be used \emph{prior} to loading the package.
-  Indeed it is defined this way:
+  This command can also be defined \emph{prior} to loading the package,
+  as the package itself only does:
   \centeredline{|\providecommand*\MTgreekitdefault{it}|}
 \end{enumerate}
 
@@ -4976,16 +4982,10 @@ Numerous examples will be found there:\\
 \parindent \z@ \parfillskip \@flushglue \parskip \tw@\p@
 \let \do \@makeother \dospecials \catcode`\ =10 }
 
-% et donc on ne fait pas \obeylines
+% et donc on ne fait pas \obeylines, ni \@noligs
 \def\endverbatim{}
 \let\@vobeyspaces\relax
 
-\begingroup \catcode `|=0 \catcode `[= 1 \catcode`]=2 
-\catcode `\{=12 \catcode `\}=12 \catcode`\\=12 
-|long|gdef|@xverbatim#1\end{verbatim}[#1|end[verbatim]]
-|endgroup
-
-% \end{verbatim} Fix du font-locking de AUCTeX (11.89.6)
 % 2015/09/10 -- 2015/09/12
 % Dorénavant README.md (et possiblement un CHANGES.txt ou CHANGES.md)
 % sont auto-extraits du .dtx.
@@ -5093,7 +5093,7 @@ Numerous examples will be found there:\\
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage {mathastext}
-  [2022/11/04 v1.3y Use the text font in math mode (JFB)]
+  [2023/09/01 v1.3z Use the text font in math mode (JFB)]
 %    \end{macrocode}
 % \LaTeX{} |2019-10-01| release has made robust math macros such as the math
 % accents and \cs{hbar}. 
@@ -6497,48 +6497,52 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %   package; to be examined next time --- which may be a long time in
 %   future!).
 %
+%   Unfortunately the |1.3x/1.3y| did some internal renamings here (using
+%   |@lgr@| in macro names in place of |@greek@|) which were not everywhere
+%   followed up, and this broke the |selfGreek| option.  Fixed at |1.3z|.
+%
 %    \begin{macrocode}
 \providecommand*\MTgreekupdefault{n}
 \providecommand*\MTgreekitdefault{it}
-\newif\ifmst@lgr@lower@up
-\newif\ifmst@lgr@upper@up
+\newif\ifmst@greek@lower@up
+\newif\ifmst@greek@upper@up
 \def\mst@update@greeksh{
-    \def\mst@lgr@lsh{\mst@ltsh}
-    \def\mst@lgr@ush{\mst@opsh}
-      \mst@lgr@lower@uptrue
+    \def\mst@greek@lsh{\mst@ltsh}
+    \def\mst@greek@ush{\mst@opsh}
+      \mst@greek@lower@uptrue
       \expandafter\in@\expanded{{\mst@ltsh.}}{it.,sl.}%
-      \ifin@\mst@lgr@lower@upfalse\fi
-      \mst@lgr@upper@uptrue
+      \ifin@\mst@greek@lower@upfalse\fi
+      \mst@greek@upper@uptrue
       \expandafter\in@\expanded{{\mst@opsh.}}{it.,sl.}%
-      \ifin@\mst@lgr@upper@upfalse\fi
+      \ifin@\mst@greek@upper@upfalse\fi
     \ifmst@itgreek
-      \def\mst@lgr@lsh{\MTgreekitdefault}
-      \def\mst@lgr@ush{\MTgreekitdefault}
-        \mst@lgr@lower@upfalse
-        \mst@lgr@upper@upfalse
+      \def\mst@greek@lsh{\MTgreekitdefault}
+      \def\mst@greek@ush{\MTgreekitdefault}
+        \mst@greek@lower@upfalse
+        \mst@greek@upper@upfalse
     \fi
     \ifmst@upgreek
-      \def\mst@lgr@lsh{\MTgreekupdefault}
-      \def\mst@lgr@ush{\MTgreekupdefault}
-        \mst@lgr@lower@uptrue
-        \mst@lgr@upper@uptrue
+      \def\mst@greek@lsh{\MTgreekupdefault}
+      \def\mst@greek@ush{\MTgreekupdefault}
+        \mst@greek@lower@uptrue
+        \mst@greek@upper@uptrue
     \fi
     \ifmst@frenchmath
       \ifmst@itgreek\else
       \ifmst@upgreek\else
-        \def\mst@lgr@lsh{\mst@opsh}
-        \def\mst@lgr@ush{\mst@opsh}
-          \mst@lgr@lower@uptrue
-          \mst@lgr@upper@uptrue
+        \def\mst@greek@lsh{\mst@opsh}
+        \def\mst@greek@ush{\mst@opsh}
+          \mst@greek@lower@uptrue
+          \mst@greek@upper@uptrue
       \fi\fi
     \fi
     \ifcase\mst@greek@select
         \or
-          \def\mst@lgr@ush{\MTgreekitdefault}
-            \mst@lgr@upper@upfalse
+          \def\mst@greek@ush{\MTgreekitdefault}
+            \mst@greek@upper@upfalse
        \or
-          \def\mst@lgr@ush{\MTgreekupdefault}
-            \mst@lgr@upper@uptrue
+          \def\mst@greek@ush{\MTgreekupdefault}
+            \mst@greek@upper@uptrue
     \fi
 }
 \mst@update@greeksh
@@ -7880,33 +7884,33 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
   \DeclareMathSymbol{\Psiit}{\mathalpha}{mtgreekit}{89}
   \DeclareMathSymbol{\Omegait}{\mathalpha}{mtgreekit}{87}
   %
-  \def\mst@Alpha{\ifmst@lgr@upper@up\Alphaup\else\Alphait\fi}%
-  \def\mst@Beta{\ifmst@lgr@upper@up\Betaup\else\Betait\fi}%
-  \def\mst@Epsilon{\ifmst@lgr@upper@up\Epsilonup\else\Epsilonit\fi}%
-  \def\mst@Zeta{\ifmst@lgr@upper@up\Zetaup\else\Zetait\fi}%
-  \def\mst@Eta{\ifmst@lgr@upper@up\Etaup\else\Etait\fi}%
-  \def\mst@Iota{\ifmst@lgr@upper@up\Iotaup\else\Iotait\fi}%
-  \def\mst@Kappa{\ifmst@lgr@upper@up\Kappaup\else\Kappait\fi}%
-  \def\mst@Mu{\ifmst@lgr@upper@up\Muup\else\Muit\fi}%
-  \def\mst@Nu{\ifmst@lgr@upper@up\Nuup\else\Nuit\fi}%
-  \def\mst@Omicron{\ifmst@lgr@upper@up\Omicronup\else\Omicronit\fi}%
-  \def\mst@Rho{\ifmst@lgr@upper@up\Rhoup\else\Rhoit\fi}%
-  \def\mst@Tau{\ifmst@lgr@upper@up\Tauup\else\Tauit\fi}%
-  \def\mst@Chi{\ifmst@lgr@upper@up\Chiup\else\Chiit\fi}%
+  \def\mst@Alpha{\ifmst@greek@upper@up\Alphaup\else\Alphait\fi}%
+  \def\mst@Beta{\ifmst@greek@upper@up\Betaup\else\Betait\fi}%
+  \def\mst@Epsilon{\ifmst@greek@upper@up\Epsilonup\else\Epsilonit\fi}%
+  \def\mst@Zeta{\ifmst@greek@upper@up\Zetaup\else\Zetait\fi}%
+  \def\mst@Eta{\ifmst@greek@upper@up\Etaup\else\Etait\fi}%
+  \def\mst@Iota{\ifmst@greek@upper@up\Iotaup\else\Iotait\fi}%
+  \def\mst@Kappa{\ifmst@greek@upper@up\Kappaup\else\Kappait\fi}%
+  \def\mst@Mu{\ifmst@greek@upper@up\Muup\else\Muit\fi}%
+  \def\mst@Nu{\ifmst@greek@upper@up\Nuup\else\Nuit\fi}%
+  \def\mst@Omicron{\ifmst@greek@upper@up\Omicronup\else\Omicronit\fi}%
+  \def\mst@Rho{\ifmst@greek@upper@up\Rhoup\else\Rhoit\fi}%
+  \def\mst@Tau{\ifmst@greek@upper@up\Tauup\else\Tauit\fi}%
+  \def\mst@Chi{\ifmst@greek@upper@up\Chiup\else\Chiit\fi}%
   %
-  \def\mst@Digamma{\ifmst@lgr@upper@up\Digammaup\else\Digammait\fi}%
+  \def\mst@Digamma{\ifmst@greek@upper@up\Digammaup\else\Digammait\fi}%
   %
-  \def\mst@Gamma{\ifmst@lgr@upper@up\Gammaup\else\Gammait\fi}%
-  \def\mst@Delta{\ifmst@lgr@upper@up\Deltaup\else\Deltait\fi}%
-  \def\mst@Theta{\ifmst@lgr@upper@up\Thetaup\else\Thetait\fi}%
-  \def\mst@Lambda{\ifmst@lgr@upper@up\Lambdaup\else\Lambdait\fi}%
-  \def\mst@Xi{\ifmst@lgr@upper@up\Xiup\else\Xiit\fi}%
-  \def\mst@Pi{\ifmst@lgr@upper@up\Piup\else\Piit\fi}%
-  \def\mst@Sigma{\ifmst@lgr@upper@up\Sigmaup\else\Sigmait\fi}%
-  \def\mst@Upsilon{\ifmst@lgr@upper@up\Upsilonup\else\Upsilonit\fi}%
-  \def\mst@Phi{\ifmst@lgr@upper@up\Phiup\else\Phiit\fi}%
-  \def\mst@Psi{\ifmst@lgr@upper@up\Psiup\else\Psiit\fi}%
-  \def\mst@Omega{\ifmst@lgr@upper@up\Omegaup\else\Omegait\fi}%
+  \def\mst@Gamma{\ifmst@greek@upper@up\Gammaup\else\Gammait\fi}%
+  \def\mst@Delta{\ifmst@greek@upper@up\Deltaup\else\Deltait\fi}%
+  \def\mst@Theta{\ifmst@greek@upper@up\Thetaup\else\Thetait\fi}%
+  \def\mst@Lambda{\ifmst@greek@upper@up\Lambdaup\else\Lambdait\fi}%
+  \def\mst@Xi{\ifmst@greek@upper@up\Xiup\else\Xiit\fi}%
+  \def\mst@Pi{\ifmst@greek@upper@up\Piup\else\Piit\fi}%
+  \def\mst@Sigma{\ifmst@greek@upper@up\Sigmaup\else\Sigmait\fi}%
+  \def\mst@Upsilon{\ifmst@greek@upper@up\Upsilonup\else\Upsilonit\fi}%
+  \def\mst@Phi{\ifmst@greek@upper@up\Phiup\else\Phiit\fi}%
+  \def\mst@Psi{\ifmst@greek@upper@up\Psiup\else\Psiit\fi}%
+  \def\mst@Omega{\ifmst@greek@upper@up\Omegaup\else\Omegait\fi}%
   %
   \DeclareMathSymbol{\alphaup}{\mathalpha}{mtgreekup}{97}
   \DeclareMathSymbol{\betaup}{\mathalpha}{mtgreekup}{98}
@@ -7965,33 +7969,33 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
   \DeclareMathSymbol{\digammait}{\mathalpha}{mtgreekit}{147}
   \DeclareMathSymbol{\varsigmait}{\mathalpha}{mtgreekit}{99}
   %
-  \def\mst@alpha{\ifmst@lgr@lower@up\alphaup\else\alphait\fi}%
-  \def\mst@beta{\ifmst@lgr@lower@up\betaup\else\betait\fi}%
-  \def\mst@gamma{\ifmst@lgr@lower@up\gammaup\else\gammait\fi}%
-  \def\mst@delta{\ifmst@lgr@lower@up\deltaup\else\deltait\fi}%
-  \def\mst@epsilon{\ifmst@lgr@lower@up\epsilonup\else\epsilonit\fi}%
-  \def\mst@zeta{\ifmst@lgr@lower@up\zetaup\else\zetait\fi}%
-  \def\mst@eta{\ifmst@lgr@lower@up\etaup\else\etait\fi}%
-  \def\mst@theta{\ifmst@lgr@lower@up\thetaup\else\thetait\fi}%
-  \def\mst@iota{\ifmst@lgr@lower@up\iotaup\else\iotait\fi}%
-  \def\mst@kappa{\ifmst@lgr@lower@up\kappaup\else\kappait\fi}%
-  \def\mst@lambda{\ifmst@lgr@lower@up\lambdaup\else\lambdait\fi}%
-  \def\mst@mu{\ifmst@lgr@lower@up\muup\else\muit\fi}%
-  \def\mst@nu{\ifmst@lgr@lower@up\nuup\else\nuit\fi}%
-  \def\mst@xi{\ifmst@lgr@lower@up\xiup\else\xiit\fi}%
-  \def\mst@omicron{\ifmst@lgr@lower@up\omicronup\else\omicronit\fi}%
-  \def\mst@pi{\ifmst@lgr@lower@up\piup\else\piit\fi}%
-  \def\mst@rho{\ifmst@lgr@lower@up\rhoup\else\rhoit\fi}%
-  \def\mst@sigma{\ifmst@lgr@lower@up\sigmaup\else\sigmait\fi}%
-  \def\mst@tau{\ifmst@lgr@lower@up\tauup\else\tauit\fi}%
-  \def\mst@upsilon{\ifmst@lgr@lower@up\upsilonup\else\upsilonit\fi}%
-  \def\mst@phi{\ifmst@lgr@lower@up\phiup\else\phiit\fi}%
-  \def\mst@chi{\ifmst@lgr@lower@up\chiup\else\chiit\fi}%
-  \def\mst@psi{\ifmst@lgr@lower@up\psiup\else\psiit\fi}%
-  \def\mst@omega{\ifmst@lgr@lower@up\omegaup\else\omegait\fi}%
+  \def\mst@alpha{\ifmst@greek@lower@up\alphaup\else\alphait\fi}%
+  \def\mst@beta{\ifmst@greek@lower@up\betaup\else\betait\fi}%
+  \def\mst@gamma{\ifmst@greek@lower@up\gammaup\else\gammait\fi}%
+  \def\mst@delta{\ifmst@greek@lower@up\deltaup\else\deltait\fi}%
+  \def\mst@epsilon{\ifmst@greek@lower@up\epsilonup\else\epsilonit\fi}%
+  \def\mst@zeta{\ifmst@greek@lower@up\zetaup\else\zetait\fi}%
+  \def\mst@eta{\ifmst@greek@lower@up\etaup\else\etait\fi}%
+  \def\mst@theta{\ifmst@greek@lower@up\thetaup\else\thetait\fi}%
+  \def\mst@iota{\ifmst@greek@lower@up\iotaup\else\iotait\fi}%
+  \def\mst@kappa{\ifmst@greek@lower@up\kappaup\else\kappait\fi}%
+  \def\mst@lambda{\ifmst@greek@lower@up\lambdaup\else\lambdait\fi}%
+  \def\mst@mu{\ifmst@greek@lower@up\muup\else\muit\fi}%
+  \def\mst@nu{\ifmst@greek@lower@up\nuup\else\nuit\fi}%
+  \def\mst@xi{\ifmst@greek@lower@up\xiup\else\xiit\fi}%
+  \def\mst@omicron{\ifmst@greek@lower@up\omicronup\else\omicronit\fi}%
+  \def\mst@pi{\ifmst@greek@lower@up\piup\else\piit\fi}%
+  \def\mst@rho{\ifmst@greek@lower@up\rhoup\else\rhoit\fi}%
+  \def\mst@sigma{\ifmst@greek@lower@up\sigmaup\else\sigmait\fi}%
+  \def\mst@tau{\ifmst@greek@lower@up\tauup\else\tauit\fi}%
+  \def\mst@upsilon{\ifmst@greek@lower@up\upsilonup\else\upsilonit\fi}%
+  \def\mst@phi{\ifmst@greek@lower@up\phiup\else\phiit\fi}%
+  \def\mst@chi{\ifmst@greek@lower@up\chiup\else\chiit\fi}%
+  \def\mst@psi{\ifmst@greek@lower@up\psiup\else\psiit\fi}%
+  \def\mst@omega{\ifmst@greek@lower@up\omegaup\else\omegait\fi}%
     %
-  \def\mst@digamma{\ifmst@lgr@lower@up\digammaup\else\digammait\fi}%
-  \def\mst@varsigma{\ifmst@lgr@lower@up\varsigmaup\else\varsigmait\fi}%
+  \def\mst@digamma{\ifmst@greek@lower@up\digammaup\else\digammait\fi}%
+  \def\mst@varsigma{\ifmst@greek@lower@up\varsigmaup\else\varsigmait\fi}%
 \fi
 %    \end{macrocode}
 % \end{macro}
@@ -8681,40 +8685,40 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %    \begin{macrocode}
   \def\mst@greek@lsh@loc{\csname mst@ltshape@\mst@version\endcsname}%
   \def\mst@greek@ush@loc{\csname mst@shape@\mst@version\endcsname}%
-  \mst@lgr@lower@uptrue
+  \mst@greek@lower@uptrue
       \expandafter\in@\expanded{{\mst@greek@lsh@loc.}}{it.,sl.}%
-      \ifin@\mst@lgr@lower@upfalse\fi
-  \mst@lgr@upper@uptrue
+      \ifin@\mst@greek@lower@upfalse\fi
+  \mst@greek@upper@uptrue
       \expandafter\in@\expanded{{\mst@greek@ush@loc.}}{it.,sl.}%
-      \ifin@\mst@lgr@upper@upfalse\fi
+      \ifin@\mst@greek@upper@upfalse\fi
   \ifmst@itgreek
     \def\mst@greek@lsh@loc{\MTgreekitdefault}%
     \def\mst@greek@ush@loc{\MTgreekitdefault}%
-      \mst@lgr@lower@upfalse
-      \mst@lgr@upper@upfalse
+      \mst@greek@lower@upfalse
+      \mst@greek@upper@upfalse
   \fi
   \ifmst@upgreek
     \def\mst@greek@lsh@loc{\MTgreekupdefault}%
     \def\mst@greek@ush@loc{\MTgreekupdefault}%
-      \mst@lgr@lower@uptrue
-      \mst@lgr@upper@uptrue
+      \mst@greek@lower@uptrue
+      \mst@greek@upper@uptrue
   \fi
   \ifmst@frenchmath
       \ifmst@itgreek\else
       \ifmst@upgreek\else
         \def\mst@greek@lsh@loc{\csname mst@shape@\mst@version\endcsname}%
         \def\mst@greek@ush@loc{\csname mst@shape@\mst@version\endcsname}%
-        \mst@lgr@lower@uptrue
-        \mst@lgr@upper@uptrue
+        \mst@greek@lower@uptrue
+        \mst@greek@upper@uptrue
       \fi\fi
   \fi
   \ifcase\mst@greek@select
         \or
           \def\mst@greek@ush@loc{\MTgreekitdefault}%
-          \mst@lgr@upper@upfalse
+          \mst@greek@upper@upfalse
         \or
           \def\mst@greek@ush@loc{\MTgreekupdefault}%
-          \mst@lgr@upper@uptrue
+          \mst@greek@upper@uptrue
   \fi
   \ifmst@LGRgreeks
     \SetSymbolFont{mtgreekup}{#2}{LGR}{#4}{#5}{\MTgreekupdefault}%
@@ -8725,14 +8729,14 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %  Also |1.3x| fixes some strange log messages which did not recall
 %  the math version name and referred to `non subdued versions' (strange).
 %    \begin{macrocode}
-    \expandafter\let\csname ifmst@lgr@\mst@version @upper@up\expandafter\endcsname
-                    \csname ifmst@lgr@upper@up\endcsname
-    \expandafter\let\csname ifmst@lgr@\mst@version @lower@up\expandafter\endcsname
-                    \csname ifmst@lgr@lower@up\endcsname
+    \expandafter\let\csname ifmst@greek@\mst@version @upper@up\expandafter\endcsname
+                    \csname ifmst@greek@upper@up\endcsname
+    \expandafter\let\csname ifmst@greek@\mst@version @lower@up\expandafter\endcsname
+                    \csname ifmst@greek@lower@up\endcsname
     \typeout{** Greek letters (upper:
-      `\ifmst@lgr@upper@up\MTgreekupdefault\else\MTgreekitdefault\fi\string',
+      `\ifmst@greek@upper@up\MTgreekupdefault\else\MTgreekitdefault\fi\string',
                                lower:
-      `\ifmst@lgr@lower@up\MTgreekupdefault\else\MTgreekitdefault\fi\string')
+      `\ifmst@greek@lower@up\MTgreekupdefault\else\MTgreekitdefault\fi\string')
                 will use
                 font family `#4\string' (LGR)^^J**
                 in mathastext math version `\mst@version\string'.}%
@@ -8750,14 +8754,14 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %  This is where the shape of uppercase/lowercase Greek letters is recorded,
 %  for \cs{MTversion}'s triggered \cs{MTcustomgreek} to do the right thing.
 %    \begin{macrocode}
-      \expandafter\let\csname ifmst@lgr@\mst@version @upper@up\expandafter\endcsname
-                      \csname ifmst@lgr@upper@up\endcsname
-      \expandafter\let\csname ifmst@lgr@\mst@version @lower@up\expandafter\endcsname
-                      \csname ifmst@lgr@lower@up\endcsname
+      \expandafter\let\csname ifmst@greek@\mst@version @upper@up\expandafter\endcsname
+                      \csname ifmst@greek@upper@up\endcsname
+      \expandafter\let\csname ifmst@greek@\mst@version @lower@up\expandafter\endcsname
+                      \csname ifmst@greek@lower@up\endcsname
       \typeout{** Greek letters (upper:
-      `\ifmst@lgr@upper@up\MTgreekupdefault\else\MTgreekitdefault\fi\string',
+      `\ifmst@greek@upper@up\MTgreekupdefault\else\MTgreekitdefault\fi\string',
                                  lower:
-      `\ifmst@lgr@lower@up\MTgreekupdefault\else\MTgreekitdefault\fi\string')
+      `\ifmst@greek@lower@up\MTgreekupdefault\else\MTgreekitdefault\fi\string')
                will use font family `\mst@greekfont\string' (LGR)^^J**
                in mathastext math version `\mst@version\string'.}%
     \else
@@ -8968,10 +8972,10 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %    \end{macrocode}
 % |1.3x| addition for \cs{MTcustomgreek} under |LGRgreeks| option.
 %    \begin{macrocode}
-    \expandafter\let\csname ifmst@lgr@upper@up\expandafter\endcsname
-                    \csname ifmst@lgr@\math@version @upper@up\endcsname
-    \expandafter\let\csname ifmst@lgr@lower@up\expandafter\endcsname
-                    \csname ifmst@lgr@\math@version @lower@up\endcsname
+    \expandafter\let\csname ifmst@greek@upper@up\expandafter\endcsname
+                    \csname ifmst@greek@\math@version @upper@up\endcsname
+    \expandafter\let\csname ifmst@greek@lower@up\expandafter\endcsname
+                    \csname ifmst@greek@\math@version @lower@up\endcsname
           \MTcustomgreek
           \mst@nonsubduedhbar
           \mst@nonsubduedinodot
@@ -8983,10 +8987,10 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %    \end{macrocode}
 % |1.3x| addition for \cs{MTcustomgreek} under |LGRgreek| option.
 %    \begin{macrocode}
-    \expandafter\let\csname ifmst@lgr@upper@up\expandafter\endcsname
-                    \csname ifmst@lgr@\math@version @upper@up\endcsname
-    \expandafter\let\csname ifmst@lgr@lower@up\expandafter\endcsname
-                    \csname ifmst@lgr@\math@version @lower@up\endcsname
+    \expandafter\let\csname ifmst@greek@upper@up\expandafter\endcsname
+                    \csname ifmst@greek@\math@version @upper@up\endcsname
+    \expandafter\let\csname ifmst@greek@lower@up\expandafter\endcsname
+                    \csname ifmst@greek@\math@version @lower@up\endcsname
       \MTcustomgreek % new with 1.3d
       \mst@nonsubduedhbar
       \mst@nonsubduedinodot
@@ -9257,9 +9261,9 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
    \mst@encoding@normal/\mst@family@normal/\mst@series@normal%
                (\mst@boldvariant@normal)/\mst@ltshape@normal}%
    \ifmst@LGRgreek\typeout{** Greek letters (upper:
-      `\ifmst@lgr@upper@up\MTgreekupdefault\else\MTgreekitdefault\fi\string',
+      `\ifmst@greek@upper@up\MTgreekupdefault\else\MTgreekitdefault\fi\string',
                                              lower:
-      `\ifmst@lgr@lower@up\MTgreekupdefault\else\MTgreekitdefault\fi\string')
+      `\ifmst@greek@lower@up\MTgreekupdefault\else\MTgreekitdefault\fi\string')
       will use font family `\mst@greekfont\string' (LGR)}%
    \fi
    \ifmst@nodigits\else

@@ -10,11 +10,11 @@
 This Work may be distributed and/or modified under the conditions
 of the [LPPL1.3c](http://www.latex-project.org/lppl/lppl-1-3c.txt)
 
-The Author of this Work is Jean-Francois B.
+The Author of this Work is Jean-Francois B. (`2589111+jfbu@users.noreply.github.com`)
 
-Copyright (C) 2011-2019, 2022 Jean-Francois B. (`2589111+jfbu@users.noreply.github.com`)
+Copyright (C) 2011-2016, 2018, 2019, 2022, 2023 Jean-Francois B.
 
-      Source: mathastext.dtx 1.3y 2022/11/04
+      Source: mathastext.dtx 1.3z 2023/09/01
 
 
 DESCRIPTION
@@ -81,6 +81,12 @@ Main options: `italic`, `subdued`, `LGRgreek`.
 
 RECENT CHANGES
 ==============
+
+1.3z \[2023/09/01\]
+----
+
+Fix 1.3y regression which broke `selfGreek` option due to internal
+renamings.  Thanks to Stephan Korell for report.
 
 1.3y \[2022/11/04\]
 ----
