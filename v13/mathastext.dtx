@@ -2,8 +2,8 @@
 % N.B.: this dtx file does NOT use \DocInput, it only uses docstrip.
 % The LaTeX source of the documentation is NOT prefixed with %'s.
 %<*dtx>
-\def\dtxtimestamp {Time-stamp: <30-08-2023 at 21:41:24 CEST>}
-\def\docdate{2023/09/01}
+\def\dtxtimestamp {Time-stamp: <21-12-2023 at 13:22:21 CET>}
+\def\docdate{2023/12/20}
 % To extract run etex on this file, then to build documentation run
 % latexmk on mathastext.tex then dvipdfmx on the dvi.
 % For more information see v13/INSTALL.txt
@@ -11,8 +11,8 @@
 % due to usage of § (<A7>) as an active character.
 %</dtx>
 %<*drv>
-\def\MSTpkgdate    {2023/09/01}
-\def\MSTpkgversion {1.3z}
+\def\MSTpkgdate    {2023/12/20}
+\def\MSTpkgversion {1.3za}
 %</drv>
 %<*dtx>
 \iffalse % meta-comment
@@ -34,7 +34,7 @@ The Author of this Work is Jean-Francois B. (`2589111+jfbu@users.noreply.github.
 
 Copyright (C) 2011-2016, 2018, 2019, 2022, 2023 Jean-Francois B.
 
-      Source: mathastext.dtx 1.3z 2023/09/01
+      Source: mathastext.dtx 1.3za 2023/12/20
 
 %</readme>
 %<*dtx>
@@ -44,7 +44,7 @@ Copyright (C) 2011-2016, 2018, 2019, 2022, 2023 Jean-Francois B.
 %%----------------------------------------------------------------
 %% Package: mathastext
 %% Info:    Use the text font in math mode (JFB)
-%% Version: 1.3z 2023/09/01
+%% Version: 1.3za 2023/12/20
 %% License: LPPL 1.3c (http://www.latex-project.org/lppl/lppl-1-3c.txt)
 %% Copyright (C) 2011-2016, 2018, 2019, 2022, 2023 Jean-Francois B.
 %%                                                <2589111+jfbu@users.noreply.github.com>
@@ -200,6 +200,34 @@ MATHASTEXT CHANGE LOG
 
 %</changelog>
 %<*readme|changelog>
+1.3za \[2023/12/20\]
+-----
+
+* Under `LGRgreek` and `LGRgreeks` options, new math alphabets
+  `\mathgreekupbold` and `\mathgreekitbold`.
+
+* New options `LGRgreek+` and `LGRgreeks+`.
+
+  Thanks to Holger Gerhardt for feature request and code ideas.
+  Please find and read the relevant documentation in the PDF.
+
+* The meaning of `defaultalphabets` and related individual
+  options such as `defaultbf` has been modified (reverted to pre
+  `1.15f` release): even under these options, the package always
+  creates `\mathnormalbold`, `\Mathnormal`, `\Mathrm`, `\Mathbf`
+  etc..., commands.  This may break documents which used these
+  options in order to reserve these command names.  This was done
+  with some hesitancy, but for the sake of internal logical
+  coherence.
+
+* Fix an obscure bug with no real consequences regarding
+  interaction of `subdued` with `LGRgreek` and `\MTgreekfont`.
+  See the `LGRgreek` documentation in the complete list of
+  options for details.
+
+* Fix long-standing hyperlink problems in the documentation:
+  blue color words should now all be functioning hyperlinks.
+
 1.3z \[2023/09/01\]
 ----
 
@@ -1419,6 +1447,11 @@ $\mathnormal{ff}$, $\mathrm{ff}$, $\mathit{ff}$, $\mathbf{ff}$, $\mathtt{ff}$
 %</alphabets>
 %<*dtx>
 ^^Afi^^Aendgroup % end of big \iffalse block including generated files
+% Removal of the *sfixed found in tex/latex/mlmodern/omxmlmex.fd
+\DeclareFontFamily{OMX}{mlmex}{}
+\DeclareFontShape{OMX}{mlmex}{m}{n}{%
+   <->mlmex10%
+   }{}
 % customization should be done in mathastext.tex, not here.
 \documentclass{scrartcl}
 \makeatletter
@@ -1549,6 +1582,7 @@ $\mathnormal{ff}$, $\mathrm{ff}$, $\mathit{ff}$, $\mathbf{ff}$, $\mathtt{ff}$
 \usepackage{color}
 \definecolor{DarkMagenta}{RGB}{139,0,139} 
 \definecolor{joli}{RGB}{225,95,0}
+\definecolor{monmarron}{RGB}{136,24,24}
 \usepackage{xspace}
 %\usepackage{metalogo}% on utilise dejà hologo
 \usepackage{framed}
@@ -1579,6 +1613,7 @@ pdfpagemode=UseOutlines,%
         {\hyperref[#1]{\ttfamily\hyphenchar\font=127 \char`\\#1}}
 
 \newcommand*\blueit[1]{\texorpdfstring{\blueitaux #1\relax}{#1}}
+% utiliser \texttt plutôt que \ttfamily ?
 \def\blueitaux #1#2\relax{\hyperref[#2]{\ttfamily #1#2}}
 
 % 2 septembre 2013, 22:25
@@ -1599,11 +1634,17 @@ pdfpagemode=UseOutlines,%
 
 \let\oldexists\exists\let\oldforall\forall
 \let\originalbullet\bullet
+
+% MEMO: due to LGRgreek option, symbol font alphabets mtgreekup and mtgreekit
+% are declared using the \familydefault at times of loading so here mlmr.
+% It is not important that mlmr does not exist in LGR encoding, because
+% we will not use the \mathgreekup or \mathgreekit alphabet in the subdued
+% normal math versions, and besides the Greek letters are left untouched.
 \usepackage[subdued,%
             asterisk,%
             defaultmathsizes,%
             symbolmisc,symbolre,%
-            LGRgreek]{mathastext}
+            LGRgreek+]{mathastext}
 \let\symbolbullet\bullet
 \let\bullet\originalbullet
 % This version will use the mlmodern font which is current
@@ -1644,14 +1685,15 @@ pdfpagemode=UseOutlines,%
 \MTseries{bx}
 \Mathastext[timesbold][bold]
 
-\usepackage[scaled]{helvet}
-\MTfamily{\sfdefault}
+\usepackage[scaled]{helvet}% attention modifie \sfdefault
+\MTfamily{\sfdefault}% phv
 \MTlettershape{it}
 \MTseries{m}
 \MTitgreek
 \MTgreekfont{cmss}
 \Mathastext[helvet]
 
+\renewcommand{\ttdefault}{mlmtt}
 \MTfamily{LibertinusSerif-TLF}
 \MTlettershape{n}
 \MTseries{m}
@@ -1660,10 +1702,11 @@ pdfpagemode=UseOutlines,%
 \Mathastext[libertinus]
 \MTseries{sb}
 % attention je veux pas courier quand je ferai \texttt avec cette version
-% donc
-\renewcommand{\ttdefault}{mlmtt}
+% donc (a été déplacé plus haut)
+% \renewcommand{\ttdefault}{mlmtt}
 \Mathastext[libertinussemibold]
 
+% la ligne suivante semble superflue maintenant
 \renewcommand\familydefault\sfdefault% attention that it is phv at this stage
 
 % pas nécessaire car je fais \MTversion{normal} après \begin{document}
@@ -2006,23 +2049,41 @@ and \emph{before} \mst.
 \item[math alphabets:] 
   \begin{itemize}
   \item We define a new math alphabet command
-    \cs{mathnormalbold} which gives direct access to
-    the bold version of the \cs{mathnormal} alphabet
+    §\mathnormalbold§ which gives direct access to
+    the bold version of the §\mathnormal§ alphabet
     (rather than using either the \cs{bm} command from
     the |bm| package or the \cs{boldsymbol} command
     from the |amsbsy| package). As it does not
     exist in the default \LaTeX{} math font set-up, this
     alphabet is \emph{not} subjected to the {subdued option} action.
-  \item The other math alphabet changing commands
-    defined by the package are \cs{MathEulerBold},
-    \cs{MathEuler} and \cs{MathPSymbol}.
-  \item \cs{mathnormal}, \cs{mathrm}, \cs{mathbf},
-  \cs{mathit}, \cs{mathsf} and \cs{mathtt} are modified
-  to make reference to the document text fonts (this
-  can be disabled by suitable package options).
-\item \RLNote{new:}{1.3x}§\mathgreekup§ and §\mathgreekit§ are math alphabets
-  modifying the shape of Greek letters, only available under
-  §LGRgreek§ (or §LGRgreeks§) option.
+  \item Depending on options, further math alphabet commands
+    are defined by the package: §\MathEulerBold§,
+    §\MathEuler§, §\MathPSymbol§, and since |1.3x| under
+    the §LGRgreek§ family of options also
+    §\mathgreekup§ and §\mathgreekit§.
+  \item \RLNote{new:}{1.3za}Addition of §\mathgreekupbold§ and
+    §\mathgreekitbold§ under the §LGRgreek§ family of options. 
+  \item §\mathnormal§, §\mathrm§, §\mathbf§, §\mathit§,
+    §\mathsf§ and §\mathtt§ are modified to use the \mst-ified
+    text fonts; this can be disabled via §defaultalphabets§ and
+    related individual options, but the package always provides
+    §\Mathnormal§, §\Mathrm§, etc..., to match the \mst font
+    configuration (\RLNote{changed:}{1.3za}prior to |1.3za|
+    §defaultalphabets§ and related options also caused the \mst
+    alphabet commands not to be defined).  Recall that there may
+    arise a ``too many math alphabets'' error if too many of these
+    commands are \emph{used} in the document: 
+    \emph{declaring} them is not by itself the cause of the error.  See the
+    \LaTeX\ news entry of its \texttt{2021-11-15} release for
+    the counter \texttt{localmathalphabets} (with default value 2)
+    which can be now be used if one hits such a difficulty.
+
+    Please\RLNote{new:}{1.3za} note that in case of the
+    §LGRgreek+§ option which enhances Greek letters with a
+    specific behavior when in the arguments of some of these
+    commands, this works only with the lowercase named commands,
+    not with the ones having an uppercase initial.  See \autoref{sec:newgreekplus}.
+    
 \item version |1.2| of \mst has extended the scope of the math
   alphabets to apply to non-alphabetical characters and to
   operator names. This respects the automatic white spaces
@@ -2335,7 +2396,7 @@ and has added an example using the Libertinus font in type-1 format%
 %
 although there is an existing accompanying math font%
 \footnote{Michael \textsc{Sharpe}, \emph{A Type 1 font and \LaTeX\ support for Libertinus
-    Math}, \url{https://ctan.org/pkg/libertinust1math}. Note that it is then highly
+    Math},\\ \url{https://ctan.org/pkg/libertinust1math}. Note that it is then highly
 advantageous to use \texttt{latex+dvipdfmx} and not \texttt{pdflatex} for
 reasons of PDF file size.}%
 .%
@@ -2343,7 +2404,7 @@ reasons of PDF file size.}%
 
 \subsection{Main options}
 
-   \subsubsection[The italic option]{The \blueit{italic} option}
+   \subsubsection{The \blueit{italic} option}
 
 In the initial version |1.0|, the Latin letters in
 mathematical mode assumed the exact same shape as in
@@ -2831,6 +2892,12 @@ provided by \mst:
  If you use the §italic§ option note that the italic Greek
  letters from the |cbfonts| are not the same glyphs as 
   the default Greek letters from the |OML| encoded font |cmmi|.
+\item[§LGRgreek+§:] \RLNote{new:}{1.3za}extends §LGRgreek§ to allow abusive
+  usage of \cs{mathrm} and alike commands with Greek letters.
+  This is very much not in the spirit (especially with traditional
+  ``8bit'' \TeX\ fonts) of the \LaTeX\ kernel concept of math alphabet
+  commands. Check \autoref{sec:newgreekplus} for
+  relevant information.
 \item[§eulergreek§:] the Greek letters will be taken from the Euler font (the
   document does not have to load the eulervm package, \mst directly uses
   some file included in this package, as it provides a mechanism to scale
@@ -2845,10 +2912,10 @@ provided by \mst:
   not have to be |OT1|.
 \end{description}
 
-There is also §LGRgreeks§ which tells \mst to pick up in each math
-version the letters from the |LGR| encoded font used in that version,
-and §selfGreeks§ to tell \mst to do as for §selfGreek§ but
-separately in all math versions. 
+There is also §LGRgreeks§ (and §LGRgreeks+§) which tells \mst to
+pick up in each math version the letters from the |LGR| encoded
+font used in that version, and §selfGreeks§ to tell \mst to do
+as for §selfGreek§ but separately in all math versions.
 
 Under the §subdued§ option the Greek letters in the normal and bold math
 versions are kept to their defaults as found at the time of loading the
@@ -2904,55 +2971,47 @@ from the lowest to the highest priority:
 \end{description}
 
 So, the default gives the classic \TeX{} behavior when option §italic§
-was passed. Each call to \cs{Mathastext} (or \cs{MathastextWillUse})
-macros (described in a later section) reinitializes the computation of
-the shapes.
+was passed.
 
-The commands §\MTitgreek§, §\MTupgreek§, §\MTitGreek§ and §\MTupGreek§ were
-added at |1.15c|, they act like the options with the analogous names, as if
-these options were activated only at time of use of these commands in the
-preamble, prior to some §\Mathastext§, or
-§\Mathastext§\oarg{math\_version}, or §\MTDeclareVersion§.
-
-\begin{framed}
-  These commands have some effect only if one of the §LGRgreek§, §LGRgreeks§,
-  §selfGreek§ or §selfGreeks§ options was passed to the package.
-
-  Once anyone of these commands has been made use of, changes in the shape
-  configuration of the Latin letters for new math versions (or prior to using
-  §\Mathastext§ to redefine the default configuration) via §\MTlettershape§,
-  or to the shape of letters of operator names via §\MTshape§ (or via the
-  arguments of §\MTDeclareVersion§), will stop being kept in sync with the
-  shape of the Greek letters.  The shape of the Greek letters will respond
-  only to the way \mst-math versions (or default behaviour if using
-  §\Mathastext§ in the preamble) are subsequently re-configured via usage of
-  the §\MTitgreek§, §\MTupgreek§, §\MTitGreek§ and §\MTupGreek§ commands in
-  the preamble.
-\end{framed}
+% on comprend pas bien ce que ça veut dire.
+%  Each call to \cs{Mathastext} (or \cs{MathastextWillUse})
+% macros (described in a later section) reinitializes the computation of
+% the shapes.
 
 As mentioned already the package allows to define various ``math
-versions''. In the case of §eulergreek§ or §symbolgreek§ they apply
-to all these versions. In the case of the options §LGRgreeks§ or
-§selfGreeks§ (notice the additional ``s''), each math version is
-assumed to have its text font available in |LGR| (or |OT1|
-encoding) and also the shapes will be local to the math version.
+versions''.  There are commands to be used inside the preamble to
+influence the shapes, and even the font, used for Greek letters
+in each given \mst-declared math version: §\MTitgreek§,
+§\MTupgreek§, §\MTitGreek§, §\MTupGreek§ and
+§\MTgreekfont§|{name_of_font}|.
 
-Finally version |1.15c| of \mst introduces new preamble-only
-commands to change the shapes, and even the font, used for Greek
-letters, in case of package options §LGRgreek§/§selfGreek§. They
-are §\MTitgreek§, §\MTupgreek§, §\MTitGreek§, §\MTupGreek§: these
-are used like the options and change only the shapes for the math
-versions which will be declared \emph{next} in the preamble; and
-§\MTgreekfont§|{name_of_font}| will tell the \emph{next} math
-versions to use that font family. To use this command you need to
-know the (little) name of a suitable font family available in |LGR|
-encoding: for example |lmr|, |txr| (needs |txfontsb|
-package on your system), |DejaVuSerif-TLF| (needs |dejavu| package
-on your system), etc\dots
+Their effect is as the options of the alike name, except that
+the effect applies only to \mst-math versions declared
+\emph{next} in the preamble (be it via §\Mathastext§ or
+§\MTDeclareVersion§).
 
-\subsubsection{New with \texttt{1.3x}: alphabets \cs{mathgreekup} and
-  \cs{mathgreekit}, control sequences to access directly upright or italic
-  Greek letters}
+To use §\MTgreekfont§ you need to know the name of a suitable
+font family available in |LGR| encoding: for example |lmr|,
+|txr| (needs |txfontsb| package on your system),
+|DejaVuSerif-TLF| (needs |dejavu| package on your system),
+etc\dots
+
+\begin{framed}
+  §\MTitgreek§, §\MTupgreek§, §\MTitGreek§, §\MTupGreek§
+  have some effect only if one of the §LGRgreek§, §LGRgreeks§,
+  §selfGreek§ or §selfGreeks§ options was passed to the package.
+
+  Once any of these commands has been made use of, changes in the shape
+  configuration of the Latin letters will stop having any influence on the
+  shape of the Greek letters.
+
+  §\MTgreekfont§ has an effect only for §LGRgreek§ and §selfGreek§.  It is
+  without any effect with §LGRgreeks§ and §selfGreeks§.
+\end{framed}
+
+
+\subsubsection{Control sequences to access directly upright or italic
+  shape for Greek under \texttt{LGRgreek} option}
 \label{sec:newgreek}
 
 Some changes were made at |1.3x| to enhance the §LGRgreek§ (and §LGRgreeks§)
@@ -2965,7 +3024,7 @@ by `upright' or `italic' is configured via defining §\MTgreekupdefault§ and
 §\MTgreekitdefault§ respectively.  Their default definitions are to expand to
 `|n|' and `|it|' respectively.
 
-See\RLNote{new:}{1.3x} the \autoref{table:greekup} and \autoref{table:greekit}
+See\RightNote{1.3x} the \autoref{table:greekup} and \autoref{table:greekit}
 for illustrations (using here the Libertinus Serif font).
 \begin{table}[htbp]
 \MTversion{libertinus}
@@ -3110,7 +3169,7 @@ etc\dots\ options or §\MTitgreek§ et al.\@ commands.  This is on a per \mst-enri
 math version basis, depending only on how the options or commands were used
 in the preamble.
 
-Furthermore\RLNote{new:}{1.3x} two math alphabets are provided
+Furthermore\RightNote{1.3x} two math alphabets are provided
 \centeredline{§\mathgreekup§}
 \centeredline{§\mathgreekit§}
 which can be used to map a letter to the corresponding Greek fonts.
@@ -3127,7 +3186,7 @@ was stored as a \mst-enriched math version with name |libertinussemibold|):
 \centeredline{$\mathgreekit{W}=\mathgreekit{\Omega}=\mathgreekit{\Omegaup}=\Omegait$}
 }
 
-Some\RLNote{changed!}{1.3x} refactoring%
+Some\RightNote{1.3x} refactoring%
 %
 \footnote{Technically, formerly two symbol fonts were declared, one for the
   lowercase Greek letters and one for the uppercase Greek letters; now those
@@ -3157,6 +3216,270 @@ made use of the §LGRgreek§ (or §LGRgreeks§) option will simply produce
 unmodified output.  Please report to the author unexpected results not fitting
 the above attempted description of the only partial backwards
 compatibility.
+
+
+\subsubsection{\cs{mathgreekupbold} and \cs{mathgreekitbold}}
+\label{sec:newgreekbold}
+
+Again this applies only to §LGRgreek§ and §LGRgreeks§ options (and the |1.3za|
+added §LGRgreek+§ and §LGRgreeks+§).
+
+See\RLNote{new:}{1.3za} the \autoref{table:greekupbold} and \autoref{table:greekitbold}
+for illustration of usage (in math mode only) of code such as
+\begin{verbatim}
+    \mathgreekupbold{\alpha}
+or  \mathgreekitbold{\alpha}
+\end{verbatim}
+Note that all three of  \cs{alpha}, \cs{alphaup} and \cs{alphait}
+would give the same output. 
+These two tables again use the
+Libertinus Serif font via an \mst math version which was
+configured in the preamble using this set-up (and the package §LGRgreek§
+option):
+\begin{verbatim}
+\MTfamily{LibertinusSerif-TLF}
+\MTlettershape{n}
+\MTseries{m}
+\MTgreekfont{LibertinusSerif-TLF}
+\MTupgreek
+\Mathastext[libertinus]
+\end{verbatim}
+Some examples here to illustrate the effet of the math alphabet
+commands on Latin letters also:
+{%\MTversion{libertinus}
+\centeredline{|$\mathgreekupbold{a}=\mathgreekupbold{\alpha}$|}
+\centeredline{\MTversion{libertinus}$\mathgreekupbold{a}=\mathgreekupbold{\alpha}$}
+\centeredline{|$\mathgreekupbold{G}=\mathgreekupbold{\Gamma}$|}
+\centeredline{\MTversion{libertinus}$\mathgreekupbold{G}=\mathgreekupbold{\Gamma}$}
+\centeredline{|$\mathgreekitbold{z}=\mathgreekitbold{\zeta}$|}
+\centeredline{\MTversion{libertinus}$\mathgreekitbold{z}=\mathgreekitbold{\zeta}$}
+\centeredline{|$\mathgreekitbold{W}=\mathgreekitbold{\Omega}$|}
+\centeredline{\MTversion{libertinus}$\mathgreekitbold{W}=\mathgreekitbold{\Omega}$}
+}
+
+\begin{table}[htbp]
+\MTversion{libertinus}
+\begin{framed}
+\begin{multicols}{4}
+\noindent
+\string\Alpha\ $\rightarrow\mathgreekupbold{\Alpha}$\\
+\string\Beta\ $\rightarrow\mathgreekupbold{\Beta}$\\
+\string\Gamma\ $\rightarrow\mathgreekupbold{\Gamma}$\\
+\string\Delta\ $\rightarrow\mathgreekupbold{\Delta}$\\
+\string\Epsilon\ $\rightarrow\mathgreekupbold{\Epsilon}$\\
+\string\Zeta\ $\rightarrow\mathgreekupbold{\Zeta}$\\
+\string\Eta\ $\rightarrow\mathgreekupbold{\Eta}$\\
+\string\Theta\ $\rightarrow\mathgreekupbold{\Theta}$\\
+\string\Iota\ $\rightarrow\mathgreekupbold{\Iota}$\\
+\string\Kappa\ $\rightarrow\mathgreekupbold{\Kappa}$\\
+\string\Lambda\ $\rightarrow\mathgreekupbold{\Lambda}$\\
+\string\Mu\ $\rightarrow\mathgreekupbold{\Mu}$\\
+\string\Nu\ $\rightarrow\mathgreekupbold{\Nu}$\\
+\string\Xi\ $\rightarrow\mathgreekupbold{\Xi}$\\
+\string\Omicron\ $\rightarrow\mathgreekupbold{\Omicron}$\\
+\string\Pi\ $\rightarrow\mathgreekupbold{\Pi}$\\
+\string\Rho\ $\rightarrow\mathgreekupbold{\Rho}$\\
+\string\Sigma\ $\rightarrow\mathgreekupbold{\Sigma}$\\
+\string\Tau\ $\rightarrow\mathgreekupbold{\Tau}$\\
+\string\Upsilon\ $\rightarrow\mathgreekupbold{\Upsilon}$\\
+\string\Phi\ $\rightarrow\mathgreekupbold{\Phi}$\\
+\string\Chi\ $\rightarrow\mathgreekupbold{\Chi}$\\
+\string\Psi\ $\rightarrow\mathgreekupbold{\Psi}$\\
+\string\Omega\ $\rightarrow\mathgreekupbold{\Omega}$\\
+\string\Digamma\ $\rightarrow\mathgreekupbold{\Digamma}$\\
+% \columnbreak ne fonctionne pas comme espéré
+\mbox{}\\
+\string\alpha\ $\rightarrow\mathgreekupbold{\alpha}$\\
+\string\beta\ $\rightarrow\mathgreekupbold{\beta}$\\
+\string\gamma\ $\rightarrow\mathgreekupbold{\gamma}$\\
+\string\delta\ $\rightarrow\mathgreekupbold{\delta}$\\
+\string\epsilon\ $\rightarrow\mathgreekupbold{\epsilon}$\\
+\string\zeta\ $\rightarrow\mathgreekupbold{\zeta}$\\
+\string\eta\ $\rightarrow\mathgreekupbold{\eta}$\\
+\string\theta\ $\rightarrow\mathgreekupbold{\theta}$\\
+\string\iota\ $\rightarrow\mathgreekupbold{\iota}$\\
+\string\kappa\ $\rightarrow\mathgreekupbold{\kappa}$\\
+\string\lambda\ $\rightarrow\mathgreekupbold{\lambda}$\\
+\string\mu\ $\rightarrow\mathgreekupbold{\mu}$\\
+\string\nu\ $\rightarrow\mathgreekupbold{\nu}$\\
+\string\xi\ $\rightarrow\mathgreekupbold{\xi}$\\
+\string\omicron\ $\rightarrow\mathgreekupbold{\omicron}$\\
+\string\pi\ $\rightarrow\mathgreekupbold{\pi}$\\
+\string\rho\ $\rightarrow\mathgreekupbold{\rho}$\\
+\string\sigma\ $\rightarrow\mathgreekupbold{\sigma}$\\
+\string\tau\ $\rightarrow\mathgreekupbold{\tau}$\\
+\string\upsilon\ $\rightarrow\mathgreekupbold{\upsilon}$\\
+\string\phi\ $\rightarrow\mathgreekupbold{\phi}$\\
+\string\chi\ $\rightarrow\mathgreekupbold{\chi}$\\
+\string\psi\ $\rightarrow\mathgreekupbold{\psi}$\\
+\string\omega\ $\rightarrow\mathgreekupbold{\omega}$\\
+\string\digamma\ $\rightarrow\mathgreekupbold{\digamma}$\\
+\string\varsigma\ $\rightarrow\mathgreekupbold{\varsigma}$
+\end{multicols}
+\end{framed}
+% il y a bien sûr d'horribles espacement verticaux typiques de LaTeX
+\vspace*{-\baselineskip}
+\caption{Greek control sequences in the argument of
+  \texttt{\cs{mathgreekupbold}}.}
+\label{table:greekupbold}
+\end{table}
+\begin{table}[htbp]
+\MTversion{libertinus}
+\begin{framed}
+\begin{multicols}{4}
+\noindent
+\string\Alpha\ $\rightarrow\mathgreekitbold{\Alpha}$\\
+\string\Beta\ $\rightarrow\mathgreekitbold{\Beta}$\\
+\string\Gamma\ $\rightarrow\mathgreekitbold{\Gamma}$\\
+\string\Delta\ $\rightarrow\mathgreekitbold{\Delta}$\\
+\string\Epsilon\ $\rightarrow\mathgreekitbold{\Epsilon}$\\
+\string\Zeta\ $\rightarrow\mathgreekitbold{\Zeta}$\\
+\string\Eta\ $\rightarrow\mathgreekitbold{\Eta}$\\
+\string\Theta\ $\rightarrow\mathgreekitbold{\Theta}$\\
+\string\Iota\ $\rightarrow\mathgreekitbold{\Iota}$\\
+\string\Kappa\ $\rightarrow\mathgreekitbold{\Kappa}$\\
+\string\Lambda\ $\rightarrow\mathgreekitbold{\Lambda}$\\
+\string\Mu\ $\rightarrow\mathgreekitbold{\Mu}$\\
+\string\Nu\ $\rightarrow\mathgreekitbold{\Nu}$\\
+\string\Xi\ $\rightarrow\mathgreekitbold{\Xi}$\\
+\string\Omicron\ $\rightarrow\mathgreekitbold{\Omicron}$\\
+\string\Pi\ $\rightarrow\mathgreekitbold{\Pi}$\\
+\string\Rho\ $\rightarrow\mathgreekitbold{\Rho}$\\
+\string\Sigma\ $\rightarrow\mathgreekitbold{\Sigma}$\\
+\string\Tau\ $\rightarrow\mathgreekitbold{\Tau}$\\
+\string\Upsilon\ $\rightarrow\mathgreekitbold{\Upsilon}$\\
+\string\Phi\ $\rightarrow\mathgreekitbold{\Phi}$\\
+\string\Chi\ $\rightarrow\mathgreekitbold{\Chi}$\\
+\string\Psi\ $\rightarrow\mathgreekitbold{\Psi}$\\
+\string\Omega\ $\rightarrow\mathgreekitbold{\Omega}$\\
+% \string\Digamma\ $\rightarrow\mathgreekitbold{\Digamma}$\\
+\string\Digamma\ $\rightarrow N/A$\\
+% \columnbreak ne fonctionne pas comme espéré
+\mbox{}\\
+\string\alpha\ $\rightarrow\mathgreekitbold{\alpha}$\\
+\string\beta\ $\rightarrow\mathgreekitbold{\beta}$\\
+\string\gamma\ $\rightarrow\mathgreekitbold{\gamma}$\\
+\string\delta\ $\rightarrow\mathgreekitbold{\delta}$\\
+\string\epsilon\ $\rightarrow\mathgreekitbold{\epsilon}$\\
+\string\zeta\ $\rightarrow\mathgreekitbold{\zeta}$\\
+\string\eta\ $\rightarrow\mathgreekitbold{\eta}$\\
+\string\theta\ $\rightarrow\mathgreekitbold{\theta}$\\
+\string\iota\ $\rightarrow\mathgreekitbold{\iota}$\\
+\string\kappa\ $\rightarrow\mathgreekitbold{\kappa}$\\
+\string\lambda\ $\rightarrow\mathgreekitbold{\lambda}$\\
+\string\mu\ $\rightarrow\mathgreekitbold{\mu}$\\
+\string\nu\ $\rightarrow\mathgreekitbold{\nu}$\\
+\string\xi\ $\rightarrow\mathgreekitbold{\xi}$\\
+\string\omicron\ $\rightarrow\mathgreekitbold{\omicron}$\\
+\string\pi\ $\rightarrow\mathgreekitbold{\pi}$\\
+\string\rho\ $\rightarrow\mathgreekitbold{\rho}$\\
+\string\sigma\ $\rightarrow\mathgreekitbold{\sigma}$\\
+\string\tau\ $\rightarrow\mathgreekitbold{\tau}$\\
+\string\upsilon\ $\rightarrow\mathgreekitbold{\upsilon}$\\
+\string\phi\ $\rightarrow\mathgreekitbold{\phi}$\\
+\string\chi\ $\rightarrow\mathgreekitbold{\chi}$\\
+\string\psi\ $\rightarrow\mathgreekitbold{\psi}$\\
+\string\omega\ $\rightarrow\mathgreekitbold{\omega}$\\
+% \string\digamma\ $\rightarrow\mathgreekitbold{\digamma}$\\
+\string\digamma\ $\rightarrow N/A$\\
+\string\varsigma\ $\rightarrow\mathgreekitbold{\varsigma}$
+\end{multicols}
+\end{framed}
+% il y a bien sûr d'horribles espacement verticaux typiques de LaTeX
+\vspace*{-\baselineskip}
+\caption{Greek control sequences in the argument of the
+  \texttt{\cs{mathgreekitbold}} command.  This font has
+  no bold italic Digamma nor digamma (last tested 2023/12/19).}
+\label{table:greekitbold}
+\end{table}
+% 2023/12/19 mais comme j'ai configuré Latexmk pour lever une
+% erreur en cas de "bad warning" je supprime de la source
+% le test avec \Digamma et \digamma
+
+\subsubsection{Special behavior of
+  \cs{mathrm}, \cs{mathbf}, \cs{mathit} with Greek letters via
+  the \texttt{LGRgreek+} option}
+\label{sec:newgreekplus}
+
+If option\RLNote{new:}{1.3za} §LGRgreek+§ or §LGRgreeks+§ has
+been used, \mst makes Greek letters attempt to react suitably when
+in the scope of §\mathnormal§, §\mathrm§, §\mathit§,
+§\mathbf§, and §\mathnormalbold§ (but not further math
+alphabet commands, and not when using the \mst defined commands
+named with an uppercased initial).
+
+Here is an example
+\begin{verbatim}
+\[\def\zzz{abCD\alpha\pi\Delta\Gamma}
+  \begin{array}{c}
+    \zzz\\
+    mathnormal: \mathnormal{\zzz}\\
+    mathrm: \mathrm{\zzz}\\% \mathrm on Greek is like \mathgreekup
+    mathit: \mathit{\zzz}\\% \mathit on Greek is like \mathgreekit
+    mathbf: \mathbf{\zzz}\\% \mathbf on Greek is like \mathgreekupbold
+    mathnormalbold: \mathnormalbold{\zzz}\\%
+    mathgreekup: \mathgreekup{\zzz}\\%
+    mathgreekit: \mathgreekit{\zzz}\\%
+    mathgreekupbold: \mathgreekupbold{\zzz}\\%
+    mathgreekitbold: \mathgreekitbold{\zzz}%
+  \end{array}
+\]
+\end{verbatim}
+% putain d'espacement vertical LaTeX
+%
+This will be typeset here with the same ``libertinus'' version as in the
+previous section.  Please check it there, it is reproduced verbatim.  This
+math version was configured to use upright shape for both Latin letters and
+Greek letters, which explains the output of §\mathnormal§ and
+§\mathnormalbold§ here below, and also the fact that §\mathrm§ appears to
+change nothing.  In a simple package configuration with only options §italic§
+and §LGRgreek+§ the lowercase Greek letters would be in italic by default,
+hence also in the output of §\mathnormal§ and §\mathnormalbold§.
+%
+{\MTversion{libertinus}\[\def\zzz{abCD\alpha\pi\Delta\Gamma}
+  \begin{array}{c}
+    \zzz\\
+    mathnormal: \mathnormal{\zzz}\\
+    mathrm: \mathrm{\zzz}\\% \mathrm on Greek is like \mathgreekup
+    mathit: \mathit{\zzz}\\% \mathit on Greek is like \mathgreekit
+    mathbf: \mathbf{\zzz}\\% \mathbf on Greek is like \mathgreekupbold
+    mathnormalbold: \mathnormalbold{\zzz}\\
+    mathgreekup: \mathgreekup{\zzz}\\%
+    mathgreekit: \mathgreekit{\zzz}\\%
+    mathgreekupbold: \mathgreekupbold{\zzz}\\%
+    mathgreekitbold: \mathgreekitbold{\zzz}%
+  \end{array}
+\]
+}%
+%
+The difference here with §LGRgreek§ is that with the latter the Latin
+math alphabets such as §\mathrm§, §\mathit§, §\mathbf§
+produce a Latin letter when acting on a Greek control sequence,
+as the latter are defined by \mst under §LGRgreek§ to be of
+``variable family type'' for usage with §\mathgreekup§ and §\mathgreekit§.
+
+\mst has no logical way to sync shape of Latin and Greek letters
+once usage has been made of Greek related commands.
+Hence \verb|\mathnormal| is configured to do nothing on Greek
+letters, they are as without it, whereas on Latin letters it will give to an
+uppercase letter the shape as used for lowercase letters. In the
+example above this is not visible because both lowercase and
+uppercase Latin letters were configured to be upright.
+
+Because neither \LaTeX\ nor \mst define an \cs{mathbfit}
+alphabet per default, no mechanism was added for it, but advanced
+\TeX\ hackers will be able to check the \mst source code and add
+the needed definitions.
+
+Remark: this §LGRgreek+§ functionality is considered by its author an abuse of
+the concept of a math alphabet command and required accomodating a serious
+deviation from internal logical design of \mst. I don't know if it is because
+\LaTeX\ documentations are deficient or misleading on such matters but it
+appears many \LaTeX\ users are surprised when |$\mathrm{\pi}$| does not give
+an upright pi letter but this is completely to be expected in a world with
+fonts having only 128 or 256 glyphs, and from the fact that §\mathrm§ and
+§\mathbf§ originate in Plain \TeX\ \cs{rm} and \cs{bf} and are still quite
+akin to it, they are font switching commands nothing more or less.
 
 
 \subsection{Extra spaces around letters}
@@ -3856,9 +4179,6 @@ when the earlier package had made the character `mathematically active').
 Conversely most of the set-up done by \mst may well be overruled by
 packages loaded later which do math related things.
 
-In case of a `too many math alphabets' message try the |defaultalphabets|
-option or one of its |defaultnormal|, |defaulttt|, etc\dots sub-options.
-
 Starting with version |1.2|, \mst makes some characters `mathematically
 active' to achieve certain effects: automatic insertion of the italic
 corrections when using an upright text font in math, extended scope of
@@ -3966,11 +4286,15 @@ the character was mathematically active remained true).
    
 
 % 2 septembre 2013; finalisé 22:58
+% Mardi 19 décembre 2023: l'utilisation de bleu alors que ce n'est
+% pas un lien était très mauvais.
+% New mark-up \mstopt, and \mstcmd I had been too lazy and could
+% never resolved some issues of missing hyperlinks with the trick
+% formerly used here to redefine the short verb §foo§.
 \makeatletter
-\def\@jfendshrtverb #1#2§{\@ifundefined{FLAG#2}%
-             {\color{blue}\ttfamily #1#2\endgroup
-              \global\@namedef{FLAG#2}{}\label{#2}}%
-             {\hyperref[#2]{\ttfamily #1#2}\endgroup}}
+\newcounter{machin}
+\def\mstopt#1{{\textcolor{monmarron}{#1}\refstepcounter{machin}\expandafter\label\expandafter{\@gobble#1}}}
+\def\mstcmd#1{{\textcolor{monmarron}{\ttfamily\@backslashchar#1}\label{#1}}}
 \makeatother
 
 \newsavebox\boite
@@ -3985,7 +4309,7 @@ extended sense. It is not necessary to use them to activate the package
 basic functionalities, as loading \mst is enough (except with the |subdued|
 option). 
 \begin{enumerate}[label=$\bullet$, leftmargin=1em]
-\item §\Mathastext§ (or §\mathastext§) reinitializes \mst: it sets the
+\item \mstcmd{Mathastext} (or \mstcmd{mathastext}) reinitializes \mst: it sets the
   fonts used in math mode (in versions |normal| and |bold|) for letters,
   digits and a few ascii symbols to the \emph{current} defaults of encoding,
   family, series and shape.\footnote{\texttt{\char92Mathastext} updates also
@@ -3993,10 +4317,8 @@ option).
     skips to be inserted after the symbols $\oldforall$ and $\oldexists$,
     see \emph{infra.}} Both the normal and bold math version are modified by
   this action of §\Mathastext§.
-  \begin{enumerate}[label=$\bullet$]
-  \item \textbf{math versions:} 
-    \csb{Mathastext} accepts an optional argument \oarg{name}. With
-    this (within square brackets) argument, rather than redefining the
+  \item %\textbf{math versions:} 
+    \csb{Mathastext}\oarg{version\_name} rather than redefining the
     fonts for math mode, §\Mathastext§ declares a new \emph{math version}, and
     it is this 
     math version which will use the then current text font in math
@@ -4005,14 +4327,15 @@ option).
         |\string\Mathastext[foo]| \emph{with
         |foo| equal to ``normal'' or ``bold'';} this is already taken care of by the
       initial loading of the package or a later command \cs{Mathastext}
-      without any optional argument.}
-  \item \textbf{inheritance:} starting\RightNote{1.3c} with version |1.3c| a second optional
-    argument \oarg{other\_version} will transfer its set-up for things not
-    affected by \mst action, like large symbols, to the declared math
-    version whose name was given as first optional argument. The main use
-    will be with |[bold]| in order for the symbols and large symbols to be
-    typeset as in the |bold| math version. For example, this document has in
-    its preamble:\hfill\break\begingroup\small
+      without any optional argument.  And it will be rejected.}
+  \item %\textbf{inheritance:}
+    \csb{Mathastext}\oarg{version\_name}\oarg{parent\_name}
+    declares \meta{version\_name} and configures it to inherit
+    from \meta{parent\_name} all which is not under the scope of
+    \mst, such as large symbols. The main use will be with
+    |[bold]| in order for the symbols and large symbols to be
+    typeset as in the |bold| math version. For example, this
+    document has in its preamble:\hfill\break\begingroup\small
     \begin{lrbox}{\boite}|\usepackage{newcent}% this package makes New Century the roman font|\end{lrbox}\rlap{\usebox{\boite}}\hfill\break
     |\Mathastext[newcent]% this math version will use New Century|\hfill\break
     |\MTseries{b}        % next \Mathastext will use a bold font|\hfill\break
@@ -4030,27 +4353,33 @@ option).
     |\DeclareSymbolFont{largesymbols}{OMX}{txex}{m}{n}|\hfill\break
     |\SetSymbolFont{largesymbols}{bold}{OMX}{txex}{bx}{n}|\hfill\break
     |\DeclareFontSubstitution{OMX}{txex}{m}{n}|
-  \end{enumerate}
 
-  \item §\Mathastext§ may be preceded optionally by one or
-    more of\footnote{these commands exist also with
+  \item 
+    \mstcmd{MTencoding}\marg{enc},
+    \mstcmd{MTfamily}\marg{fam},
+    \mstcmd{MTseries}\marg{ser},
+    \mstcmd{MTshape}\marg{sh}, and
+    \mstcmd{MTlettershape}\marg{sh}.%
+%
+\footnote{These commands exist also with
     long names: \texttt{\char92Mathastextencoding},
     etc\dots{} The same applies to the other commands
     mentioned in this section.}
-    §\MTencoding§\marg{enc},
-    §\MTfamily§\marg{fam},
-    §\MTseries§\marg{ser},
-    §\MTshape§\marg{sh}, and §\MTlettershape§\marg{sh}. For
-    example valid values are, respectively, \meta{T1},
-    \meta{phv}, \meta{m}, \meta{n}, and \meta{it}: this
-    is the Helvetica font in T1-encoding, regular
-    (medium) series, upright shape, and the letters
-    will be in italic shape. Once used their effect applies to all
-    succeeding calls to \cs{Mathastext}, and can only be undone by using
-    them again.
+% 
+For example valid respective arguments are, respectively, \meta{T1},
+\meta{phv}, \meta{m}, \meta{n}, and \meta{it}: this is the
+Helvetica font in T1-encoding, regular (medium) series, upright
+shape, and the letters will be in italic shape. Once used their
+effect applies to all succeeding calls to \cs{Mathastext}, and
+can only be undone by using them again with other settings, again
+followed by a call to \cs{Mathastext}.
+
+NOTE: \emph{only} if
+\cs{Mathastext} is used next (possibly with a version name as
+optional argument) will these commands have any real effect.
 
   \item
-    §\MTWillUse§\oarg{ltsh}\marg{enc}\marg{fam}\marg{ser}\marg{sh}
+    \mstcmd{MTWillUse}\oarg{ltsh}\marg{enc}\marg{fam}\marg{ser}\marg{sh}
     tells \mst to use the font with the
     specified encoding, family, series, and shape for
     the letters and digits (and all other afflicted
@@ -4059,7 +4388,7 @@ option).
     example \cs{itdefault}, or directly \meta{it} or
     \meta{sc}. 
   
-\item  §\MTDeclareVersion§\oarg{ltsh}\marg{name}\marg{enc}\marg{fam}\marg{ser}\marg{sh}\oarg{other\_version}:
+\item  \mstcmd{MTDeclareVersion}\oarg{ltsh}\marg{name}\marg{enc}\marg{fam}\marg{ser}\marg{sh}\oarg{other\_version}:
   declares that the document will have access to the font
   with the specified characteristics, under the math version name
   \meta{name}. For example:
@@ -4084,34 +4413,36 @@ option).
   version whose name was passed as optional argument (typical use will be
   with |[bold]|).
 
-\item §\MTboldvariant§\marg{var}: when used before §\Mathastext§,
+\item \mstcmd{MTboldvariant}\marg{var}: when used before §\Mathastext§,
   specifies which bold
   (|b|, |sb|, |bx|, \dots) to be used by \cs{mathbf} (and
   \cs{boldmath}). Default is the \cs{bfdefault} at the time of
   loading \mst. When used before the declaration
   of a version, decides the way \cs{mathbf} will act in this version.
-\item §\MTEulerScale§\marg{factor}: scales the Euler font by
+\item \mstcmd{MTEulerScale}\marg{factor}: scales the Euler font by
   \meta{factor}.
-\item §\MTSymbolScale§\marg{factor}: scales the Symbol font by
+\item \mstcmd{MTSymbolScale}\marg{factor}: scales the Symbol font by
   \meta{factor}.
-\item §\MTitgreek§, §\MTupgreek§, §\MTitGreek§, §\MTupGreek§: these commands
-  are active in case the \blueit{LGRgreek} option was used; they act
-  as the options of the similar names §itgreek§, §upgreek§, §itGreek§,
-  §upGreek§, but only for the Greek letters in the versions yet to be
-  defined.
-\item §\MTgreekfont§\marg{fontfamily}: a command with a mandatory argument
+\item \mstcmd{MTitgreek}, \mstcmd{MTupgreek}, \mstcmd{MTitGreek},
+  \mstcmd{MTupGreek}: these commands are active in case the \blueit{LGRgreek}
+  option was used; they act as the options of the similar names §itgreek§,
+  §upgreek§, §itGreek§, §upGreek§, but only for the Greek letters in the
+  versions yet to be defined.  Their effect become recorded only when the
+  version is declared via §\Mathastext§ or §\MTDeclareVersion§.
+\item \mstcmd{MTgreekfont}\marg{fontfamily}: a command with a mandatory argument
   which specifies the font family for Greek letters in all \mst math versions
   declared afterwards via §\Mathastext§ or §\MTDeclareVersion§. Only
-  effective if \blueit{LGRgreek} option was passed to the package.
+  effective if §LGRgreek§ (or §LGRgreek+§) or §selfGreek§ option was passed to the package.
 
+  Check the §LGRgreek§ documentation for some relevant information.
 \end{enumerate}
 
 \subsubsection{Commands for body or math}
 
 \begin{enumerate}[label=$\bullet$, leftmargin=1em]
-\item §\MTversion§\oarg{nametext}\marg{namemath},
+\item \mstcmd{MTversion}\oarg{nametext}\marg{namemath},
   §\MTversion§$\ast$\marg{namemath}, also known as
-  §\Mathastextversion§ (and as \cs{MTVersion}, and
+  \mstcmd{Mathastextversion} (and as \cs{MTVersion}, and
   \cs{mathastextversion}):
   \begin{enumerate}[label=$\bullet$]
   \item the non-starred version changes
@@ -4128,7 +4459,7 @@ option).
     set-up, which summarizes 
     what is done additionally to only using \LaTeX{}'s |\mathversion|).
   \end{enumerate}
-  \cs{MTversion}\oarg{nametext}\marg{namemath} does §\MTeverymathdefault§
+  §\MTversion§\oarg{nametext}\marg{namemath} does §\MTeverymathdefault§
   (except for |\MTversion{normal}| and |\MTversion{bold}| under package option
   |subdued|), which in particular activates the insertion of skips around
   letters specified by §\MTsetmathskips§ and also, if the font used is not
@@ -4137,12 +4468,12 @@ option).
   option the package checks separately the letter shape for lowercase and
   uppercase. 
 
-  \RightNote{1.3j}\cs{MTversion} also does §\MTexistsdoesskip§,
+  \RightNote{1.3j}§\MTversion§ also does §\MTexistsdoesskip§,
   §\MTforalldoesskip§, and also §\MTprimedoesskip§,
   \csb{MTmathoperatorsobeymathxx}, except under the |subdued| option for
   \emph{normal} and \emph{bold}, in which case it does the opposite actions.
 
-\item §\hbar§: this macro is by default redefined (in a way compatible with
+\item \mstcmd{hbar}: this macro is by default redefined (in a way compatible with
   the |italic| option) combining the |h| letter and the \={ } accent from the
   \mst font. Note that \cs{mathrm}|{\hbar}| and \cs{mathbf}|{\hbar}| will
   work and that \cs{hbar} does scale in subscripts and exponents. Since
@@ -4158,37 +4489,104 @@ option).
 \footnote{\RightNote{1.3u}The \cs{hbar} redefinition is canceled in normal and
   bold math versions under the |subdued| option.}
   
-\item §\fouriervec§: this is a |\vec| accent taken from the Fourier font;
+\item \mstcmd{fouriervec}: this is a |\vec| accent taken from the Fourier font;
 the |fourier| package need not be loaded. Active only
 if option §fouriervec§.
-\item §\pmvec§: this provides a poor man \cs{vec} accent command, for
+\item \mstcmd{pmvec}: this provides a poor man \cs{vec} accent command, for
 upright letters. It uses the right arrow. Does not change
 size in subscripts and exponents.
- \item §\mathnormal§, §\mathrm§, §\mathbf§, §\mathit§, §\mathsf§,
-§\mathtt§: modifications of the original \cs{mathnormal},
-\cs{mathrm}, \cs{mathbf}, \cs{mathit}, \cs{mathsf}, \cs{mathtt} to
-use the mathastextified font. The
-underlying internal \LaTeX{} structures related to the original
-commands are not overwritten, so the original commands can be saved under
-other names before |\usepackage{mathastext}|, to be used in case of
-necessity  (this is what option |subdued| does.) 
- \item §\mathnormalbold§: a bold version of \cs{mathnormal}. Differs
-from §\mathbf§ when the |italic| option has been used, or when use
-has been made of §\MTlettershape§ to specify a shape for letters
-distinct from the one for digits and operator names, or similarly
-when the math version has been declared via §\MTDeclareVersion§ with
-its optional parameter for shape of letters.
-\item \RLNote{new:}{1.3x}§\mathgreekup§: math alphabet, only available under
-  §LGRgreek§ (or §LGRgreeks§) option (and if with §subdued§ only in the
-  non-|normal| and non-|bold| \mst-enriched math versions) which gives access
-  to `upright' Greek letters (picked up from a font available in
-  |LGR|-encoding).  The actual shape is configurable via re-defining §\MTgreekupdefault§.
-\item \RLNote{new:}{1.3x}§\mathgreekit§: math alphabet, only available under
-  §LGRgreek§ (or §LGRgreeks§) option (and if with §subdued§ only in the
-  non-|normal| and non-|bold| \mst-enriched math versions) which gives access
-  to `italic' Greek letters (picked up from a font available in
-  |LGR|-encoding).  The actual shape is configurable via re-defining §\MTgreekitdefault§.
-\item §\inodot§, §\jnodot§: the corresponding glyphs in the \mst-ified
+\item \RLNote{new description:}{1.3za}\mstcmd{Mathnormal}, \mstcmd{Mathrm},
+  \mstcmd{Mathbf}, \mstcmd{Mathit}, \mstcmd{Mathsf}, \mstcmd{Mathtt}: they use the
+  \mst-ified fonts.  By default, \mstcmd{mathnormal}, \mstcmd{mathrm},
+  \mstcmd{mathbf}, \mstcmd{mathit}, \mstcmd{mathsf}, \mstcmd{mathtt} are redefined
+  to map to these new commands using the \mst fonts.  The option
+  §defaultalphabets§ tells to keep them with their original
+  meanings.  Alternatively the original commands can be saved
+  under other names before loading \mst: the underlying
+  architecture is not deleted by the package, and aliases
+  defined before loading \mst will work as expected.
+\item \mstcmd{mathnormalbold}: a bold version of \cs{mathnormal}, i.e. picks
+  up the math alphabet used for ascii letters as mathematical variables, but
+  in a bold weight.  When the package typesets such letters in the same shape
+  as for operator names (i.e.\@ neither §italic§ option nor the
+  §\MTlettershape§ command have been used) the output is as the one of
+  §\mathbf§.
+
+   This command is also made available under §subdued§ option in
+   the ``normal'' and ``bold'' math versions, as \LaTeX\ does not define it a
+   priori, contrarily to §\mathbf§ and other math alphabet commands.
+ \item \RightNote{1.3x}\mstcmd{mathgreekup}: math alphabet, only available
+   under §LGRgreek§ (or §LGRgreeks§) option, which gives access to `upright'
+   Greek letters (picked up from a font available in |LGR|-encoding).  Note
+   that the package also defines \cs{alphaup}, \dots, \cs{piup}, \dots\
+   mathematical character tokens, see \autoref{sec:newgreek}.  What
+   ``\texttt{up}'' shape really means may be math version dependent.  It is
+   configurable in the preamble via re-defining §\MTgreekupdefault§ and then
+   declaring the math version via §\Mathastext§ (with optional argument if for
+   a math version other than the ``normal'' one), or §\MTDeclareVersion§.  The
+   font used is also math version dependent: it is the one which was similarly
+   configured via usage of §\MTgreekfont§ prior to the §\Mathastext§ or
+   §\MTDeclareVersion§ step.  In absence of any such configuration in the
+   preamble, it will be (in all math versions) the family default at time of
+   loading the package (which thus has then to be available in \texttt{LGR}
+   encoding; it is not a problem if the family default has no \texttt{LGR}
+   support as long as suitable usage of §\MTgreekfont§ later on configures a
+   suitable font).
+
+  \RLNote{new:}{1.3za}Also \mstcmd{mathgreekupbold}.
+
+\begin{footnotesize}
+  These math alphabets are also available under §subdued§ option in the
+  ``normal'' and ``bold'' math versions, as \LaTeX\ does not (a priori) define
+  analog ones, so \mst has no reason not to leave them live.  Note though that
+  |\mathgreekup{\pi}| will work only if the original \cs{pi} is of ``variable
+  family type'' which is not the case except if some math package handling
+  Greek was used, but then why load \mst with option §LGRgreek§?
+
+  But you can use |\mathgreekup{p}| as the slot number of
+  \texttt{p} in the \LaTeX\ font for mathematical letters is the same as the slot
+  number of $\pi$ in \texttt{LGR} encoding.
+
+  Or, use rather \cs{piup} because it is not undefined by \mst in §subdued§
+  normal mode, as \LaTeX\ has no a priori definition for it.  Or use (but
+  why?) |\mathgreekup{\piit}|.
+
+  The \texttt{LGR} font family used will be the latest one configured by
+  §\MTgreekfont§ usage followed by §\Mathastext§ (\emph{without} optional
+  argument) in the preamble which is what is needed to modify the non-subdued
+  aspects of subdued ``normal'' math; if no such configuration was done, the
+  font family will be the family default found at time of loading the package.
+
+  Worse: $\Delta$ is per \LaTeX\ default of variable family type but its slot
+  number in its assigned font is not at all the one of the \texttt{LGR}
+  encoding, so |\mathgreekupbold{\Delta}| will give some unrelated
+  glyph.  This is because \mst restores the pristine \cs{Delta} in §subdued§
+  normal mode to its original meaning.  But it keeps its own defined
+  \cs{Deltaup} and \cs{Deltait}, so you can use |\mathgreekupbold{\Deltaup}|
+  for example.  Or |\mathgreekupbold{D}| as the mathematical letter \texttt{D}
+  slot number in \LaTeX\ is also the one of $\Delta$ in \texttt{LGR} encoding.
+
+  I am sorry for such lengthy explanations, but this is to comment on why \mst
+  keeps also in §subdued§ normal math some of its Greek related functionality,
+  if option §LGRgreek§ was used.  Most \mst users will not use
+  the §subdued§ option anyhow.\par
+\end{footnotesize}
+
+\item \RightNote{1.3x}\mstcmd{mathgreekit}: math alphabet, only available
+  under §LGRgreek§ (or §LGRgreeks§) option, which gives access to `italic'
+  Greek letters (picked up from a font available in |LGR|-encoding).  The
+  actual shape is configurable via re-defining §\MTgreekitdefault§ and then
+  redeclaring the math version via §\Mathastext§ (with optional argument if
+  for a math version other than the ``normal'' one), or §\MTDeclareVersion§.
+
+  \RLNote{new:}{1.3za}Also \mstcmd{mathgreekitbold}.
+
+  \begin{footnotesize}
+    See the discussion of §\mathgreekup§ for some \TeX\ hacker level
+    information on what happens with §subdued§ option 
+    in the ``normal'' (or ``bold'') math version.\par
+  \end{footnotesize}
+\item \mstcmd{inodot}, \mstcmd{jnodot}: the corresponding glyphs in the \mst-ified
   font for use in math mode. By default, |\imath| and |\jmath| are redefined to use
   them. Since \texttt{1.3t}, these macros obey the \texttt{subdued}
   regime.
@@ -4199,10 +4597,10 @@ its optional parameter for shape of letters.
   in the latter. I have decided it wasn't such a good idea and there is
   from now on \texttt{1.3t} no such redefinition of \texttt{\string\i}
   and \texttt{\string\j}!}
-\item §\MathEuler§, §\MathEulerBold§: math alphabets to access
+\item \mstcmd{MathEuler}, \mstcmd{MathEulerBold}: math alphabets to access
 all the glyphs of the Euler font, if option |eulergreek| (or
 |eulerdigits| was passed to the package.
-\item §\MathPSymbol§: math alphabet to access the Symbol font.
+\item \mstcmd{MathPSymbol}: math alphabet to access the Symbol font.
 \item when one of the options \blueit{symbolgreek},
   \blueit{eulergreek}, or \blueit{selfGreek} is passed to the package
   the capital Greek letters which look like their Latin
@@ -4317,7 +4715,7 @@ for all. The command \csb{MTeverymathoff} cancels all actions done by
 
 \DeleteShortVerb{\|}%
 
-\item §\MTsetmathskips§\marg{a-z|A-Z}\marg{muglue\_before}\marg{muglue\_after}:
+\item \mstcmd{MTsetmathskips}\marg{a-z|A-Z}\marg{muglue\_before}\marg{muglue\_after}:
 %
 \MakeShortVerb{\|}%
 %
@@ -4370,7 +4768,7 @@ for all. The command \csb{MTeverymathoff} cancels all actions done by
 
 \DeleteShortVerb{\|}
 
-\item §\MTunsetmathskips§\marg{a-z|A-Z}:
+\item \mstcmd{MTunsetmathskips}\marg{a-z|A-Z}:
 %
 \MakeShortVerb{\|}
 %
@@ -4389,7 +4787,7 @@ for all. The command \csb{MTeverymathoff} cancels all actions done by
   The argument may be a macro (or any expandable code) expanding to a letter.
 
 
-\item §\MTexistsskip§\marg{math glue}: specifies the amount of skip or more
+\item \mstcmd{MTexistsskip}\marg{math glue}: specifies the amount of skip or more
   generally glue to put after each $\oldexists$ math symbol. Indeed, upright
   letters (or digits for that matter) often appear to be positioned a bit too
   close to the quantifier: $\oldexists\mathrm{B}$. The package default is to
@@ -4404,13 +4802,13 @@ for all. The command \csb{MTeverymathoff} cancels all actions done by
 Formerly, it was set to |0mu|.} In the case of the option |italic|, the
   default skip is set to zero.
 
-\item \RightNote{1.3j}§\MTnormalexists§, §\MTexistsdoesskip§: the
+\item \RightNote{1.3j}\mstcmd{MTnormalexists}, \mstcmd{MTexistsdoesskip}: the
   latter (done by default if not |subdued|, and also on each use of
   |\MTversion| in the body of the document) makes it so that $\oldexists$
   takes into account the math glue as specified by \csb{MTexistsskip}. The
   former is its opposite.
 
-\item §\MTforallskip§\marg{math glue}: the default is to add a |.6667mu| math
+\item \mstcmd{MTforallskip}\marg{math glue}: the default is to add a |.6667mu| math
   skip after each $\oldforall$ (except with the option |italic| for which the
   default skip is set to zero). Compare $\oldforall\mskip.6667mu\mathrm{F}$
   (has the skip) with $\oldforall\mathrm{F}$ (has no skip). Use this command
@@ -4421,13 +4819,13 @@ Formerly, it was set to |0mu|.} In the case of the option |italic|, the
   case of the option |italic|, the default skip is zero for all math versions.
   One may use the command at any location in the document.
 
-\item \RightNote{1.3j}§\MTnormalforall§, §\MTforalldoesskip§: the
+\item \RightNote{1.3j}\mstcmd{MTnormalforall}, \mstcmd{MTforalldoesskip}: the
   latter (done by default if not |subdued|, and also on each use of
   |\MTversion| in the body of the document) makes it so that $\oldforall$
   takes into account the math glue as specified by \csb{MTforallskip}. The
   former is its opposite.
 
-\item §\MTprimeskip§\marg{math glue}: the default is to add a |0.5mu| skip
+\item \mstcmd{MTprimeskip}\marg{math glue}: the default is to add a |0.5mu| skip
   before the derivative glyph, except for the |italic| option. In the case of
   the option |subdued|, the skip is canceled in the \emph{normal} and
   \emph{bold} math versions.\footnote{\RightNote{1.3j}Formerly, it was set to
@@ -4439,7 +4837,7 @@ Formerly, it was set to |0mu|.} In the case of the option |italic|, the
 %     these commands are used at the beginning of the document,
 %     even under option \texttt{subdued}.}
 
-\item §\MTlowerast§\marg{dimen}: a \cs{raisebox} command is
+\item \mstcmd{MTlowerast}\marg{dimen}: a \cs{raisebox} command is
   used to lower the text asterisk to produce a reasonable math
   asterisk. The package uses this command initially with
   argument |0.3\height|, this will have to be fine-tuned for
@@ -4448,14 +4846,14 @@ Formerly, it was set to |0mu|.} In the case of the option |italic|, the
   sub-scripts and sub-sub-scripts, so it is best not to use an
   absolute dimension.
 
-\item §\MTmathoperatorsobeymathxx§, §\MTmathoperatorsdonotobeymathxx§: the
+\item \mstcmd{MTmathoperatorsobeymathxx}, \mstcmd{MTmathoperatorsdonotobeymathxx}: the
   former is done by default, it makes operator names obey math alphabets. See
   also section \ref{sec:mathxx}. This functionality \emph{does
     {\normalfont\bfseries not} rely}
   on ``math active characters''. Automatically issued by each \cs{MTversion},
   except under option |subdued| when switching to \emph{normal} or \emph{bold}.
 
-  \item §\MTcustomgreek§:\RightNote{1.3d} in case \mst has been loaded with one of its
+  \item \mstcmd{MTcustomgreek}:\RightNote{1.3d} in case \mst has been loaded with one of its
     Greek related options, this activates the corresponding
     customization of Greek letters in math mode. It is issued
     automatically by the package in the preamble (except if loaded with
@@ -4464,7 +4862,7 @@ Formerly, it was set to |0mu|.} In the case of the option |italic|, the
     versions in subdued mode). Also available as
     |\Mathastextcustomgreek|. May be used even inside of math mode.
 
-  \item §\MTstandardgreek§:\RightNote{1.3d} in case \mst was loaded with one of the Greek
+  \item \mstcmd{MTstandardgreek}:\RightNote{1.3d} in case \mst was loaded with one of the Greek
     related options this command reverts the customization, it resets the Greek
     letters to their definitions in force at package loading time. Can be used
     in the preamble, but is mainly for the document body (may even be used
@@ -4476,7 +4874,7 @@ Formerly, it was set to |0mu|.} In the case of the option |italic|, the
 \subsubsection{Expert commands which are preamble-only}
 
 \begin{enumerate}[label=$\bullet$, leftmargin=1em]
-\item §\MTgreekupdefault§:\RLNote{new:}{1.3x} a command with
+\item \mstcmd{MTgreekupdefault}:\RightNote{1.3x} a command with
   no argument whose expansion specifies, under §LGRgreek§ regime, the
   shape for the `|up|' Greek control sequences (and for the no-postfix
   Greek control sequences under §upgreek§ option) in all \mst math
@@ -4489,7 +4887,7 @@ Formerly, it was set to |0mu|.} In the case of the option |italic|, the
   as the package itself only does:
   \centeredline{|\providecommand*\MTgreekupdefault{n}|}
 
-\item §\MTgreekitdefault§:\RLNote{new:}{1.3x} a command with
+\item \mstcmd{MTgreekitdefault}:\RightNote{1.3x} a command with
   no argument whose expansion specifies, under §LGRgreek§ regime, the
   shape for the `|it|' Greek control sequences (and for the no-postfix
   Greek control sequences under §itgreek§ option) in all \mst math
@@ -4511,7 +4909,7 @@ by \mst to the \cs{everymath} and \cs{everydisplay} token list variables.
 
 \begin{enumerate}[label=$\bullet$, leftmargin=1em]
 
-\item §\MTmathactiveletters§: activates the `math activation' of Latin
+\item \mstcmd{MTmathactiveletters}: activates the `math activation' of Latin
   letters. This is done by the package during loading, except under the
   |subdued| option.\footnote{\RightNote{1.3j}Formerly, it was also executed
     from each \cs{Mathastext} in the preamble.} It is again executed in the
@@ -4524,11 +4922,11 @@ by \mst to the \cs{everymath} and \cs{everydisplay} token list variables.
   \csb{MTsetmathskips} (see section \ref{sec:mathskips}), and also possibly
   the italic corrections when using upright fonts (see section \ref{sec:ic}).
 
-\item §\MTmathstandardletters§: cancels the `math activation' of the letters.
+\item \mstcmd{MTmathstandardletters}: cancels the `math activation' of the letters.
   Must be re-issued after each \csb{MTversion}, but see
   \csb{MTeverymathdefault}.
 
-\item §\MTicinmath§: this command is executed by default by \mst except in
+\item \mstcmd{MTicinmath}: this command is executed by default by \mst except in
   case of option |subdued| or if the user chosen letter shape is oblique (|it|
   or |sl|). It tells \mst to add italic corrections after all letters in math
   mode, except within the scope of math alphabets.\footnote{\RightNote{1.3i}%
@@ -4553,11 +4951,11 @@ Formerly, italic corrections were added to the (non-oblique) letters of
   §\MTmathactiveletters§ will have an effect only if issued prior to
   entering math mode.
 
-  §\MTnoicinmath§: this command deactivates the package added
+  \mstcmd{MTnoicinmath}: this command deactivates the package added
   italic corrections. It can be used inside as well as outside
   of math mode (or in the preamble of the document).
 
-  §\MTICinmath§, §\MTnoICinmath§: these commands activate the italic
+  \mstcmd{MTICinmath}, \mstcmd{MTnoICinmath}: these commands activate the italic
   corrections only for the uppercase letters (but recall that \cs{MTicinmath}
   is done by default, thus this will typically have to follow
   \cs{MTnoicinmath}.)
@@ -4571,7 +4969,7 @@ Formerly, italic corrections were added to the (non-oblique) letters of
   % No italic corrections are explicitly added inside arguments of math
   % alphabets.
 
- §\MTicalsoinmathxx§: this command de-activates the de-activation of
+ \mstcmd{MTicalsoinmathxx}: this command de-activates the de-activation of
   the italic corrections inside the arguments to the math alphabet
   commands. 
 % apart from \cs{mathnormal}. 
@@ -4587,19 +4985,19 @@ Formerly, italic corrections were added to the (non-oblique) letters of
 
 }
 
-\item §\MTnormalasterisk§, §\MTactiveasterisk§: the latter will use for |*|
+\item \mstcmd{MTnormalasterisk}, \mstcmd{MTactiveasterisk}: the latter will use for |*|
   and |\ast| the text font asterisk, suitably lowered; the former tells \mst
   to not modify the \LaTeX\ default. Both are no-op without option
   §asterisk§.
 
-\item §\MTeasynonlettersobeymathxx§, §\MTeasynonlettersdonotobeymathxx§: the
+\item \mstcmd{MTeasynonlettersobeymathxx}, \mstcmd{MTeasynonlettersdonotobeymathxx}: the
   former is done by default, it makes characters \verb+.+, \verb+/+, \verb+|+,
   \verb+\+, \verb+#+, \verb+$+, \verb+%+, and \verb+&+
   (if not excluded by package options) obey math alphabet commands. See also
   section \ref{sec:mathxx}. This functionality does \emph{not} make the
   characters ``math active'' (but it does modify |\mathcode|'s, naturally).
 
-\item §\MTnonlettersobeymathxx§, §\MTnonlettersdonotobeymathxx§: the former
+\item \mstcmd{MTnonlettersobeymathxx}, \mstcmd{MTnonlettersdonotobeymathxx}: the former
   will make (except if excluded by relevant package options) \verb|!|,
   \verb|?|, \verb|,|, \verb|:|, \verb|;|, \verb|+|, \verb|-|, \verb|=|,
   \verb|(|, \verb|)|, \verb|[|, \verb|]|, \verb|<|, and \verb|>| obey the math
@@ -4624,12 +5022,12 @@ Formerly, italic corrections were added to the (non-oblique) letters of
     \emph{normal} or \emph{bold} math versions.
   \end{framed}
 
-\item §\MTexplicitbracesobeymathxx§: extends an earlier §\MTnonlettersobeymathxx§
+\item \mstcmd{MTexplicitbracesobeymathxx}: extends an earlier §\MTnonlettersobeymathxx§
   to also treat  \verb|\{| and \verb|\}|. But then |\left\{|, |\right\}| must
   be coded |\left\lbrace|, |\right\rbrace| rather. There is also
-  §\MTexplicitbracesdonotobeymathxx§.
+  \mstcmd{MTexplicitbracesdonotobeymathxx}.
 
-\item \RightNote{1.3j}§\MTnormalprime§, §\MTprimedoesskip§: the latter (done by default if not
+\item \RightNote{1.3j}\mstcmd{MTnormalprime}, \mstcmd{MTprimedoesskip}: the latter (done by default if not
   |subdued|, and also on each use of \csb{MTversion} in the body of the document
   except for the |subdued| \emph{normal} and \emph{bold} math version)
   makes it so that $'$ takes into account the math glue as specified by
@@ -4641,7 +5039,7 @@ Formerly, italic corrections were added to the (non-oblique) letters of
   no-op from inside math mode.
 
 
-\item \RightNote{1.3j}§\MTeverymathdefault§: this hook is executed by
+\item \RightNote{1.3j}\mstcmd{MTeverymathdefault}: this hook is executed by
   \csb{MTversion}\marg{version\_name}, except under option |subdued|
   when switching to the \emph{normal} or \emph{bold} math versions. Its
   default meaning is:
@@ -4669,7 +5067,7 @@ or \emph{bold} if |subdued| does \csb{MTforalldoesskip} and
 \csb{MTexistsdoesskip}, which are not included in \cs{MTeverymathdefault}
 actions as they are not related to \cs{everymath} and \cs{everydisplay}.\par}
 
-\item \RightNote{1.3j}§\MTeverymathoff§: does §\MTnormalasterisk§,
+\item \RightNote{1.3j}\mstcmd{MTeverymathoff}: does §\MTnormalasterisk§,
   §\MTnormalprime§, §\MTnonlettersdonotobeymathxx§,
   §\MTeasynonlettersdonotobeymathxx§, §\MTmathstandardletters§ and
   §\MTdonotfixfonts§.
@@ -4691,7 +5089,7 @@ actions as they are not related to \cs{everymath} and \cs{everydisplay}.\par}
 
 \small
 
-\item \RightNote{1.3o}§\MTfixfonts§: this is operant only under
+\item \RightNote{1.3o}\mstcmd{MTfixfonts}: this is operant only under
   \LuaLaTeX{}. It has the effect that each time math mode is entered macro
   \csb{MTfixmathfonts} will be executed. The latter forces so-called |base|
   mode for the used text font in math mode, in an effort to (only partially,
@@ -4699,7 +5097,7 @@ actions as they are not related to \cs{everymath} and \cs{everydisplay}.\par}
   Figures were in some cases not being applied in math mode when one uses text
   fonts there (text fonts are declared by \LuaTeX+|luaotfload| to use |node|
   mode, which is non-functional in math.) It is invoked automatically by the
-  package (except for |normal| and |bold| math versions under §subdued§
+  package (except for |normal| and |bold| math versions under |subdued|
   option), and in normal situations, there is no reason to use it directly.
 
 % pas envie de perdre mon temps là-dessus. D'ailleurs peut-être déjà pour
@@ -4707,7 +5105,7 @@ actions as they are not related to \cs{everymath} and \cs{everydisplay}.\par}
 
 % Notice (not tested) that package |bm| is presumably not compatible.
 
-\item \RightNote{1.3o}§\MTdonotfixfonts§: cancels the job of
+\item \RightNote{1.3o}\mstcmd{MTdonotfixfonts}: cancels the job of
   |\MTfixfonts|. Done automatically in §subdued§ mode when in the |normal| or
   |bold| math version; in normal contexts, there is no reason to use this
   command. Only operant under \LuaLaTeX.
@@ -4719,7 +5117,7 @@ actions as they are not related to \cs{everymath} and \cs{everydisplay}.\par}
 \begin{enumerate}[label=$\bullet$, leftmargin=1em]
 {\small
 \item\RightNote{1.3p}%
-§\MTfixmathfonts§: this used to be an internal package macro
+\mstcmd{MTfixmathfonts}: this used to be an internal package macro
   but it is given a public name at |1.3p| because I discovered that
   |$..\hbox{\mathversion{foo}$..$}..$| causes an
   issue and one needs to invoke again \cs{MTfixmathfonts} \emph{after} the
@@ -4733,37 +5131,42 @@ actions as they are not related to \cs{everymath} and \cs{everydisplay}.\par}
 \subsection{Summary of main options}
 
 \begin{description}
-\item[{§italic§, §frenchmath§}:] italic letters in
-math, upright uppercase if §frenchmath§.
- \item[{§subdued§}:] acts in a subdued way. The \LaTeX{} normal and bold
- math versions are left (quasi) unchanged. With version |1.15e| of
- the package this statement applies also to the math alphabets
- \cs{mathbf}, \cs{mathit}, \cs{mathsf}, and \cs{mathtt} (and not
- only to \cs{mathnormal} and \cs{mathrm} as in previous versions.)
-\item[{§LGRgreek§, §eulergreek§, §symbolgreek§}:] the
-  Greek letters will be taken, respectively from the
-  text font itself (in |LGR| encoding), or from the Euler
-  font, or from the Postscript Symbol font.
-\item[{§symbolmax§}:] all characters
+\item[{\blueit{italic}}:] tells \mst to typeset the ascii letters in math
+  using italic shape; indeed, its legacy historical default is to typeset them
+  in roman (upright) shape.
+\item[{\blueit{frenchmath}}:] lowercase ascii letters in italic shape,
+  uppercase in upright shape.  Also lets the Greek letters, if the latter are
+  under \mst influence, be upright, i.e.\@ also the lowercase ones.
+\item[{\blueit{subdued}}:] tells \mst to not change the default fonts or the math
+   alphabets for the normal and bold math versions.  The \mst-ification
+   activates only after §\MTversion§\marg{version\_name} usage in the
+   document body, where the \meta{version\_name} was declared as an \mst
+   enriched math version in the preamble via §\Mathastext§\oarg{version\_name}
+   or akin package commands.%
+\item[{\blueit{LGRgreek}, \blueit{eulergreek}, \blueit{symbolgreek}}:] the
+  Greek letters will be taken, respectively from the text font itself (which
+  must be available in |LGR| encoding), or respectively the Euler or Symbol
+  font.
+\item[{\blueit{symbolmax}}:] all characters
   other than letters and digits, are taken from the
   Symbol font. This option also makes a number of
   further glyphs available, such as some basic
   mathematical arrows, and the sum and product
   signs. For documents with very simple needs in
   mathematical symbols, \mst with option
-  §symbolmax§ may give in the end a PDF file quite
+  §symbolmax§ may give in the end a PDF file size quite
   smaller than the one one would get without the
-  package.
-\item[{§defaultmathsizes§}:] \mst sets up bigger sizes
-for subscripts (it also copies code from the |moresize| package to redefine
-  \cs{Huge} and define \cs{HUGE}). Use this option to prevent it from
-  doing so.
-\item[{§defaultalphabets§}:] by default, \mst redeclares the math
-  alphabets \cs{mathrm}, \cs{mathit}, \cs{mathtt} etc\dots{} (but not
-  \cs{mathcal} of course) to refer to the current document text fonts (at the
-  time of loading the package and in each \mst math version). Use
-  this option to prevent it from doing so (each alphabet also has
-  its own disabling option).
+  package.%
+%
+\footnote{It is even better if compiled via \texttt{latex+dvipdfmx}.}
+
+\item[{\blueit{defaultmathsizes}}:] prevents \mst from setting up, as it does
+  per default, larger subscripts and superscripts in math mode, and from
+  copying code from the |moresize| package%
+%
+\footnote{Christian \textsc{Cornelssen}, \emph{Allows font sizes up to 35.83pt}, \url{https://ctan.org/pkg/moresize}.}
+%
+  in order to redefine \cs{Huge} and define a \cs{HUGE} command.
 \end{description}
 
 \subsection{Complete list of options}
@@ -4773,17 +5176,68 @@ for subscripts (it also copies code from the |moresize| package to redefine
  and not consider all possible configurations, particularly those
  resulting from usage of the package commands in the preamble to
  configure  math versions.
+
+ Note that this list in not in alphabetical order, the items are grouped
+ roughly by themes.  So, objectively, the best for the diligent reader is to
+ read thoroughly all descriptions.
  \begin{enumerate}[label=$\bullet$, leftmargin=1em]
- \item §basic§: only mathastextify letters and digits.
- \item §subdued§: do not change the default fonts or the math alphabets in math
-   mode for the normal and bold math versions, turn on the \mst-ification only
-   after an explicit \csb{MTversion} (or \cs{mathastextversion}) command
-   activating an additional math version as declared in the preamble. With
-   option |subdued| \cs{MTversion\{normal\}} and \cs{MTversion\{bold\}} do
+ \item \mstopt{basic}: only mathastextify letters and digits.
+ \item \mstopt{subdued}:  acts in a subdued way, which means that the \LaTeX\
+  ``normal'' (default) and ``bold'' (triggered by \cs{boldmath} or
+  \cs{mathversion}|{bold}|, undone by \cs{unboldmath} or on exit from a
+  scope limiting context such as an environment) math versions are
+  left (not quite: check \autoref{sec:subdued} for specifics) unchanged and the
+  \mst action is triggered only when switching via
+  §\MTversion§\marg{version\_name} (or its starred variant) in the document
+  body to a version previously defined in the preamble via
+  §\Mathastext§\oarg{version\_name} (or alternative declarative interface such
+  as §\MTDeclareVersion§).
+%
+\footnote{Under this option
+   \cs{MTversion\{normal\}} and \cs{MTversion\{bold\}} execute automatically
    \csb{MTmathoperatorsdonotobeymathxx}, \csb{MTeasynonlettersdonotobeymathxx},
-   \csb{MTnonlettersdonotobeymathxx}, \csb{MTmathstandardletters}.
- \item §italic§: the Latin letters (both lowercase and uppercase) use
-   the italic shape (\cs{itdefault}) in math mode; if the package
+   \csb{MTnonlettersdonotobeymathxx}, \csb{MTmathstandardletters}.}
+
+\item \mstopt{defaultalphabets}: \RLNote{new behavior}{1.3za}\mst
+  always defines \cs{Mathnormal}, \cs{Mathrm}, \cs{Mathbf} etc... to
+  refer to the \mst-ified text fonts, and redefines the math
+  alphabets \cs{mathrm}, \cs{mathit}, \cs{mathtt} etc\dots{} (but
+  not \cs{mathcal} of course) to use them.  To avoid the remapping
+  and keep the \cs{mathrm} et al.\@ to refer to the non \mst-ified
+  fonts, use this option.  The \cs{Mathnormal} et al.\@ commands with an
+  initial uppercase will always
+  be available whether or not this option is made use of.
+
+  \begin{footnotesize}
+    Prior to |1.3za| (and since |1.15f|), this option also prevented the
+    package to declare the \cs{Mathnormal} et al.\@ and \cs{mathnormalbold}
+    commands.  In this context, recall that the dreaded ``too many math
+    alphabets'' error can only occur on \emph{use} in the document of too many
+    of such commands, and not at the time of their declarations.  The author's
+    notes from time of |1.15f| release (|2012/10/25|) only say that it may not
+    be ``useful'' to package user to have both (for example) |\mathrm| and
+    |\Mathrm|, which sounds weird if they are to acquire distinct meanings.
+    So since |1.3za| both will exist.  In the default package configuration
+    |\mathrm| is configured to expand to |\Mathrm| (with some extra behavior
+    under §LGRgreek+§), and with this option or the §defaultrm§ option
+    |\mathrm| is kept with its original meaning (and the §LGRgreek+§ extras do
+    not work).\par
+  \end{footnotesize}
+
+\item \RLNote{changed:}{1.3za}\mstopt{defaultnormal}, \mstopt{defaultrm},
+  \mstopt{defaultbf}, \mstopt{defaultit}, \mstopt{defaultsf},
+  \mstopt{defaulttt}: tell \mst to not set up, respectively, the
+  \cs{mathnormal}, \cs{mathrm}, \cs{mathbf}, \cs{mathit}, \cs{mathsf}, and
+  \cs{mathtt} commands to use the mathastext-ified font which are accessible
+  always via \cs{Mathnormal}, \cs{Mathrm}, \cs{Mathbf}, \cs{Mathit}, etc...
+
+  \begin{footnotesize}
+    Prior to |1.3za| these options also prevented the creation of the
+    corresponding \mst command with an uppercased initial.\par
+  \end{footnotesize}
+
+ \item \mstopt{italic}: let the Latin letters (both lowercase and uppercase) use
+   the italic shape (\cs{itdefault}) in math mode. If the package
    handles Greek letters, also lowercase (but not uppercase) Greek
    letters will use this a priori italic shape except if some other
    option such as \blueit{upgreek} was used.%
@@ -4791,7 +5245,7 @@ for subscripts (it also copies code from the |moresize| package to redefine
      option in addition to \blueit{italic}, the \cs{MTgreekitdefault}
      shape is then used for lowercase Greek letters and
      \cs{MTgreekupdefault} for uppercase.}
- \item §frenchmath§: it configures for lowercase Latin letters to use
+ \item \mstopt{frenchmath}: configures for lowercase Latin letters to use
    italic shape (\cs{itdefault}), and uppercase Latin letters to be in
    same shape as for digits and operator names (i.e.\@ a priori
    \cs{shapedefault}). If the package handles Greek letters both
@@ -4804,7 +5258,9 @@ for subscripts (it also copies code from the |moresize| package to redefine
    \footnote{Under \blueit{LGRgreek} and since |1.3x|, the
      \cs{MTgreekupdefault} is used for Greek letters if no other option
      such as \blueit{itgreek} was employed.}
-\item §ncccomma§:\RLNote{new:}{1.3x} it triggers the loading of the
+
+
+\item \mstopt{ncccomma}:\RightNote{1.3x} it triggers the loading of the
   \href{https://ctan.org/pkg/ncccomma}{ncccomma} package%
 %
 \footnote{Alexander I. \textsc{Rozhenko}, \emph{Use comma as decimal
@@ -4827,7 +5283,7 @@ those parts of the document using another language than French.%
   switches from French to English; and switching back to French does not
   reenact it.  For background on this issue see
   \url{https://github.com/latex3/babel/issues/190}.}
-\item §binarysemicolon§:\RLNote{new:}{1.3x} sets (except if
+\item \mstopt{binarysemicolon}:\RightNote{1.3x} sets (except if
   \blueit{nopunctuation} is used) the semi-colon to let \TeX\ use
   spacing of binary type, not punctuation type, around the semi-colon
   (it is often used in French mathematical typesetting as separator in
@@ -4837,39 +5293,39 @@ those parts of the document using another language than French.%
   The effect applies to all math versions, even the \emph{normal} and
   \emph{bold} math versions with \mst having been loaded with the
   \blueit{subdued} option.
-\item §frenchmath*§:\RLNote{new:}{1.3x} does all three of \blueit{frenchmath},
+\item \mstopt{frenchmath*}:\RightNote{1.3x} does all three of \blueit{frenchmath},
   \blueit{ncccomma} and \blueit{binarysemicolon}.
-\item §endash§, §emdash§: use the text font en-dash (\textendash) or even
+\item \mstopt{endash}, \mstopt{emdash}: use the text font en-dash (\textendash) or even
  the em-dash (\textemdash, but this seems crazy) for the minus sign
  rather than {}-{}. §endash§ option is default for the package.
-\item §unicodeminus§:\RightNote{1.3q} use the |MINUS SIGN U+2212| (requires
+\item \mstopt{unicodeminus}:\RightNote{1.3q} use the |MINUS SIGN U+2212| (requires
   |fontspec|.) Or, in the form |unicodeminus=HHHH| with four \emph{uppercased}
   hexadecimal digits: use the |U+HHHH| code point. As §noendash§ really means
   ``use the hyphen from the text font'', §unicodeminus§ remains without effect
   under it, or, naturally, under §nominus§. Without this option,
   \mst uses the |EN DASH U+2013| by default for OpenType fonts.
-\item §asterisk§: use the text font (or the Symbol font) asterisk in math mode. 
-\item §nohbar§: prevents \mst from defining its own
+\item \mstopt{asterisk}: use the text font (or the Symbol font) asterisk in math mode. 
+\item \mstopt{nohbar}: prevents \mst from defining its own
   \cs{hbar}.
-\item §noendash§: the minus sign will be the - from the
+\item \mstopt{noendash}: the minus sign will be the - from the
  text font, not the en-dash \textendash.
-\item §nolessnomore§: besides
+\item \mstopt{nolessnomore}: besides
   !\,?\,,\,.\,:\,;\,+\,\textendash\,=\,(\,)\,[\,]\,/\,\#\,\$\,\%\,\&
   \mst treats also \DeleteShortVerb{\|}
   $\mathord{<}\,\mathord{>}\,\mathord{|}$\, \{\,\} and
   $\backslash$.\MakeShortVerb{\|} Use this option to let it not
   do it. This is the default
   in case of |OT1|-encoding.
-\item further excluding options: §noexclam§ !\,?\
-\ §nopunctuation§ ,\,.\,:\,;\ §noplus§,
-§nominus§, §noplusnominus§\ +\,\textendash{} §noequal§ =\
-§noparenthesis§ (\,)\,[\,]\,/\ §nospecials§
-\#\,\$\,\%\,\&\ and §nodigits§.
- \item §alldelims§: true by default, means that the
+\item further excluding options: \mstopt{noexclam} !\,?\
+\ \mstopt{nopunctuation} ,\,.\,:\,;\ \mstopt{noplus},
+\mstopt{nominus}, \mstopt{noplusnominus}\ +\,\textendash{} \mstopt{noequal} =\
+\mstopt{noparenthesis} (\,)\,[\,]\,/\ \mstopt{nospecials}
+\#\,\$\,\%\,\&\ and \mstopt{nodigits}.
+ \item \mstopt{alldelims}: true by default, means that the
 characters excluded by §nolessnomore§ are
 treated. Use this option in case of a mono-width
 |OT1|-encoded font.
-\item §nosmalldelims§: this prevents \mst from trying to pick up in the text
+\item \mstopt{nosmalldelims}: this prevents \mst from trying to pick up in the text
   font the `small variants' of some math delimiters; it only affects what
   happens when a character such as a left parenthesis $($ or $[$ is used as a
   delimiter, and in the event that \TeX{} has chosen the smallest sized
@@ -4880,71 +5336,123 @@ treated. Use this option in case of a mono-width
     this rule and they require both of \csb{MTnonlettersobeymathxx} and
     \csb{MTexplicitbracesobeymathxx} for being picked up from the text font
     when not used as delimiters.}
- \item §symbolgreek§, §symboldigits§: to let Greek letters (digits) use the
+ \item \mstopt{symbolgreek}, \mstopt{symboldigits}: to let Greek letters (digits) use the
 Symbol font.
- \item §symbolre§: replaces \cs{Re} and \cs{Im} by the
+ \item \mstopt{symbolre}: replaces \cs{Re} and \cs{Im} by the
  Symbol glyphs $\Re, \Im$ and defines a
 \cs{DotTriangle} command ($\DotTriangle$).
-\item §symbolmisc§: takes quite a few glyphs, including logical arrows, product
+\item \mstopt{symbolmisc}: takes quite a few glyphs, including logical arrows, product
   and sum signs from Symbol. They are listed
   \hyperlink{symbolmisc}{\emph{supra}}. Doing
   \cs{renewcommand\{\string\int\}\{\string\smallint\}} will maximize
   even more the use of the Symbol font.
- \item §symboldelimiters§: the characters apart from
+ \item \mstopt{symboldelimiters}: the characters apart from
  letters and digits will be taken from the Symbol font. 
- \item §symbol§: combines §symbolgreek§, §symbolre§, and §symbolmisc§.
- \item §symbolmax§: combines §symbol§ and §symboldelimiters§.
- \item §eulergreek§, §eulerdigits§: to let Greek letters (digits) use the
+ \item \mstopt{symbol}: combines §symbolgreek§, §symbolre§, and §symbolmisc§.
+ \item \mstopt{symbolmax}: combines §symbol§ and §symboldelimiters§.
+ \item \mstopt{eulergreek}, \mstopt{eulerdigits}: to let Greek letters (digits) use the
 Euler font.
- \item §LGRgreek§: this configures the Greek letters in math mode to use the
-   text font in
- LGR-encoding (it is up to user to ascertain that the font familty is indeed
- available in the LGR encoding).  It also
- activates the command §\MTgreekfont§ which can be used to set a specific
- (LGR-encoded) font family for Greek, possibly not related to the font family
- for Latin letters.  But each use §\MTgreekfont§ must be followed by a §\Mathastext§
- or §\Mathastext§\oarg{version\_name} to be effective.
- \item §LGRgreeks§: each declared math version will be supposed to be with a
- font which is also available in LGR-encoding.  Attention that macro
- §\MTgreekfont§ becomes then inoperant.
- \item §selfGreek§: this is for a font which is also available in
- |OT1|-encoding and contains the glyphs for the default eleven capital Greek
-letters.
- \item §selfGreeks§: each declared math version will be supposed to be with
- a font with the eleven capital Greek letters in its |OT1|-encoded
- version.
- \item §upgreek§, §itgreek§, §upGreek§, §itGreek§:
- options to tell to use \cs{itdefault} or \cs{updefault} for the lowercase
- and uppercase (or only the uppercase) Greek letters. Only operant
- in the case of the |LGRgreek(s)| and |selfGreek(s)| options.
+\item \mstopt{LGRgreek}: this configures the Greek letters in math mode to use
+  the text font (i.e. a priori the font which was default at time of loading
+  the package) in LGR-encoding.  The command §\MTgreekfont§ can be used to set
+  a specific (LGR-encoded) font family.  Each use of §\MTgreekfont§ must be
+  followed at some point by a §\Mathastext§ or
+  §\Mathastext§\oarg{version\_name} to be effective.  Any subsequent math
+  version declaration will be influenced by it until §\MTgreekfont§ is used
+  again to configure another font for Greek letters.%
+  %
+  \footnote{You can check the documentation of the
+  \url{https://ctan.org/pkg/lgrmath} package for how to find out systematically which
+  fonts are available on your system in \texttt{LGR} encoding.}
 
- \RLNote{changed:}{1.3x}These options now use \cs{MTgreekitdefault} and
- \cs{MTgreekupdefault} rather.
- \item §mathaccents§: use the text font also for the math
+  If §\MTgreekfont§ is never used the font family for Greek under
+  option §LGRgreek§ will be, in all math versions except under §subdued§ for
+  the ``normal'' and ``bold'', the family which was the default at time of
+  loading the package.  You must use §\MTgreekfont§ to change it.
+
+  See further on this topic the §upgreek§, §itgreek§, §upGreek§ and §itGreek§
+  options as well as the §\MTupgreek§, §\MTitgreek§, §\MTupGreek§ and
+  §\MTitGreek§ commands.
+
+  It is up to the user to ascertain that the font family is indeed available
+  in the LGR encoding; if it is not, only at time of the first math mode
+  typesetting will \LaTeX\ issue warnings such as this one:%
+  %
+  \centeredline{|Font shape `LGR/ptm/m/n' undefined|}%
+  \centeredline{|using `LGR/cmr/m/n' instead on input line 28|}%
+  %
+
+  The §LGRgreek§ option also triggers pre-definition of Greek character tokens
+  such as \cs{alphaup} or \cs{betait}, see \autoref{sec:newgreek} for the
+  explanations.
+
+  \begin{footnotesize}
+    Although under §subdued§ option \mst does not modify Latin
+    and Greek letters in the ``normal'' and ``bold'' math
+    versions it still under §LGRgreek§ option declares two
+    additional symbol fonts with the associated §\mathgreekup§
+    and §\mathgreekit§ commands to access them, and also since
+    |1.3za| §\mathgreekupbold§ and §\mathgreekitbold§, and these
+    math alphabets can be used also in the ``normal'' and
+    ``bold'' math versions.  They will work on mathchar tokens
+    which are of ``variable family type''; \mst makes all Greek
+    letters of such ``variable family type'' but only of course
+    in non-subdued math versions so this situation depends on the
+    math configuration of the document.  As per the font used by these
+    alphabets in the subdued ``normal'' and ``bold'' it is either
+    the one in \texttt{LGR} encoding which was the family default
+    at time of loading the package or the one configured last by
+    §\MTgreekfont§ when the command §\Mathastext§ (without
+    optional argument) was used in the preamble.
+
+    |1.3za| fixes here a bug which froze the target font to be
+    the one at time of loading the package: this bug applied
+    (only) to the subdued ``normal'' and ``bold'' math versions
+    and was not readily visible as there is a priori no reason to
+    use in these subdued math versions these \mst-provided Greek
+    font alphabets.\par
+  \end{footnotesize}
+
+\item \mstopt{LGRgreeks}: each declared math version will be supposed to be
+  with a font which is also available in LGR-encoding.  This is a shortcut to
+  using §\MTgreekfont§ systematically to keep in sync in all declared math
+  versions the font for Greek with the font for Latin letters.  Please note
+  that macro §\MTgreekfont§ becomes then inoperant, and if you need one math
+  version without this Latin-Greek synching, you will have to use rather
+  §LGRgreek§ and then §\MTgreekfont§ manually appropriately.
+
+\item \mstopt{LGRgreek+} and
+  \mstopt{LGRgreeks+}:\RLNote{new:}{1.3za} they extend
+  respectively §LGRgreek§ or §LGRgreeks§ to let Greek letters
+  control sequences when in the scope of §\mathrm§, §\mathit§,
+  and §\mathbf§ behave as would be expected by LaTeX users who
+  have not read \texttt{fntguide.pdf} or any other \LaTeX\
+  documentation but have used \texttt{unicode-math}. See
+  \autoref{sec:newgreekplus} for details.
+
+\item \mstopt{selfGreek}: this is for a font which is also available in
+  |OT1|-encoding and contains the glyphs for the default eleven capital Greek
+  letters.
+\item \mstopt{selfGreeks}: each declared math version will be supposed to be
+  with a font with the eleven capital Greek letters in its |OT1|-encoded
+  version.
+\item \mstopt{upgreek}, \mstopt{itgreek}: options to tell \mst to use
+  §\MTgreekupdefault§ or §\MTgreekitdefault§ for the lowercase and uppercase
+  Greek letters shape. These two commands can be defined prior to loading the
+  package.  This option is operant only under the |LGRgreek(s)| or
+  |selfGreek(s)| options.
+\item \mstopt{upGreek}, \mstopt{itGreek}: influence only uppercase Greek.
+ \item \mstopt{mathaccents}: use the text font also for the math
 accents. As in vanilla \LaTeX{}, they are taken from the font
 for the digits and \cs{log}-like names. Obey the alphabet
 changing commands.
- \item §unimathaccents§:\RightNote{1.3u} extends |mathaccents| to
+ \item \mstopt{unimathaccents}:\RightNote{1.3u} extends |mathaccents| to
 OpenType fonts. Gave bad results in my brief testing.
- \item §defaultbf§, §defaultit§, §defaultsf§, §defaulttt§: do not
-set up, respectively, the \cs{mathbf}, \cs{mathit}, \cs{mathsf},
-and \cs{mathtt} commands to use the mathastext-ified
-font. This also prevents \mst to create internally
-\cs{Mathxx} alphabets (it never overwrites the original
-\cs{mathxx} things but let \cs{mathxx} point to \cs{Mathxx}
-instead), so one can use these options if one encounters a `too
-many math alphabets' \LaTeX{} error.
-\item §defaulnormal§, §defaultrm§: do not identify the default
-\cs{mathnormal} (resp. \cs{mathrm}) with the newly created
-\cs{Mathnormal} (resp. \cs{Mathrm}) commands which use the
-mathastextified fonts in each math version.
-\item §defaultalphabets§: all the §defaultxx§ options together, and
-additionally tells \mst not to create the \cs{mathnormalbold} alphabet either.
- \item §defaultimath§: do not overwrite \cs{imath} and
+ \item \mstopt{defaultimath}: do not overwrite \cs{imath} and
  \cs{jmath} to use \cs{inodot} and \cs{jnodot}.
- \item §defaultmathsizes§: do not change the \LaTeX{} defaults for the sizes
+ \item \mstopt{defaultmathsizes}: do not change the \LaTeX{} defaults for the sizes
  of exponents and subscripts.
- \item §fouriervec§: provides a \cs{fouriervec} command. The user can then
+ \item \mstopt{fouriervec}: provides a \cs{fouriervec} command. The user can then
  add in the preamble \cs{let}\cs{vec}$=$\cs{fouriervec}. There is also
  always available a ``poor man'' vec accent \cs{pmvec} for upright letters.
  \end{enumerate}
@@ -5093,7 +5601,7 @@ Numerous examples will be found there:\\
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage {mathastext}
-  [2023/09/01 v1.3z Use the text font in math mode (JFB)]
+  [2023/12/20 v1.3za Use the text font in math mode (JFB)]
 %    \end{macrocode}
 % \LaTeX{} |2019-10-01| release has made robust math macros such as the math
 % accents and \cs{hbar}. 
@@ -5202,7 +5710,7 @@ Numerous examples will be found there:\\
 %    Greek at the time of \cs{usepackage}. Modifiable in the preamble
 %    via \cs{MTgreekfont}\marg{font\_name}\cs{Mathastext}.
 %    \begin{macrocode}
-  \edef\mst@greekfont{\familydefault} %% v 1.15c 
+  \edef\mst@greekfont{\familydefault}
 %    \end{macrocode}
 %  \end{macro}
 % \begin{macro}{Package options}
@@ -5210,7 +5718,10 @@ Numerous examples will be found there:\\
 %   of \cs{if...} conditionals, for better readability (by myself) of
 %   the code.
 %
-%   |1.3x| of |2022/11/03| adds |ncccomma|, |binarysemicolon| and |frenchmath*| options.
+%   |1.3x| of |2022/11/03| adds |ncccomma|, |binarysemicolon| and
+%   |frenchmath*| options.
+%
+%   |1.3za| adds |LGRgreek+| and |LGRgreeks+|.
 %    \begin{macrocode}
 \newif\ifmst@italic
 \newif\ifmst@frenchmath
@@ -5300,6 +5811,9 @@ Numerous examples will be found there:\\
 \newif\ifmst@LGRgreeks
     \DeclareOption{LGRgreeks}{\mst@LGRgreekstrue\mst@LGRgreektrue
                               \mst@customgreektrue}
+\newif\ifmst@greekplus
+    \DeclareOption{LGRgreek+}{\ExecuteOptions{LGRgreek}\mst@greekplustrue}
+    \DeclareOption{LGRgreeks+}{\ExecuteOptions{LGRgreeks}\mst@greekplustrue}
 \def\mst@greek@select{0}
 \newif\ifmst@itgreek
 \newif\ifmst@upgreek
@@ -5313,6 +5827,12 @@ Numerous examples will be found there:\\
 % prevent it from identifying the `mathxx' with the new `Mathxx'. The
 % `Mathnormal' and `Mathrm' alphabet commands are always created as they are
 % SymbolFontAlphabets.
+%
+% This was again changed at |1.3za|.  The additional alphabets are
+% always declared, the options only prevent mapping the existing
+% `mathxx' to the new `Mathxx'.  This may be breaking change if
+% people used these options because they had a need for the
+% |\Mathbf| etc... names.
 %    \begin{macrocode}
 \newif\ifmst@defaultnormal
     \DeclareOption{defaultnormal}{\mst@defaultnormaltrue}
@@ -5326,9 +5846,12 @@ Numerous examples will be found there:\\
     \DeclareOption{defaultsf}{\mst@defaultsftrue}
 \newif\ifmst@defaulttt
     \DeclareOption{defaulttt}{\mst@defaulttttrue}
-\newif\ifmst@nonormalbold
+%    \end{macrocode}
+% Here and elsewhere |1.3za| has removed an
+% \cs{ifmst@nonormalbold} conditional.
+%    \begin{macrocode}
 \DeclareOption{defaultalphabets}{\ExecuteOptions{defaultnormal,defaultrm,%
-defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
+defaultbf,defaultit,defaultsf,defaulttt}}
 %    \end{macrocode}
 % |mathastext| considers the default script and especially scriptscript sizes to
 % be far too small, and it will modify them. An option maintains the default. 
@@ -6333,7 +6856,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 % \begin{macro}{\Mathit}
 % \begin{macro}{\Mathsf}
 % \begin{macro}{\Mathtt}
-% \begin{macro}{\mathnormalbold}
+% \begin{macro}{\Mathnormalbold}
 %   We redefine the default normal, rm, bf, it, sf, and tt alphabets,
 %   but this will be done via |\renewcommand*{\mathrm}{\Mathrm}| etc\dots
 %   (not anymore, see comment below).
@@ -6370,26 +6893,26 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %   simply use |\protected\def| in place of obeying strictly \LaTeX2e
 %   robustness (except of course in the subdued math versions as there the math
 %   alphabets acquire back their original robust meanings.)
+%
+%   Potential breaking change at |1.3za|, the |defaultbf| etc... options do
+%   not prevent the package declaring |\Mathbf| etc... commands.
+%
+%   |1.3za| defines a \cs{Mathnormalbold} and then defines \cs{mathnormalbold}
+%   in terms of it in place of defining directly \cs{mathnormalbold} as a math
+%   alphabet.  This is in relation to implementation of the |LGRgreek+|
+%   option.  There was some hesitation though to restrict this change to that
+%   option only or not.
 %    \begin{macrocode}
 \let\mst@alph@omicron\mathnormal 
 \@ifpackageloaded{fourier}{\ifsloped\else\let\mst@alph@omicron\mathrm\fi}{}
 \DeclareSymbolFontAlphabet{\Mathnormal}{mtletterfont}
 \DeclareSymbolFontAlphabet{\Mathrm}{mtoperatorfont}
-\ifmst@nonormalbold\else
-   \DeclareMathAlphabet{\mathnormalbold}{\mst@enc}{\mst@fam}{\mst@bold}{\mst@ltsh}
-\fi
-\ifmst@defaultbf\else
+   \DeclareMathAlphabet{\Mathnormalbold}{\mst@enc}{\mst@fam}{\mst@bold}{\mst@ltsh}
+   \protected\def\mathnormalbold{\Mathnormalbold}
    \DeclareMathAlphabet{\Mathbf}{\mst@enc}{\mst@fam}{\mst@bold}{\mst@opsh}
-\fi
-\ifmst@defaultit\else
    \DeclareMathAlphabet{\Mathit}{\mst@enc}{\mst@fam}{\mst@ser}{\itdefault}
-\fi
-\ifmst@defaultsf\else
    \DeclareMathAlphabet{\Mathsf}{\mst@enc}{\sfdefault}{\mst@ser}{\mst@opsh}
-\fi
-\ifmst@defaulttt\else
    \DeclareMathAlphabet{\Mathtt}{\mst@enc}{\ttdefault}{\mst@ser}{\mst@opsh}
-\fi
 %    \end{macrocode}
 % The \cs{mathxx} macros being \LaTeX2e robust, or course the meanings here
 % are known, and «original» macros are sort of superfluous but well it works.
@@ -6406,16 +6929,56 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \let\mathbf\mst@original@bf
     \let\mathit\mst@original@it
     \let\mathsf\mst@original@sf
-    \let\mathtt\mst@original@tt}
-\def\mst@setalphabets{%
+    \let\mathtt\mst@original@tt
+  }
+\ifmst@greekplus
+%    \end{macrocode}
+% \begin{macro}{\mst@mathalph}
+% The \LaTeX\ kernel code regarding math fonts is too complex and rigid for
+% there to be a robust and easy way to know when one is in the argument of
+% \cs{mathrm} or \cs{mathbf}, and the code is spread on various chapters of
+% \texttt{source2e.pdf}, and the comments are often not up-to-date.  So I did
+% not try a too complex hack and decided for |1.3za| to add a numeric
+% indicator to let Greek letters react to it. It incorporates a space to be
+% self-delimiting in an \cs{ifcase} to maintain expandability in numeric
+% context of the to-be-defined Greek control sequences.
+%    \begin{macrocode}
+  \def\mst@mathalph{-1}
+  \def\mst@setalphabets{%
+    \protected\def
+    \mathnormalbold##1{\def\mst@mathalph{4 }\Mathnormalbold{##1}\def\mst@mathalph{-1 }}%
+    \ifmst@defaultnormal\else
+        \protected\def
+        \mathnormal##1{\def\mst@mathalph{0 }\Mathnormal{##1}\def\mst@mathalph{-1 }}%
+    \fi
+    \ifmst@defaultrm\else
+        \protected\def
+        \mathrm##1{\def\mst@mathalph{1 }\Mathrm{##1}\def\mst@mathalph{-1 }}%
+    \fi
+    \ifmst@defaultbf\else
+        \protected\def
+        \mathbf##1{\def\mst@mathalph{2 }\Mathbf{##1}\def\mst@mathalph{-1 }}%
+    \fi
+    \ifmst@defaultit\else
+        \protected\def
+        \mathit##1{\def\mst@mathalph{3 }\Mathit{##1}\def\mst@mathalph{-1 }}%
+    \fi
+    \ifmst@defaultsf\else\protected\def\mathsf{\Mathsf}\fi
+    \ifmst@defaulttt\else\protected\def\mathtt{\Mathtt}\fi
+  }
+\else
+  \def\mst@setalphabets{%
     \ifmst@defaultnormal\else\protected\def\mathnormal{\Mathnormal}\fi
     \ifmst@defaultrm\else\protected\def\mathrm{\Mathrm}\fi
     \ifmst@defaultbf\else\protected\def\mathbf{\Mathbf}\fi
     \ifmst@defaultit\else\protected\def\mathit{\Mathit}\fi
     \ifmst@defaultsf\else\protected\def\mathsf{\Mathsf}\fi
-    \ifmst@defaulttt\else\protected\def\mathtt{\Mathtt}\fi}
+    \ifmst@defaulttt\else\protected\def\mathtt{\Mathtt}\fi
+  }
+\fi
 \ifmst@subdued\else\mst@setalphabets\fi
 %    \end{macrocode}
+% \end{macro}
 % \end{macro}
 % \end{macro}
 % \end{macro}
@@ -6551,12 +7114,16 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 % \begin{macro}{mtgreekit}
 % \begin{macro}{\mathgreekup}
 % \begin{macro}{\mathgreekit}
+% \begin{macro}{\mathgreekupbold}
+% \begin{macro}{\mathgreekitbold}
 % The |1.3x| refactoring was done in order to be able to define \cs{alphaup},
 % etc \dots\ control sequences (\cs{mathchar}'s), as well as the italic ones.
 % Formerly two math fonts were created but to be used respectively with
 % lowercase or uppercase Greek.  Now we have two fonts indexed by their shape,
 % and we take advantage to create two math alphabets mapping to the two
 % defined symbol fonts |mtgreekup| and |mtgreekit|.
+%
+% |1.3za| adds \cs{mathgreekupbold} and \cs{mathgreekitbold}.
 %    \begin{macrocode}
 \ifmst@LGRgreek
     \DeclareFontEncoding{LGR}{}{}
@@ -6564,6 +7131,8 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \DeclareSymbolFont{mtgreekit}{LGR}{\mst@fam}{\mst@ser}{\MTgreekitdefault}
     \DeclareSymbolFontAlphabet{\mathgreekup}{mtgreekup}
     \DeclareSymbolFontAlphabet{\mathgreekit}{mtgreekit}
+    \DeclareMathAlphabet{\mathgreekupbold}{LGR}{\mst@fam}{\mst@bold}{\MTgreekupdefault}
+    \DeclareMathAlphabet{\mathgreekitbold}{LGR}{\mst@fam}{\mst@bold}{\MTgreekitdefault}
 \else
 %    \end{macrocode}
 % \begin{macro}{mtselfGreekfont}
@@ -6572,6 +7141,8 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \DeclareSymbolFont{mtselfGreekfont}{OT1}{\mst@fam}{\mst@ser}{\mst@greek@ush}
 \fi\fi
 %    \end{macrocode}
+% \end{macro}
+% \end{macro}
 % \end{macro}
 % \end{macro}
 % \end{macro}
@@ -6599,7 +7170,8 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 % capital Greek letters are of type |mathalpha|, but the
 % lower Greek letters of type |mathord|, so that \cs{mathbf}
 % does not act on them, although lowercase Greek letters and
-% Latin letters are from the same font. This is because
+% Latin letters are from the same font. ^^A qui est cmmi encodage OML
+% This is because
 % \cs{mathbf} is set up to be like a bold version of
 % \cs{mathrm}, and \cs{mathrm} uses the `operators' font, by
 % default |cmr|, where there are NO lowercase greek
@@ -6695,6 +7267,10 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %   to set up math versions with a given font for math mode, and at the
 %   same time not modifying the \cs{familydefault} or \cs{romandefault}
 %   etc\dots
+%
+%   At time of |1.3za| I considered letting |LGRgreeks| and |selfGreeks|
+%   support \cs{MTgreekfont} and this needed a chaneg to \cs{MTfamily}
+%   here but I dropped the idea.  Too wary of documentation changes.
 %    \begin{macrocode}
 \newcommand*\MTencoding[1]{\def\mst@enc{#1}}
 \newcommand*\MTfamily[1]{\def\mst@fam{#1}}
@@ -6723,9 +7299,12 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 %   |1.15c|: These new macros can be used in-between calls to \cs{Mathastext}.
 %   They reset the shapes for Greek letters (applies to LGRgreek(s) and
 %   selfGreek(s) options). The \cs{MTgreekfont} presupposes either LGRgreek or
-%   selfGreek (it is inoperant under LGRgreeks or selfGreeks).
+%   selfGreek (it is inoperant under |LGRgreeks| or |selfGreeks|).
 %   |\MTgreekfont{\familydefault}| is somewhat like using LGRgreeks or
 %   selfGreeks.
+%
+%   At time of |1.3za| I let \cs{MTgreekfont} also have an effect under option
+%   |LGRgreeks| or |selfGreeks|, via a refactoring which also modified \cs{MTfamily}.
 %    \begin{macrocode}
 \newcommand*\MTitgreek{\mst@itgreektrue\mst@upgreekfalse\def\mst@greek@select{0}}
 \newcommand*\MTupgreek{\mst@upgreektrue\mst@itgreekfalse\def\mst@greek@select{0}}
@@ -6735,7 +7314,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \let\Mathastextupgreek\MTupgreek
 \let\MathastextitGreek\MTitGreek
 \let\MathastextupGreek\MTupGreek
-    \newcommand*\MTgreekfont[1]{\def\mst@greekfont{#1}}
+\newcommand*\MTgreekfont[1]{\def\mst@greekfont{#1}}
 \let\Mathastextgreekfont\MTgreekfont
 %    \end{macrocode}
 % \end{macro}
@@ -8142,6 +8721,98 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \let\wp\mst@origwp
     \let\ell\mst@origell
 }% \MTstandardgreek
+\ifmst@greekplus
+%    \end{macrocode}
+%   |1.3za| implementation of |LGRgreek+| option.  It is not exactly
+%   clear what we should do for \cs{mathnormal} and \cs{mathnormalbold}.
+%
+%   This definition allows usage of \cs{alpha} for example in numerical
+%   context.  To be completely clean perhaps we should get rid of
+%   final \cs{fi}, but old-fashioned \LaTeX\ does not have built-in
+%   conveniences, were it not for the nested if's simple \cs{expandafter}
+%   would do, but here we would need three in four places. Or simply
+%   wrap the whole in \cs{expanded}.  Anyway, not really important.
+%    \begin{macrocode}
+\def\mst@define@lowergreekletter#1#2{%
+    \protected\def#1{\ifcase\mst@mathalph
+        \ifmst@greek@lower@up\mathgreekup{#2}\else\mathgreekit{#2}\fi
+      \or % rm
+        \mathgreekup{#2}%
+      \or % bf
+        \mathgreekupbold{#2}%
+      \or % it
+        \mathgreekit{#2}%
+      \or % normalbold
+        \ifmst@greek@lower@up\mathgreekupbold{#2}\else\mathgreekitbold{#2}\fi
+      \else #2\fi}%
+    }
+\def\mst@define@uppergreekletter#1#2{%
+    \protected\def#1{\ifcase\mst@mathalph
+        \ifmst@greek@upper@up\mathgreekup{#2}\else\mathgreekit{#2}\fi
+      \or % rm
+        \mathgreekup{#2}%
+      \or % bf
+        \mathgreekupbold{#2}%
+      \or % it
+        \mathgreekit{#2}%
+      \or % mathnormalbold
+        \ifmst@greek@upper@up\mathgreekupbold{#2}\else\mathgreekitbold{#2}\fi
+      \else #2\fi}%
+    }
+\renewcommand*{\MTcustomgreek}{%
+    \mst@define@uppergreekletter\Alpha\mst@Alpha
+    \mst@define@uppergreekletter\Beta\mst@Beta
+    \mst@define@uppergreekletter\Epsilon\mst@Epsilon
+    \mst@define@uppergreekletter\Zeta\mst@Zeta
+    \mst@define@uppergreekletter\Eta\mst@Eta
+    \mst@define@uppergreekletter\Iota\mst@Iota
+    \mst@define@uppergreekletter\Kappa\mst@Kappa
+    \mst@define@uppergreekletter\Mu\mst@Mu
+    \mst@define@uppergreekletter\Nu\mst@Nu
+    \mst@define@uppergreekletter\Omicron\mst@Omicron
+    \mst@define@uppergreekletter\Rho\mst@Rho
+    \mst@define@uppergreekletter\Tau\mst@Tau
+    \mst@define@uppergreekletter\Chi\mst@Chi
+    \mst@define@uppergreekletter\Digamma\mst@Digamma
+    \mst@define@uppergreekletter\Gamma\mst@Gamma
+    \mst@define@uppergreekletter\Delta\mst@Delta
+    \mst@define@uppergreekletter\Theta\mst@Theta
+    \mst@define@uppergreekletter\Lambda\mst@Lambda
+    \mst@define@uppergreekletter\Xi\mst@Xi
+    \mst@define@uppergreekletter\Pi\mst@Pi
+    \mst@define@uppergreekletter\Sigma\mst@Sigma
+    \mst@define@uppergreekletter\Upsilon\mst@Upsilon
+    \mst@define@uppergreekletter\Phi\mst@Phi
+    \mst@define@uppergreekletter\Psi\mst@Psi
+    \mst@define@uppergreekletter\Omega\mst@Omega
+    \mst@define@lowergreekletter\alpha\mst@alpha
+    \mst@define@lowergreekletter\beta\mst@beta
+    \mst@define@lowergreekletter\gamma\mst@gamma
+    \mst@define@lowergreekletter\delta\mst@delta
+    \mst@define@lowergreekletter\epsilon\mst@epsilon
+    \mst@define@lowergreekletter\zeta\mst@zeta
+    \mst@define@lowergreekletter\eta\mst@eta
+    \mst@define@lowergreekletter\theta\mst@theta
+    \mst@define@lowergreekletter\iota\mst@iota
+    \mst@define@lowergreekletter\kappa\mst@kappa
+    \mst@define@lowergreekletter\lambda\mst@lambda
+    \mst@define@lowergreekletter\mu\mst@mu
+    \mst@define@lowergreekletter\nu\mst@nu
+    \mst@define@lowergreekletter\xi\mst@xi
+    \mst@define@lowergreekletter\omicron\mst@omicron
+    \mst@define@lowergreekletter\pi\mst@pi
+    \mst@define@lowergreekletter\rho\mst@rho
+    \mst@define@lowergreekletter\sigma\mst@sigma
+    \mst@define@lowergreekletter\tau\mst@tau
+    \mst@define@lowergreekletter\upsilon\mst@upsilon
+    \mst@define@lowergreekletter\phi\mst@phi
+    \mst@define@lowergreekletter\chi\mst@chi
+    \mst@define@lowergreekletter\psi\mst@psi
+    \mst@define@lowergreekletter\omega\mst@omega
+    \mst@define@lowergreekletter\varsigma\mst@varsigma
+    \mst@define@lowergreekletter\digamma\mst@digamma
+}% end of True branch of \ifmst@greekplus
+\else
 %    \end{macrocode}
 %   Under |selfGreek| or other Greek option but not |LGRgreek|, these Greek
 %   letter control sequences are already |\mathchar|'s, but under |LGRgreek|
@@ -8243,7 +8914,8 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \fi
  \fi
 }% \MTcustomgreek
-\fi% end of \ifcustomgreek
+\fi% end of else branch of \ifmst@greekplus
+\fi% end of \ifmst@customgreek
 \let\Mathastextstandardgreek\MTstandardgreek
 \let\Mathastextcustomgreek\MTcustomgreek
 \ifmst@subdued\else\MTcustomgreek\fi
@@ -8651,15 +9323,21 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
                 names will be in `#6\string' shape.}%
       \expandafter\edef\csname mst@ltshape@\mst@version\endcsname{#1}%
   \fi
-  \ifmst@nonormalbold\else
-       \SetMathAlphabet{\mathnormalbold}{#2}{#3}{#4}{\mst@bold}%
+%    \end{macrocode}
+% Here and elsewhere |1.3za| has removed an
+% \cs{ifmst@nonormalbold} conditional.
+%    \begin{macrocode}
+       \SetMathAlphabet{\Mathnormalbold}{#2}{#3}{#4}{\mst@bold}%
                    {\csname mst@ltshape@\mst@version\endcsname}%
-  \fi
   \SetSymbolFont{mtoperatorfont}{#2}{#3}{#4}{#5}{#6}%
-  \ifmst@defaultbf\else\SetMathAlphabet{\Mathbf}{#2}{#3}{#4}{\mst@bold}{#6}\fi
-  \ifmst@defaultit\else\SetMathAlphabet{\Mathit}{#2}{#3}{#4}{#5}{\itdefault}\fi
-  \ifmst@defaultsf\else\SetMathAlphabet{\Mathsf}{#2}{#3}{\sfdefault}{#5}{#6}\fi
-  \ifmst@defaulttt\else\SetMathAlphabet{\Mathtt}{#2}{#3}{\ttdefault}{#5}{#6}\fi
+%    \end{macrocode}
+% Since |1.3za| (and prior to |1.15f|) these math alphabet
+% commands are always defined.
+%    \begin{macrocode}
+  \SetMathAlphabet{\Mathbf}{#2}{#3}{#4}{\mst@bold}{#6}
+  \SetMathAlphabet{\Mathit}{#2}{#3}{#4}{#5}{\itdefault}
+  \SetMathAlphabet{\Mathsf}{#2}{#3}{\sfdefault}{#5}{#6}
+  \SetMathAlphabet{\Mathtt}{#2}{#3}{\ttdefault}{#5}{#6}
   \ifmst@needeuler
       \SetMathAlphabet{\MathEulerBold}{#2}{U}{zeur}{\mst@bold}{n}%
   \fi
@@ -8720,36 +9398,20 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
           \def\mst@greek@ush@loc{\MTgreekupdefault}%
           \mst@greek@upper@uptrue
   \fi
-  \ifmst@LGRgreeks
-    \SetSymbolFont{mtgreekup}{#2}{LGR}{#4}{#5}{\MTgreekupdefault}%
-    \SetSymbolFont{mtgreekit}{#2}{LGR}{#4}{#5}{\MTgreekitdefault}%
 %    \end{macrocode}
-%  This is where the shape of uppercase/lowercase Greek letters is recorded,
-%  for \cs{MTversion}'s triggered \cs{MTcustomgreek} to do the right thing.
-%  Also |1.3x| fixes some strange log messages which did not recall
-%  the math version name and referred to `non subdued versions' (strange).
+% |1.3za| refactoring to reduce code duplication; I briefly considered
+% trying to enhance \cs{MTgreekfont} to work also with |LGRgreeks| and
+% |selfGreeks| but I have dropped the idea for now.
 %    \begin{macrocode}
-    \expandafter\let\csname ifmst@greek@\mst@version @upper@up\expandafter\endcsname
-                    \csname ifmst@greek@upper@up\endcsname
-    \expandafter\let\csname ifmst@greek@\mst@version @lower@up\expandafter\endcsname
-                    \csname ifmst@greek@lower@up\endcsname
-    \typeout{** Greek letters (upper:
-      `\ifmst@greek@upper@up\MTgreekupdefault\else\MTgreekitdefault\fi\string',
-                               lower:
-      `\ifmst@greek@lower@up\MTgreekupdefault\else\MTgreekitdefault\fi\string')
-                will use
-                font family `#4\string' (LGR)^^J**
-                in mathastext math version `\mst@version\string'.}%
-  \else
-   \ifmst@selfGreeks
-      \SetSymbolFont{mtselfGreekfont}{#2}{OT1}{#4}{#5}{\mst@greek@ush@loc}%
-     \typeout{** Capital Greek letters (shape `\mst@greek@ush@loc\string')
-                 will use font family `#4\string' (OT1)^^J**
-                 in mathastext math version `\mst@version\string'.}%
-   \else
+    \ifmst@LGRgreeks \def\mst@greekfont{#4}\fi
+    \ifmst@selfGreeks\def\mst@greekfont{#4}\fi
     \ifmst@LGRgreek 
       \SetSymbolFont{mtgreekup}{#2}{LGR}{\mst@greekfont}{#5}{\MTgreekupdefault}%
       \SetSymbolFont{mtgreekit}{#2}{LGR}{\mst@greekfont}{#5}{\MTgreekitdefault}%
+      \SetMathAlphabet{\mathgreekupbold}{#2}{LGR}{\mst@greekfont}
+                                                 {\mst@bold}{\MTgreekupdefault}%
+      \SetMathAlphabet{\mathgreekitbold}{#2}{LGR}{\mst@greekfont}
+                                                 {\mst@bold}{\MTgreekitdefault}%
 %    \end{macrocode}
 %  This is where the shape of uppercase/lowercase Greek letters is recorded,
 %  for \cs{MTversion}'s triggered \cs{MTcustomgreek} to do the right thing.
@@ -8773,8 +9435,6 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
                    in mathastext math version `\mst@version\string'.}%
      \fi
     \fi
-   \fi
-  \fi
   \edef\mst@tmp{\expandafter\noexpand\csname mst@hbar@mv#2\endcsname
                 \expandafter\noexpand\csname mst@ltbar@mv#2\endcsname}%
   \expandafter\mst@dothe@hbarstuff\mst@tmp{#3}%
@@ -9133,18 +9793,18 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
         \mst@prime@muskip\mst@prime@skip\relax
     \fi
   \fi
-%% v1.15f 
-  \ifmst@nonormalbold\else
-   \SetMathAlphabet{\mathnormalbold}{normal}{\mst@encoding@normal}%
+%    \end{macrocode}
+% Here and elsewhere |1.3za| has removed usage of an
+% \cs{ifmst@nonormalbold} conditional which was added at |1.15f|.
+%    \begin{macrocode}
+   \SetMathAlphabet{\Mathnormalbold}{normal}{\mst@encoding@normal}%
                                  {\mst@family@normal}%
                                  {\mst@boldvariant@normal}%
                                  {\mst@ltshape@normal}%
-   \SetMathAlphabet{\mathnormalbold}{bold}{\mst@encoding@bold}%
+   \SetMathAlphabet{\Mathnormalbold}{bold}{\mst@encoding@bold}%
                                  {\mst@family@bold}%
                                  {\mst@boldvariant@bold}%
                                  {\mst@ltshape@bold}%
-  \fi
-%% v1.15f adds \ifmst@default.. checks
   \ifmst@subdued\else
    \SetSymbolFont{mtletterfont}{normal}{\mst@encoding@normal}%
                                        {\mst@family@normal}%
@@ -9162,7 +9822,9 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
                                        {\mst@family@bold}%
                                        {\mst@series@bold}%
                                        {\mst@shape@bold}%
-   \ifmst@defaultbf\else
+%    \end{macrocode}
+% |1.3za| removes the |1.15f| added conditional checks.
+%    \begin{macrocode}
     \SetMathAlphabet{\Mathbf}{normal}{\mst@encoding@normal}%
                                  {\mst@family@normal}%
                                  {\mst@series@bold}%
@@ -9171,8 +9833,6 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
                                  {\mst@family@bold}%
                                  {\mst@series@bold}%
                                  {\mst@shape@bold}%
-   \fi
-   \ifmst@defaultit\else
     \SetMathAlphabet{\Mathit}{normal}{\mst@encoding@normal}%
                                  {\mst@family@normal}%
                                  {\mst@series@normal}%
@@ -9181,8 +9841,6 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
                                  {\mst@family@bold}%
                                  {\mst@series@bold}%
                                  {\mst@itdefault@bold}%
-   \fi
-   \ifmst@defaultsf\else
     \SetMathAlphabet{\Mathsf}{normal}{\mst@encoding@normal}%
                                  {\mst@sfdefault@normal}%
                                  {\mst@series@normal}%
@@ -9191,8 +9849,6 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
                                  {\mst@sfdefault@bold}%
                                  {\mst@series@bold}%
                                  {\mst@shape@bold}%
-   \fi
-   \ifmst@defaulttt\else
     \SetMathAlphabet{\Mathtt}{normal}{\mst@encoding@normal}%
                                  {\mst@ttdefault@normal}%
                                  {\mst@series@normal}%
@@ -9201,7 +9857,6 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
                                  {\mst@ttdefault@bold}%
                                  {\mst@series@bold}%
                                  {\mst@shape@bold}%
-   \fi
   \fi % de \ifmst@subdued
 %    \end{macrocode}
 % \begin{macro}{\MathEulerBold}
@@ -9215,13 +9870,13 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \SetMathAlphabet{\MathEulerBold}{normal}%
                {U}{zeur}{\mst@boldvariant@normal}{n}%
     \SetMathAlphabet{\MathEulerBold}{bold}%
-               {U}{zeur}{\mst@boldvariant@normal}{n}%
+               {U}{zeur}{\mst@boldvariant@bold}{n}%
   \fi
 %    \end{macrocode}
 % \end{macro}
 %    \begin{macrocode}
   \ifmst@needsymbol\SetSymbolFont{mtpsymbol}{bold}%
-                     {U}{psy}{\mst@boldvariant@normal}{n}%
+                     {U}{psy}{\mst@boldvariant@bold}{n}%
   \fi
 %    \end{macrocode}
 % \begin{macro}{LGRgreek*}
@@ -9229,16 +9884,36 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 % LGRgreek, LGRgreeks, selfGreek, and selfGreeks options.
 %
 % |1.3x| has refactored the |LGRgreek| associated math fonts.
+%
+% |1.3za| adds the math alphabets \cs{mathgreekitbold} and
+% \cs{mathgreekupbold}.
+% And it executes this code also in |subdued| mode, because
+% anyhow the symbolfonts |mtgreekup| and |mtgreekit| and
+% associated alphabets have been declared also, at time of
+% loading the package, so not doing it here means that effect
+% of \cs{MTgreekfont} would be ignored; which was probably
+% a bug.  And by the way, documentation says \cs{MTgreekfont}
+% has no effect under |LGRgreeks| and |selfGreeks| option
+% so we need to enforce it here (for time being).
 %    \begin{macrocode}
-  \ifmst@subdued\else 
+   \ifmst@LGRgreeks \edef\mst@greekfont{\mst@fam}\fi
+   \ifmst@selfGreeks\edef\mst@greekfont{\mst@fam}\fi
    \ifmst@LGRgreek
     \SetSymbolFont{mtgreekup}{normal}{LGR}%
             {\mst@greekfont}{\mst@series@normal}{\MTgreekupdefault}%
     \SetSymbolFont{mtgreekup}{bold}{LGR}%
-            {\mst@greekfont}{\mst@boldvariant@normal}{\MTgreekupdefault}%
+            {\mst@greekfont}{\mst@boldvariant@bold}{\MTgreekupdefault}%
     \SetSymbolFont{mtgreekit}{normal}{LGR}%
             {\mst@greekfont}{\mst@series@normal}{\MTgreekitdefault}%
     \SetSymbolFont{mtgreekit}{bold}{LGR}%
+            {\mst@greekfont}{\mst@boldvariant@bold}{\MTgreekitdefault}%
+    \SetMathAlphabet{\mathgreekupbold}{normal}{LGR}%
+            {\mst@greekfont}{\mst@boldvariant@normal}{\MTgreekupdefault}%
+    \SetMathAlphabet{\mathgreekupbold}{bold}{LGR}%
+            {\mst@greekfont}{\mst@boldvariant@bold}{\MTgreekupdefault}%
+    \SetMathAlphabet{\mathgreekitbold}{normal}{LGR}%
+            {\mst@greekfont}{\mst@boldvariant@normal}{\MTgreekitdefault}%
+    \SetMathAlphabet{\mathgreekitbold}{bold}{LGR}%
             {\mst@greekfont}{\mst@boldvariant@bold}{\MTgreekitdefault}%
    \else
     \ifmst@selfGreek
@@ -9248,23 +9923,30 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
             {\mst@greekfont}{\mst@boldvariant@bold}{\mst@greek@ush}%
     \fi
    \fi
-  \fi
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
+% |1.3za| adds the log message in case of |selfGreek| option.
 %    \begin{macrocode}
   \ifmst@subdued
-   \typeout{** subdued mode will be activated for the `normal\string' and `bold\string' math versions}%
+   \typeout{** subdued mode applies to the `normal\string' and `bold\string' math versions}%
   \else 
    \typeout{** Latin letters in the `normal\string' (resp. `bold\string') math versions are now^^J%
             ** set up to use the fonts 
-   \mst@encoding@normal/\mst@family@normal/\mst@series@normal%
-               (\mst@boldvariant@normal)/\mst@ltshape@normal}%
+               \mst@encoding@normal/\mst@family@normal/\mst@series@normal%
+               (\mst@boldvariant@normal)/\mst@ltshape@normal
+           }%
    \ifmst@LGRgreek\typeout{** Greek letters (upper:
       `\ifmst@greek@upper@up\MTgreekupdefault\else\MTgreekitdefault\fi\string',
                                              lower:
       `\ifmst@greek@lower@up\MTgreekupdefault\else\MTgreekitdefault\fi\string')
       will use font family `\mst@greekfont\string' (LGR)}%
+   \else
+     \ifmst@selfGreek
+       \typeout{** Capital Greek letters 
+                   (shape `\mst@greek@ush\string')
+                   will use font family `\mst@greekfont\string' (OT1)}%
+     \fi
    \fi
    \ifmst@nodigits\else
      \typeout{** Other characters (digits, ...) and \protect\log-like names will be^^J%

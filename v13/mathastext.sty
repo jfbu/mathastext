@@ -23,7 +23,7 @@
 %%----------------------------------------------------------------
 %% Package: mathastext
 %% Info:    Use the text font in math mode (JFB)
-%% Version: 1.3z 2023/09/01
+%% Version: 1.3za 2023/12/20
 %% License: LPPL 1.3c (http://www.latex-project.org/lppl/lppl-1-3c.txt)
 %% Copyright (C) 2011-2016, 2018, 2019, 2022, 2023 Jean-Francois B.
 %%                                                <2589111+jfbu@users.noreply.github.com>
@@ -33,7 +33,7 @@
 %%----------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage {mathastext}
-  [2023/09/01 v1.3z Use the text font in math mode (JFB)]
+  [2023/12/20 v1.3za Use the text font in math mode (JFB)]
 \newif\ifmst@robust@obsessed@LaTeX@era
 \@ifl@t@r\fmtversion{2019/10/01}{\mst@robust@obsessed@LaTeX@eratrue}{}
 \edef\mst@robustifyingspace{\ifmst@robust@obsessed@LaTeX@era\space\fi}
@@ -85,7 +85,7 @@
   \def\mst@opsh{\shapedefault}  %% will be default shape for operator names
   \def\mst@bold{\bfdefault}
   \def\mst@ltsh{\shapedefault}  %% will be default shape for letters
-  \edef\mst@greekfont{\familydefault} %% v 1.15c
+  \edef\mst@greekfont{\familydefault}
 \newif\ifmst@italic
 \newif\ifmst@frenchmath
 \newif\ifmst@ncccomma
@@ -174,6 +174,9 @@
 \newif\ifmst@LGRgreeks
     \DeclareOption{LGRgreeks}{\mst@LGRgreekstrue\mst@LGRgreektrue
                               \mst@customgreektrue}
+\newif\ifmst@greekplus
+    \DeclareOption{LGRgreek+}{\ExecuteOptions{LGRgreek}\mst@greekplustrue}
+    \DeclareOption{LGRgreeks+}{\ExecuteOptions{LGRgreeks}\mst@greekplustrue}
 \def\mst@greek@select{0}
 \newif\ifmst@itgreek
 \newif\ifmst@upgreek
@@ -193,9 +196,8 @@
     \DeclareOption{defaultsf}{\mst@defaultsftrue}
 \newif\ifmst@defaulttt
     \DeclareOption{defaulttt}{\mst@defaulttttrue}
-\newif\ifmst@nonormalbold
 \DeclareOption{defaultalphabets}{\ExecuteOptions{defaultnormal,defaultrm,%
-defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
+defaultbf,defaultit,defaultsf,defaulttt}}
 \newif\ifmst@defaultsizes
     \DeclareOption{defaultmathsizes}{\mst@defaultsizestrue}
 \newif\ifmst@twelve
@@ -545,21 +547,12 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \@ifpackageloaded{fourier}{\ifsloped\else\let\mst@alph@omicron\mathrm\fi}{}
 \DeclareSymbolFontAlphabet{\Mathnormal}{mtletterfont}
 \DeclareSymbolFontAlphabet{\Mathrm}{mtoperatorfont}
-\ifmst@nonormalbold\else
-   \DeclareMathAlphabet{\mathnormalbold}{\mst@enc}{\mst@fam}{\mst@bold}{\mst@ltsh}
-\fi
-\ifmst@defaultbf\else
+   \DeclareMathAlphabet{\Mathnormalbold}{\mst@enc}{\mst@fam}{\mst@bold}{\mst@ltsh}
+   \protected\def\mathnormalbold{\Mathnormalbold}
    \DeclareMathAlphabet{\Mathbf}{\mst@enc}{\mst@fam}{\mst@bold}{\mst@opsh}
-\fi
-\ifmst@defaultit\else
    \DeclareMathAlphabet{\Mathit}{\mst@enc}{\mst@fam}{\mst@ser}{\itdefault}
-\fi
-\ifmst@defaultsf\else
    \DeclareMathAlphabet{\Mathsf}{\mst@enc}{\sfdefault}{\mst@ser}{\mst@opsh}
-\fi
-\ifmst@defaulttt\else
    \DeclareMathAlphabet{\Mathtt}{\mst@enc}{\ttdefault}{\mst@ser}{\mst@opsh}
-\fi
 \let\mst@original@normal\mathnormal
 \let\mst@original@rm\mathrm
 \let\mst@original@bf\mathbf
@@ -572,14 +565,42 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \let\mathbf\mst@original@bf
     \let\mathit\mst@original@it
     \let\mathsf\mst@original@sf
-    \let\mathtt\mst@original@tt}
-\def\mst@setalphabets{%
+    \let\mathtt\mst@original@tt
+  }
+\ifmst@greekplus
+  \def\mst@mathalph{-1}
+  \def\mst@setalphabets{%
+    \protected\def
+    \mathnormalbold##1{\def\mst@mathalph{4 }\Mathnormalbold{##1}\def\mst@mathalph{-1 }}%
+    \ifmst@defaultnormal\else
+        \protected\def
+        \mathnormal##1{\def\mst@mathalph{0 }\Mathnormal{##1}\def\mst@mathalph{-1 }}%
+    \fi
+    \ifmst@defaultrm\else
+        \protected\def
+        \mathrm##1{\def\mst@mathalph{1 }\Mathrm{##1}\def\mst@mathalph{-1 }}%
+    \fi
+    \ifmst@defaultbf\else
+        \protected\def
+        \mathbf##1{\def\mst@mathalph{2 }\Mathbf{##1}\def\mst@mathalph{-1 }}%
+    \fi
+    \ifmst@defaultit\else
+        \protected\def
+        \mathit##1{\def\mst@mathalph{3 }\Mathit{##1}\def\mst@mathalph{-1 }}%
+    \fi
+    \ifmst@defaultsf\else\protected\def\mathsf{\Mathsf}\fi
+    \ifmst@defaulttt\else\protected\def\mathtt{\Mathtt}\fi
+  }
+\else
+  \def\mst@setalphabets{%
     \ifmst@defaultnormal\else\protected\def\mathnormal{\Mathnormal}\fi
     \ifmst@defaultrm\else\protected\def\mathrm{\Mathrm}\fi
     \ifmst@defaultbf\else\protected\def\mathbf{\Mathbf}\fi
     \ifmst@defaultit\else\protected\def\mathit{\Mathit}\fi
     \ifmst@defaultsf\else\protected\def\mathsf{\Mathsf}\fi
-    \ifmst@defaulttt\else\protected\def\mathtt{\Mathtt}\fi}
+    \ifmst@defaulttt\else\protected\def\mathtt{\Mathtt}\fi
+  }
+\fi
 \ifmst@subdued\else\mst@setalphabets\fi
 \providecommand*\MTgreekupdefault{n}
 \providecommand*\MTgreekitdefault{it}
@@ -631,6 +652,8 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \DeclareSymbolFont{mtgreekit}{LGR}{\mst@fam}{\mst@ser}{\MTgreekitdefault}
     \DeclareSymbolFontAlphabet{\mathgreekup}{mtgreekup}
     \DeclareSymbolFontAlphabet{\mathgreekit}{mtgreekit}
+    \DeclareMathAlphabet{\mathgreekupbold}{LGR}{\mst@fam}{\mst@bold}{\MTgreekupdefault}
+    \DeclareMathAlphabet{\mathgreekitbold}{LGR}{\mst@fam}{\mst@bold}{\MTgreekitdefault}
 \else
 \ifmst@selfGreek
     \DeclareSymbolFont{mtselfGreekfont}{OT1}{\mst@fam}{\mst@ser}{\mst@greek@ush}
@@ -682,7 +705,7 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
 \let\Mathastextupgreek\MTupgreek
 \let\MathastextitGreek\MTitGreek
 \let\MathastextupGreek\MTupGreek
-    \newcommand*\MTgreekfont[1]{\def\mst@greekfont{#1}}
+\newcommand*\MTgreekfont[1]{\def\mst@greekfont{#1}}
 \let\Mathastextgreekfont\MTgreekfont
 \def\mst@DeclareMathLetter #1{%
     \DeclareMathSymbol {#1}{\mathalpha}{mtletterfont}{`#1}%
@@ -1596,6 +1619,87 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \let\wp\mst@origwp
     \let\ell\mst@origell
 }% \MTstandardgreek
+\ifmst@greekplus
+\def\mst@define@lowergreekletter#1#2{%
+    \protected\def#1{\ifcase\mst@mathalph
+        \ifmst@greek@lower@up\mathgreekup{#2}\else\mathgreekit{#2}\fi
+      \or % rm
+        \mathgreekup{#2}%
+      \or % bf
+        \mathgreekupbold{#2}%
+      \or % it
+        \mathgreekit{#2}%
+      \or % normalbold
+        \ifmst@greek@lower@up\mathgreekupbold{#2}\else\mathgreekitbold{#2}\fi
+      \else #2\fi}%
+    }
+\def\mst@define@uppergreekletter#1#2{%
+    \protected\def#1{\ifcase\mst@mathalph
+        \ifmst@greek@upper@up\mathgreekup{#2}\else\mathgreekit{#2}\fi
+      \or % rm
+        \mathgreekup{#2}%
+      \or % bf
+        \mathgreekupbold{#2}%
+      \or % it
+        \mathgreekit{#2}%
+      \or % mathnormalbold
+        \ifmst@greek@upper@up\mathgreekupbold{#2}\else\mathgreekitbold{#2}\fi
+      \else #2\fi}%
+    }
+\renewcommand*{\MTcustomgreek}{%
+    \mst@define@uppergreekletter\Alpha\mst@Alpha
+    \mst@define@uppergreekletter\Beta\mst@Beta
+    \mst@define@uppergreekletter\Epsilon\mst@Epsilon
+    \mst@define@uppergreekletter\Zeta\mst@Zeta
+    \mst@define@uppergreekletter\Eta\mst@Eta
+    \mst@define@uppergreekletter\Iota\mst@Iota
+    \mst@define@uppergreekletter\Kappa\mst@Kappa
+    \mst@define@uppergreekletter\Mu\mst@Mu
+    \mst@define@uppergreekletter\Nu\mst@Nu
+    \mst@define@uppergreekletter\Omicron\mst@Omicron
+    \mst@define@uppergreekletter\Rho\mst@Rho
+    \mst@define@uppergreekletter\Tau\mst@Tau
+    \mst@define@uppergreekletter\Chi\mst@Chi
+    \mst@define@uppergreekletter\Digamma\mst@Digamma
+    \mst@define@uppergreekletter\Gamma\mst@Gamma
+    \mst@define@uppergreekletter\Delta\mst@Delta
+    \mst@define@uppergreekletter\Theta\mst@Theta
+    \mst@define@uppergreekletter\Lambda\mst@Lambda
+    \mst@define@uppergreekletter\Xi\mst@Xi
+    \mst@define@uppergreekletter\Pi\mst@Pi
+    \mst@define@uppergreekletter\Sigma\mst@Sigma
+    \mst@define@uppergreekletter\Upsilon\mst@Upsilon
+    \mst@define@uppergreekletter\Phi\mst@Phi
+    \mst@define@uppergreekletter\Psi\mst@Psi
+    \mst@define@uppergreekletter\Omega\mst@Omega
+    \mst@define@lowergreekletter\alpha\mst@alpha
+    \mst@define@lowergreekletter\beta\mst@beta
+    \mst@define@lowergreekletter\gamma\mst@gamma
+    \mst@define@lowergreekletter\delta\mst@delta
+    \mst@define@lowergreekletter\epsilon\mst@epsilon
+    \mst@define@lowergreekletter\zeta\mst@zeta
+    \mst@define@lowergreekletter\eta\mst@eta
+    \mst@define@lowergreekletter\theta\mst@theta
+    \mst@define@lowergreekletter\iota\mst@iota
+    \mst@define@lowergreekletter\kappa\mst@kappa
+    \mst@define@lowergreekletter\lambda\mst@lambda
+    \mst@define@lowergreekletter\mu\mst@mu
+    \mst@define@lowergreekletter\nu\mst@nu
+    \mst@define@lowergreekletter\xi\mst@xi
+    \mst@define@lowergreekletter\omicron\mst@omicron
+    \mst@define@lowergreekletter\pi\mst@pi
+    \mst@define@lowergreekletter\rho\mst@rho
+    \mst@define@lowergreekletter\sigma\mst@sigma
+    \mst@define@lowergreekletter\tau\mst@tau
+    \mst@define@lowergreekletter\upsilon\mst@upsilon
+    \mst@define@lowergreekletter\phi\mst@phi
+    \mst@define@lowergreekletter\chi\mst@chi
+    \mst@define@lowergreekletter\psi\mst@psi
+    \mst@define@lowergreekletter\omega\mst@omega
+    \mst@define@lowergreekletter\varsigma\mst@varsigma
+    \mst@define@lowergreekletter\digamma\mst@digamma
+}% end of True branch of \ifmst@greekplus
+\else
 \renewcommand*{\MTcustomgreek}{%
   \expanded{%
     \let\noexpand\Alpha\mst@Alpha
@@ -1671,7 +1775,8 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
     \fi
  \fi
 }% \MTcustomgreek
-\fi% end of \ifcustomgreek
+\fi% end of else branch of \ifmst@greekplus
+\fi% end of \ifmst@customgreek
 \let\Mathastextstandardgreek\MTstandardgreek
 \let\Mathastextcustomgreek\MTcustomgreek
 \ifmst@subdued\else\MTcustomgreek\fi
@@ -1927,15 +2032,13 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
                 names will be in `#6\string' shape.}%
       \expandafter\edef\csname mst@ltshape@\mst@version\endcsname{#1}%
   \fi
-  \ifmst@nonormalbold\else
-       \SetMathAlphabet{\mathnormalbold}{#2}{#3}{#4}{\mst@bold}%
+       \SetMathAlphabet{\Mathnormalbold}{#2}{#3}{#4}{\mst@bold}%
                    {\csname mst@ltshape@\mst@version\endcsname}%
-  \fi
   \SetSymbolFont{mtoperatorfont}{#2}{#3}{#4}{#5}{#6}%
-  \ifmst@defaultbf\else\SetMathAlphabet{\Mathbf}{#2}{#3}{#4}{\mst@bold}{#6}\fi
-  \ifmst@defaultit\else\SetMathAlphabet{\Mathit}{#2}{#3}{#4}{#5}{\itdefault}\fi
-  \ifmst@defaultsf\else\SetMathAlphabet{\Mathsf}{#2}{#3}{\sfdefault}{#5}{#6}\fi
-  \ifmst@defaulttt\else\SetMathAlphabet{\Mathtt}{#2}{#3}{\ttdefault}{#5}{#6}\fi
+  \SetMathAlphabet{\Mathbf}{#2}{#3}{#4}{\mst@bold}{#6}
+  \SetMathAlphabet{\Mathit}{#2}{#3}{#4}{#5}{\itdefault}
+  \SetMathAlphabet{\Mathsf}{#2}{#3}{\sfdefault}{#5}{#6}
+  \SetMathAlphabet{\Mathtt}{#2}{#3}{\ttdefault}{#5}{#6}
   \ifmst@needeuler
       \SetMathAlphabet{\MathEulerBold}{#2}{U}{zeur}{\mst@bold}{n}%
   \fi
@@ -1976,30 +2079,15 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
           \def\mst@greek@ush@loc{\MTgreekupdefault}%
           \mst@greek@upper@uptrue
   \fi
-  \ifmst@LGRgreeks
-    \SetSymbolFont{mtgreekup}{#2}{LGR}{#4}{#5}{\MTgreekupdefault}%
-    \SetSymbolFont{mtgreekit}{#2}{LGR}{#4}{#5}{\MTgreekitdefault}%
-    \expandafter\let\csname ifmst@greek@\mst@version @upper@up\expandafter\endcsname
-                    \csname ifmst@greek@upper@up\endcsname
-    \expandafter\let\csname ifmst@greek@\mst@version @lower@up\expandafter\endcsname
-                    \csname ifmst@greek@lower@up\endcsname
-    \typeout{** Greek letters (upper:
-      `\ifmst@greek@upper@up\MTgreekupdefault\else\MTgreekitdefault\fi\string',
-                               lower:
-      `\ifmst@greek@lower@up\MTgreekupdefault\else\MTgreekitdefault\fi\string')
-                will use
-                font family `#4\string' (LGR)^^J**
-                in mathastext math version `\mst@version\string'.}%
-  \else
-   \ifmst@selfGreeks
-      \SetSymbolFont{mtselfGreekfont}{#2}{OT1}{#4}{#5}{\mst@greek@ush@loc}%
-     \typeout{** Capital Greek letters (shape `\mst@greek@ush@loc\string')
-                 will use font family `#4\string' (OT1)^^J**
-                 in mathastext math version `\mst@version\string'.}%
-   \else
+    \ifmst@LGRgreeks \def\mst@greekfont{#4}\fi
+    \ifmst@selfGreeks\def\mst@greekfont{#4}\fi
     \ifmst@LGRgreek
       \SetSymbolFont{mtgreekup}{#2}{LGR}{\mst@greekfont}{#5}{\MTgreekupdefault}%
       \SetSymbolFont{mtgreekit}{#2}{LGR}{\mst@greekfont}{#5}{\MTgreekitdefault}%
+      \SetMathAlphabet{\mathgreekupbold}{#2}{LGR}{\mst@greekfont}
+                                                 {\mst@bold}{\MTgreekupdefault}%
+      \SetMathAlphabet{\mathgreekitbold}{#2}{LGR}{\mst@greekfont}
+                                                 {\mst@bold}{\MTgreekitdefault}%
       \expandafter\let\csname ifmst@greek@\mst@version @upper@up\expandafter\endcsname
                       \csname ifmst@greek@upper@up\endcsname
       \expandafter\let\csname ifmst@greek@\mst@version @lower@up\expandafter\endcsname
@@ -2019,8 +2107,6 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
                    in mathastext math version `\mst@version\string'.}%
      \fi
     \fi
-   \fi
-  \fi
   \edef\mst@tmp{\expandafter\noexpand\csname mst@hbar@mv#2\endcsname
                 \expandafter\noexpand\csname mst@ltbar@mv#2\endcsname}%
   \expandafter\mst@dothe@hbarstuff\mst@tmp{#3}%
@@ -2213,18 +2299,14 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
         \mst@prime@muskip\mst@prime@skip\relax
     \fi
   \fi
-%% v1.15f
-  \ifmst@nonormalbold\else
-   \SetMathAlphabet{\mathnormalbold}{normal}{\mst@encoding@normal}%
+   \SetMathAlphabet{\Mathnormalbold}{normal}{\mst@encoding@normal}%
                                  {\mst@family@normal}%
                                  {\mst@boldvariant@normal}%
                                  {\mst@ltshape@normal}%
-   \SetMathAlphabet{\mathnormalbold}{bold}{\mst@encoding@bold}%
+   \SetMathAlphabet{\Mathnormalbold}{bold}{\mst@encoding@bold}%
                                  {\mst@family@bold}%
                                  {\mst@boldvariant@bold}%
                                  {\mst@ltshape@bold}%
-  \fi
-%% v1.15f adds \ifmst@default.. checks
   \ifmst@subdued\else
    \SetSymbolFont{mtletterfont}{normal}{\mst@encoding@normal}%
                                        {\mst@family@normal}%
@@ -2242,7 +2324,6 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
                                        {\mst@family@bold}%
                                        {\mst@series@bold}%
                                        {\mst@shape@bold}%
-   \ifmst@defaultbf\else
     \SetMathAlphabet{\Mathbf}{normal}{\mst@encoding@normal}%
                                  {\mst@family@normal}%
                                  {\mst@series@bold}%
@@ -2251,8 +2332,6 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
                                  {\mst@family@bold}%
                                  {\mst@series@bold}%
                                  {\mst@shape@bold}%
-   \fi
-   \ifmst@defaultit\else
     \SetMathAlphabet{\Mathit}{normal}{\mst@encoding@normal}%
                                  {\mst@family@normal}%
                                  {\mst@series@normal}%
@@ -2261,8 +2340,6 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
                                  {\mst@family@bold}%
                                  {\mst@series@bold}%
                                  {\mst@itdefault@bold}%
-   \fi
-   \ifmst@defaultsf\else
     \SetMathAlphabet{\Mathsf}{normal}{\mst@encoding@normal}%
                                  {\mst@sfdefault@normal}%
                                  {\mst@series@normal}%
@@ -2271,8 +2348,6 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
                                  {\mst@sfdefault@bold}%
                                  {\mst@series@bold}%
                                  {\mst@shape@bold}%
-   \fi
-   \ifmst@defaulttt\else
     \SetMathAlphabet{\Mathtt}{normal}{\mst@encoding@normal}%
                                  {\mst@ttdefault@normal}%
                                  {\mst@series@normal}%
@@ -2281,27 +2356,35 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
                                  {\mst@ttdefault@bold}%
                                  {\mst@series@bold}%
                                  {\mst@shape@bold}%
-   \fi
   \fi % de \ifmst@subdued
   \ifmst@needeuler
     \SetSymbolFont{mteulervm}{bold}{U}{zeur}{\mst@boldvariant@normal}{n}%
     \SetMathAlphabet{\MathEulerBold}{normal}%
                {U}{zeur}{\mst@boldvariant@normal}{n}%
     \SetMathAlphabet{\MathEulerBold}{bold}%
-               {U}{zeur}{\mst@boldvariant@normal}{n}%
+               {U}{zeur}{\mst@boldvariant@bold}{n}%
   \fi
   \ifmst@needsymbol\SetSymbolFont{mtpsymbol}{bold}%
-                     {U}{psy}{\mst@boldvariant@normal}{n}%
+                     {U}{psy}{\mst@boldvariant@bold}{n}%
   \fi
-  \ifmst@subdued\else
+   \ifmst@LGRgreeks \edef\mst@greekfont{\mst@fam}\fi
+   \ifmst@selfGreeks\edef\mst@greekfont{\mst@fam}\fi
    \ifmst@LGRgreek
     \SetSymbolFont{mtgreekup}{normal}{LGR}%
             {\mst@greekfont}{\mst@series@normal}{\MTgreekupdefault}%
     \SetSymbolFont{mtgreekup}{bold}{LGR}%
-            {\mst@greekfont}{\mst@boldvariant@normal}{\MTgreekupdefault}%
+            {\mst@greekfont}{\mst@boldvariant@bold}{\MTgreekupdefault}%
     \SetSymbolFont{mtgreekit}{normal}{LGR}%
             {\mst@greekfont}{\mst@series@normal}{\MTgreekitdefault}%
     \SetSymbolFont{mtgreekit}{bold}{LGR}%
+            {\mst@greekfont}{\mst@boldvariant@bold}{\MTgreekitdefault}%
+    \SetMathAlphabet{\mathgreekupbold}{normal}{LGR}%
+            {\mst@greekfont}{\mst@boldvariant@normal}{\MTgreekupdefault}%
+    \SetMathAlphabet{\mathgreekupbold}{bold}{LGR}%
+            {\mst@greekfont}{\mst@boldvariant@bold}{\MTgreekupdefault}%
+    \SetMathAlphabet{\mathgreekitbold}{normal}{LGR}%
+            {\mst@greekfont}{\mst@boldvariant@normal}{\MTgreekitdefault}%
+    \SetMathAlphabet{\mathgreekitbold}{bold}{LGR}%
             {\mst@greekfont}{\mst@boldvariant@bold}{\MTgreekitdefault}%
    \else
     \ifmst@selfGreek
@@ -2311,19 +2394,25 @@ defaultbf,defaultit,defaultsf,defaulttt}\mst@nonormalboldtrue}
             {\mst@greekfont}{\mst@boldvariant@bold}{\mst@greek@ush}%
     \fi
    \fi
-  \fi
   \ifmst@subdued
-   \typeout{** subdued mode will be activated for the `normal\string' and `bold\string' math versions}%
+   \typeout{** subdued mode applies to the `normal\string' and `bold\string' math versions}%
   \else
    \typeout{** Latin letters in the `normal\string' (resp. `bold\string') math versions are now^^J%
             ** set up to use the fonts
-   \mst@encoding@normal/\mst@family@normal/\mst@series@normal%
-               (\mst@boldvariant@normal)/\mst@ltshape@normal}%
+               \mst@encoding@normal/\mst@family@normal/\mst@series@normal%
+               (\mst@boldvariant@normal)/\mst@ltshape@normal
+           }%
    \ifmst@LGRgreek\typeout{** Greek letters (upper:
       `\ifmst@greek@upper@up\MTgreekupdefault\else\MTgreekitdefault\fi\string',
                                              lower:
       `\ifmst@greek@lower@up\MTgreekupdefault\else\MTgreekitdefault\fi\string')
       will use font family `\mst@greekfont\string' (LGR)}%
+   \else
+     \ifmst@selfGreek
+       \typeout{** Capital Greek letters
+                   (shape `\mst@greek@ush\string')
+                   will use font family `\mst@greekfont\string' (OT1)}%
+     \fi
    \fi
    \ifmst@nodigits\else
      \typeout{** Other characters (digits, ...) and \protect\log-like names will be^^J%

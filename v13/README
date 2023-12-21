@@ -13,7 +13,7 @@ The Author of this Work is Jean-Francois B. (2589111+jfbu@users.noreply.github.c
 
 Copyright (C) 2011-2016, 2018, 2019, 2022, 2023 Jean-Francois B.
 
-      Source: mathastext.dtx 1.3z 2023/09/01
+      Source: mathastext.dtx 1.3za 2023/12/20
 
 DESCRIPTION
 
@@ -72,6 +72,31 @@ Main options: italic, subdued, LGRgreek.
 -   \MTsetmathskips allows to set up extra spacings around letters.
 
 RECENT CHANGES
+
+1.3za [2023/12/20]
+
+-   Under LGRgreek and LGRgreeks options, new math alphabets
+    \mathgreekupbold and \mathgreekitbold.
+
+-   New options LGRgreek+ and LGRgreeks+.
+
+    Thanks to Holger Gerhardt for feature request and code ideas. Please
+    find and read the relevant documentation in the PDF.
+
+-   The meaning of defaultalphabets and related individual options such
+    as defaultbf has been modified (reverted to pre 1.15f release): even
+    under these options, the package always creates \mathnormalbold,
+    \Mathnormal, \Mathrm, \Mathbf etc..., commands. This may break
+    documents which used these options in order to reserve these command
+    names. This was done with some hesitancy, but for the sake of
+    internal logical coherence.
+
+-   Fix an obscure bug with no real consequences regarding interaction
+    of subdued with LGRgreek and \MTgreekfont. See the LGRgreek
+    documentation in the complete list of options for details.
+
+-   Fix long-standing hyperlink problems in the documentation: blue
+    color words should now all be functioning hyperlinks.
 
 1.3z [2023/09/01]
 

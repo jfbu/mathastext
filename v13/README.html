@@ -173,6 +173,8 @@
 <li><a href="#usage" id="toc-usage">USAGE</a></li>
 <li><a href="#recent-changes" id="toc-recent-changes">RECENT CHANGES</a>
 <ul>
+<li><a href="#13za-20231220" id="toc-13za-20231220">1.3za
+[2023/12/20]</a></li>
 <li><a href="#13z-20230901" id="toc-13z-20230901">1.3z
 [2023/09/01]</a></li>
 <li><a href="#13y-20221104" id="toc-13y-20221104">1.3y
@@ -195,7 +197,7 @@ href="http://www.latex-project.org/lppl/lppl-1-3c.txt">LPPL1.3c</a></p>
 (<code>2589111+jfbu@users.noreply.github.com</code>)</p>
 <p>Copyright (C) 2011-2016, 2018, 2019, 2022, 2023 Jean-Francois
 B.</p>
-<pre><code>  Source: mathastext.dtx 1.3z 2023/09/01</code></pre>
+<pre><code>  Source: mathastext.dtx 1.3za 2023/12/20</code></pre>
 <h1 id="description">DESCRIPTION</h1>
 <p>Optimal typographical results for documents containing mathematical
 symbols can only be hoped for with math fonts specifically designed to
@@ -255,6 +257,30 @@ font.</li>
 letters.</li>
 </ul>
 <h1 id="recent-changes">RECENT CHANGES</h1>
+<h2 id="13za-20231220">1.3za [2023/12/20]</h2>
+<ul>
+<li><p>Under <code>LGRgreek</code> and <code>LGRgreeks</code> options,
+new math alphabets <code>\mathgreekupbold</code> and
+<code>\mathgreekitbold</code>.</p></li>
+<li><p>New options <code>LGRgreek+</code> and
+<code>LGRgreeks+</code>.</p>
+<p>Thanks to Holger Gerhardt for feature request and code ideas. Please
+find and read the relevant documentation in the PDF.</p></li>
+<li><p>The meaning of <code>defaultalphabets</code> and related
+individual options such as <code>defaultbf</code> has been modified
+(reverted to pre <code>1.15f</code> release): even under these options,
+the package always creates <code>\mathnormalbold</code>,
+<code>\Mathnormal</code>, <code>\Mathrm</code>, <code>\Mathbf</code>
+etc..., commands. This may break documents which used these options in
+order to reserve these command names. This was done with some hesitancy,
+but for the sake of internal logical coherence.</p></li>
+<li><p>Fix an obscure bug with no real consequences regarding
+interaction of <code>subdued</code> with <code>LGRgreek</code> and
+<code>\MTgreekfont</code>. See the <code>LGRgreek</code> documentation
+in the complete list of options for details.</p></li>
+<li><p>Fix long-standing hyperlink problems in the documentation: blue
+color words should now all be functioning hyperlinks.</p></li>
+</ul>
 <h2 id="13z-20230901">1.3z [2023/09/01]</h2>
 <p>Fix 1.3y regression which broke <code>selfGreek</code> option due to
 internal renamings. Thanks to Stephan Korell for report.</p>

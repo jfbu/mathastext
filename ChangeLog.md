@@ -1,6 +1,34 @@
 MATHASTEXT CHANGE LOG
 =====================
 
+1.3za \[2023/12/20\]
+-----
+
+* Under `LGRgreek` and `LGRgreeks` options, new math alphabets
+  `\mathgreekupbold` and `\mathgreekitbold`.
+
+* New options `LGRgreek+` and `LGRgreeks+`.
+
+  Thanks to Holger Gerhardt for feature request and code ideas.
+  Please find and read the relevant documentation in the PDF.
+
+* The meaning of `defaultalphabets` and related individual
+  options such as `defaultbf` has been modified (reverted to pre
+  `1.15f` release): even under these options, the package always
+  creates `\mathnormalbold`, `\Mathnormal`, `\Mathrm`, `\Mathbf`
+  etc..., commands.  This may break documents which used these
+  options in order to reserve these command names.  This was done
+  with some hesitancy, but for the sake of internal logical
+  coherence.
+
+* Fix an obscure bug with no real consequences regarding
+  interaction of `subdued` with `LGRgreek` and `\MTgreekfont`.
+  See the `LGRgreek` documentation in the complete list of
+  options for details.
+
+* Fix long-standing hyperlink problems in the documentation:
+  blue color words should now all be functioning hyperlinks.
+
 1.3z \[2023/09/01\]
 ----
 
