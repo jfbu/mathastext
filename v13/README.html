@@ -173,6 +173,8 @@
 <li><a href="#usage" id="toc-usage">USAGE</a></li>
 <li><a href="#recent-changes" id="toc-recent-changes">RECENT CHANGES</a>
 <ul>
+<li><a href="#13zb-20231229" id="toc-13zb-20231229">1.3zb
+[2023/12/29]</a></li>
 <li><a href="#13za-20231220" id="toc-13za-20231220">1.3za
 [2023/12/20]</a></li>
 <li><a href="#13z-20230901" id="toc-13z-20230901">1.3z
@@ -195,9 +197,8 @@ the <a
 href="http://www.latex-project.org/lppl/lppl-1-3c.txt">LPPL1.3c</a></p>
 <p>The Author of this Work is Jean-Francois B.
 (<code>2589111+jfbu@users.noreply.github.com</code>)</p>
-<p>Copyright (C) 2011-2016, 2018, 2019, 2022, 2023 Jean-Francois
-B.</p>
-<pre><code>  Source: mathastext.dtx 1.3za 2023/12/20</code></pre>
+<p>Copyright (C) 2011-2019, 2022, 2023 Jean-Francois B.</p>
+<pre><code>  Source: mathastext.dtx 1.3zb 2023/12/29</code></pre>
 <h1 id="description">DESCRIPTION</h1>
 <p>Optimal typographical results for documents containing mathematical
 symbols can only be hoped for with math fonts specifically designed to
@@ -226,8 +227,8 @@ package loading time, for these characters:</p>
   ABCDEFGHIJKLMNOPQRSTUVWXYZ
   0123456789
   !?,.:;+-=()[]/#$%&amp;&lt;&gt;|{}\</code></pre>
-<p>Main options: <code>italic</code>, <code>subdued</code>,
-<code>LGRgreek</code>.</p>
+<p>Main options: <code>italic</code>, <code>frenchmath</code>,
+<code>subdued</code>, <code>LGRgreek</code>.</p>
 <ul>
 <li>Use the <code>italic</code> option to get the Latin letters in math
 mode be in italics. Digits and log-like operator names (pre-defined as
@@ -257,6 +258,26 @@ font.</li>
 letters.</li>
 </ul>
 <h1 id="recent-changes">RECENT CHANGES</h1>
+<h2 id="13zb-20231229">1.3zb [2023/12/29]</h2>
+<ul>
+<li><p>Update to the <code>frenchmath*</code> option to maintain
+compatibility with the <a
+href="https://ctan.org/pkg/frenchmath">frenchmath</a> package whose
+release 2.7 (2023/12/23) has replaced the ncccomma package by the
+decimalcomma package.</p></li>
+<li><p>The <code>frenchmath+</code> option holds the former meaning of
+<code>frenchmath*</code>.</p></li>
+<li><p>Option <code>decimalcomma</code> to load the eponymous package by
+Antoine Missier. This is tacitly done by
+<code>frenchmath*</code>.</p></li>
+<li><p>No more messages sent to the console output during loading, only
+info messages going into the log, and using (more or less) the official
+LaTeX interface: after close to 13 years of development of this package
+it was perhaps finally the time to do it.</p></li>
+<li><p>Documentation improvements. Close to 13 years after the birth of
+the package, and as it nowadays rarely wakes up from dormancy, this was
+almost last chance to try to improve a few things.</p></li>
+</ul>
 <h2 id="13za-20231220">1.3za [2023/12/20]</h2>
 <ul>
 <li><p>Under <code>LGRgreek</code> and <code>LGRgreeks</code> options,

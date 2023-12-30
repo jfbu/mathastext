@@ -1,7 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html lang="en">
+<!-- Time-stamp: <30-12-2023 14:06:42 CET> -->
+<!-- pour libgreek, mention de Libertinus avec lien -->
+<!-- Time-stamp: <29-12-2023 20:02:00 CET> -->
+<!-- libgreek 1.1 de 2022/11/11 finalement documenté après un an de retard -->
+<!-- et je parle également de lgrmath -->
+<!-- SUPPRESSION DE LA SECTION "NEW WITH THE LATEST VERSIONS" -->
+<!-- Time-stamp: <29-12-2023 10:06:18 CET> -->
+<!-- (1.3zb) -->
 <!-- Time-stamp: <21-12-2023 13:36:04 CET> -->
-<!-- (1.3z) -->
+<!-- (1.3za) -->
 <!-- Time-stamp: <30-08-2023 21:39:45 CEST> -->
 <!-- (1.3z) -->
 <!-- Time-stamp: <04-11-2022 12:20:20 CET> -->
@@ -81,7 +89,7 @@ BLOCKQUOTE{margin-left:4ex;margin-right:4ex;text-align:left;}
 
 <DIV CLASS="center">A LaTeX package: <b>mathastext</b><br>
 Copyright &copy; 2011-2019, 2022, 2023 Jean-Fran&ccedil;ois B..<br>
-Current version is <b>1.3za</b> (2023/12/20)<br>
+Current version is <b>1.3zb</b> (2023/12/29)<br>
   <a href="v13/README">README</a>,
   <a href="v13/README.html">README.html</a>,
   <a href="v13/INSTALL.txt">INSTALL.txt</a>,
@@ -157,7 +165,7 @@ between atoms.</p>
 <CENTER>
 <table WIDTH="500"  border="0" cellpadding="10">
 <tr><td>
-Current version is <b>1.3za</b> (2023/12/20)<br>
+Current version is <b>1.3zb</b> (2023/12/29)<br>
 <ul>
 <li><a href="v13/README">README</a></li>
 <li><a href="v13/README.html">README.html</a></li>
@@ -211,140 +219,48 @@ pdf files.)
 
 <DIV class="intro">
 <ul>
-<li>New with the latest versions:
-<ul>
-<li>
-  (1.3za) option <code>LGRgreek+</code>.
-</li>
-<li>
-  (1.3z) fix 1.3y regression regarding selfGreek option.
-</li>
-<li>
-  (1.3y) fixed an annoying documentation bug in 1.3x,
-         which had already been pushed to CTAN
-         hence the version number increase.
-</li>
-<li>
-  (1.3x) <ul>
-         <li>options <code>ncccomma</code>, <code>binarysemicolon</code> and <code>frenchmath*</code>.</li>
-         <li><code>\mathgreekup</code> and <code>\mathgreekit</code> alpphabets if LGRgreek option.</li>
-         <li>under LGRgreek, all Greek letters also have <code>\...up</code> and <code>\...it</code> variants.</li>
-         <li>the actual shapes referred to in the previous two items are configurable via
-             <code>\MTgreekupdefault</code> and <code>\MTgreekitdefault</code>.</li>
-         </ul>
-</li>
-<li>
-  (1.3w) workaround an upstream LaTeX+amsmath bug regarding math accents.
-</li>
-<li>
-  (1.3v) update to match upcoming LaTeX release (dated 2019-10-01) which has more "robust" math macros.
-</li>
-<li>
-  (1.3u) allows math versions with distinct font encodings (i.e. the minus sign as text en dash, the dotless i and j, the hbar and the text accents as math accents work across math versions).
-</li>
-<li>
-  (1.3t) fixes the 1.3s fix and a very old bug (1.2) which broke compilation in case the font encoding default was other than OT1, T1 or LY1 (with pdflatex). Breaking change: no redefinitions of <code>\i</code> and <code>\j</code> anymore, only of <code>\imath</code> and <code>\jmath</code>.
-</li>
-<li>
-  (1.3s) fix to a <a href="https://tex.stackexchange.com/q/444565/4686">subdued+fontspec</a> issue.
-</li>
-<li>
-  (1.3r) documentation tweaks.
-</li>
-<li>
-  (1.3q) option unicodeminus.
-</li>
-<li>(1.3o, 1.3p) patches around LuaLaTeX+luaotfload font issues in math mode.</li>
-<li>(1.3n) improved compatibility with amsmath (use of certain characters with correct font and spacing in declared operator names).</li>
-<li>(1.3m) minor code/doc maintenance.</li>
-<li>(1.3l) compatibility with TL2016 fontspec.</li>
-<li>(1.3k) fixes typos in the documentation.</li>
-<li>(1.3j) stronger subdued mode, newcommand \MTeverymathoff, various minor code changes and documentation improvements.</li>
-<li>(1.3i) patches \url command from packages hyperref.sty and url.sty in order for its preparation of math mode not to be altered by mathastext; stronger subdued mode, no extra skips in operator names or inside a math alphabet scope.</li>
-<li>(1.3h) fixes bugs dating back to 1.3d with options symbolgreek and selfGreek/selfGreeks.</li>
-<li>(1.3g) Latest LaTeX (2015/10/01) removed the "luatex" prefix for the
-LuaLaTeX Unicode math primitives. Package updated to reflect this, back
-compatibility with older LaTeX maintained. Nota bene: when used with LuaLaTeX,
-mathastext needs LuaLaTeX as per TeXLive 2013 (or equivalent) or later.</li>
-<li>(1.3f) Info messages replace Warnings in some cases. Also, self extracting
-README.md from the dtx file.</li>
-<li>(1.3e) bugfix regarding option nosmalldelims.</li>
-<li>(1.3d) new commands \MTstandardgreek and \MTcustomgreek; subdued mode acts
-  on Greek letters, too, even if package is loaded with one of the Greek
-  related options.</li>
-<li>(1.3c) mechanism of "inheritance" in the declaration of mathastext math
-  versions; starred variant of \MTversion leaves untouched the text font.</li>
-<li>(1.3b)
-   <ol>
-   <li> added a starred variant to \MTversion which tells mathastext to
-only do the math set-up and not modify the text fonts.</li>
-   <li>  added second optional version name argument to \Mathastext and to
-\MTDeclareVersion, to transfer settings for things not otherwise changed
-by mathastext from a math version to the one declared. This is mainly
-for helping set in bold face also symbols and large symbols when the used font
-for letters has been chosen bold in the declared version.</li>
-    </ol>
-<li>(1.3a)
-<ol>
-<li>new command \MTsetmathskips allows to specify on a letter by
-  letter basis some extra skips to be automatically inserted in math mode before
-  and after each occurrence of the given letter,</li>
-<li>the package when running
-  under lualatex requires it in a version at least as recent as the one distributed with TL2013,</li>
-<li> the documentation is better
-  hyperlinked.</li>
-</ol>
-<li>(1.2f) "change log" added to the user manual. Minor code improvements.</li>
-<li>(1.2e) remaining technical issues introduced with the version 1.2 have been
-  solved; the documentation and the test files have been extended.
-<li>(1.2d) an incompatibility with <i>amsmath</i> introduced in 1.2 is
-      fixed. </li>
-<li>(1.2b) The package achieves a slight improvement in the positioning of
-  subscripts when using an upright text font for letters in text mode and
-  it corrects bugs with active characters which were introduced in 1.2. </li>
-<li>(1.2)
-<ol>
-   <li> A new command sets up the amount of space to be automatically
-      inserted before the derivative glyph (useful when using an
-      upright font).</li>
-   <li>  The scope of the math alphabets has been extended to apply
-      to the non-alphabetical characters, and also to operator
-      names. In usual math mode $\mathbf{(\sin(n!)<\cos(x)?)}$
-      changes only the font for n and x. With mathastext and if
-      not told otherwise, /everything/ in the formula above
-      will respond to \mathbf (and the automatic spaces are left
-      untouched).</li>
-   <li> The documentation has been improved. The package file is self-extracting
-      from the dtx, and four additional test files are also produced during
-      `latex mathastext.dtx'.</li>
-</ol>
-<li>(1.15g) improvements to the documentation; modifications of the \#,\&,\$ and
-  \% related code which was working but admittedly a bit strange; changes to the
-  behavior of the math alphabets related options; general clean up of the code
-  and of its comments.
-<li>(1.15e) commands to add some spacing after
-  &exist; and &forall;, additions to the <i>subdued</i> option implementation.
-<li>(1.15d) additional fixes to problems related to the <i>amsmath</i>
-  package, especially under the Unicode engines XeTeX or LuaLaTeX.</li>
-<li>(1.15c) each math version can have its own LGR font for the
-  Greek letters in math mode,
-<li>(1.15) introduction of the <i>subdued</i> package option, which allows to
-  let <span class="mono">mathastext</span> act only on some limited portions of
-  the document; and a fix to a problem of compatibility with <i>amsmath</i>
-  when using the Unicode engines XeTeX or LuaLaTeX.</li>
-</ul><br>
-</li>
 <li>Related packages by the
 author:
 <ul>
 <li>
-<p><a href="https://ctan.org/pkg/libgreek">libgreek</a>
-(use the Linux Libertine or Biolinum fonts for Greek in math mode)</p>
+<p><a href="https://ctan.org/pkg/lgrmath">lgrmath</a>
+(use <code>LGR</code>-encoded fonts in math mode)</p>
 <p>
-This package is currently (since the 2018 release of the latest version of package <a href="https://ctan.org/pkg/libertine">libertine</a>) broken as it needs <a href="https://ctan.org/pkg/libertine-legacy">libertine-legacy</a> to be on the user system, but the latter is not distributed by TeXLive as it is in the obsolete section of CTAN, and it does not come with a <code>tds.zip</code> for that very same reason, making installation a bit involved, in particular it may be needed to rename the <code>libertine.map</code> file to avoid incompatibility with the existing one from installed <a href="https://ctan.org/pkg/libertine">libertine</a> package.
+</li>
+<li>
+<p><a href="https://ctan.org/pkg/libgreek">libgreek</a> (Greek letters in math
+mode from <a href="https://github.com/alerque/libertinus">Libertinus</a> or <a href="https://en.wikipedia.org/wiki/Linux_Libertine">Linux Libertine/Biolinum</a>)</p>
+<p>
+The original version of this package (2011/03/14) used the support files of
+the <a href="https://ctan.org/pkg/libertine">libertine</a> LaTeX font package
+(which made <a href="https://en.wikipedia.org/wiki/Linux_Libertine">Linux
+Libertine</a> usable via pdfLaTeX).  It got broken at the time of a 2018 release
+of <a href="https://ctan.org/pkg/libertine">libertine</a> when
+the <a href="https://ctan.org/pkg/libertine-legacy">libertine-legacy</a> got
+moved to the obsolete section of CTAN, and thus stopped being distributed by
+TeXLive (and presumably MikTeX).
 </p>
-<p>The author will perhaps release a new version using the files from <a href="https://ctan.org/pkg/libertinus-type1">libertinus-type1</a>.
+<p>The current version, 1.1 of 2022/11/11, uses the LGR-encoded font files
+from the <a href="https://ctan.org/pkg/libertinus-type1">libertinus-type1</a>
+package by Bob Tennent which gives an interface for pdfLaTeX users to
+the <a href="https://github.com/alerque/libertinus">Libertinus</a> OpenType
+fonts.
+For perfect backwards compatibility, if executed on a LaTeX system where
+<a href="https://ctan.org/pkg/libertine-legacy">libertine-legacy</a> is still
+installed, <a href="https://ctan.org/pkg/libgreek">libgreek</a> will use it.
+Else (or if mandated by the <code>libertinus</code> option) it
+uses the font definition files from
+<a href="https://ctan.org/pkg/libertinus-type1">libertinus-type1</a>.
 </p>
+<p>
+In this context, note
+that <a href="https://ctan.org/pkg/libertinust1math">libertinust1math</a> by
+Michael Sharpe provides complete math support to pdfLaTeX to use the OpenType
+math part of <a href="https://github.com/alerque/libertinus">Libertinus</a>.
+But then the simplest is for the document text to also
+use <a href="https://github.com/alerque/libertinus">Libertinus</a>
+via <a href="https://ctan.org/pkg/libertinus-type1">libertinus-type1</a> and
+you presumably don't need <code>mathastext</code>!
 </li>
 <li>
 <a href="https://ctan.org/pkg/pxgreeks">pxgreeks</a>
@@ -475,6 +391,7 @@ an <a href="showcase.html#fc">example</a>).</li>
                  and \mathgreekup/\mathgreekit alphabets.
 2023/09/01 1.3z  fix 1.3y regression regarding selfGreek option.
 2023/12/20 1.3za option LGRgreek+, documentation improvements.
+2023/12/29 1.3zb frenchmath* update, decimalcomma, modified build logs, documentation.
 </pre>
 </li>
 </ul>

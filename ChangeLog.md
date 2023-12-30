@@ -1,6 +1,29 @@
 MATHASTEXT CHANGE LOG
 =====================
 
+1.3zb \[2023/12/29\]
+-----
+
+* Update to the `frenchmath*` option to maintain compatibility
+  with the [frenchmath](https://ctan.org/pkg/frenchmath)
+  package whose release 2.7 (2023/12/23) has replaced
+  the ncccomma package by the decimalcomma package.
+
+* The `frenchmath+` option holds the former meaning of `frenchmath*`.
+
+* Option `decimalcomma` to load the eponymous package by Antoine
+  Missier.  This is tacitly done by `frenchmath*`.
+
+* No more messages sent to the console output during loading,
+  only info messages going into the log, and using (more or less)
+  the official LaTeX interface: after close to 13 years of development
+  of this package it was perhaps finally the time to do it.
+
+* Documentation improvements.  Close to 13 years after the
+  birth of the package, and as it nowadays rarely wakes up from
+  dormancy, this was almost last chance to try to improve a few
+  things.
+
 1.3za \[2023/12/20\]
 -----
 

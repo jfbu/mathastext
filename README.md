@@ -12,9 +12,9 @@ of the [LPPL1.3c](http://www.latex-project.org/lppl/lppl-1-3c.txt)
 
 The Author of this Work is Jean-Francois B. (`2589111+jfbu@users.noreply.github.com`)
 
-Copyright (C) 2011-2016, 2018, 2019, 2022, 2023 Jean-Francois B.
+Copyright (C) 2011-2019, 2022, 2023 Jean-Francois B.
 
-      Source: mathastext.dtx 1.3za 2023/12/20
+      Source: mathastext.dtx 1.3zb 2023/12/29
 
 
 DESCRIPTION
@@ -53,7 +53,7 @@ package loading time, for these characters:
       0123456789
       !?,.:;+-=()[]/#$%&<>|{}\
 
-Main options: `italic`, `subdued`, `LGRgreek`.
+Main options: `italic`, `frenchmath`, `subdued`, `LGRgreek`.
 - Use the `italic` option to get the Latin letters in math mode
   be in italics. Digits and log-like operator names (pre-defined
   as well as user-defined) will be in the same shape as the text
@@ -81,6 +81,29 @@ Main options: `italic`, `subdued`, `LGRgreek`.
 
 RECENT CHANGES
 ==============
+
+1.3zb \[2023/12/29\]
+-----
+
+* Update to the `frenchmath*` option to maintain compatibility
+  with the [frenchmath](https://ctan.org/pkg/frenchmath)
+  package whose release 2.7 (2023/12/23) has replaced
+  the ncccomma package by the decimalcomma package.
+
+* The `frenchmath+` option holds the former meaning of `frenchmath*`.
+
+* Option `decimalcomma` to load the eponymous package by Antoine
+  Missier.  This is tacitly done by `frenchmath*`.
+
+* No more messages sent to the console output during loading,
+  only info messages going into the log, and using (more or less)
+  the official LaTeX interface: after close to 13 years of development
+  of this package it was perhaps finally the time to do it.
+
+* Documentation improvements.  Close to 13 years after the
+  birth of the package, and as it nowadays rarely wakes up from
+  dormancy, this was almost last chance to try to improve a few
+  things.
 
 1.3za \[2023/12/20\]
 -----
