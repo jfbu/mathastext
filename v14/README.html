@@ -173,14 +173,14 @@
 <li><a href="#usage" id="toc-usage">USAGE</a></li>
 <li><a href="#recent-changes" id="toc-recent-changes">RECENT CHANGES</a>
 <ul>
+<li><a href="#14a-20240720" id="toc-14a-20240720">1.4a
+[2024/07/20]</a></li>
+<li><a href="#14-20240720" id="toc-14-20240720">1.4
+[2024/07/20]</a></li>
 <li><a href="#13zb-20231229" id="toc-13zb-20231229">1.3zb
 [2023/12/29]</a></li>
 <li><a href="#13za-20231220" id="toc-13za-20231220">1.3za
 [2023/12/20]</a></li>
-<li><a href="#13z-20230901" id="toc-13z-20230901">1.3z
-[2023/09/01]</a></li>
-<li><a href="#13y-20221104" id="toc-13y-20221104">1.3y
-[2022/11/04]</a></li>
 </ul></li>
 </ul>
 </nav>
@@ -197,8 +197,8 @@ the <a
 href="http://www.latex-project.org/lppl/lppl-1-3c.txt">LPPL1.3c</a></p>
 <p>The Author of this Work is Jean-Francois B.
 (<code>2589111+jfbu@users.noreply.github.com</code>)</p>
-<p>Copyright (C) 2011-2019, 2022, 2023 Jean-Francois B.</p>
-<pre><code>  Source: mathastext.dtx 1.3zb 2023/12/29</code></pre>
+<p>Copyright (C) 2011-2019, 2022-2024 Jean-Francois B.</p>
+<pre><code>  Source: mathastext.dtx 1.4a 2024/07/20</code></pre>
 <h1 id="description">DESCRIPTION</h1>
 <p>Optimal typographical results for documents containing mathematical
 symbols can only be hoped for with math fonts specifically designed to
@@ -258,6 +258,78 @@ font.</li>
 letters.</li>
 </ul>
 <h1 id="recent-changes">RECENT CHANGES</h1>
+<h2 id="14a-20240720">1.4a [2024/07/20]</h2>
+<ul>
+<li>There was a documentation glitch in 1.4 and also a problem with the
+<code>\MTprimeskip</code> feature being lost under the emergency
+fall-back <code>everymath</code> option.</li>
+</ul>
+<h2 id="14-20240720">1.4 [2024/07/20]</h2>
+<ul>
+<li><p>Since 1.2 of 2012/12/20, mathastext has used mathematically
+active characters to propose certain advanced functionalities. For
+reasons half lost in the mists of time but whose main one was surely to
+keep the meaning of the active shape of characters unchanged outside of
+math mode, this mathematical activation, and (in most cases) the
+definitions of what active characters do, were done again at
+<em>each</em> entrance into math mode. At this 1.4 release, mathastext
+does not inject <em>any</em> code whatsoever into the
+<code>\everymath</code> and <code>\everydisplay</code> toks registers
+anymore (except for one font-related hack needed under LuaLaTeX, see
+below). Your documents will compile a tiny bit faster.</p></li>
+<li><p>In (unsual) documents where users play with catcodes and
+mathcodes it is impossible to keep exact backward compatibility, because
+documented user commands which acted formerly a toggles with delayed
+action now will enact changes immediately if in the document body. In
+practice consequences are expected to be few, because catcode active
+characters are (as was already the case with earlier releases) hacked
+only when they are Babel shorthands and they are then modified in a way
+altering only their action in math mode. The precise description of what
+mathastext does when mathematically activating (or not) a character,
+depending on circumstances, is to be found among small-print comments in
+the section "Extended scope of the math alphabets commands". See also
+the documentation of the <code>\MTmathactiveletters</code> command for
+some specifics regarding ascii letters.</p></li>
+<li><p>New option: <code>everymath</code>. It instructs mathastext to
+revert (partially) to its legacy code which uses
+<code>\everymath/\everydisplay</code>. This reversal is partial, the
+handling of ascii letters not being included into it. The
+<code>everymath</code> option is there only to try as a quick fix in
+case transition to this release causes a major problem in a user
+document and time is lacking to investigate. Please report to the author
+such issues. Option <code>everymath</code> is destined to be removed at
+next major release.</p></li>
+<li><p>New option: <code>activedigits</code>. Enjoy.</p></li>
+<li><p>It is now easier to hook into the mathastext architecture for
+mathematically activated ascii letters. See the new section "Hacking
+letters (and even digits) for special tasks".</p></li>
+<li><p>Bugfix: do not override special behavior of the math mode dot in
+babel-spanish.</p></li>
+<li><p>Bugfix: A desperate hack related to LuaLaTeX font matters and
+dating back to 1.3o 2016/05/03 had been for some years in dire need of
+an update regarding fonts using <code>Renderer=HarfBuzz</code>. This is
+done now. Thanks to tex.sx <code>user691586</code> for report. This is
+currently the sole remaining usage of
+<code>\everymath/\everydisplay</code>.</p></li>
+<li><p>Bugfix: an optional feature related to <code>\{</code> and
+<code>\}</code> was broken since an upstream LaTeX change at its
+2020-02-02 release.</p></li>
+<li><p>With option symbolmisc, those math symbol macros formerly defined
+via <code>\DeclareRobustCommand</code> are now declared via
+<code>\protected\def</code>.</p></li>
+<li><p>Removal of legacy branches previously kept to support LaTeX
+earlier than 2020-02-02.</p></li>
+<li><p>Removal of support for EU1 and EU2 font encodings.</p></li>
+<li><p>Option <code>noasterisk</code> deprecated at 1.2d 2013/01/02 has
+(finally) been removed.</p></li>
+<li><p>Four test files previously included and auto-extracted from the
+distributed dtx have been dropped. One of them is still available on the
+package homepage.</p></li>
+<li><p>Some parts of the documentation have been massively re-ordered
+and even to some extent improved. But there may be some occasions where
+obsolete statements will be found having the legacy
+<code>\everymath/\everydisplay</code> situation as background.</p></li>
+</ul>
 <h2 id="13zb-20231229">1.3zb [2023/12/29]</h2>
 <ul>
 <li><p>Update to the <code>frenchmath*</code> option to maintain
@@ -301,54 +373,6 @@ interaction of <code>subdued</code> with <code>LGRgreek</code> and
 in the complete list of options for details.</p></li>
 <li><p>Fix long-standing hyperlink problems in the documentation: blue
 color words should now all be functioning hyperlinks.</p></li>
-</ul>
-<h2 id="13z-20230901">1.3z [2023/09/01]</h2>
-<p>Fix 1.3y regression which broke <code>selfGreek</code> option due to
-internal renamings. Thanks to Stephan Korell for report.</p>
-<h2 id="13y-20221104">1.3y [2022/11/04]</h2>
-<p>(the 1.3x had an annoying documentation bug, and had already been
-pushed to CTAN, hence the version increase to 1.3y)</p>
-<ul>
-<li><p>mathastext now requires the <code>\expanded</code> primitive
-(which is available with all major engines since TeXLive 2019).</p></li>
-<li><p>Revisit parts of the documentation (mainly the Examples, and the
-section on Greek letters) and shuffle the other parts to surely improve
-things. Mention the <a href="https://ctan.org/pkg/mathfont">mathfont</a>
-and <a href="https://ctan.org/pkg/frenchmath">frenchmath</a>
-packages.</p></li>
-<li><p>Add the <code>ncccomma</code> option which loads the <a
-href="https://ctan.org/pkg/ncccomma">ncccomma</a> package to allow the
-comma as decimal separator.</p></li>
-<li><p>Add the <code>binarysemicolon</code> option to let the semi-colon
-be of type <code>\mathbin</code>, not <code>\mathpunct</code>.</p></li>
-<li><p>Add the <code>frenchmath*</code> option which does all three of
-<code>frenchmath</code>, <code>ncccomma</code> and
-<code>binarysemicolon</code>.</p></li>
-<li><p>Under the <code>LGRgreek</code> and <code>LGRgreeks</code>
-options only:</p>
-<ul>
-<li><p>make available upright and italic Greek letters in math mode via
-<code>\alphaup</code>, <code>\alphait</code>, ... control sequences, in
-addition to those not using such postfixed-names.</p></li>
-<li><p>add <code>\mathgreekup</code> and <code>\mathgreekit</code> math
-alphabets.</p></li>
-<li><p>add <code>\MTgreekupdefault</code> and
-<code>\MTgreekitdefault</code>. The former replaces
-<code>\updefault</code> which was used in some places and since LaTeX
-2020-02-02 caused systematic Font Warnings about the substitution of
-<code>up</code> by <code>n</code>.</p></li>
-</ul>
-<p>These new features required an extensive internal refactoring which
-is expected to not induce changes to most existing documents. But it may
-induce changes to those using some unusual configuration in the
-preamble, as made possible via the package macros; this can apply only
-to documents authored by those few people who actually read the
-documentation. For full details make sure to read the PDF documentation
-about this change.</p></li>
-<li><p>Fix "<code>\Digamma</code> under <code>LGRgreek</code> option
-uses the shape for lowercase not uppercase Greek".</p></li>
-<li><p>Fix some incongruities in log messages related to Greek letters
-and emitted during math version creation in the preamble.</p></li>
 </ul>
 </body>
 </html>

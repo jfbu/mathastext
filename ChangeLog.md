@@ -1,6 +1,84 @@
 MATHASTEXT CHANGE LOG
 =====================
 
+1.4a \[2024/07/20\]
+----
+
+* There was a documentation glitch in 1.4 and also a problem with the
+  `\MTprimeskip` feature being lost under the emergency fall-back
+  `everymath` option.
+
+1.4 \[2024/07/20\]
+---
+
+* Since 1.2 of 2012/12/20, mathastext has used mathematically active
+  characters to propose certain advanced functionalities.  For reasons half
+  lost in the mists of time but whose main one was surely to keep the
+  meaning of the active shape of characters unchanged outside of math mode,
+  this mathematical activation, and (in most cases) the definitions of what
+  active characters do, were done again at *each* entrance into math mode.
+  At this 1.4 release, mathastext does not inject *any* code whatsoever into
+  the `\everymath` and `\everydisplay` toks registers anymore (except for
+  one font-related hack needed under LuaLaTeX, see below).  Your documents
+  will compile a tiny bit faster.
+
+* In (unsual) documents where users play with catcodes and mathcodes it is
+  impossible to keep exact backward compatibility, because documented user
+  commands which acted formerly a toggles with delayed action now will enact
+  changes immediately if in the document body.  In practice consequences are
+  expected to be few, because catcode active characters are (as was already
+  the case with earlier releases) hacked only when they are Babel shorthands
+  and they are then modified in a way altering only their action in math
+  mode.  The precise description of what mathastext does when mathematically
+  activating (or not) a character, depending on circumstances, is to be
+  found among small-print comments in the section "Extended scope of the
+  math alphabets commands".  See also the documentation of the
+  `\MTmathactiveletters` command for some specifics regarding ascii letters.
+
+* New option: `everymath`. It instructs mathastext to revert (partially)
+  to its legacy code which uses `\everymath/\everydisplay`.  This reversal
+  is partial, the handling of ascii letters not being included into it.  The
+  `everymath` option is there only to try as a quick fix in case transition
+  to this release causes a major problem in a user document and time is
+  lacking to investigate.  Please report to the author such issues.  Option
+  `everymath` is destined to be removed at next major release.
+
+* New option: `activedigits`.  Enjoy.
+
+* It is now easier to hook into the mathastext architecture for
+  mathematically activated ascii letters.  See the new section "Hacking
+  letters (and even digits) for special tasks".
+
+* Bugfix: do not override special behavior of the math mode dot in
+  babel-spanish.
+
+* Bugfix: A desperate hack related to LuaLaTeX font matters and dating
+  back to 1.3o 2016/05/03 had been for some years in dire need of an update
+  regarding fonts using `Renderer=HarfBuzz`.  This is done now.  Thanks to
+  tex.sx `user691586` for report.  This is currently the sole remaining
+  usage of `\everymath/\everydisplay`.
+
+* Bugfix: an optional feature related to `\{` and `\}` was broken since an
+  upstream LaTeX change at its 2020-02-02 release.
+
+* With option symbolmisc, those math symbol macros formerly defined via
+  `\DeclareRobustCommand` are now declared via `\protected\def`.
+
+* Removal of legacy branches previously kept to support LaTeX earlier than
+  2020-02-02.
+
+* Removal of support for EU1 and EU2 font encodings.
+
+* Option `noasterisk` deprecated at 1.2d 2013/01/02 has (finally) been removed.
+
+* Four test files previously included and auto-extracted from the
+  distributed dtx have been dropped.  One of them is still available
+  on the package homepage.
+
+* Some parts of the documentation have been massively re-ordered and even to some
+  extent improved.  But there may be some occasions where obsolete statements will
+  be found having the legacy `\everymath/\everydisplay` situation as background.
+
 1.3zb \[2023/12/29\]
 -----
 
@@ -156,7 +234,7 @@ been pushed to CTAN, hence the version increase to 1.3y)
   to some other (robust) math alphabet macros, but were not
   robust in the strict sense. This does cause some issues for
   moving arguments in the context of multiple math versions,
-  hence it was a bug. The special behaviour of the math
+  hence it was a bug. The special behavior of the math
   alphabet commands (they redefine themselves and other macros
   on first use) makes is somewhat problematic for mathastext
   to keep them updated across math versions and at the same
@@ -400,15 +478,13 @@ been pushed to CTAN, hence the version increase to 1.3y)
 * bugfix: under option nosmalldelims, `\lbrace` and `\rbrace` were
   redefined as math symbols and could not be used as delimiters.
 
-1.3d \[2015/02/26\]
-----
-
-* the documentation mentions the improved compatibility of mathastext
-  with the latest (3.34) beamer release: no more need for
-  `\usefonttheme{professionalfonts}`.
-
 1.3d \[2014/05/23\]
 ----
+
+* A 2015/02/26 edit to the documentation mentions the
+  improved compatibility of mathastext
+  with the latest (3.34) beamer release: no more need for
+  `\usefonttheme{professionalfonts}`.
 
 * new commands `\MTstandardgreek` and `\MTcustomgreek`.
 
@@ -539,6 +615,8 @@ use of mathematically active characters in versions 1.2 and 1.2b.
 *  various improvements in dealing with the asterisk and in the
       mechanism of letting non-letter symbols obey the math alphabet
       commands.
+
+*  the `noasterisk` option is deprecated and made a no-op.
 
 *  documentation extended and improved.
 
@@ -683,6 +761,11 @@ use of mathematically active characters in versions 1.2 and 1.2b.
       `\mathsf` and `\mathtt`, thus making it a quite generic
       complete manner to adapt the math configuration to fonts
       provided with no math support.
+
+1.13d
+----
+
+*  new macros `\MTstandardgreek` and `\MTcustomgreek`
 
 1.13b
 ----

@@ -12,9 +12,9 @@ of the [LPPL1.3c](http://www.latex-project.org/lppl/lppl-1-3c.txt)
 
 The Author of this Work is Jean-Francois B. (`2589111+jfbu@users.noreply.github.com`)
 
-Copyright (C) 2011-2019, 2022, 2023 Jean-Francois B.
+Copyright (C) 2011-2019, 2022-2024 Jean-Francois B.
 
-      Source: mathastext.dtx 1.3zb 2023/12/29
+      Source: mathastext.dtx 1.4a 2024/07/20
 
 
 DESCRIPTION
@@ -82,6 +82,84 @@ Main options: `italic`, `frenchmath`, `subdued`, `LGRgreek`.
 RECENT CHANGES
 ==============
 
+1.4a \[2024/07/20\]
+----
+
+* There was a documentation glitch in 1.4 and also a problem with the
+  `\MTprimeskip` feature being lost under the emergency fall-back
+  `everymath` option.
+
+1.4 \[2024/07/20\]
+---
+
+* Since 1.2 of 2012/12/20, mathastext has used mathematically active
+  characters to propose certain advanced functionalities.  For reasons half
+  lost in the mists of time but whose main one was surely to keep the
+  meaning of the active shape of characters unchanged outside of math mode,
+  this mathematical activation, and (in most cases) the definitions of what
+  active characters do, were done again at *each* entrance into math mode.
+  At this 1.4 release, mathastext does not inject *any* code whatsoever into
+  the `\everymath` and `\everydisplay` toks registers anymore (except for
+  one font-related hack needed under LuaLaTeX, see below).  Your documents
+  will compile a tiny bit faster.
+
+* In (unsual) documents where users play with catcodes and mathcodes it is
+  impossible to keep exact backward compatibility, because documented user
+  commands which acted formerly a toggles with delayed action now will enact
+  changes immediately if in the document body.  In practice consequences are
+  expected to be few, because catcode active characters are (as was already
+  the case with earlier releases) hacked only when they are Babel shorthands
+  and they are then modified in a way altering only their action in math
+  mode.  The precise description of what mathastext does when mathematically
+  activating (or not) a character, depending on circumstances, is to be
+  found among small-print comments in the section "Extended scope of the
+  math alphabets commands".  See also the documentation of the
+  `\MTmathactiveletters` command for some specifics regarding ascii letters.
+
+* New option: `everymath`. It instructs mathastext to revert (partially)
+  to its legacy code which uses `\everymath/\everydisplay`.  This reversal
+  is partial, the handling of ascii letters not being included into it.  The
+  `everymath` option is there only to try as a quick fix in case transition
+  to this release causes a major problem in a user document and time is
+  lacking to investigate.  Please report to the author such issues.  Option
+  `everymath` is destined to be removed at next major release.
+
+* New option: `activedigits`.  Enjoy.
+
+* It is now easier to hook into the mathastext architecture for
+  mathematically activated ascii letters.  See the new section "Hacking
+  letters (and even digits) for special tasks".
+
+* Bugfix: do not override special behavior of the math mode dot in
+  babel-spanish.
+
+* Bugfix: A desperate hack related to LuaLaTeX font matters and dating
+  back to 1.3o 2016/05/03 had been for some years in dire need of an update
+  regarding fonts using `Renderer=HarfBuzz`.  This is done now.  Thanks to
+  tex.sx `user691586` for report.  This is currently the sole remaining
+  usage of `\everymath/\everydisplay`.
+
+* Bugfix: an optional feature related to `\{` and `\}` was broken since an
+  upstream LaTeX change at its 2020-02-02 release.
+
+* With option symbolmisc, those math symbol macros formerly defined via
+  `\DeclareRobustCommand` are now declared via `\protected\def`.
+
+* Removal of legacy branches previously kept to support LaTeX earlier than
+  2020-02-02.
+
+* Removal of support for EU1 and EU2 font encodings.
+
+* Option `noasterisk` deprecated at 1.2d 2013/01/02 has (finally) been removed.
+
+* Four test files previously included and auto-extracted from the
+  distributed dtx have been dropped.  One of them is still available
+  on the package homepage.
+
+* Some parts of the documentation have been massively re-ordered and even to some
+  extent improved.  But there may be some occasions where obsolete statements will
+  be found having the legacy `\everymath/\everydisplay` situation as background.
+
 1.3zb \[2023/12/29\]
 -----
 
@@ -132,64 +210,4 @@ RECENT CHANGES
 
 * Fix long-standing hyperlink problems in the documentation:
   blue color words should now all be functioning hyperlinks.
-
-1.3z \[2023/09/01\]
-----
-
-Fix 1.3y regression which broke `selfGreek` option due to internal
-renamings.  Thanks to Stephan Korell for report.
-
-1.3y \[2022/11/04\]
-----
-
-(the 1.3x had an annoying documentation bug, and had already
-been pushed to CTAN, hence the version increase to 1.3y)
-
-* mathastext now requires the `\expanded` primitive (which is
-  available with all major engines since TeXLive 2019).
-
-* Revisit parts of the documentation (mainly
-  the Examples, and the section on Greek letters) and shuffle
-  the other parts to surely improve things. Mention
-  the [mathfont](https://ctan.org/pkg/mathfont)
-  and [frenchmath](https://ctan.org/pkg/frenchmath) packages.
-
-* Add the `ncccomma` option which loads the
-  [ncccomma](https://ctan.org/pkg/ncccomma)
-  package to allow the comma as decimal separator.
-
-* Add the `binarysemicolon` option to let the semi-colon
-  be of type `\mathbin`, not `\mathpunct`.
-
-* Add the `frenchmath*` option which does all three of
-  `frenchmath`, `ncccomma` and `binarysemicolon`.
-
-* Under the `LGRgreek` and `LGRgreeks` options only:
-
-  - make available upright and italic Greek letters in math mode
-    via `\alphaup`, `\alphait`, ...  control sequences, in
-    addition to those not using such postfixed-names.
-
-  - add `\mathgreekup` and `\mathgreekit` math alphabets.
-
-  - add `\MTgreekupdefault` and `\MTgreekitdefault`.  The former
-    replaces `\updefault` which was used in some places and since
-    LaTeX 2020-02-02 caused systematic Font Warnings about the
-    substitution of `up` by `n`.
-
-  These new features required an extensive internal refactoring
-  which is expected to not induce changes to most existing
-  documents.  But it may induce changes to those using some
-  unusual configuration in the preamble, as made possible via the
-  package macros; this can apply only to documents authored by
-  those few people who actually read the documentation.  For full
-  details make sure to read the PDF documentation about this
-  change.
-
-* Fix "`\Digamma` under `LGRgreek` option uses the shape for
-  lowercase not uppercase Greek".
-
-* Fix some incongruities in log messages related to Greek
-  letters and emitted during math version creation in the
-  preamble.
 

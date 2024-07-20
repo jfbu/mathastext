@@ -1,5 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html lang="en">
+<!-- Time-stamp: <20-07-2024 21:28:55 CEST> -->
+<!-- (1.4a) -->
 <!-- Time-stamp: <30-12-2023 14:06:42 CET> -->
 <!-- pour libgreek, mention de Libertinus avec lien -->
 <!-- Time-stamp: <29-12-2023 20:02:00 CET> -->
@@ -88,8 +90,8 @@ BLOCKQUOTE{margin-left:4ex;margin-right:4ex;text-align:left;}
 <body>
 
 <DIV CLASS="center">A LaTeX package: <b>mathastext</b><br>
-Copyright &copy; 2011-2019, 2022, 2023 Jean-Fran&ccedil;ois B..<br>
-Current version is <b>1.3zb</b> (2023/12/29)<br>
+Copyright &copy; 2011-2019, 2022-2024 Jean-Fran&ccedil;ois B..<br>
+Current version is <b>1.4a</b> (2024/07/20)<br>
   <a href="v13/README">README</a>,
   <a href="v13/README.html">README.html</a>,
   <a href="v13/INSTALL.txt">INSTALL.txt</a>,
@@ -98,6 +100,7 @@ Current version is <b>1.3zb</b> (2023/12/29)<br>
   <a href="v13/mathastext.sty">sty</a>,
   <a href="v13/mathastext.dtx">dtx</a>,
   <a href="v13/mathastext.tds.zip">mathastext.tds.zip</a>,
+  <a href="v13/mathastexttestalphabets.tex">mathastexttestalphabets.tex</a>,
   <a href="v13/mathastexttestalphabets.pdf">mathastexttestalphabets.pdf</a>,
 <a href="showcase.html">showcase page</a>.</DIV>
 
@@ -165,7 +168,7 @@ between atoms.</p>
 <CENTER>
 <table WIDTH="500"  border="0" cellpadding="10">
 <tr><td>
-Current version is <b>1.3zb</b> (2023/12/29)<br>
+Current version is <b>1.4a</b> (2024/07/20)<br>
 <ul>
 <li><a href="v13/README">README</a></li>
 <li><a href="v13/README.html">README.html</a></li>
@@ -176,7 +179,8 @@ Current version is <b>1.3zb</b> (2023/12/29)<br>
 <li><a href="v13/mathastext.pdf">PDF Documentation</a></li>
 <li>Package file: <a href="v13/mathastext.sty">mathastext.sty</a></li>
 <li>Documented source: <a href="v13/mathastext.dtx">dtx</a>.</li>
-<li>Compiled test file: <a href="v13/mathastexttestalphabets.pdf">pdf</a>.</li>
+<li>Test file: <a href="v13/mathastexttestalphabets.tex">tex</a>.</li>
+<li>Compiled (with pdflatex) test file: <a href="v13/mathastexttestalphabets.pdf">pdf</a>.</li>
 <!--
   <ol>
     <li>easiest is with <a href="v13/mathastext.tds.zip">mathastext.tds.zip</a>:
@@ -392,6 +396,10 @@ an <a href="showcase.html#fc">example</a>).</li>
 2023/09/01 1.3z  fix 1.3y regression regarding selfGreek option.
 2023/12/20 1.3za option LGRgreek+, documentation improvements.
 2023/12/29 1.3zb frenchmath* update, decimalcomma, modified build logs, documentation.
+2024/07/20 1.4a   core internal refactoring: mathastext does not use \everymath anymore.
+                 option activedigits; option everymath to revert to legacy behavior.
+                 bugfix regaring the babel-spanish dot in math mode
+                 update to a lualatex font related workaround.
 </pre>
 </li>
 </ul>
