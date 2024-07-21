@@ -1,5 +1,563 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html lang="en">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<!-- Time-stamp: <21-07-2024 23:18:36 CEST> -->
+<!-- Version HTML5 de cette page -->
+<head>
+  <meta charset="utf-8" >
+  <meta name="generator" content="pandoc" >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" >
+  <!-- plus some manual fine-tuning; conversion was from HTML4.01 original -->
+  <!-- manual correction of validation problems in particular with trailings slashes -->
+  <title>mathastext</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    .center{display: block; text-align: center; margin: 0.5rem auto;}
+    .leftaligned{display: inline-block; text-align: left;}
+    .small{font-size:80%;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">mathastext</h1>
+<p>A LaTeX package: <strong>mathastext</strong><br>
+Copyright © 2011-2019, 2022-2024 Jean-François B..<br>
+Current version is <strong>1.4a</strong> (2024/07/20)<br>
+<a href="v13/README">README</a>,
+<a href="v13/README.html">README.html</a>,
+<a href="v13/INSTALL.txt">INSTALL.txt</a>,
+<a href="v13/ChangeLog.md">ChangeLog.md</a>,
+<a href="v13/mathastext.pdf">pdf</a>,
+<a href="v13/mathastext.sty">sty</a>,
+<a href="v13/mathastext.dtx">dtx</a>,
+<a href="v13/mathastext.tds.zip">mathastext.tds.zip</a>,
+<a href="v13/mathastexttestalphabets.tex">mathastexttestalphabets.tex</a>,
+<a href="v13/mathastexttestalphabets.pdf">mathastexttestalphabets.pdf</a>,
+<a href="showcase.html">showcase page</a>,
+<a href="https://ctan.org/pkg/mathastext">CTAN page</a>.</p>
+<p>This Work may be distributed and/or modified under the conditions
+of the <a href="https://www.latex-project.org/lppl/lppl-1-3c.txt">The LaTeX Project Public License 1.3c</a>.
+</p>
+</header>
+
+    <ol class="TOC">
+        <li>
+          <a href="#philo">
+            <span class="title">Philosophy</span>
+          </a>
+        </li>
+        <li>
+          <a href="#download">
+            <span class="title">Download</span>
+          </a>
+        </li>
+        <li>
+          <a href="#related">
+            <span class="title">Related</span>
+          </a>
+        </li>
+        <li>
+          <a href="#tips">
+            <span class="title">Tips</span>
+          </a>
+        </li>
+        <li>
+          <a href="#changes">
+            <span class="title">History</span>
+          </a>
+        </li>
+    </ol>
+
+<section>
+<h2 id="philo">Philosophy</h2>
+<div>
+<p>The package originates in some (even worse) macros I had been using
+many years ago to produce handouts as if done on a typewriter, or better
+said, to produce documents with a somewhat rough, but unified look, done
+by a real human and meaning to convey some message to real humans. The
+hope was to <strong>coerce</strong> the reader into making a real effort
+at assimilating the <strong>entirety</strong> of the material, text and
+math, not knowing in advance which piece would prove to be more
+important than the others.</p>
+<div class="center">
+<img src="../showcase/Riemann1859.png" alt="Riemann1859.png">
+<div class="leftaligned">
+<pre class="small">
+\usepackage[T1]{fontenc}
+\usepackage[german]{babel}
+\usepackage[variablett]{lmodern}
+\renewcommand\familydefault\ttdefault
+\usepackage[LGRgreek]{mathastext}
+\MTgreekfont{lmtt}\Mathastext
+</pre>
+</div>
+</div>
+<p>In a well-crafted mathematical document,
+every single part is as important as any other one, or, rather, it is up
+to the reader to uncover the web of links between atoms.</p>
+<p>The example above uses a typewriter font which well illustrates
+the purpose. But <strong>mathastext</strong> will work with all kinds of
+fonts and can produce less militant math: see the <a
+href="showcase.html">examples</a> (be patient, this page with its
+embedded png images weighs circa 5 Mo!) A notable feature of
+<strong>mathastext</strong> is to give a simple interface to using many
+distinct math fonts in the same document: <a
+href="showcase-riemann.html">special example</a>.</p>
+
+<p>Optimal typographical results for documents containing
+mathematical symbols can only be hoped for with math fonts specifically
+designed to match a given text typeface. Although the list of freely
+available math fonts for (PDF)LaTeX is slowly expanding (Computer
+Modern, AMS fonts, PX fonts, TX fonts, Fourier-GUTenberg, Math Design,
+Kepler Project, newtx, mathabx, others ... ; and ([2012/10/27]) on the
+Unicode side (XeTeX/LuaTeX): Asana-Math, XITS, Latin Modern Math, TeX
+Gyre Pagella Math, TeX Gyre Termes Math) it remains limited. Chances are
+you will not find a math font which fits well with your favorite text
+font.</p>
+
+<p>Try out <strong>mathastext</strong>: it will simply use the text
+font also for the math! (additionally to Latin letters, digits,
+punctuation signs, a few math symbols available in the ascii set, such
+as +,–,&lt;,&gt;,=, will also be picked up from the text font.) Often
+this gives quite satisfying results especially if, like the author, you
+aim at a very unified look for the document, and in particular prefer
+upright to slanted shapes for math (<strong>mathastext</strong> does
+have an option to maintain the usual slanted shape).</p>
+
+<p><a href="showcase.html">Examples</a> (page last updated around 2018,
+examples last updated around 2012; be patient, the page with its
+embedded png images weighs circa 5 Mo! (wow...) It contains about 70 examples, as
+png images and/or as pdf files.)</p>
+</div>
+<h2 id="download">Download</h2>
+<ul>
+<li>Current version is <strong>1.4a</strong> (2024/07/20)</li>
+<li><a href="v13/README">README</a></li>
+<li><a href="v13/README.html">README.html</a></li>
+<li><a href="v13/INSTALL.txt">INSTALL.txt</a></li>
+<li><a href="v13/ChangeLog.md">ChangeLog.md</a></li>
+<li><a href="v13/mathastext.tds.zip">tds.zip archive</a> (for manual
+installation)</li>
+<li><a href="https://ctan.org/pkg/mathastext">CTAN page</a></li>
+<li><a href="v13/mathastext.pdf">PDF Documentation</a></li>
+<li>Package file: <a href="v13/mathastext.sty">mathastext.sty</a></li>
+<li>Documented source: <a href="v13/mathastext.dtx">dtx</a>.</li>
+<li>Test file: <a href="v13/mathastexttestalphabets.tex">tex</a>.</li>
+<li>Compiled (with pdflatex) test file: <a
+href="v13/mathastexttestalphabets.pdf">pdf</a>.</li>
+</ul>
+
+<h2 id="related">Related packages by the author</h2>
+<ul>
+<li><p><a href="https://ctan.org/pkg/lgrmath">lgrmath</a> (use
+<code>LGR</code>-encoded fonts in math mode)</p></li>
+<li><p><a href="https://ctan.org/pkg/libgreek">libgreek</a> (Greek
+letters in math mode from <a
+href="https://github.com/alerque/libertinus">Libertinus</a> or <a
+href="https://en.wikipedia.org/wiki/Linux_Libertine">Linux
+Libertine/Biolinum</a>)</p>
+<p>The original version of this package (2011/03/14) used the support
+files of the <a href="https://ctan.org/pkg/libertine">libertine</a>
+LaTeX font package (which made <a
+href="https://en.wikipedia.org/wiki/Linux_Libertine">Linux Libertine</a>
+usable via pdfLaTeX). It got broken at the time of a 2018 release of <a
+href="https://ctan.org/pkg/libertine">libertine</a> when the <a
+href="https://ctan.org/pkg/libertine-legacy">libertine-legacy</a> got
+moved to the obsolete section of CTAN, and thus stopped being
+distributed by TeXLive (and presumably MikTeX).</p>
+<p>The current version, 1.1 of 2022/11/11, uses the LGR-encoded font
+files from the <a
+href="https://ctan.org/pkg/libertinus-type1">libertinus-type1</a>
+package by Bob Tennent which gives an interface for pdfLaTeX users to
+the <a href="https://github.com/alerque/libertinus">Libertinus</a>
+OpenType fonts. For perfect backwards compatibility, if executed on a
+LaTeX system where <a
+href="https://ctan.org/pkg/libertine-legacy">libertine-legacy</a> is
+still installed, <a href="https://ctan.org/pkg/libgreek">libgreek</a>
+will use it. Else (or if mandated by the <code>libertinus</code> option)
+it uses the font definition files from <a
+href="https://ctan.org/pkg/libertinus-type1">libertinus-type1</a>.</p>
+<p>In this context, note that <a
+href="https://ctan.org/pkg/libertinust1math">libertinust1math</a> by
+Michael Sharpe provides complete math support to pdfLaTeX to use the
+OpenType math part of <a
+href="https://github.com/alerque/libertinus">Libertinus</a>. But then
+the simplest is for the document text to also use <a
+href="https://github.com/alerque/libertinus">Libertinus</a> via <a
+href="https://ctan.org/pkg/libertinus-type1">libertinus-type1</a> and
+you presumably don't need <code>mathastext</code>!</p></li>
+<li><a href="https://ctan.org/pkg/pxgreeks">pxgreeks</a> (select
+upright/italic shape for the Greek letters from the PX fonts)</li>
+<li><a href="https://ctan.org/pkg/txgreeks">txgreeks</a> (select
+upright/italic shape for the Greek letters from the TX fonts).</li>
+</ul>
+<h2 id="tips">Tips</h2>
+<ul>
+<li><p>The sans-serif member of the document font family gives often
+good results when used in math-mode, in parallel with the text in
+serif.</p>
+<pre><code>\renewcommand{\familydefault}{\sfdefault}
+\usepackage{mathastext}
+\renewcommand{\familydefault}{\rmdefault}</code></pre>
+<p>It is then even less recommended to use the <em>italic</em> option
+(matter of taste!).</p></li>
+<li><p>How get in math mode the <em>upright</em> Greek letters from
+Computer Modern? Include in your preamble:</p>
+<pre><code>\usepackage{my_nice_font}
+\renewcommand{\familydefault}{cmr} % or cmss or cmtt for sans resp. mono
+\usepackage[LGRgreek, further options]{mathastext}
+\renewcommand{\familydefault}{\rmdefault}
+\Mathastext
+\begin{document}</code></pre>
+<p>The Greek letters will be from the LGR encoded CM font (and will be
+in upright shape, except if <em>italic</em> was among the <span
+class="mono">mathastext</span> options).<br>
+</p></li>
+<li>The previous trick works for (pdf)LaTeX as well as for XeLaTeX or
+LuaLaTeX. For XeLaTeX the <span class="mono">mathspec</span> package is
+a (far) better choice, but if you wish you can still use <span
+class="mono">mathastext</span> for its other aspects (math
+versions...).</li>
+<li>The LGRgreek option (<span
+class="mono">\usepackage[LGRgreek]{mathastext}</span>) picks up the
+Greek letters in LGR encoding from the default font family at the time
+of loading <span class="mono">mathastext</span>. Starting with version
+1.15c it is possible to have distinct Greek fonts in each <em>math
+version</em>. I mentioned already above that the CM/LM fonts are
+available (in Type 1 version for inclusion in pdf files) in LGR encoding
+for serif, sans-serif, and typewriter families (they actually belong to
+the "<span class="mono">cbfonts</span>".) Other available fonts in
+standard TeX distributions: the Greek Font Society fonts (such as
+<em>GFS Didot</em>), the <em>epigrafica</em> and <em>kerkis</em>
+packages, the <em>txfontsb</em> package which extends the
+<em>txfonts</em> package with LGR-encoded Greek letters, the
+<em>droid</em>, <em>comfortaa</em>, <em>dejavu</em>, and
+<em>opensans</em> package.</li>
+<li>Note that <span class="mono">mathastext</span> makes proviso only
+for monotonic Greek letters (in math mode; many of these packages are
+designed for polytonic Greek in text mode). After loading <span
+class="mono">mathastext</span> with option LGRgreek one should take note
+that <span class="mono">\varphi</span> and other `var' letters (except
+<span class="mono">\varsigma</span>) are not provided by this encoding,
+so the package does not make any specific assignments to such `var'
+macros.</li>
+</ul>
+
+<h2 id="changes">Abridged version history</h2>
+
+<dl>
+<dt>2011/01/25 1.0</dt>
+    <dd>
+Initial version. (<a href="v10/mathastext-doc.pdf">doc</a>)
+</dd>
+<dt>2011/02/01 1.1</dt>
+<dd>
+bugs fixed; options <code>italic</code> and <code>frenchmath</code>; minus as endash.
+</dd>
+<dt>2011/02/06 1.11</dt>
+<dd>
+bugs fixed; <code>\Mathastext</code> admits optional math version name.
+</dd>
+<dt>2011/03/11 1.13</dt>
+<dd>
+bugs fixed; option <code>LGRgreek</code>.
+</dd>
+<dt>2011/04/03 1.14b</dt>
+<dd>
+bugs fixed; options <code>LGRgreeks</code> and <code>selfGreeks</code>.
+</dd>
+<dt>2012/09/26 1.15</dt>
+<dd>
+option <code>subdued</code> allowing the <strong>mathastext</strong>-ification to act locally.
+</dd>
+<dt>2012/10/05 1.15c</dt>
+<dd>
+commands to set-up distinct LGR Greek fonts in each math version.
+</dd>
+<dt>2012/10/22 1.15e</dt>
+<dd>
+improvements to <code>subdued</code>; automatic spaces after <code>\forall</code> and <code>\exists</code>.
+</dd>
+<dt>2012/10/25 1.15g</dt>
+<dd>
+improvements
+in <code>\#</code>, <code>\&amp;</code>, <code>\$</code>, <code>\%</code>;
+code cleaned up and better documented.
+</dd>
+<dt>2012/12/20 1.2</dt>
+<dd>
+extended scope of the math alphabets; automatic space before
+the derivative glyph; documentation improved.
+</dd>
+<dt>2013/12/31 1.2b</dt>
+<dd>automatic italic corrections in math mode.</dd>
+<dt>2013/01/10 1.2e</dt>
+<dd>
+remaining technical issues with active characters in v1.2
+and v1.2b solved; extended test files, documentation, and
+source code comments
+</dd>
+<dt>2013/09/02 1.3</dt>
+<dd>new command <code>\MTsetmathskips</code>.</dd>
+<dt>2013/12/14 1.3c</dt>
+<dd>
+mechanism of &quot;inheritance&quot; in the declaration of
+<strong>mathastext</strong> math versions; starred variant of <code>\MTversion</code>
+leaves untouched the text font.
+</dd>
+<dt>2014/05/23 1.3d</dt>
+<dd>
+new commands <code>\MTstandardgreek</code> and <code>\MTcustomgreek</code>.
+</dd>
+<dt>2015/09/10 1.3e</dt>
+<dd>
+bugfix (option <code>ldelims</code> badly redefined <code>\lbrace</code> and <code>\rbrace</code>).
+</dd>
+<dt>2015/09/12 1.3f</dt>
+<dd>
+info rather than warning viz. <code>amsmath</code> <code>\resetMathstrut@</code>.
+self extracting README.md with Markdown syntax.
+</dd>
+<dt>2015/10/15 1.3g</dt>
+<dd>
+compatibility patch with <code>LaTeX</code> 2015/10/01 regarding <code>LuaLaTeX</code>.
+</dd>
+<dt>2015/10/31 1.3h</dt>
+<dd>
+bugfix regarding options <code>symbolgreek</code>/<code>selfGreek</code>/<code>selfGreeks</code>.
+</dd>
+<dt>2016/01/06 1.3i</dt>
+<dd>
+compatibility layer with <code>\url&#39;s</code> use of math mode.
+</dd>
+<dt>2016/01/15 1.3j</dt>
+<dd>
+stronger subdued mode and related under-the-hood changes.
+</dd>
+<dt>2016/01/24 1.3k</dt>
+<dd>
+documentation fixes.
+</dd>
+<dt>2016/01/29 1.3l</dt>
+<dd>
+compatibility with TL2016 <code>fontspec</code>.
+</dd>
+<dt>2016/04/22 1.3n</dt>
+<dd>
+improved compatibility with <code>amsmath</code>.
+</dd>
+<dt>2016/05/03 1.3o</dt>
+<dd>
+patches around <code>LuaLaTeX+luaotfload</code> font issues in math mode.
+</dd>
+<dt>2016/10/31 1.3q</dt>
+<dd>
+option <code>unicodeminus</code>.
+</dd>
+<dt>2018/08/22 1.3t</dt>
+<dd>
+compatibility fix with <code>fontspec</code> relative to subdued option.
+no more redefinitions of <code>\i</code>
+and <code>\j</code>, only <code>\imath</code>
+and <code>\jmath</code>.
+</dd>
+<dt>2019/08/20 1.3u</dt>
+<dd>
+support for math versions with varying font encodings.
+</dd>
+<dt>2019/09/19 1.3v</dt>
+<dd>
+robust and protected math macros to match <code>LaTeX</code> 2019-10-01
+</dd>
+<dt>2019/11/16 1.3w</dt>
+<dd>
+workaround to a (provisory) <code>LaTeX+amsmath</code> bug regarding accents
+</dd>
+<dt>2022/11/04 1.3y</dt>
+<dd>
+<ul>
+<li>options <code>ncccomma,</code> <code>binarysemicolon</code> and frenchmath*.</li>
+<li>with LGRgreek: <code><code>\...up</code></code> and <code><code>\...it</code></code> variants for Greek letters</li>
+<li>and <code><code>\mathgreekup</code>/<code>\mathgreekit</code></code> alphabets.</li>
+</ul>
+</dd>
+<dt>2023/09/01 1.3z</dt>
+<dd>
+fix 1.3y regression regarding <code>selfGreek</code> option.
+</dd>
+<dt>2023/12/20 1.3za</dt>
+<dd>
+option <code>LGRgreek+</code>, documentation improvements.
+</dd>
+<dt>2023/12/29 1.3zb</dt>
+<dd>
+<code>frenchmath*</code> update, <code>decimalcomma</code>, modified build logs, documentation.
+</dd>
+<dt>2024/07/20 1.4a</dt>
+<dd>
+<ul>
+<li>core internal refactoring: <strong>mathastext</strong> does not use <code>\everymath</code> anymore.</li>
+<li>option <code>activedigits</code>; option <code>everymath</code> to revert to legacy behavior.</li>
+<li>bugfix regarding the <code>babel-spanish</code> dot in math mode.</li>
+<li>update to a <code>LuaLaTeX</code> font related workaround.</li>
+<li>conversion of this page to <code>html5</code> (2024/07/21).</li>
+</ul>
+</dd>
+</dl>
+</section>
+</body>
+</html>
 <!-- Time-stamp: <20-07-2024 21:28:55 CEST> -->
 <!-- (1.4a) -->
 <!-- Time-stamp: <30-12-2023 14:06:42 CET> -->
@@ -65,352 +623,3 @@
 <!-- Time-stamp: <11-01-2015 à 23:33:53 CET> -->
 <!-- (Charlie) -->
 <!-- 1.3d (2014/05/23) -->
-
-<head>
-<link rel="shortcut icon" type="image/png" href="zeta32.png">
-   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-   <META NAME="robots" CONTENT="index, follow">
-   <title>mathastext</title>
-<STYLE type="text/css">
-.toc{list-style:none;}
-.title{margin:auto;text-align:center;}
-.center{text-align:center;margin-left:auto;margin-right:auto;}
-.fighead{text-align:center;margin-left:auto;margin-right:auto;font-weight:bold;}
-.flushleft{text-align:left;margin-left:0ex;margin-right:auto;}
-.flushright{text-align:right;margin-left:auto;margin-right:0ex;}
-DIV TABLE{margin-left:inherit;margin-right:inherit;}
-BLOCKQUOTE{margin-left:4ex;margin-right:4ex;text-align:left;}
-.part{margin:auto;text-align:center;}
-.intro{margin-left:15%;margin-right:15%;}
-.central{margin-left:25%;margin-right:25%;}
-.mono{font-family:monospace,monospace;}
-</STYLE>
-</head>
-
-<body>
-
-<DIV CLASS="center">A LaTeX package: <b>mathastext</b><br>
-Copyright &copy; 2011-2019, 2022-2024 Jean-Fran&ccedil;ois B..<br>
-Current version is <b>1.4a</b> (2024/07/20)<br>
-  <a href="v13/README">README</a>,
-  <a href="v13/README.html">README.html</a>,
-  <a href="v13/INSTALL.txt">INSTALL.txt</a>,
-  <a href="v13/ChangeLog.md">ChangeLog.md</a>,
-  <a href="v13/mathastext.pdf">pdf</a>,
-  <a href="v13/mathastext.sty">sty</a>,
-  <a href="v13/mathastext.dtx">dtx</a>,
-  <a href="v13/mathastext.tds.zip">mathastext.tds.zip</a>,
-  <a href="v13/mathastexttestalphabets.tex">mathastexttestalphabets.tex</a>,
-  <a href="v13/mathastexttestalphabets.pdf">mathastexttestalphabets.pdf</a>,
-<a href="showcase.html">showcase page</a>.</DIV>
-
-
-<DIV class="center">
- <table align="center" border="0" WIDTH="85%" cellpadding="5">
-
-<tr><td width="0"
- align="center"><img src="showcase/Riemann1859.png"
- alt="Riemann1859.png">
-<DIV align="left">
-<pre style="font-size:90%">
-\usepackage[T1]{fontenc}
-\usepackage[german]{babel}
-\usepackage[variablett]{lmodern}
-\renewcommand\familydefault\ttdefault
-\usepackage[LGRgreek]{mathastext}
-\MTgreekfont{lmtt}\Mathastext
-</pre></DIV></td>
-
-<td><p>Optimal typographical results for documents
-	containing mathematical symbols can only be hoped for
-	with math fonts specifically designed to match a given
-	text typeface. Although the list of freely available
-	math fonts for (PDF)LaTeX is slowly expanding
-	(Computer Modern, AMS fonts, PX fonts, TX fonts,
-	Fourier-GUTenberg, Math Design, Kepler Project, newtx,
-	mathabx, others ... ; and ([2012/10/27]) on the
-	Unicode side (XeTeX/LuaTeX): Asana-Math, XITS, Latin
-	Modern Math, TeX Gyre Pagella Math, TeX Gyre Termes
-	Math) it remains limited. Chances are you will not
-	find a math font which fits well with your favorite
-	text font. Try out <b>mathastext</b>: it will simply
-	use the text font also for the math! (additionally to
-	Latin letters, digits, punctuation signs, a few math
-	symbols available in the ascii set, such as
-	+,&ndash;,<,>,=, will also be picked up from the text
-	font.) Often this gives quite satisfying results
-	especially if, like the author, you aim at a very
-	unified look for the document, and in particular
-	prefer upright to slanted shapes for math
-	(<b>mathastext</b> does have an option to maintain the
-	usual slanted shape). </p>
-<p> The package originates in some (even worse)
-macros I had been using many years ago to produce handouts as if done on a
-typewriter, or better said, to produce documents with a somewhat rough, but
-unified look, done by a real human and meaning to convey some message to real
-humans. The hope was to <b>coerce</b> the reader into making a real effort at
-assimilating the <b>entirety</b> of the material, text and math, not knowing
-in advance which piece would prove to be more important than the others. In a
-well-crafted mathematical document, every single part is as important as any
-other one, or, rather, it is up to the reader to uncover the web of links
-between atoms.</p>
-<p>The example on the side uses a typewriter font which well
-  illustrates the purpose. But <b>mathastext</b> will work
-  with all kinds of fonts and can produce less militant
-  math: see the <a href="showcase.html">examples</a> (be
-  patient, this page with its embedded png images weighs
-  circa 5 Mo!) A notable feature of <b>mathastext</b> is
-  to give a simple interface to using many distinct math
-  fonts in the same document: <a href="showcase-riemann.html">special example</a>.</p>
-</td>
-</tr></table></DIV>
-
-<CENTER>
-<table WIDTH="500"  border="0" cellpadding="10">
-<tr><td>
-Current version is <b>1.4a</b> (2024/07/20)<br>
-<ul>
-<li><a href="v13/README">README</a></li>
-<li><a href="v13/README.html">README.html</a></li>
-<li><a href="v13/INSTALL.txt">INSTALL.txt</a></li>
-<li><a href="v13/ChangeLog.md">ChangeLog.md</a></li>
-<li><a href="v13/mathastext.tds.zip">tds.zip archive</a> (for manual installation)</li>
-<li><a href="https://ctan.org/pkg/mathastext">CTAN page</a></li>
-<li><a href="v13/mathastext.pdf">PDF Documentation</a></li>
-<li>Package file: <a href="v13/mathastext.sty">mathastext.sty</a></li>
-<li>Documented source: <a href="v13/mathastext.dtx">dtx</a>.</li>
-<li>Test file: <a href="v13/mathastexttestalphabets.tex">tex</a>.</li>
-<li>Compiled (with pdflatex) test file: <a href="v13/mathastexttestalphabets.pdf">pdf</a>.</li>
-<!--
-  <ol>
-    <li>easiest is with <a href="v13/mathastext.tds.zip">mathastext.tds.zip</a>:
-  <code>unzip -d &lt;foo&gt; mathastext.tds.zip</code>
-  where <code>foo</code> is the <a href="http://tug.org/tds/tds.html">TDS</a>
-  compliant destination folder.
-    <li>or download <a href="v13/mathastext.sty">mathastext.sty</a> and move
-    it to the
-    suitable <a href="http://tug.org/tds/tds.html">TDS</a><code>/source/latex/mathastext/</code>
-    location (or alternatively to the working repertory of your current
-    project).
-    <li>for customized compilation: all files may get extracted
-  from <code>mathastext.dtx</code> via <code>tex mathastext.dtx</code>. This
-  includes
-  <code>mathastext.sty</code>, <i>some test files</i> (illustrating some
-  package features), and also <code>README.md</code>, <code>ChangeLog.md</code>
-  and <code>mathastext.tex</code>. The latter can customize the global font
-  size or paper dimensions of the pdf documentation: then <code>latex
-  mathastext.tex</code> (thrice) and <code>dvipdfmx mathastext.dvi</code>. It
-  is also possible to run directly <code>pdflatex mathastext.dtx</code>. Move
-  the various files to the correct <code>TDS</code> locations.</li>
-   </ol>
--->
-<!--Here are those test
-  files after compilation to PDF format:
-  <ol>
-	<li> <a href="v12/testmathastextalphabets.pdf">testmathastextalphabets.pdf</a></li>
-	<li> <a href="v12/testmathastextlinux.pdf">testmathastextlinux.pdf</a></li>
-	<li> <a href="v12/testmathastextmacos.pdf">testmathastextmacos.pdf</a></li>
-	<li> <a href="v12/testmathastextmathversions.pdf">testmathastextmathversions.pdf</a>
-</li>
-	</ol>-->
-</ul>
-<a href="showcase.html">Examples</a> (be patient, the page with its embedded png
-images weighs circa 5 Mo! It contains about 70 examples, as png images and/or as
-pdf files.)
-</td></tr></table>
-</CENTER>
-
-
-<DIV class="intro">
-<ul>
-<li>Related packages by the
-author:
-<ul>
-<li>
-<p><a href="https://ctan.org/pkg/lgrmath">lgrmath</a>
-(use <code>LGR</code>-encoded fonts in math mode)</p>
-<p>
-</li>
-<li>
-<p><a href="https://ctan.org/pkg/libgreek">libgreek</a> (Greek letters in math
-mode from <a href="https://github.com/alerque/libertinus">Libertinus</a> or <a href="https://en.wikipedia.org/wiki/Linux_Libertine">Linux Libertine/Biolinum</a>)</p>
-<p>
-The original version of this package (2011/03/14) used the support files of
-the <a href="https://ctan.org/pkg/libertine">libertine</a> LaTeX font package
-(which made <a href="https://en.wikipedia.org/wiki/Linux_Libertine">Linux
-Libertine</a> usable via pdfLaTeX).  It got broken at the time of a 2018 release
-of <a href="https://ctan.org/pkg/libertine">libertine</a> when
-the <a href="https://ctan.org/pkg/libertine-legacy">libertine-legacy</a> got
-moved to the obsolete section of CTAN, and thus stopped being distributed by
-TeXLive (and presumably MikTeX).
-</p>
-<p>The current version, 1.1 of 2022/11/11, uses the LGR-encoded font files
-from the <a href="https://ctan.org/pkg/libertinus-type1">libertinus-type1</a>
-package by Bob Tennent which gives an interface for pdfLaTeX users to
-the <a href="https://github.com/alerque/libertinus">Libertinus</a> OpenType
-fonts.
-For perfect backwards compatibility, if executed on a LaTeX system where
-<a href="https://ctan.org/pkg/libertine-legacy">libertine-legacy</a> is still
-installed, <a href="https://ctan.org/pkg/libgreek">libgreek</a> will use it.
-Else (or if mandated by the <code>libertinus</code> option) it
-uses the font definition files from
-<a href="https://ctan.org/pkg/libertinus-type1">libertinus-type1</a>.
-</p>
-<p>
-In this context, note
-that <a href="https://ctan.org/pkg/libertinust1math">libertinust1math</a> by
-Michael Sharpe provides complete math support to pdfLaTeX to use the OpenType
-math part of <a href="https://github.com/alerque/libertinus">Libertinus</a>.
-But then the simplest is for the document text to also
-use <a href="https://github.com/alerque/libertinus">Libertinus</a>
-via <a href="https://ctan.org/pkg/libertinus-type1">libertinus-type1</a> and
-you presumably don't need <code>mathastext</code>!
-</li>
-<li>
-<a href="https://ctan.org/pkg/pxgreeks">pxgreeks</a>
-(select upright/italic shape for the Greek letters from the PX
-fonts)</li>
-<li> <a href="https://ctan.org/pkg/txgreeks">txgreeks</a>
-(select upright/italic shape for the Greek letters from the TX fonts).</li>
-</ul><br>
-</li>
-<li>Random bits of info:
-<ul>
-<li>The sans-serif member of the document font family gives often good results when used in math-mode, in parallel with the text in serif.
-<pre>
-\renewcommand{\familydefault}{\sfdefault}
-\usepackage{mathastext}
-\renewcommand{\familydefault}{\rmdefault}
-</pre>
-It is then even less recommended to use the <i>italic</i> option (matter of
-taste!).</li>
-<li>How get in math mode the <i>upright</i> Greek letters from Computer Modern?
-  Include in your preamble:
-<pre>
-\usepackage{my_nice_font}
-\renewcommand{\familydefault}{cmr} % or cmss or cmtt for sans resp. mono
-\usepackage[LGRgreek, further options]{mathastext}
-\renewcommand{\familydefault}{\rmdefault}
-\Mathastext
-\begin{document}
-</pre>
-The Greek letters will be from the LGR encoded CM
-font (and will be in upright shape, except if
- <i>italic</i> was among
- the  <span class="mono">mathastext</span> options). <br>
-<li>The previous trick works for (pdf)LaTeX as well as for XeLaTeX or LuaLaTeX.
-  For XeLaTeX the <span class="mono">mathspec</span> package is a (far)
-  better choice, but if you wish you can still
-  use <span class="mono">mathastext</span> for its other aspects (math
-  versions...).</li>
-<li>The LGRgreek option
-  (<span class="mono">\usepackage[LGRgreek]{mathastext}</span>) picks up the
-  Greek letters in LGR encoding from the default font family at the time of
-  loading <span class="mono">mathastext</span>. Starting with version 1.15c it
-  is possible to have distinct Greek fonts in each
-  <i>math version</i>. I mentioned already above that the CM/LM fonts are available (in
-  Type 1 version for inclusion in pdf files) in
-  LGR encoding for serif, sans-serif, and typewriter families (they actually
-  belong to the "<span class="mono">cbfonts</span>".) Other available fonts in
-  standard TeX distributions: the Greek Font Society fonts (such as <i>GFS
-  Didot</i>), the <i>epigrafica</i> and <i>kerkis</i> packages,
-  the <i>txfontsb</i> package which extends the <i>txfonts</i> package with
-  LGR-encoded Greek letters, the <i>droid</i>,
-  <i>comfortaa</i>, <i>dejavu</i>, and <i>opensans</i> package.</li>
-<li> Note that <span class="mono">mathastext</span> makes proviso
-  only for monotonic Greek letters (in math mode; many of these packages are
-  designed for polytonic Greek in text mode). After
-  loading <span class="mono">mathastext</span> with option LGRgreek one should
-  take note  that <span class="mono">\varphi</span> and other `var' letters
- (except <span class="mono">\varsigma</span>) are not provided by this encoding, so the package does not make any specific assignments to such `var' macros.
-</li>
-</ul><br></li>
-<!--
-<li>Known limitations and bugs:
-<ul>
-<li>Some characters from fonts having complex ligature rules may not
-display correctly in math mode (here is
-an <a href="showcase.html#fc">example</a>).</li>
-<li>Although the <i>subdued</i> option claims to
-  let <span class="mono">mathastext</span> act only on some limited parts of the
-  document, it just hides to the best possible the sinister dealings done
-  by <span class="mono">mathastext</span>: it does not really cancels them. To
-  do that one also needs
-   <i>basic</i>, <i>defaultmathsizes</i>, <i>nohbar</i>,
-  and <i>defaultimath</i>, and ... no that's all<sup>1</sup>; but then the
-  influence of <span class="mono">mathastext</span> when activated in a math
-  version is lessened.<br>
- (1)
-  in some exceptional situations, an example being provided by a document
-  loading the <i>euler</i> package, it is also necessary to use <i>nodigits</i>.
-  Let me at this point recall that all of these complications are just for
-  telling <span class="mono">mathastext</span> to ... <i>not</i> mathastextify! </li>
-</ul><br>
-</li>
--->
-<!--
-<li> PDF documentation of the <a href="v10/mathastext-doc.pdf">initial --
-  --version</a></li>
--->
-<li> (Shortened) Version history:
-<pre>
-2011/01/25 1.0   Initial version. (<a href="v10/mathastext-doc.pdf">doc</a>)
-2011/02/01 1.1   bugs fixed; options italic and frenchmath; minus as endash.
-2011/02/06 1.11  bugs fixed; \Mathastext admits optional math version name.
-2011/03/11 1.13  bugs fixed; option LGRgreek.
-2011/04/03 1.14b bugs fixed; options LGRgreeks and selfGreeks.
-2012/09/26 1.15  option subdued allowing the mathastextification to act locally.
-2012/10/05 1.15c commands to set-up distinct LGR Greek fonts in each math version.
-2012/10/22 1.15e improvements to subdued; automatic spaces after \forall and \exists.
-2012/10/25 1.15g improvements in \#,\&,\$,\%; code cleaned up and better documented.
-2012/12/20 1.2   extended scope of the math alphabets; automatic space before
-                 the derivative glyph; documentation improved.
-2013/12/31 1.2b  automatic italic corrections in math mode.
-2013/01/10 1.2e  remaining technical issues with active characters in v1.2 and v1.2b
-                 solved; extended test files, documentation, and source code comments
-2013/09/02 1.3   new command \MTsetmathskips.
-2013/12/14 1.3c  mechanism of "inheritance" in the declaration of mathastext math versions.
-                 starred variant of \MTversion leaves untouched the text font.
-2014/05/23 1.3d  new commands \MTstandardgreek and \MTcustomgreek.
-2015/09/10 1.3e  bugfix (option nosmalldelims badly redefined \lbrace and \rbrace).
-2015/09/12 1.3f  info rather than warning viz. amsmath's \resetMathstrut@.
-                 self extracting README.md with Markdown syntax.
-2015/10/15 1.3g  compatibility patch with LaTeX 2015/10/01 regarding LuaLaTeX.
-2015/10/31 1.3h  bugfix regarding options symbolgreek/selfGreek/selfGreeks.
-2016/01/06 1.3i  compatibility layer with \url's use of math mode.
-2016/01/15 1.3j  stronger subdued mode and related under-the-hood changes.
-2016/01/24 1.3k  documentation fixes.
-2016/01/29 1.3l  compatibility with TL2016 fontspec.
-2016/04/22 1.3n  improved compatibility with amsmath.
-2016/05/03 1.3o  patches around LuaLaTeX+luaotfload font issues in math mode.
-2016/10/31 1.3q  option unicodeminus.
-2018/08/22 1.3t  compatibility fix with fontspec relative to subdued option.
-                 no more redefinitions of \i and \j, only \imath and \jmath.
-2019/08/20 1.3u  support for math versions with varying font encodings.
-2019/09/19 1.3v  robust and protected math macros to match LaTeX 2019-10-01
-2019/11/16 1.3w  workaround to a (provisory) LaTeX+amsmath bug regarding
-                 math accents
-2022/11/04 1.3y  options ncccomma, binarysemicolon and frenchmath*.
-                 with LGRgreek: \...up and \...it variants for Greek letters
-                 and \mathgreekup/\mathgreekit alphabets.
-2023/09/01 1.3z  fix 1.3y regression regarding selfGreek option.
-2023/12/20 1.3za option LGRgreek+, documentation improvements.
-2023/12/29 1.3zb frenchmath* update, decimalcomma, modified build logs, documentation.
-2024/07/20 1.4a   core internal refactoring: mathastext does not use \everymath anymore.
-                 option activedigits; option everymath to revert to legacy behavior.
-                 bugfix regaring the babel-spanish dot in math mode
-                 update to a lualatex font related workaround.
-</pre>
-</li>
-</ul>
-</DIV>
-
-
-<p>
-    <a href="http://validator.w3.org/check?uri=referer"><img
-      src="http://www.w3.org/Icons/valid-html401-blue"
-      alt="Valid HTML 4.01 Transitional" height="31" width="88"></a>
-</p>
-
-</body>
-</html>
