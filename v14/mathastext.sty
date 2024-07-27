@@ -23,7 +23,7 @@
 %%----------------------------------------------------------------
 %% Package: mathastext
 %% Info:    Use the text font in math mode (JFB)
-%% Version: 1.4a 2024/07/20
+%% Version: 1.4b 2024/07/27
 %% License: LPPL 1.3c (http://www.latex-project.org/lppl/lppl-1-3c.txt)
 %% Copyright (C) 2011-2019, 2022-2024 Jean-Francois B.
 %%                                   <2589111+jfbu@users.noreply.github.com>
@@ -33,7 +33,7 @@
 %%----------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}[2020/02/02]
 \ProvidesPackage {mathastext}
-  [2024/07/20 v1.4a Use the text font in math mode (JFB)]
+  [2024/07/27 v1.4b Use the text font in math mode (JFB)]
 \def\mst@infoline#1{\immediate\write\m@ne
                     {(\space\space\space mathastext:\space\space\space) #1}}
 \immediate\write\m@ne{}
@@ -162,6 +162,8 @@
     \DeclareOption{nodigits}{\mst@nodigitstrue}
 \newif\ifmst@defaultimath
     \DeclareOption{defaultimath}{\mst@defaultimathtrue}
+\newif\ifmst@noletters
+    \DeclareOption{noletters}{\mst@noletterstrue\ExecuteOptions{nohbar,defaultimath}}
 \newif\ifmst@mathaccents
     \DeclareOption{mathaccents}{\mst@mathaccentstrue}
 \newif\ifmst@unimathaccents
@@ -230,7 +232,12 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 \newif\ifmst@subdued
     \DeclareOption{subdued}{\mst@subduedtrue}
 \newif\ifmst@everymath
-    \DeclareOption{everymath}{\mst@everymathtrue}
+    \DeclareOption{everymath}{\mst@everymathtrue
+\PackageWarningNoLine{mathastext}{%
+        `everymath\string' will be removed at next major release.\MessageBreak
+        Please report to the author the circumstances\MessageBreak
+        which mandated its use in the present document}%
+}
 \def\mst@unicodeminus {2013}
 \def\mst@checkoption #1unicodeminus#2\mst@#3\mst@@
    {\ifx\\#3\\\PackageWarningNoLine{mathastext}
@@ -853,6 +860,11 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 \let\MathastextupGreek\MTupGreek
 \newcommand*\MTgreekfont[1]{\def\mst@greekfont{#1}}
 \let\Mathastextgreekfont\MTgreekfont
+\ifmst@noletters
+  \let\MTmathactiveletters\@empty
+  \let\MTmathactiveLetters\@empty
+  \let\MTmathstandardletters\@empty
+\else
 \def\mst@DeclareMathLetter#1#2#3#4#5{%
     \DeclareMathSymbol {#1}{\mathalpha}{mtletterfont}{`#1}%
     \DeclareMathSymbol {#4}{\mathalpha}{mtletterfont}{`#1}%
@@ -937,6 +949,7 @@ defaultbf,defaultit,defaultsf,defaulttt}}
     \mst@mathdeactivate@lowercase
     \mst@mathdeactivate@uppercase
 }%
+\fi
 \newcommand*\MTicinmath{%
     \MTmathactiveletters
     \def\mst@itcorr{\ifnum\fam=\m@ne\/\fi}%
@@ -960,6 +973,8 @@ defaultbf,defaultit,defaultsf,defaulttt}}
     \@namedef{mst@before@#1}{}%
     \@namedef{mst@after@#1}{}%
 }
+\let\MTmathactivedigits\empty
+\let\MTmathstandarddigits\empty
 \ifmst@nodigits\else
   \def\mst@font@tbu{mtoperatorfont}%
   \ifmst@symboldigits \def\mst@font@tbu{mtpsymbol}\fi
@@ -974,8 +989,6 @@ defaultbf,defaultit,defaultsf,defaulttt}}
   \DeclareMathSymbol{7}{\mathalpha}{\mst@font@tbu}{`7}%
   \DeclareMathSymbol{8}{\mathalpha}{\mst@font@tbu}{`8}%
   \DeclareMathSymbol{9}{\mathalpha}{\mst@font@tbu}{`9}%
-  \let\MTmathactivedigits\relax
-  \let\MTmathstandarddigits\relax
   \ifmst@activedigits
     \def\mst@DeclareMathDigit #1#2#3{%
       \DeclareMathSymbol{#3}{\mathalpha}{\mst@font@tbu}{`#1}%
@@ -993,17 +1006,17 @@ defaultbf,defaultit,defaultsf,defaulttt}}
       \expandafter\mst@tmp\csname MTcommanddigit\romannumeral\mst@tmp\endcsname{}%
      }%
     }%
-    \newcommand*\MTmathactivedigits{\mst@OnlyIfNotSubdued\mst@mathactivatedigits}%
+    \def\MTmathactivedigits{\mst@OnlyIfNotSubdued\mst@mathactivatedigits}%
     \MTmathactivedigits
     \ifmst@everymath
-      \newcommand*\MTmathstandarddigits{%
+      \def\MTmathstandarddigits{%
         \@tfor\mst@tmp:=0123456789\do{%
         \expandafter\mathcode\expandafter`\mst@tmp
             =\csname MTmathchardigit\romannumeral\mst@tmp\endcsname
          }%
       }%
     \else
-      \newcommand*\MTmathstandarddigits{%
+      \def\MTmathstandarddigits{%
         \@tfor\mst@tmp:=0123456789\do{%
         \expandafter\mathcode\expandafter`\mst@tmp
             =\csname MTmathchardigit\romannumeral\mst@tmp\endcsname
@@ -1027,8 +1040,8 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 \DeclareMathSymbol{\mst@varfam@question}{\mathalpha}{\mst@font@tbu}{"3F}%
 \expandafter\mst@addtodo@nonletters\string?\mathclose\mst@varfam@question
 \fi
-\newcommand*\MTnormalasterisk{}
-\newcommand*\MTactiveasterisk{}
+\let\MTnormalasterisk\empty
+\let\MTactiveasterisk\empty
 \ifmst@asterisk\mst@infoline{asterisk: \string\ast\space and *}
   \ifmst@symbolmisc
     \protected\def\mst@bin@ast{\mathbin{\mathchoice
@@ -2358,21 +2371,31 @@ defaultbf,defaultit,defaultsf,defaulttt}}
       \SetSymbolFont{mtletterfont}{#2}{#3}{#4}{#5}{\mst@ltsh}%
       \immediate\write\m@ne{}%
       \PackageInfo{mathastext}%
-                        {Latin letters in math version `#2\string'\MessageBreak
+                        {\ifmst@noletters
+                         \else
+                         Latin letters in math version `#2\string'\MessageBreak
                          declared\on@line\MessageBreak
                          will use the font #3/#4/#5/\mst@ltsh
                          \ifmst@frenchmath\space(uppercase: #6)\fi\MessageBreak
+                         \fi
                          Other characters (digits, ...) and \protect\log-like names\MessageBreak
-                         will be in `#6\string' shape\@gobble}%
+                         \ifmst@noletters
+                         will use the font #3/#4/#5/#6%
+                         \else
+                         will be in `#6\string' shape%
+                         \fi\@gobble}%
       \immediate\write\m@ne{}%
       \expandafter\edef\csname mst@ltshape@\mst@version\endcsname{\mst@ltsh}%
     \else
       \SetSymbolFont{mtletterfont}{#2}{#3}{#4}{#5}{#6}%
+      \ifmst@noletters
+      \else
       \immediate\write\m@ne{}%
       \PackageInfo{mathastext}%
                         {Latin letters in math version `#2\string'\MessageBreak
                          declared\on@line\MessageBreak
                          will use the fonts #3/#4/#5(\mst@bold)/#6\@gobble}%
+      \fi
       \immediate\write\m@ne{}%
       \expandafter\edef\csname mst@ltshape@\mst@version\endcsname{#6}%
     \fi
@@ -2380,13 +2403,20 @@ defaultbf,defaultit,defaultsf,defaulttt}}
     \SetSymbolFont{mtletterfont}{#2}{#3}{#4}{#5}{#1}%
     \immediate\write\m@ne{}%
     \PackageInfo{mathastext}%
-                        {Latin letters in math version `#2\string'\MessageBreak
+                        {\ifmst@noletters
+                         \else
+                         Latin letters in math version `#2\string'\MessageBreak
                          declared\on@line\MessageBreak
                          will use the font #3/#4/#5/#1%
                          \ifmst@frenchmath\space(uppercase: #6)\fi\MessageBreak
+                         \fi
                          Other characters (digits, ...) and
                          \protect\log-like names\MessageBreak
-                         will be in `#6\string' shape\@gobble}%
+                         \ifmst@noletters
+                         will use the font #3/#4/#5/#6%
+                         \else
+                         will be in `#6\string' shape%
+                         \fi\@gobble}%
     \immediate\write\m@ne{}%
     \expandafter\edef\csname mst@ltshape@\mst@version\endcsname{#1}%
   \fi

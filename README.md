@@ -8,13 +8,13 @@
             +-------------------------------------------+
 
 This Work may be distributed and/or modified under the conditions
-of the [LPPL1.3c](http://www.latex-project.org/lppl/lppl-1-3c.txt)
+of the [LPPL 1.3c](https://www.latex-project.org/lppl/lppl-1-3c.txt)
 
 The Author of this Work is Jean-Francois B. (`2589111+jfbu@users.noreply.github.com`)
 
 Copyright (C) 2011-2019, 2022-2024 Jean-Francois B.
 
-      Source: mathastext.dtx 1.4a 2024/07/20
+      Source: mathastext.dtx 1.4b 2024/07/27
 
 
 DESCRIPTION
@@ -81,6 +81,20 @@ Main options: `italic`, `frenchmath`, `subdued`, `LGRgreek`.
 
 RECENT CHANGES
 ==============
+
+1.4b \[2024/07/27\]
+----
+
+* Fix a regression at `1.4` regarding option `nodigits`.
+
+* New option: `noletters`.  I am in old age now so I can provide an option
+  completely antithetical to my life work.
+
+* Option `everymath` which is destined to be removed at next major
+  release warns user about it.  As major releases tend to happen once
+  per decade I think the constant nagging will become insufferable
+  and you will adapt to the `1.4` changes rather than persisting into
+  using this option.
 
 1.4a \[2024/07/20\]
 ----

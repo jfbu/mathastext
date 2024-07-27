@@ -2,8 +2,8 @@
 % N.B.: this dtx file does NOT use \DocInput, it only uses docstrip.
 % The LaTeX source of the documentation is NOT prefixed with %'s.
 %<*dtx>
-\def\dtxtimestamp {Time-stamp: <20-07-2024 at 22:26:18 CEST>}
-\def\docdate{2024/07/20}
+\def\dtxtimestamp {Time-stamp: <26-07-2024 at 11:21:35 CEST>}
+\def\docdate{2024/07/27}
 % To extract run etex on this file, then to build documentation run
 % latexmk on mathastext.tex then dvipdfmx on the dvi.
 % For more information see v13/INSTALL.txt
@@ -11,8 +11,8 @@
 % due to usage of § (<A7>) as an active character.
 %</dtx>
 %<*drv>
-\def\MSTpkgdate    {2024/07/20}
-\def\MSTpkgversion {1.4a}
+\def\MSTpkgdate    {2024/07/27}
+\def\MSTpkgversion {1.4b}
 %</drv>
 %<*dtx>
 \iffalse % meta-comment
@@ -28,13 +28,13 @@
             +-------------------------------------------+
 
 This Work may be distributed and/or modified under the conditions
-of the [LPPL1.3c](http://www.latex-project.org/lppl/lppl-1-3c.txt)
+of the [LPPL 1.3c](https://www.latex-project.org/lppl/lppl-1-3c.txt)
 
 The Author of this Work is Jean-Francois B. (`2589111+jfbu@users.noreply.github.com`)
 
 Copyright (C) 2011-2019, 2022-2024 Jean-Francois B.
 
-      Source: mathastext.dtx 1.4a 2024/07/20
+      Source: mathastext.dtx 1.4b 2024/07/27
 
 %</readme>
 %<*dtx>
@@ -44,7 +44,7 @@ Copyright (C) 2011-2019, 2022-2024 Jean-Francois B.
 %%----------------------------------------------------------------
 %% Package: mathastext
 %% Info:    Use the text font in math mode (JFB)
-%% Version: 1.4a 2024/07/20
+%% Version: 1.4b 2024/07/27
 %% License: LPPL 1.3c (http://www.latex-project.org/lppl/lppl-1-3c.txt)
 %% Copyright (C) 2011-2019, 2022-2024 Jean-Francois B.
 %%                                   <2589111+jfbu@users.noreply.github.com>
@@ -193,6 +193,20 @@ MATHASTEXT CHANGE LOG
 
 %</changelog>
 %<*readme|changelog>
+1.4b \[2024/07/27\]
+----
+
+* Fix a regression at `1.4` regarding option `nodigits`.
+
+* New option: `noletters`.  I am in old age now so I can provide an option
+  completely antithetical to my life work.
+
+* Option `everymath` which is destined to be removed at next major
+  release warns user about it.  As major releases tend to happen once
+  per decade I think the constant nagging will become insufferable
+  and you will adapt to the `1.4` changes rather than persisting into
+  using this option.
+
 1.4a \[2024/07/20\]
 ----
 
@@ -2483,8 +2497,9 @@ And now the same thing with fonts available on Mac OS X:
 
 \subsubsection{Compatibility with other packages}\label{sec:compat}
 
-Regarding the namespace of the package almost all internally used macros use
-\cs{mst@} prefix.  Almost all user commands have \cs{MT} prefix, the oldest ones
+Regarding the namespace of the package: all internal macros use
+\cs{mst@} (or \cs{ifmst@} for \TeX{} conditionals) as prefix.  Almost all user
+commands have \cs{MT} prefix, the oldest ones
 may use \cs{Mathastext} or variants.%
 %
 \footnote{It is only years after initial release that I became aware that
@@ -2502,8 +2517,7 @@ but applies in general as well).
 
 Any definition made in a package loaded before \mst of the font to be
 used for letters or for the common characters in the |ascii| basic range
-will be overruled by the loading of \mst (this includes the case
-when the earlier package had made the character `mathematically active').
+will be overruled by the loading of \mst.
 Conversely most of the set-up done by \mst may well be overruled by
 packages loaded later which do math related things.
 
@@ -2522,7 +2536,7 @@ commands in and outside of math mode.
 But a difficulty arises when some other package has
 made the character `catcode active' everywhere in the document. If it is
 detected for such a character that \mst wishes to make `mathematically active'
-that it is aready `catcode active', \mst then checks if it is handling a Babel
+that it is already `catcode active', \mst then checks if it is handling a Babel
 shorthand.  If yes, it then hacks into \ctanpkg{babel} support macros for that
 character to let it do what it desires it to do in math mode.  And it does not
 make the character mathematically active, to the contrary it makes sure
@@ -2530,7 +2544,7 @@ that the character is \emph{not} mathematically active.
 
 \begin{footnotesize}
   This last paragraph applies to the characters
-  {{;}\,{,}\,{:}\,{!}\,{?}\,{+}\,{\textendash}\,{=}\,{<}\,{>}\,{(}\,{)}\,{[}\,{]},*}
+  {{;}\,{,}\,{:}\,{!}\,{?}\,{+}\,{\textendash}\,{=}\,{<}\,{>}\,{(}\,{)}\,{[}\,{]}*}
   mentioned in \autoref{sec:mathxx} as `hard non-letters'.  The right tick
   (which is already mathematically active per default) is also handled via a
   similar process, and in particular is tested for being a Babel shorthand
@@ -2861,7 +2875,8 @@ provided by \mst:
   package, Greek letters are the default Computer
   Modern ones or have been set-up by other packages;
   for example by the \ctanpkg{fourier} package with option
-  `upright', which gives upright Greek letters.
+  `upright', which gives upright Greek letters
+  or by the author \ctanpkg{lgrmath} package.
 \item[§LGRgreek§:] (this was substantially updated at \mstrelease{1.3y}, make sure to
   read the new documentation at \autoref{sec:newgreek})
   this option is for fonts which additionally to Latin
@@ -4780,7 +4795,7 @@ configuration, not for the legacy one as re-enacted by §everymath§.
   * is not modified in math mode; and it is not modified either if
   found to be catcode active but not a \ctanpkg{babel} shorthand.  In
   contrast, the \cs{ast} will always be set to obey §\MTlowerast§
-  configurtion configuration after §\MTactiveasterisk§.
+  configuration after §\MTactiveasterisk§.
 
 \end{footnotesize}
 
@@ -4864,7 +4879,7 @@ configuration, not for the legacy one as re-enacted by §everymath§.
 \item \mstcmd{MTmathstandardletters}:\RightNote{\mstrelease{1.3}}
   turns off the mathematical active
   ascii letters, i.e.\@ reverts their mathcodes to package font configuration.
-  Here ``standard'' thus only means
+  Here ``standard'' only means
   that the letters will not be mathematically active, but they are still under the
   influence of \mst regarding the typeface they use, so they are only
   ``standard'' from \mst point of view.
@@ -5155,7 +5170,8 @@ only for engine \LuaLaTeX{}.
  roughly by themes.  So, objectively, the best for the diligent reader is to
  read thoroughly all descriptions.
  \begin{enumerate}[label=$\bullet$, leftmargin=1em]
- \item \mstopt{basic}: only mathastextify letters and digits.
+ \item \mstopt{basic}: only mathastextify (ascii) letters and digits.  Can
+  be combined with either §nodigits§ or §noletters§.
  \item \mstopt{subdued}:  acts in a subdued way, which means that the \LaTeX\
   ``normal'' (default) and ``bold'' (triggered by \cs{boldmath} or
   \cs{mathversion}|{bold}|, undone by \cs{unboldmath} or on exit from a
@@ -5393,14 +5409,35 @@ The same remarks apply as for the §ncccomma§ option.  In particular \emph{note
   and |*| and |\ast| will obey the math alphabet
   commands (see \autoref{sec:mathxx}).
  
-\item \mstopt{activedigits}: makes all digits mathematically active!  This is
+\item \mstopt{activedigits}:\RLNote{new:}{\mstrelease{1.4}}
+  it makes all digits mathematically active!  This is
   reserved to expert \LaTeX{} users.  See \autoref{ssec:hackingletters} for an
   example.  Do not use this option if you don't intend to make use of such
   techniques to achieve special effects at some location of your document at
   least. (I know this goes without saying, but passing this option and not
   using it is only adding overhead to all your equations with digits).
 
-\item \mstopt{nohbar}: prevents \mst from defining its own
+\item \mstopt{nodigits}: no \mst-ification of digits.
+\item \mstopt{noletters}:\RLNote{new:}{\mstrelease{1.4b}}
+   This is quite antithetical to the package core aim, but here you go.
+
+   \begin{footnotesize}
+     This option implies §nohbar§ and §defaultimath§.
+
+     Note though that \mst will still declare to \LaTeX{} two extra symbol
+     fonts and define alphabet commands such as §\Mathrm§, §\Mathnormal§ and
+     §\mathnormalbold§ which map to them.  But ascii letters will if not in
+     arguments of these commands not use the \mst-font and all business of
+     active letters (see \autoref{ssec:hackingletters}) is now irrevocably
+     inaccessible.
+
+     If you simply want to avoid the overhead of math active
+     letters, use rather §\MTmathstandardletters§ in the preamble after having
+     loaded the package (although this does not undo the fact that \mst will
+     have redefined what a letter does if it is catcode active but that remark
+     should have been made in an even smaller typeface).\par
+   \end{footnotesize}
+ \item \mstopt{nohbar}: prevents \mst from defining its own
   \cs{hbar}.
 \item \mstopt{noendash}: the minus sign will be the - from the
  text font, not the en-dash \textendash.
@@ -5415,7 +5452,7 @@ The same remarks apply as for the §ncccomma§ option.  In particular \emph{note
 \ \mstopt{nopunctuation} ,\,.\,:\,;\ \mstopt{noplus},
 \mstopt{nominus}, \mstopt{noplusnominus}\ +\,\textendash{} \mstopt{noequal} =\
 \mstopt{noparenthesis} (\,)\,[\,]\,/\ \mstopt{nospecials}
-\#\,\$\,\%\,\&\ and \mstopt{nodigits}.
+\#\,\$\,\%\,\&\ (and §nodigits§ and §noletters§ mentioned earlier).
  \item \mstopt{alldelims}: true by default, means that the
 characters excluded by §nolessnomore§ are
 treated. Use this option in case of a mono-width
@@ -5572,7 +5609,11 @@ OpenType fonts. Gave bad results in my brief testing.
   but once and for all at package loading time, if not §subdued§, or when using
   §\MTversion§ to enter a non-§subdued§ math version.
 
-  Please report breakages you may encounter to author.
+  Please report breakages due to the \mstrelease{1.4} release, which made it
+  necessary for you to use this option §everymath§ as workaround.
+
+  The option is destined to be removed at next major release and it will warn
+  the user about this.
 \end{enumerate}
 
 Thanks to Kevin~\textsc{Klement}, Tariq~\textsc{Perwez}
@@ -5748,7 +5789,7 @@ Numerous examples will be found there:\\
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}[2020/02/02]
 \ProvidesPackage {mathastext}
-  [2024/07/20 v1.4a Use the text font in math mode (JFB)]
+  [2024/07/27 v1.4b Use the text font in math mode (JFB)]
 %    \end{macrocode}
 % \mstrelease{1.3zb} avoids writing \mst info messages also to console output, only log file.
 % Make prefix occupy 20 not 25 characters for alignment with \texttt{LaTeX Font Info},
@@ -5912,6 +5953,8 @@ Numerous examples will be found there:\\
 %   recipe explained in \autoref{ssec:frenchmath}.
 %
 %   \mstrelease{1.4} adds options |everymath| and |activedigits|.
+%
+%   \mstrelease{1.4b} adds |noletters|.
 %    \begin{macrocode}
 \newif\ifmst@italic
 \newif\ifmst@frenchmath
@@ -5972,6 +6015,11 @@ Numerous examples will be found there:\\
     \DeclareOption{nodigits}{\mst@nodigitstrue}
 \newif\ifmst@defaultimath
     \DeclareOption{defaultimath}{\mst@defaultimathtrue}
+%    \end{macrocode}
+% \mstrelease{1.4b} adds option |noletters|.
+%    \begin{macrocode}
+\newif\ifmst@noletters
+    \DeclareOption{noletters}{\mst@noletterstrue\ExecuteOptions{nohbar,defaultimath}}
 \newif\ifmst@mathaccents
     \DeclareOption{mathaccents}{\mst@mathaccentstrue}
 \newif\ifmst@unimathaccents
@@ -6067,7 +6115,12 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 % \mstrelease{1.4}: the |everymath| option.
 %    \begin{macrocode}
 \newif\ifmst@everymath
-    \DeclareOption{everymath}{\mst@everymathtrue}
+    \DeclareOption{everymath}{\mst@everymathtrue
+\PackageWarningNoLine{mathastext}{%
+        `everymath\string' will be removed at next major release.\MessageBreak
+        Please report to the author the circumstances\MessageBreak
+        which mandated its use in the present document}%
+}
 %    \end{macrocode}
 %   \mstrelease{1.3q}: the |unicode| option. Thanks to Tobias~\textsc{Brink}
 %   for suggesting its incorporation. The parsing of \cs{CurrentOption} does
@@ -7877,7 +7930,14 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 % expands (the definition of the active letter done by \cs{mst@mathactivate}
 % is done with a \cs{def}, not a \cs{let}).
 % \begin{macro}{\mst@DeclareMathLetter}
+%
+% \mstrelease{1.4b} adds |noletters| option.
 %    \begin{macrocode}
+\ifmst@noletters
+  \let\MTmathactiveletters\@empty
+  \let\MTmathactiveLetters\@empty
+  \let\MTmathstandardletters\@empty
+\else
 \def\mst@DeclareMathLetter#1#2#3#4#5{%
     \DeclareMathSymbol {#1}{\mathalpha}{mtletterfont}{`#1}%
     \DeclareMathSymbol {#4}{\mathalpha}{mtletterfont}{`#1}%
@@ -7989,6 +8049,7 @@ defaultbf,defaultit,defaultsf,defaulttt}}
     \mst@mathdeactivate@lowercase
     \mst@mathdeactivate@uppercase
 }%
+\fi
 %    \end{macrocode}
 % \end{macro}\end{macro}
 %  \begin{macro}{\MTicinmath}
@@ -8088,7 +8149,17 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 % \begin{macro}{\MTmathstandarddigits}
 % In version \mstrelease{1.1}, we have now separated digits from letters, so paradoxically
 % it is less problematic to give them the |mathalpha| type.
+%
+% \mstrelease{1.4} had defined some no-op \cs{MTmathstandarddigits} and
+% \cs{MTmathactivedigits} but if not under option |nodigits|.  As they are
+% used in \cs{MTeverymathoff} and \cs{MTeverymathdefault} though this broke
+% the option |nodigits| (either with |subdued| or when using \cs{MTversion}).
+%
+% Defining them as \cs{empty} so that \LaTeX{} defensive mechanism with
+% \cs{newcommand} works but this is sooooooo hypothetical context!
 %    \begin{macrocode}
+\let\MTmathactivedigits\empty
+\let\MTmathstandarddigits\empty
 \ifmst@nodigits\else
   \def\mst@font@tbu{mtoperatorfont}%
   \ifmst@symboldigits \def\mst@font@tbu{mtpsymbol}\fi
@@ -8103,8 +8174,6 @@ defaultbf,defaultit,defaultsf,defaulttt}}
   \DeclareMathSymbol{7}{\mathalpha}{\mst@font@tbu}{`7}%
   \DeclareMathSymbol{8}{\mathalpha}{\mst@font@tbu}{`8}%
   \DeclareMathSymbol{9}{\mathalpha}{\mst@font@tbu}{`9}%
-  \let\MTmathactivedigits\relax
-  \let\MTmathstandarddigits\relax
 %    \end{macrocode}
 % \mstrelease{1.4} adds possibility of mathematically active digits.
 %    \begin{macrocode}
@@ -8125,10 +8194,10 @@ defaultbf,defaultit,defaultsf,defaulttt}}
       \expandafter\mst@tmp\csname MTcommanddigit\romannumeral\mst@tmp\endcsname{}%
      }%
     }%
-    \newcommand*\MTmathactivedigits{\mst@OnlyIfNotSubdued\mst@mathactivatedigits}%
+    \def\MTmathactivedigits{\mst@OnlyIfNotSubdued\mst@mathactivatedigits}%
     \MTmathactivedigits
     \ifmst@everymath
-      \newcommand*\MTmathstandarddigits{%
+      \def\MTmathstandarddigits{%
         \@tfor\mst@tmp:=0123456789\do{%
         \expandafter\mathcode\expandafter`\mst@tmp
             =\csname MTmathchardigit\romannumeral\mst@tmp\endcsname
@@ -8140,7 +8209,7 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 % that a digit token is Babel-active) related to \cs{mst@do@activecase} in
 % \ctanpkg{babel} context.
 %    \begin{macrocode}
-      \newcommand*\MTmathstandarddigits{%
+      \def\MTmathstandarddigits{%
         \@tfor\mst@tmp:=0123456789\do{%
         \expandafter\mathcode\expandafter`\mst@tmp
             =\csname MTmathchardigit\romannumeral\mst@tmp\endcsname
@@ -8205,10 +8274,11 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 %
 % The first two \cs{newcommand*} are because the commands were previously
 % defined unconditionally anyhow, in a way making them no-op's without
-% option |asterisk|.
+% option |asterisk|. Finally using \cs{let} here with \cs{empty} with
+% the idea of less impact on \TeX{} internals, but losing \LaTeX{} check.
 %    \begin{macrocode}
-\newcommand*\MTnormalasterisk{}
-\newcommand*\MTactiveasterisk{}
+\let\MTnormalasterisk\empty
+\let\MTactiveasterisk\empty
 \ifmst@asterisk\mst@infoline{asterisk: \string\ast\space and *}
   \ifmst@symbolmisc
     \protected\def\mst@bin@ast{\mathbin{\mathchoice
@@ -10337,21 +10407,31 @@ defaultbf,defaultit,defaultsf,defaulttt}}
       \SetSymbolFont{mtletterfont}{#2}{#3}{#4}{#5}{\mst@ltsh}%
       \immediate\write\m@ne{}%
       \PackageInfo{mathastext}%
-                        {Latin letters in math version `#2\string'\MessageBreak
+                        {\ifmst@noletters
+                         \else
+                         Latin letters in math version `#2\string'\MessageBreak
                          declared\on@line\MessageBreak
                          will use the font #3/#4/#5/\mst@ltsh
                          \ifmst@frenchmath\space(uppercase: #6)\fi\MessageBreak
+                         \fi
                          Other characters (digits, ...) and \protect\log-like names\MessageBreak 
-                         will be in `#6\string' shape\@gobble}%
+                         \ifmst@noletters
+                         will use the font #3/#4/#5/#6%
+                         \else
+                         will be in `#6\string' shape%
+                         \fi\@gobble}%
       \immediate\write\m@ne{}%
       \expandafter\edef\csname mst@ltshape@\mst@version\endcsname{\mst@ltsh}%
     \else
       \SetSymbolFont{mtletterfont}{#2}{#3}{#4}{#5}{#6}%
+      \ifmst@noletters
+      \else
       \immediate\write\m@ne{}%
       \PackageInfo{mathastext}%
                         {Latin letters in math version `#2\string'\MessageBreak
                          declared\on@line\MessageBreak
                          will use the fonts #3/#4/#5(\mst@bold)/#6\@gobble}%
+      \fi
       \immediate\write\m@ne{}%
       \expandafter\edef\csname mst@ltshape@\mst@version\endcsname{#6}%
     \fi
@@ -10362,13 +10442,20 @@ defaultbf,defaultit,defaultsf,defaulttt}}
     \SetSymbolFont{mtletterfont}{#2}{#3}{#4}{#5}{#1}%
     \immediate\write\m@ne{}%
     \PackageInfo{mathastext}%
-                        {Latin letters in math version `#2\string'\MessageBreak
+                        {\ifmst@noletters
+                         \else
+                         Latin letters in math version `#2\string'\MessageBreak
                          declared\on@line\MessageBreak
                          will use the font #3/#4/#5/#1%
                          \ifmst@frenchmath\space(uppercase: #6)\fi\MessageBreak
+                         \fi
                          Other characters (digits, ...) and
                          \protect\log-like names\MessageBreak
-                         will be in `#6\string' shape\@gobble}%
+                         \ifmst@noletters
+                         will use the font #3/#4/#5/#6%
+                         \else
+                         will be in `#6\string' shape%
+                         \fi\@gobble}%
     \immediate\write\m@ne{}%
     \expandafter\edef\csname mst@ltshape@\mst@version\endcsname{#1}%
   \fi

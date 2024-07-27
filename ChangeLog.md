@@ -1,6 +1,20 @@
 MATHASTEXT CHANGE LOG
 =====================
 
+1.4b \[2024/07/27\]
+----
+
+* Fix a regression at `1.4` regarding option `nodigits`.
+
+* New option: `noletters`.  I am in old age now so I can provide an option
+  completely antithetical to my life work.
+
+* Option `everymath` which is destined to be removed at next major
+  release warns user about it.  As major releases tend to happen once
+  per decade I think the constant nagging will become insufferable
+  and you will adapt to the `1.4` changes rather than persisting into
+  using this option.
+
 1.4a \[2024/07/20\]
 ----
 
