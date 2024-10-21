@@ -2,8 +2,8 @@
 % N.B.: this dtx file does NOT use \DocInput, it only uses docstrip.
 % The LaTeX source of the documentation is NOT prefixed with %'s.
 %<*dtx>
-\def\dtxtimestamp {Time-stamp: <26-07-2024 at 11:21:35 CEST>}
-\def\docdate{2024/07/27}
+\def\dtxtimestamp {Time-stamp: <21-10-2024 at 14:03:00 CEST>}
+\def\docdate{2024/10/21}
 % To extract run etex on this file, then to build documentation run
 % latexmk on mathastext.tex then dvipdfmx on the dvi.
 % For more information see v13/INSTALL.txt
@@ -11,8 +11,8 @@
 % due to usage of § (<A7>) as an active character.
 %</dtx>
 %<*drv>
-\def\MSTpkgdate    {2024/07/27}
-\def\MSTpkgversion {1.4b}
+\def\MSTpkgdate    {2024/10/21}
+\def\MSTpkgversion {1.4c}
 %</drv>
 %<*dtx>
 \iffalse % meta-comment
@@ -34,7 +34,7 @@ The Author of this Work is Jean-Francois B. (`2589111+jfbu@users.noreply.github.
 
 Copyright (C) 2011-2019, 2022-2024 Jean-Francois B.
 
-      Source: mathastext.dtx 1.4b 2024/07/27
+      Source: mathastext.dtx 1.4c 2024/10/21
 
 %</readme>
 %<*dtx>
@@ -44,7 +44,7 @@ Copyright (C) 2011-2019, 2022-2024 Jean-Francois B.
 %%----------------------------------------------------------------
 %% Package: mathastext
 %% Info:    Use the text font in math mode (JFB)
-%% Version: 1.4b 2024/07/27
+%% Version: 1.4c 2024/10/21
 %% License: LPPL 1.3c (http://www.latex-project.org/lppl/lppl-1-3c.txt)
 %% Copyright (C) 2011-2019, 2022-2024 Jean-Francois B.
 %%                                   <2589111+jfbu@users.noreply.github.com>
@@ -193,6 +193,33 @@ MATHASTEXT CHANGE LOG
 
 %</changelog>
 %<*readme|changelog>
+1.4c \[2024/10/21\]
+----
+
+* Fix a regression at `1.4`: under `XeLaTeX`: loading `mathastext`
+  caused an error if `unicode-math` and its `\setmathfont` had been
+  used prior ("Extended mathchar used as mathchar" in relation to the
+  minus sign character). Thanks to Michael Roland for report.
+
+  Keep in mind though that the documentation (see 1.4.15 Unicode engines) has
+  always said that the package "is expected to be most definitely
+  incompatible with unicode-math".
+
+* Fix another regression at `1.4`, related to the same code and also avoided
+  with `everymath` option, but showing with
+  all engines.  It caused `\MTnonlettersdonotobeymathxx`, if used, to reset
+  the minus sign to its status as prior to the loading of `mathastext`,
+  whereas it should have used the (by default) mathversion dependent one
+  (which defaults to the en-dash in the font encoding as stored by `mathastext` in
+  the extended math version).
+
+* `\Relbar` and `\relbar` redeclarations (needed as they are used by `LaTeX`
+  for arrows, and the equal and minus signs if picked from the text font may not
+  work well in-there) are now done via `\DeclareRobustCommand` also with
+  package `amsmath` to match the current behavior of the latter.  Note though
+  that they will use the equal and minus signs as in place at package loading
+  time, the documentation does say that `mathastext` should be loaded last.
+
 1.4b \[2024/07/27\]
 ----
 
@@ -264,8 +291,8 @@ MATHASTEXT CHANGE LOG
   tex.sx `user691586` for report.  This is currently the sole remaining
   usage of `\everymath/\everydisplay`.
 
-* Bugfix: an optional feature related to `\{` and `\}` was broken since an
-  upstream LaTeX change at its 2020-02-02 release.
+* Bugfix: `\MTexplicitbracesobeymathxx` (which is related to `\{` and `\}`)
+  was without effect since an upstream LaTeX change at its 2020-02-02 release.
 
 * With option symbolmisc, those math symbol macros formerly defined via
   `\DeclareRobustCommand` are now declared via `\protected\def`.
@@ -285,6 +312,8 @@ MATHASTEXT CHANGE LOG
   extent improved.  But there may be some occasions where obsolete statements will
   be found having the legacy `\everymath/\everydisplay` situation as background.
 
+%</readme|changelog>
+%<*changelog>
 1.3zb \[2023/12/29\]
 -----
 
@@ -336,8 +365,6 @@ MATHASTEXT CHANGE LOG
 * Fix long-standing hyperlink problems in the documentation:
   blue color words should now all be functioning hyperlinks.
 
-%</readme|changelog>
-%<*changelog>
 1.3z \[2023/09/01\]
 ----
 
@@ -1423,7 +1450,7 @@ pdfpagemode=UseOutlines,%
   {\normalfont\LARGE The \mst  package}\\
 \textsc{\small Jean-François B.}\par
   \footnotesize \ttfamily \frenchspacing
-  2589111+jfbu@users.noreply.github.com\par
+  \fbox{contact: 2589111+jfbu@users.noreply.github.com}\par
   \let\thefootnote\empty
   Package version: \MSTpkgversion\ (\MSTpkgdate)%
   \footnote{Documentation generated from the
@@ -4267,7 +4294,7 @@ option).
     \mstcmd{MTlettershape}\marg{sh}.%
 %
 \footnote{These commands exist also with
-    long names: \csb{Mathastextencoding},
+    long names: \cs{Mathastextencoding},
     etc\dots{} The same applies to the other commands
     mentioned in this section.}
 % 
@@ -4789,7 +4816,7 @@ configuration, not for the legacy one as re-enacted by §everymath§.
   (even in the preamble). 
 
   At \mstrelease{1.4}\RLNote{changed:}{\mstrelease{1.4}} \mst checks at
-  |\begin{document}| (or each time §\MTaciveasterisk§ is made use of) if
+  |\begin{document}| (or each time §\MTactiveasterisk§ is made use of) if
   * is a Babel shorthand (which I far as I know is the case of no
   language) or is already mathematically active.  In the latter case the
   * is not modified in math mode; and it is not modified either if
@@ -4988,10 +5015,22 @@ configuration, not for the legacy one as re-enacted by §everymath§.
   it will have to be coded |$a^{!}$|. Hence, by default, the package does
   §\MTnonlettersdonotobeymathxx§.
 
-\item \mstcmd{MTexplicitbracesobeymathxx}: extends an earlier §\MTnonlettersobeymathxx§
-  to also treat  \verb|\{| and \verb|\}|. But then |\left\{|, |\right\}| must
-  be coded |\left\lbrace|, |\right\rbrace| rather. There is also
-  \mstcmd{MTexplicitbracesdonotobeymathxx}.
+\item \mstcmd{MTexplicitbracesobeymathxx}: does §\MTnonlettersobeymathxx§ and
+  extends it to also apply to \verb|\{| and \verb|\}|.  Note that then |\left\{|,
+    |\right\}| must be coded |\left\lbrace|, |\right\rbrace| rather. There is
+  also \mstcmd{MTexplicitbracesdonotobeymathxx}.
+
+  {\footnotesize
+   If under the §everymath§ option, it is needed to issue explicitly
+   §\MTnonlettersobeymathxx§ in addition to §\MTexplicitbracesobeymathxx§.
+
+   Whether or not with §everymath§, if the command is issued while in
+   §subdued§ normal or bold, it has no effect immediately, but if switching
+   later to a non-§subdued§ math version via §\MTversion§, a
+   §\MTnonlettersobeymathxx§ issued then will automatically apply also to
+   \verb|\{| and \verb|\}|.
+   \par
+  }
 
 \item \RightNote{\mstrelease{1.3j}}\mstcmd{MTeverymathdefault}: this hook is executed by
   \csb{MTversion}\marg{version\_name} (but if under option |subdued|
@@ -5789,7 +5828,7 @@ Numerous examples will be found there:\\
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}[2020/02/02]
 \ProvidesPackage {mathastext}
-  [2024/07/27 v1.4b Use the text font in math mode (JFB)]
+  [2024/10/21 v1.4c Use the text font in math mode (JFB)]
 %    \end{macrocode}
 % \mstrelease{1.3zb} avoids writing \mst info messages also to console output, only log file.
 % Make prefix occupy 20 not 25 characters for alignment with \texttt{LaTeX Font Info},
@@ -5846,33 +5885,32 @@ Numerous examples will be found there:\\
 \newif\ifmst@XeOrLua
 \ifmst@LuaTeX\mst@XeOrLuatrue\fi
 \ifmst@XeTeX \mst@XeOrLuatrue\fi
+%    \begin{macrocode}
 %    \end{macrocode}
 % \mstrelease{1.4}.  I only checked this is correct with TL2024.
 % The macro will be used with |#1| a catcode 11 or 12 token or a one character
 % control sequence such as |\#|.
+%
+% \mstrelease{1.4c} add some definitions to avoid separate branches for
+% non-Unicode vs Unicode.
 %    \begin{macrocode}
 \ifmst@XeTeX
-  \def\mst@OnlyIfNotMathActive#1{%
-      \ifnum\mst@Umathcodenum`#1="1FFFFF
-           \expandafter\@gobble
-      \else\expandafter\@firstofone
-      \fi
-   }
-\else\ifmst@LuaTeX
-  \def\mst@OnlyIfNotMathActive#1{%
-      \ifnum\mst@Umathcodenum`#1="1000000
-           \expandafter\@gobble
-      \else\expandafter\@firstofone
-      \fi
-   }
+  \def\mst@activemathcodenum@space{"1FFFFF }%
+  \let\mst@mathcodenum\mst@Umathcodenum
 \else
-  \def\mst@OnlyIfNotMathActive#1{%
-      \ifnum\mathcode`#1="8000
-           \expandafter\@gobble
-      \else\expandafter\@firstofone
-      \fi
-   }
+\ifmst@LuaTeX
+  \def\mst@activemathcodenum@space{"1000000 }%
+  \let\mst@mathcodenum\mst@Umathcodenum
+\else
+  \def\mst@activemathcodenum@space{"8000 }%
+  \let\mst@mathcodenum\mathcode
 \fi\fi
+\def\mst@OnlyIfNotMathActive#1{%
+    \ifnum\mst@mathcodenum`#1=\mst@activemathcodenum@space
+         \expandafter\@gobble
+    \else\expandafter\@firstofone
+    \fi
+}
 %    \end{macrocode}
 % \mstrelease{1.2}: all inner macros of \mst now starts with |\mst@| for a cleaner
 % name-space. 
@@ -6349,8 +6387,10 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 }%
 %    \end{macrocode}
 % The ``undo'' is needed at \mstrelease{1.4} (but not if |everymath|).
+% The \mstrelease{1.4c} uses with Unicode \cs{Umathcodenum} in
+% \cs{mst@mathdeactivate} and not \cs{mathcode} hence no |"8000| here.
 %    \begin{macrocode}
-\def\mst@undo@mathactivateprime{\mst@mathdeactivate#1{"8000}}%
+\def\mst@undo@mathactivateprime{\mst@mathdeactivate#1{\mst@activemathcodenum@space}}%
 }\expandafter\mst@tmp\string'
 \def\mst@active@math@prime{\sp\bgroup\mskip\mst@prime@muskip\prim@s}
 \ifmst@everymath
@@ -6470,7 +6510,7 @@ defaultbf,defaultit,defaultsf,defaulttt}}
        \let\mst@savedresetMathstrut@\resetMathstrut@
 %    \end{macrocode}
 % The |\ifx\mst@the\the| is true iff \cs{MTnonlettersobeymathxx} was used in preamble
-% (last compared to \cs{MTnonlettersdonotobeymathxx}).
+% (and after possibly some \cs{MTnonlettersdonotobeymathxx}).
 % Setting \cs{mst@the} to \cs{@gobble} here wiil cause \cs{MTnonlettersobeymathxx}
 % to indeed modify \cs{resetMathstrut@} (and it resets \cs{mst@the} to \cs{the} for
 % its behavior in \cs{everymath}).
@@ -6794,7 +6834,7 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 % here using an \cs{ifmmode}.  And we store the original meaning of the
 % active variant of the token to reset it when ``undoing''.
 %
-% Careful not to do it twice in a row... (but this means \cs{mst@deactivate}
+% Careful not to do it twice in a row... (but this means \cs{mst@mathdeactivate}
 % might not revert to a user custom redefinition done in-between but to a
 % prior one; although if the character is made active the second
 % \cs{mst@mathactivate} would not have been done).
@@ -6836,11 +6876,19 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 % The \cs{mst@mathdeactivate} is active (sic) only in the non |everymath|
 % situation.  It will restore a previously existing active meaning if it has
 % been changed.
+%
+% The \mstrelease{1.4c} uses \cs{Umathcodenum} here with Unicode engines (the
+% actual conditions why this became necessary were related to the minus
+% character which however does not use \cs{mst@mathdeactivate} anyway at time
+% of finishing the \mstrelease{1.4c} updates).  The \cs{string} thing with
+% \texttt{-} is due to some old paranoia for which I see no underlying reason
+% (why on earth would \texttt{-} be catcode active here?), but maintaining it.
+% For |#1=-| the |#2| is empty and unused.
 %    \begin{macrocode}
 \ifmst@everymath
 \else
 \def\mst@mathdeactivate#1#2{%
-  \mathcode`#1=#2\relax
+  \if#1\string-\else\mst@mathcodenum`#1=#2\relax\fi
   \@ifundefined{active@char#1}
       {\@ifundefined{mst@prioractivemeaning@#1}
              {}%
@@ -6927,10 +6975,21 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 %    \end{macrocode}
 % We need to automatize some safeguards related to \cs{mst@do@activecase} when
 % deactivating.
+%
+% \mstrelease{1.4c} fixes two problems of \mstrelease{1.4} code.  First a bug
+% due to \XeLaTeX\ diverging implementation of \cs{mathcode} compared to
+% \LuaLaTeX (or rather vice versa), second the fact that the mathcode here is
+% the one at package loading time, which for most non-letter characters was
+% fine because it had been set by \mst, but for the minus character it was too
+% early.
+%
+% The generic \cs{mst@addtodo@nonletters} can not be used with \texttt{-},
+% some specific code is used, see \cs{mst@nonsubduedminus}.
 %    \begin{macrocode}
-    \def\mst@addtodo@nonletters#1#2#3{\mst@do@nonletters\expandafter
+    \def\mst@addtodo@nonletters#1#2#3{%
+        \mst@do@nonletters\expandafter
                    {\the\mst@do@nonletters\mst@mathactivate#1#2#3}%
-        \edef\mst@tmp{\noexpand\mst@mathdeactivate#1{\the\mathcode`#1}}%
+        \edef\mst@tmp{\noexpand\mst@mathdeactivate#1{\the\mst@mathcodenum`#1}}%
         \mst@undo@nonletters\expandafter\expandafter\expandafter
                   {\expandafter\mst@tmp\the\mst@undo@nonletters}%
     }%
@@ -7004,6 +7063,19 @@ defaultbf,defaultit,defaultsf,defaulttt}}
              \let\mst@the\the
          }%
     }%
+%    \end{macrocode}
+% The next one gets executed (even if not used by user) via
+% \cs{MTeverymathoff}, which itself is done automatically at begin document if
+% in \texttt{subdued} mode.  The mechanism of \texttt{subdued} mode is to
+% reassign the \texttt{mtoperatorfont} and \texttt{mtletterfont} to the fonts
+% used by default in the normal math version.  The reassignment of mathcodes
+% is needed in case a priori \cs{MTnonlettersobeymathxx} made some characters math
+% active.  Normally the slots as defined by \mst match default slots.  The
+% case of minus character is special as it by default with legacy \TeX\ fonts
+% and encodings will try to be the EN DASH, whose slot depends on the
+% encoding.  The used mathcode's for the minus sign are thus stored by \mst,
+% but under the shape of \cs{(U)mathchar} control sequences.
+%    \begin{macrocode}
     \renewcommand*\MTnonlettersdonotobeymathxx{%
         \the\mst@undo@nonletters
         \ifx\mst@the\@gobble
@@ -7154,7 +7226,7 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 %   \item seems I simply don't understand what the amsmath code does with
 %     \cs{std@minus}. It is used in \cs{relbar} and it escapes me why
 %     \cs{newmcodes@} would ever want to redefine it, and more importantly why
-%     on earth it tests the mathcode of |-| for that ? yes, \cs{std@minus} is
+%     on earth it tests the mathcode of |-| for that? yes, \cs{std@minus} is
 %     defined (at begin document) using the mathcode of |-|, but what's the
 %     connexion to \cs{newmcodes@} ?? Any way \mst defines \cs{relbar} with
 %     \cs{mst@minus@sign}. Thus I just drop this conditional.
@@ -8349,7 +8421,7 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 %    \begin{macrocode}
      \AtBeginDocument{%
          \let\mst@orig@abd@ast\ast
-         \edef\MTnormalasterisk{\noexpand\mst@mathdeactivate*{\the\mathcode`\*}%
+         \edef\MTnormalasterisk{\noexpand\mst@mathdeactivate*{\the\mst@mathcodenum`\*}%
                                 \let\noexpand\ast\noexpand\mst@orig@abd@ast}%
          \def\MTactiveasterisk{\def\ast{\mst@ast}%
                                \mst@mathactivate*{}\mst@ast
@@ -8585,12 +8657,23 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 % \mstrelease{1.3v} |2019/09/19|: \LaTeX{} of |2019-10-01| defines \cs{leftarrowfill}
 % and \cs{rightarrowfill} as robust macros, so we do the same.
 %
-% I need to put amsmath under surveillance to check if it decides to
+% I need to put \ctanpkg{amsmath} under surveillance to check if it decides to
 % robustify \cs{relbar} at some point, now that the \LaTeX\ team has
 % taken over maintenance.
 %
 % |2019/09/16| Use \cs{protected} for \cs{right\textbar{}leftarrowfill} in the non
 % \cs{DeclareRobustCommand} branch?
+%
+% \mstrelease{1.4c} |2024/10/20|: I didn't actually put
+% \ctanpkg{amsmath} under surveillance because I had other things to do with
+% my life.  But it appears indeed that \cs{relbar} (and \cs{Relbar}) are now
+% robust also if \ctanpkg{amsmath} is loaded, so I follow suit here.
+%
+% MEMO: the minus character used in \cs{relbar} has its mathcode from the
+% \mst loading time.  This is not the same as the minus in subdued mode
+% which fetches its mathcode only at begin document.  But anyhow the \mst
+% documentation insists the package should be loaded last among packages
+% modifying math mode rendering.
 %    \begin{macrocode}
 \ifmst@nominus
 \else
@@ -8605,7 +8688,7 @@ defaultbf,defaultit,defaultsf,defaulttt}}
     \mathchardef\mst@minus@sign=\mathcode`\-\relax
   \fi
   \@ifpackageloaded{amsmath}
-    {\def\relbar{\mathrel{\mathpalette\mathsm@sh\mst@minus@sign}}}
+    {\DeclareRobustCommand\relbar{\mathrel{\mathpalette\mathsm@sh\mst@minus@sign}}}
     {\DeclareRobustCommand\relbar{\mathrel{\smash\mst@minus@sign}}}
   \DeclareRobustCommand\rightarrowfill{$\m@th\mathord{\relbar}\mkern-7mu%
   \cleaders\hbox{$\mkern-2mu\relbar\mkern-2mu$}\hfill
@@ -8648,11 +8731,11 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 % change. This means also that |\MTversion| and not |\mathversion|
 % must be used for good functioning.
 %
-% \mstrelease{1.3u} improves the handling of the minus sign by letting it be compatible
-% with math versions (and not only with the with subdued mechanism but all
-% math versions) having varying font encodings, even possibly classic 8bit
-% font encoding mixed with TU encoding for Unicode engines. For this it is
-% needed to work around a feature of XeTeX/LuaLaTeX, here is original comment:
+% \mstrelease{1.3u} improves the handling of the minus sign by letting it be
+% compatible with math versions (and not only follow the subdued mechanism)
+% having varying font encodings, even possibly classic 8bit font encoding
+% mixed with TU encoding for Unicode engines. For this it is needed to work
+% around a feature (read: bug) of \XeTeX/\LuaLaTeX, here is original comment:
 %
 % \begin{quotation}
 %     afaict it is
@@ -8661,9 +8744,34 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 %     This is counter-intuitive and breaks expectations.
 % \end{quotation}
 %
-% But the \mstrelease{1.3u} mechanism with \cs{mst@UmathchardefWorkAround@i} introduced a
-% bug which showed under option |noendash| (hence also |symboldelimiters|) with
-% Unicode engines. Fixed at \mstrelease{1.3w}.
+% A \mstrelease{1.3u} mechanism used a \cs{mst@UmathchardefWorkAround@i} (a
+% bug which showed under option |noendash|, hence also |symboldelimiters|, with
+% Unicode engines was fixed at \mstrelease{1.3w}).   Unfortunately at
+% \mstrelease{1.4c} we still have to use it because a core deficiency with
+% math primitives in \XeTeX/\LuaTeX\ is still there (breakage of natural
+% expectations based on \TeX\ original syntax paradigm; search for
+% words such as "painful" in the text next or prior to this location).
+% The macro was renamed \cs{mst@ParseUmathchardef}.
+%
+% The next macros are used by \cs{Mathastext} and \cs{MTDeclareVersion} to
+% define \cs{mathchar} or \cs{Umathchar} control sequences which are named
+% \cs{mst@minus@mv}\meta{mathversion} and
+% \cs{mst@varfam@minus@mv}\meta{mathversion} which are math version dependent.
+% The \cs{mst@minus} was added to complement \cs{mst@varfam@minus} at
+% \mstrelease{1.4c}.
+%
+% As far as the author can tell now (at \mstrelease{1.4c}) this naming scheme
+% is due to the need to recover the \cs{textendash} or \cs{textemdash} slots
+% in the math version dependent text font (``legacy \TeX'', i.e. non Unicode)
+% encoding, and each math version can have its own font encoding.
+%
+% Sadly, due to blatant deficiencies of the Unicode engines math primitives,
+% it is only via a detour that we can fetch the extended math code defined by a
+% \cs{Umathchardef} and we have to know it was not via a \cs{mathchardef}.
+% Real pain.
+%
+% The \cs{mst@subduedminus} is defined only at begin document and fetches
+% there what will be the subdued mathcode of \texttt{-}.
 %    \begin{macrocode}
 \let\mst@subduedminus\empty
 \let\mst@nonsubduedminus\empty
@@ -8695,35 +8803,96 @@ defaultbf,defaultit,defaultsf,defaulttt}}
   \DeclareMathSymbol{#1}{\mathbin}{\mst@font@tbu}{"2D}%
   \DeclareMathSymbol{#2}{\mathalpha}{\mst@font@tbu}{"2D}%
 }%
-\def\mst@varfam@minus{\@nameuse{mst@varfam@minus@mv\math@version}}%
+\def\mst@varfam@minus{\csname mst@varfam@minus@mv\math@version\endcsname}%
+\def\mst@minus{\csname mst@minus@mv\math@version\endcsname}%
+%    \end{macrocode}
+% \mstrelease{1.4c} fixes a \mstrelease{1.4} bug:
+% \cs{MTnonlettersdonotobeymathxx} (i.e.\@ not with \texttt{everymath} option)
+% restored the minus to have the mathcode in place at package loading time,
+% which was wrong.
+%
+% The correct mathcode, which is possibly math version dependent, is stored in
+% some \cs{mathchar} or \cs{Umathchar} and can be set via
+% \cs{mst@nonsubduedminus} execution.  We can not use
+% \cs{mst@addtodo@nonletters} with \texttt{-} here (except under
+% \texttt{everymath}).  We need special coding to use \cs{mst@nonsubduedminus}
+% or \cs{mst@subduedminus}.
+%
+% It is very painful troubles with \XeTeX/\LuaTeX\ once we have a
+% \cs{Umathchardef} to re-assign its extended mathcode to a character token;
+% we can't have syntax common with non-Unicode engine or cases where the
+% control sequence was actually defined via \cs{mathchardef}.  Hence there are
+% some unnatural complications.  What a pain.
+%    \begin{macrocode}
 \ifmst@nominus\else
-  \expandafter\mst@addtodo@nonletters\string-\mathbin\mst@varfam@minus
+  \ifmst@everymath
+    \expandafter\mst@addtodo@nonletters\string-\mathbin\mst@varfam@minus
+  \else
+%    \end{macrocode}
+% I have absolutely no idea why I was paranoid about \texttt{-} catcode (as for
+% other characters) but I feel even at \mstrelease{1.4c} I have to maintain
+% the tradition.
+%    \begin{macrocode}
+    \def\mst@tmp#1{%
+      \mst@do@nonletters\expandafter{\the\mst@do@nonletters
+        \mst@mathactivate#1\mathbin\mst@varfam@minus}%
+%    \end{macrocode}
+% At \mstrelease{1.4c}, \cs{mst@mathdeactivate} adds a check to whether
+% its first argument is \texttt{-} and then does not do itself the
+% mathcode things (which are the matter of
+% either \cs{mst@nonsubduedminus} or \cs{mst@subduedminus}) but only
+% the other stuffs relative to restoration of a previous meaning for
+% the catcode active character.
+%    \begin{macrocode}
+      \mst@undo@nonletters\expandafter{\the\mst@undo@nonletters
+         \mst@mathdeactivate#1{}%
+         \mst@nonmathactiveminus}%
+    }\expandafter\mst@tmp\string-%
+%    \end{macrocode}
+% We have to go through these things because \cs{MTnonlettersdonotobeymathxx}
+% which executes \cs{mst@undo@nonletters} is done via \cs{MTeverymathoff}
+% which is part of the handling of \texttt{subdued} normal and bold math.
+%    \begin{macrocode}
+    \def\mst@nonmathactiveminus{%
+        \ifmst@subdued
+         \ifx\math@version\mst@normalversionname\mst@subduedminus\else
+         \ifx\math@version\mst@boldversionname  \mst@subduedminus\else
+         \mst@nonsubduedminus\fi\fi
+        \else
+         \mst@nonsubduedminus
+        \fi}%
+  \fi
+%    \end{macrocode}
+% I have no time to test extensively but it seems in 2024 that we still have
+% this blatant deficiency of \LuaTeX/\XeTeX\ with regards to
+% \cs{Umathchardef}: we can't use \cs{Umathcode} or \cs{Umathcodenum} with
+% them. This is obviously a strong disappointment upon which I lamented
+% already here in 2019 and much earlier certainly as it has plagued my life
+% eversince I added support for Unicode engines to \mst.
+%
+% ATTENTION: Defining \cs{mst@tmp@enc} is mandatory for
+% \cs{mst@OneifUniEnc} to work correctly...
+%
+% If neither \texttt{endash} nor \texttt{emdash} is true we will have
+% to redefine this macro next.
+%    \begin{macrocode}
   \def\mst@nonsubduedminus{%
     \edef\mst@tmp@enc{\csname mst@encoding@\math@version\endcsname}%
     \if1\mst@OneifUniEnc
      \mst@Umathcode`\-=\expandafter
-                       \mst@UmathchardefWorkAround@i
+                       \mst@ParseUmathchardef
                        \csname mst@minus@mv\math@version\endcsname
                        \relax
     \else
-     \mathcode`\-=\@nameuse{mst@minus@mv\math@version}%
+     \mathcode`\-=\mst@minus
     \fi
-   }%
-%    \end{macrocode}
-% The above works only if the \cs{mst@minus@mv<name>} was really
-% defined via \cs{Umathchardef}. If it was defined via \cs{DeclareMathSymbol}
-% then it is a \cs{mathchar}, not a \cs{Umathchar}. At least currently (2019).
-% So we need to correct the definition of \cs{mst@nonsubduedminus}.
-%    \begin{macrocode}
+  }%
+  \def\mst@ParseUmathchardef{\expandafter\mst@ParseUmathchardef@i\meaning}%
+  \def\mst@ParseUmathchardef@i#1"{"}%
   \ifmst@endash\else\ifmst@emdash\else
-    \def\mst@nonsubduedminus{%
-      \mathcode`\-=\@nameuse{mst@minus@mv\math@version}%
-      }%
+    \def\mst@nonsubduedminus{\mathcode`\-=\mst@minus}%
   \fi\fi
 \fi
-\def\mst@UmathchardefWorkAround@i
-    {\expandafter\mst@UmathchardefWorkAround@ii\meaning}%
-\def\mst@UmathchardefWorkAround@ii#1"{"}%
 %    \end{macrocode}
 % \end{macro}\end{macro}\end{macro}
 % \begin{macro}{\mst@hbar@mvnormal}
@@ -8775,6 +8944,10 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 \fi
 \def\mst@mathrlap{\mathpalette\mst@mathrlapinternal}
 \def\mst@mathrlapinternal#1#2{\rlap{$\mathsurround=0pt#1{#2}$}}
+%    \end{macrocode}
+% ATTENTION! The definition of \cs{mst@tmp@enc} is mandatory for
+% \cs{mst@OneifUniEnc} to work correctly...
+%    \begin{macrocode}
 \def\mst@dothe@hbarstuff#1#2#3{%
   \edef\mst@tmp@enc{#3}%
   \if1\mst@OneifUniEnc
@@ -8807,9 +8980,15 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 \else
     \mathchardef\mst@equal@sign=\mathcode`\=\relax
 \fi
-\@ifpackageloaded{amsmath}
-{\def\Relbar{\mathrel\mst@equal@sign}}
-{\DeclareRobustCommand\Relbar{\mathrel{\mst@equal@sign}}}
+%    \end{macrocode}
+% \mstrelease{1.4c} makes \cs{Relbar} robust also with \ctanpkg{amsmath} (the original
+% wasn't robust in the past).  We can now use same definition whether or not
+% \ctanpkg{amsmath} is loaded.
+%
+% MEMO: the character ``equal'' used in \cs{Relbar} has its mathcode frozen at
+% \mst loading time.
+%    \begin{macrocode}
+\DeclareRobustCommand\Relbar{\mathrel\mst@equal@sign}
 \DeclareMathSymbol{=}{\mathrel}{\mst@font@tbu}{"3D}
 \DeclareMathSymbol{\mst@varfam@equal}{\mathalpha}{\mst@font@tbu}{"3D}
 %    \end{macrocode}
@@ -9062,7 +9241,23 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 \newcommand*{\MTexplicitbracesobeymathxx}{\let\mst@dobraces\@firstofone}
 \newcommand*{\MTexplicitbracesdonotobeymathxx}{\let\mst@dobraces\@gobble}
 %    \end{macrocode}
-% Extras for \mstrelease{1.4} are needed:
+% Extras for \mstrelease{1.4} are needed.
+%
+% MEMO: The coding for \cs{MTexplicitbracesobeymathxx} in this non
+% \texttt{everymath} (default) branch is lazy, as it causes execution
+% of full \cs{MTnonlettersobeymathxx}, but it logically maintains the
+% pre-\mstrelease{1.4} situation, which activates the braces only
+% as part of the global \cs{mst@do@nonletters}.  Advantage also is
+% that in \texttt{subdued} it is a no-op because \cs{MTnonlettersobeymathxx}
+% is.  But, if issued while in the \texttt{subdued} normal math version, if
+% after switching to another math version user employs
+% \cs{MTnonlettersobeymathxx}, then the effect of
+% \cs{MTexplicitbracesobeymathxx} will be seen.  This is the same behavior
+% as under \texttt{everymath} option.
+%
+% But contrarily to \texttt{everymath} situation, in a non-\texttt{subdued}
+% math version, it is not needed to explicitly use \cs{MTnonlettersobeymathxx}
+% prior to \cs{MTexplicitbracesobeymathxx}, the latter implies the former.
 %    \begin{macrocode}
 \ifmst@everymath
 \else
@@ -10729,7 +10924,7 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 % but there is a \cs{MTeverymathoff} done next in the \emph{normal} and
 % \emph{bold} version.  It does \cs{MTicinmath} and \cs{MTmathactivedigits}
 % which however are no-ops (only partly for the former, and for the latter
-% always anyhow if no option |activedigits|) in subdude mode.
+% always anyhow if no option |activedigits|) in subdued mode.
 %    \begin{macrocode}
     \MTmathoperatorsobeymathxx
     \MTeverymathdefault
@@ -10771,11 +10966,17 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 %
 % \mstrelease{1.3u} extends this further to allow per-math-version meanings
 % for them.
+%
+% \mstrelease{1.4c} removes usage here of \cs{mst@subduedminus} (which anyhow is empty
+% under \texttt{everymath}) because \cs{MTeverymathoff} does
+% \cs{MTnonlettersdonotobeymathxx} which executes the \cs{mst@undo@nonletters}
+% \cs{toks} hence ends up executing \cs{mst@subduedminus}.  On second thoughts
+% not so sure good idea to have removed it because documentation mentions
+% \cs{MTeverymathoff} and sadly suggests redefining it for some effects.
 %    \begin{macrocode}
         \mst@subduedhbar
         \mst@subduedinodot
         \mst@subduedmathaccents
-        \mst@subduedminus
       \else
         \ifx\math@version\mst@boldversionname
           \mst@restorealphabets
@@ -10788,7 +10989,6 @@ defaultbf,defaultit,defaultsf,defaulttt}}
           \mst@subduedhbar
           \mst@subduedinodot
           \mst@subduedmathaccents
-          \mst@subduedminus
         \else
           \mst@setalphabets
 %    \end{macrocode}
@@ -11126,7 +11326,7 @@ defaultbf,defaultit,defaultsf,defaulttt}}
      \mst@infoline{Other characters (digits, ...) and \string\log-like names will be}%
      \mst@infoline{typeset with the \mst@shape@normal\space shape.}%
    \fi
-  \fi
+  \fi % not subdued
   \ifmst@nohbar\else
      \mst@infoline{\string\hbar}%
      \mst@dothe@hbarstuff
@@ -11143,7 +11343,30 @@ defaultbf,defaultit,defaultsf,defaulttt}}
     \mst@dothe@mathaccentsstuff{normal}\mst@encoding@normal
   \fi
   \ifmst@nominus\else
-   \mst@infoline{minus as endash}%
+  \ifmst@subdued
+   \mst@infoline{minus is kept as is in subdued normal and bold math versions}%
+  \else
+   \mst@infoline{minus either as endash, Unicode minus, emdash or hyphen}%
+%    \end{macrocode}
+% If \texttt{subdued} the \cs{mst@minus@mvnormal} etc... as defined via the
+% \cs{mst@dothe@endashstuff} et al.\@ would never end up being used in their
+% respective \emph{normal} and \emph{bold} versions, because the actual
+% mathcode assignment to \texttt{-} will proceed via \cs{mst@subduedminus}
+% which simply uses the mathcode in place at |\begin{document}|.  And
+% \cs{MTnonlettersobeymathxx} is a no-op in \texttt{subdued} math versions.
+% And (at \mstrelease{1.4c}) \cs{MTnonlettersdonotobeymathxx} (which is
+% executed via \cs{MTeverymathoff}) will do (via \cs{mst@undo@nonletters})
+% \cs{mst@subduedminus} in these math versions (see \cs{mst@nonmathactiveminus}).
+%
+% With \texttt{everymath} option the mathcode assignment is done similarly on
+% entering the math version (either \cs{mst@subduedminus} or
+% \cs{mst@nonsubduedminus}) or when using mathematically active character via
+% \cs{mst@the}\cs{mst@do@nonletters} done at \cs{everymath}.  And \cs{mst@the}
+% is set to \cs{@gobble} in subdued math versions.
+%
+% So at \mstrelease{1.4c} the execution of this code was made conditional on
+% not being in \texttt{subdued} mode.
+%    \begin{macrocode}
    \ifmst@endash
     \mst@dothe@endashstuff\mst@minus@mvnormal\mst@varfam@minus@mvnormal
                           \mst@encoding@normal
@@ -11161,7 +11384,8 @@ defaultbf,defaultit,defaultsf,defaulttt}}
       \let\mst@varfam@minus@mvbold\mst@varfam@minus@mvnormal
     \fi
    \fi
-  \fi
+  \fi % not subdued
+  \fi % not nominus
 %    \end{macrocode}
 % \mstrelease{1.3zb} moves this info line last and also explicitly mentions |italic| or
 % |frenchmath| (here and at some other locations above).
@@ -11311,7 +11535,8 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 % \end{macro}
 % \let\temp~
 % \def~{\rlap}
-% \begin{macro}{Things to do last ~{``at begin document''}}
+% \begin{macro}{Things to do last}
+% \begin{macro}{``at begin document''}
 % \let~\temp
 %
 % \mstrelease{1.4} has a significant change here that mathematical
@@ -11373,13 +11598,16 @@ defaultbf,defaultit,defaultsf,defaulttt}}
    \expandafter\let\csname mst@original@\@tempa\space\expandafter\endcsname
                    \csname \@tempa\space\endcsname
   }%
-  \ifmst@XeOrLua
-     \edef\mst@subduedminus
-         {\mst@Umathcodenum`\noexpand\-=\the\mst@Umathcodenum`\-\relax}%
-  \else
-     \edef\mst@subduedminus{\mathcode`\noexpand\-=\the\mathcode`\-\relax}%
-  \fi
+%    \end{macrocode}
+% \mstrelease{1.4c} has \cs{mst@mathcodenum} which is either alias of
+% \cs{Umathcodenum} or of \cs{mathcode}.
+%    \begin{macrocode}
+  \edef\mst@subduedminus{\mst@mathcodenum`\noexpand\-=\the\mst@mathcodenum`\-\relax}%
   \ifmst@subdued
+%    \end{macrocode}
+% This \cs{MTeverymathoff} does \cs{MTnonlettersdonotobeymathxx}, which has
+% been already set to its final definition.
+%    \begin{macrocode}
     \MTeverymathoff
     \MTresetnewmcodes
     \MTnoicinmath
@@ -11399,7 +11627,7 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 % As we are now in \cs{AtBeginDocument} we try to be careful not to overwrite
 % \cs{MTicinmath}, \cs{MTnoicinmath}, \cs{MTicalsoinmathxx}, ... if issued by
 % the user in the preamble, though. And we do not execute
-% \cs{MTmathactiveletters}, it is issued by the package at loading time in
+% \cs{MTmathactiveletters}, it is issued by \mst at loading time in
 % order to allow user to cancel it if desired from inside the preamble.
 %    \begin{macrocode}
      \ifx\mst@itcorr\@undefined
@@ -11419,7 +11647,7 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 }%
 \AtEndOfPackage{\AtBeginDocument{\ifmst@subdued\else\mst@nonsubduedmathaccents\fi}}%
 %    \end{macrocode}
-% \end{macro}
+% \end{macro}\end{macro}
 % \begin{macro}{subdued}
 %   \mstrelease{1.15}: The subdued code was initiated in May 2011. I returned to
 %   |mathastext| on Sep 24, 2012, and decided to complete what I had started

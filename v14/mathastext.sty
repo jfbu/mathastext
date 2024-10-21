@@ -23,7 +23,7 @@
 %%----------------------------------------------------------------
 %% Package: mathastext
 %% Info:    Use the text font in math mode (JFB)
-%% Version: 1.4b 2024/07/27
+%% Version: 1.4c 2024/10/21
 %% License: LPPL 1.3c (http://www.latex-project.org/lppl/lppl-1-3c.txt)
 %% Copyright (C) 2011-2019, 2022-2024 Jean-Francois B.
 %%                                   <2589111+jfbu@users.noreply.github.com>
@@ -33,7 +33,7 @@
 %%----------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}[2020/02/02]
 \ProvidesPackage {mathastext}
-  [2024/07/27 v1.4b Use the text font in math mode (JFB)]
+  [2024/10/21 v1.4c Use the text font in math mode (JFB)]
 \def\mst@infoline#1{\immediate\write\m@ne
                     {(\space\space\space mathastext:\space\space\space) #1}}
 \immediate\write\m@ne{}
@@ -73,27 +73,22 @@
 \ifmst@LuaTeX\mst@XeOrLuatrue\fi
 \ifmst@XeTeX \mst@XeOrLuatrue\fi
 \ifmst@XeTeX
-  \def\mst@OnlyIfNotMathActive#1{%
-      \ifnum\mst@Umathcodenum`#1="1FFFFF
-           \expandafter\@gobble
-      \else\expandafter\@firstofone
-      \fi
-   }
-\else\ifmst@LuaTeX
-  \def\mst@OnlyIfNotMathActive#1{%
-      \ifnum\mst@Umathcodenum`#1="1000000
-           \expandafter\@gobble
-      \else\expandafter\@firstofone
-      \fi
-   }
+  \def\mst@activemathcodenum@space{"1FFFFF }%
+  \let\mst@mathcodenum\mst@Umathcodenum
 \else
-  \def\mst@OnlyIfNotMathActive#1{%
-      \ifnum\mathcode`#1="8000
-           \expandafter\@gobble
-      \else\expandafter\@firstofone
-      \fi
-   }
+\ifmst@LuaTeX
+  \def\mst@activemathcodenum@space{"1000000 }%
+  \let\mst@mathcodenum\mst@Umathcodenum
+\else
+  \def\mst@activemathcodenum@space{"8000 }%
+  \let\mst@mathcodenum\mathcode
 \fi\fi
+\def\mst@OnlyIfNotMathActive#1{%
+    \ifnum\mst@mathcodenum`#1=\mst@activemathcodenum@space
+         \expandafter\@gobble
+    \else\expandafter\@firstofone
+    \fi
+}
 \def\mst@oti{OT1}
 \def\mst@tu{TU}
 \def\mst@OneifUniEnc{\ifx\mst@tmp@enc\mst@tu1\else0\fi}
@@ -308,7 +303,7 @@ defaultbf,defaultit,defaultsf,defaulttt}}
     \mst@@mathactivate #1{}{\mst@active@math@prime}%
   \fi
 }%
-\def\mst@undo@mathactivateprime{\mst@mathdeactivate#1{"8000}}%
+\def\mst@undo@mathactivateprime{\mst@mathdeactivate#1{\mst@activemathcodenum@space}}%
 }\expandafter\mst@tmp\string'
 \def\mst@active@math@prime{\sp\bgroup\mskip\mst@prime@muskip\prim@s}
 \ifmst@everymath
@@ -416,7 +411,7 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 \ifmst@everymath
 \else
 \def\mst@mathdeactivate#1#2{%
-  \mathcode`#1=#2\relax
+  \if#1\string-\else\mst@mathcodenum`#1=#2\relax\fi
   \@ifundefined{active@char#1}
       {\@ifundefined{mst@prioractivemeaning@#1}
              {}%
@@ -452,9 +447,10 @@ defaultbf,defaultit,defaultsf,defaulttt}}
                    {\the\mst@do@nonletters\mst@mathactivate#1#2#3}%
     }%
 \else
-    \def\mst@addtodo@nonletters#1#2#3{\mst@do@nonletters\expandafter
+    \def\mst@addtodo@nonletters#1#2#3{%
+        \mst@do@nonletters\expandafter
                    {\the\mst@do@nonletters\mst@mathactivate#1#2#3}%
-        \edef\mst@tmp{\noexpand\mst@mathdeactivate#1{\the\mathcode`#1}}%
+        \edef\mst@tmp{\noexpand\mst@mathdeactivate#1{\the\mst@mathcodenum`#1}}%
         \mst@undo@nonletters\expandafter\expandafter\expandafter
                   {\expandafter\mst@tmp\the\mst@undo@nonletters}%
     }%
@@ -1092,7 +1088,7 @@ defaultbf,defaultit,defaultsf,defaulttt}}
      }%
      \AtBeginDocument{%
          \let\mst@orig@abd@ast\ast
-         \edef\MTnormalasterisk{\noexpand\mst@mathdeactivate*{\the\mathcode`\*}%
+         \edef\MTnormalasterisk{\noexpand\mst@mathdeactivate*{\the\mst@mathcodenum`\*}%
                                 \let\noexpand\ast\noexpand\mst@orig@abd@ast}%
          \def\MTactiveasterisk{\def\ast{\mst@ast}%
                                \mst@mathactivate*{}\mst@ast
@@ -1197,7 +1193,7 @@ defaultbf,defaultit,defaultsf,defaulttt}}
     \mathchardef\mst@minus@sign=\mathcode`\-\relax
   \fi
   \@ifpackageloaded{amsmath}
-    {\def\relbar{\mathrel{\mathpalette\mathsm@sh\mst@minus@sign}}}
+    {\DeclareRobustCommand\relbar{\mathrel{\mathpalette\mathsm@sh\mst@minus@sign}}}
     {\DeclareRobustCommand\relbar{\mathrel{\smash\mst@minus@sign}}}
   \DeclareRobustCommand\rightarrowfill{$\m@th\mathord{\relbar}\mkern-7mu%
   \cleaders\hbox{$\mkern-2mu\relbar\mkern-2mu$}\hfill
@@ -1236,29 +1232,45 @@ defaultbf,defaultit,defaultsf,defaulttt}}
   \DeclareMathSymbol{#1}{\mathbin}{\mst@font@tbu}{"2D}%
   \DeclareMathSymbol{#2}{\mathalpha}{\mst@font@tbu}{"2D}%
 }%
-\def\mst@varfam@minus{\@nameuse{mst@varfam@minus@mv\math@version}}%
+\def\mst@varfam@minus{\csname mst@varfam@minus@mv\math@version\endcsname}%
+\def\mst@minus{\csname mst@minus@mv\math@version\endcsname}%
 \ifmst@nominus\else
-  \expandafter\mst@addtodo@nonletters\string-\mathbin\mst@varfam@minus
+  \ifmst@everymath
+    \expandafter\mst@addtodo@nonletters\string-\mathbin\mst@varfam@minus
+  \else
+    \def\mst@tmp#1{%
+      \mst@do@nonletters\expandafter{\the\mst@do@nonletters
+        \mst@mathactivate#1\mathbin\mst@varfam@minus}%
+      \mst@undo@nonletters\expandafter{\the\mst@undo@nonletters
+         \mst@mathdeactivate#1{}%
+         \mst@nonmathactiveminus}%
+    }\expandafter\mst@tmp\string-%
+    \def\mst@nonmathactiveminus{%
+        \ifmst@subdued
+         \ifx\math@version\mst@normalversionname\mst@subduedminus\else
+         \ifx\math@version\mst@boldversionname  \mst@subduedminus\else
+         \mst@nonsubduedminus\fi\fi
+        \else
+         \mst@nonsubduedminus
+        \fi}%
+  \fi
   \def\mst@nonsubduedminus{%
     \edef\mst@tmp@enc{\csname mst@encoding@\math@version\endcsname}%
     \if1\mst@OneifUniEnc
      \mst@Umathcode`\-=\expandafter
-                       \mst@UmathchardefWorkAround@i
+                       \mst@ParseUmathchardef
                        \csname mst@minus@mv\math@version\endcsname
                        \relax
     \else
-     \mathcode`\-=\@nameuse{mst@minus@mv\math@version}%
+     \mathcode`\-=\mst@minus
     \fi
-   }%
+  }%
+  \def\mst@ParseUmathchardef{\expandafter\mst@ParseUmathchardef@i\meaning}%
+  \def\mst@ParseUmathchardef@i#1"{"}%
   \ifmst@endash\else\ifmst@emdash\else
-    \def\mst@nonsubduedminus{%
-      \mathcode`\-=\@nameuse{mst@minus@mv\math@version}%
-      }%
+    \def\mst@nonsubduedminus{\mathcode`\-=\mst@minus}%
   \fi\fi
 \fi
-\def\mst@UmathchardefWorkAround@i
-    {\expandafter\mst@UmathchardefWorkAround@ii\meaning}%
-\def\mst@UmathchardefWorkAround@ii#1"{"}%
 \let\mst@subduedhbar\@empty
 \let\mst@nonsubduedhbar\@empty
 \ifmst@nohbar\else
@@ -1293,9 +1305,7 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 \else
     \mathchardef\mst@equal@sign=\mathcode`\=\relax
 \fi
-\@ifpackageloaded{amsmath}
-{\def\Relbar{\mathrel\mst@equal@sign}}
-{\DeclareRobustCommand\Relbar{\mathrel{\mst@equal@sign}}}
+\DeclareRobustCommand\Relbar{\mathrel\mst@equal@sign}
 \DeclareMathSymbol{=}{\mathrel}{\mst@font@tbu}{"3D}
 \DeclareMathSymbol{\mst@varfam@equal}{\mathalpha}{\mst@font@tbu}{"3D}
 \mst@infoline{adding \string= \string; and \string+ to \string\nfss@catcodes}
@@ -2574,7 +2584,6 @@ defaultbf,defaultit,defaultsf,defaulttt}}
         \mst@subduedhbar
         \mst@subduedinodot
         \mst@subduedmathaccents
-        \mst@subduedminus
       \else
         \ifx\math@version\mst@boldversionname
           \mst@restorealphabets
@@ -2587,7 +2596,6 @@ defaultbf,defaultit,defaultsf,defaulttt}}
           \mst@subduedhbar
           \mst@subduedinodot
           \mst@subduedmathaccents
-          \mst@subduedminus
         \else
           \mst@setalphabets
     \expandafter\let\csname ifmst@greek@upper@up\expandafter\endcsname
@@ -2814,7 +2822,7 @@ defaultbf,defaultit,defaultsf,defaulttt}}
      \mst@infoline{Other characters (digits, ...) and \string\log-like names will be}%
      \mst@infoline{typeset with the \mst@shape@normal\space shape.}%
    \fi
-  \fi
+  \fi % not subdued
   \ifmst@nohbar\else
      \mst@infoline{\string\hbar}%
      \mst@dothe@hbarstuff
@@ -2831,7 +2839,10 @@ defaultbf,defaultit,defaultsf,defaulttt}}
     \mst@dothe@mathaccentsstuff{normal}\mst@encoding@normal
   \fi
   \ifmst@nominus\else
-   \mst@infoline{minus as endash}%
+  \ifmst@subdued
+   \mst@infoline{minus is kept as is in subdued normal and bold math versions}%
+  \else
+   \mst@infoline{minus either as endash, Unicode minus, emdash or hyphen}%
    \ifmst@endash
     \mst@dothe@endashstuff\mst@minus@mvnormal\mst@varfam@minus@mvnormal
                           \mst@encoding@normal
@@ -2849,7 +2860,8 @@ defaultbf,defaultit,defaultsf,defaulttt}}
       \let\mst@varfam@minus@mvbold\mst@varfam@minus@mvnormal
     \fi
    \fi
-  \fi
+  \fi % not subdued
+  \fi % not nominus
   \ifmst@subdued
     \mst@infoline{Subdued `normal\string' and `bold\string' math versions.}%
   \fi
@@ -2950,12 +2962,7 @@ defaultbf,defaultit,defaultsf,defaulttt}}
    \expandafter\let\csname mst@original@\@tempa\space\expandafter\endcsname
                    \csname \@tempa\space\endcsname
   }%
-  \ifmst@XeOrLua
-     \edef\mst@subduedminus
-         {\mst@Umathcodenum`\noexpand\-=\the\mst@Umathcodenum`\-\relax}%
-  \else
-     \edef\mst@subduedminus{\mathcode`\noexpand\-=\the\mathcode`\-\relax}%
-  \fi
+  \edef\mst@subduedminus{\mst@mathcodenum`\noexpand\-=\the\mst@mathcodenum`\-\relax}%
   \ifmst@subdued
     \MTeverymathoff
     \MTresetnewmcodes

@@ -1,6 +1,33 @@
 MATHASTEXT CHANGE LOG
 =====================
 
+1.4c \[2024/10/21\]
+----
+
+* Fix a regression at `1.4`: under `XeLaTeX`: loading `mathastext`
+  caused an error if `unicode-math` and its `\setmathfont` had been
+  used prior ("Extended mathchar used as mathchar" in relation to the
+  minus sign character). Thanks to Michael Roland for report.
+
+  Keep in mind though that the documentation (see 1.4.15 Unicode engines) has
+  always said that the package "is expected to be most definitely
+  incompatible with unicode-math".
+
+* Fix another regression at `1.4`, related to the same code and also avoided
+  with `everymath` option, but showing with
+  all engines.  It caused `\MTnonlettersdonotobeymathxx`, if used, to reset
+  the minus sign to its status as prior to the loading of `mathastext`,
+  whereas it should have used the (by default) mathversion dependent one
+  (which defaults to the en-dash in the font encoding as stored by `mathastext` in
+  the extended math version).
+
+* `\Relbar` and `\relbar` redeclarations (needed as they are used by `LaTeX`
+  for arrows, and the equal and minus signs if picked from the text font may not
+  work well in-there) are now done via `\DeclareRobustCommand` also with
+  package `amsmath` to match the current behavior of the latter.  Note though
+  that they will use the equal and minus signs as in place at package loading
+  time, the documentation does say that `mathastext` should be loaded last.
+
 1.4b \[2024/07/27\]
 ----
 
@@ -72,8 +99,8 @@ MATHASTEXT CHANGE LOG
   tex.sx `user691586` for report.  This is currently the sole remaining
   usage of `\everymath/\everydisplay`.
 
-* Bugfix: an optional feature related to `\{` and `\}` was broken since an
-  upstream LaTeX change at its 2020-02-02 release.
+* Bugfix: `\MTexplicitbracesobeymathxx` (which is related to `\{` and `\}`)
+  was without effect since an upstream LaTeX change at its 2020-02-02 release.
 
 * With option symbolmisc, those math symbol macros formerly defined via
   `\DeclareRobustCommand` are now declared via `\protected\def`.

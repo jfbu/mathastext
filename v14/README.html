@@ -173,16 +173,14 @@
 <li><a href="#usage" id="toc-usage">USAGE</a></li>
 <li><a href="#recent-changes" id="toc-recent-changes">RECENT CHANGES</a>
 <ul>
+<li><a href="#14c-20241021" id="toc-14c-20241021">1.4c
+[2024/10/21]</a></li>
 <li><a href="#14b-20240727" id="toc-14b-20240727">1.4b
 [2024/07/27]</a></li>
 <li><a href="#14a-20240720" id="toc-14a-20240720">1.4a
 [2024/07/20]</a></li>
 <li><a href="#14-20240720" id="toc-14-20240720">1.4
 [2024/07/20]</a></li>
-<li><a href="#13zb-20231229" id="toc-13zb-20231229">1.3zb
-[2023/12/29]</a></li>
-<li><a href="#13za-20231220" id="toc-13za-20231220">1.3za
-[2023/12/20]</a></li>
 </ul></li>
 </ul>
 </nav>
@@ -200,7 +198,7 @@ the <a href="https://www.latex-project.org/lppl/lppl-1-3c.txt">LPPL
 <p>The Author of this Work is Jean-Francois B.
 (<code>2589111+jfbu@users.noreply.github.com</code>)</p>
 <p>Copyright (C) 2011-2019, 2022-2024 Jean-Francois B.</p>
-<pre><code>  Source: mathastext.dtx 1.4b 2024/07/27</code></pre>
+<pre><code>  Source: mathastext.dtx 1.4c 2024/10/21</code></pre>
 <h1 id="description">DESCRIPTION</h1>
 <p>Optimal typographical results for documents containing mathematical
 symbols can only be hoped for with math fonts specifically designed to
@@ -260,6 +258,33 @@ font.</li>
 letters.</li>
 </ul>
 <h1 id="recent-changes">RECENT CHANGES</h1>
+<h2 id="14c-20241021">1.4c [2024/10/21]</h2>
+<ul>
+<li><p>Fix a regression at <code>1.4</code>: under <code>XeLaTeX</code>:
+loading <code>mathastext</code> caused an error if
+<code>unicode-math</code> and its <code>\setmathfont</code> had been
+used prior ("Extended mathchar used as mathchar" in relation to the
+minus sign character). Thanks to Michael Roland for report.</p>
+<p>Keep in mind though that the documentation (see 1.4.15 Unicode
+engines) has always said that the package "is expected to be most
+definitely incompatible with unicode-math".</p></li>
+<li><p>Fix another regression at <code>1.4</code>, related to the same
+code and also avoided with <code>everymath</code> option, but showing
+with all engines. It caused <code>\MTnonlettersdonotobeymathxx</code>,
+if used, to reset the minus sign to its status as prior to the loading
+of <code>mathastext</code>, whereas it should have used the (by default)
+mathversion dependent one (which defaults to the en-dash in the font
+encoding as stored by <code>mathastext</code> in the extended math
+version).</p></li>
+<li><p><code>\Relbar</code> and <code>\relbar</code> redeclarations
+(needed as they are used by <code>LaTeX</code> for arrows, and the equal
+and minus signs if picked from the text font may not work well in-there)
+are now done via <code>\DeclareRobustCommand</code> also with package
+<code>amsmath</code> to match the current behavior of the latter. Note
+though that they will use the equal and minus signs as in place at
+package loading time, the documentation does say that
+<code>mathastext</code> should be loaded last.</p></li>
+</ul>
 <h2 id="14b-20240727">1.4b [2024/07/27]</h2>
 <ul>
 <li><p>Fix a regression at <code>1.4</code> regarding option
@@ -325,9 +350,9 @@ an update regarding fonts using <code>Renderer=HarfBuzz</code>. This is
 done now. Thanks to tex.sx <code>user691586</code> for report. This is
 currently the sole remaining usage of
 <code>\everymath/\everydisplay</code>.</p></li>
-<li><p>Bugfix: an optional feature related to <code>\{</code> and
-<code>\}</code> was broken since an upstream LaTeX change at its
-2020-02-02 release.</p></li>
+<li><p>Bugfix: <code>\MTexplicitbracesobeymathxx</code> (which is
+related to <code>\{</code> and <code>\}</code>) was without effect since
+an upstream LaTeX change at its 2020-02-02 release.</p></li>
 <li><p>With option symbolmisc, those math symbol macros formerly defined
 via <code>\DeclareRobustCommand</code> are now declared via
 <code>\protected\def</code>.</p></li>
@@ -343,50 +368,6 @@ package homepage.</p></li>
 and even to some extent improved. But there may be some occasions where
 obsolete statements will be found having the legacy
 <code>\everymath/\everydisplay</code> situation as background.</p></li>
-</ul>
-<h2 id="13zb-20231229">1.3zb [2023/12/29]</h2>
-<ul>
-<li><p>Update to the <code>frenchmath*</code> option to maintain
-compatibility with the <a
-href="https://ctan.org/pkg/frenchmath">frenchmath</a> package whose
-release 2.7 (2023/12/23) has replaced the ncccomma package by the
-decimalcomma package.</p></li>
-<li><p>The <code>frenchmath+</code> option holds the former meaning of
-<code>frenchmath*</code>.</p></li>
-<li><p>Option <code>decimalcomma</code> to load the eponymous package by
-Antoine Missier. This is tacitly done by
-<code>frenchmath*</code>.</p></li>
-<li><p>No more messages sent to the console output during loading, only
-info messages going into the log, and using (more or less) the official
-LaTeX interface: after close to 13 years of development of this package
-it was perhaps finally the time to do it.</p></li>
-<li><p>Documentation improvements. Close to 13 years after the birth of
-the package, and as it nowadays rarely wakes up from dormancy, this was
-almost last chance to try to improve a few things.</p></li>
-</ul>
-<h2 id="13za-20231220">1.3za [2023/12/20]</h2>
-<ul>
-<li><p>Under <code>LGRgreek</code> and <code>LGRgreeks</code> options,
-new math alphabets <code>\mathgreekupbold</code> and
-<code>\mathgreekitbold</code>.</p></li>
-<li><p>New options <code>LGRgreek+</code> and
-<code>LGRgreeks+</code>.</p>
-<p>Thanks to Holger Gerhardt for feature request and code ideas. Please
-find and read the relevant documentation in the PDF.</p></li>
-<li><p>The meaning of <code>defaultalphabets</code> and related
-individual options such as <code>defaultbf</code> has been modified
-(reverted to pre <code>1.15f</code> release): even under these options,
-the package always creates <code>\mathnormalbold</code>,
-<code>\Mathnormal</code>, <code>\Mathrm</code>, <code>\Mathbf</code>
-etc..., commands. This may break documents which used these options in
-order to reserve these command names. This was done with some hesitancy,
-but for the sake of internal logical coherence.</p></li>
-<li><p>Fix an obscure bug with no real consequences regarding
-interaction of <code>subdued</code> with <code>LGRgreek</code> and
-<code>\MTgreekfont</code>. See the <code>LGRgreek</code> documentation
-in the complete list of options for details.</p></li>
-<li><p>Fix long-standing hyperlink problems in the documentation: blue
-color words should now all be functioning hyperlinks.</p></li>
 </ul>
 </body>
 </html>

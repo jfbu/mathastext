@@ -14,7 +14,7 @@ The Author of this Work is Jean-Francois B. (`2589111+jfbu@users.noreply.github.
 
 Copyright (C) 2011-2019, 2022-2024 Jean-Francois B.
 
-      Source: mathastext.dtx 1.4b 2024/07/27
+      Source: mathastext.dtx 1.4c 2024/10/21
 
 
 DESCRIPTION
@@ -81,6 +81,33 @@ Main options: `italic`, `frenchmath`, `subdued`, `LGRgreek`.
 
 RECENT CHANGES
 ==============
+
+1.4c \[2024/10/21\]
+----
+
+* Fix a regression at `1.4`: under `XeLaTeX`: loading `mathastext`
+  caused an error if `unicode-math` and its `\setmathfont` had been
+  used prior ("Extended mathchar used as mathchar" in relation to the
+  minus sign character). Thanks to Michael Roland for report.
+
+  Keep in mind though that the documentation (see 1.4.15 Unicode engines) has
+  always said that the package "is expected to be most definitely
+  incompatible with unicode-math".
+
+* Fix another regression at `1.4`, related to the same code and also avoided
+  with `everymath` option, but showing with
+  all engines.  It caused `\MTnonlettersdonotobeymathxx`, if used, to reset
+  the minus sign to its status as prior to the loading of `mathastext`,
+  whereas it should have used the (by default) mathversion dependent one
+  (which defaults to the en-dash in the font encoding as stored by `mathastext` in
+  the extended math version).
+
+* `\Relbar` and `\relbar` redeclarations (needed as they are used by `LaTeX`
+  for arrows, and the equal and minus signs if picked from the text font may not
+  work well in-there) are now done via `\DeclareRobustCommand` also with
+  package `amsmath` to match the current behavior of the latter.  Note though
+  that they will use the equal and minus signs as in place at package loading
+  time, the documentation does say that `mathastext` should be loaded last.
 
 1.4b \[2024/07/27\]
 ----
@@ -153,8 +180,8 @@ RECENT CHANGES
   tex.sx `user691586` for report.  This is currently the sole remaining
   usage of `\everymath/\everydisplay`.
 
-* Bugfix: an optional feature related to `\{` and `\}` was broken since an
-  upstream LaTeX change at its 2020-02-02 release.
+* Bugfix: `\MTexplicitbracesobeymathxx` (which is related to `\{` and `\}`)
+  was without effect since an upstream LaTeX change at its 2020-02-02 release.
 
 * With option symbolmisc, those math symbol macros formerly defined via
   `\DeclareRobustCommand` are now declared via `\protected\def`.
@@ -173,55 +200,4 @@ RECENT CHANGES
 * Some parts of the documentation have been massively re-ordered and even to some
   extent improved.  But there may be some occasions where obsolete statements will
   be found having the legacy `\everymath/\everydisplay` situation as background.
-
-1.3zb \[2023/12/29\]
------
-
-* Update to the `frenchmath*` option to maintain compatibility
-  with the [frenchmath](https://ctan.org/pkg/frenchmath)
-  package whose release 2.7 (2023/12/23) has replaced
-  the ncccomma package by the decimalcomma package.
-
-* The `frenchmath+` option holds the former meaning of `frenchmath*`.
-
-* Option `decimalcomma` to load the eponymous package by Antoine
-  Missier.  This is tacitly done by `frenchmath*`.
-
-* No more messages sent to the console output during loading,
-  only info messages going into the log, and using (more or less)
-  the official LaTeX interface: after close to 13 years of development
-  of this package it was perhaps finally the time to do it.
-
-* Documentation improvements.  Close to 13 years after the
-  birth of the package, and as it nowadays rarely wakes up from
-  dormancy, this was almost last chance to try to improve a few
-  things.
-
-1.3za \[2023/12/20\]
------
-
-* Under `LGRgreek` and `LGRgreeks` options, new math alphabets
-  `\mathgreekupbold` and `\mathgreekitbold`.
-
-* New options `LGRgreek+` and `LGRgreeks+`.
-
-  Thanks to Holger Gerhardt for feature request and code ideas.
-  Please find and read the relevant documentation in the PDF.
-
-* The meaning of `defaultalphabets` and related individual
-  options such as `defaultbf` has been modified (reverted to pre
-  `1.15f` release): even under these options, the package always
-  creates `\mathnormalbold`, `\Mathnormal`, `\Mathrm`, `\Mathbf`
-  etc..., commands.  This may break documents which used these
-  options in order to reserve these command names.  This was done
-  with some hesitancy, but for the sake of internal logical
-  coherence.
-
-* Fix an obscure bug with no real consequences regarding
-  interaction of `subdued` with `LGRgreek` and `\MTgreekfont`.
-  See the `LGRgreek` documentation in the complete list of
-  options for details.
-
-* Fix long-standing hyperlink problems in the documentation:
-  blue color words should now all be functioning hyperlinks.
 
