@@ -23,7 +23,7 @@
 %%----------------------------------------------------------------
 %% Package: mathastext
 %% Info:    Use the text font in math mode (JFB)
-%% Version: 1.4c 2024/10/21
+%% Version: 1.4e 2024/10/26
 %% License: LPPL 1.3c (http://www.latex-project.org/lppl/lppl-1-3c.txt)
 %% Copyright (C) 2011-2019, 2022-2024 Jean-Francois B.
 %%                                   <2589111+jfbu@users.noreply.github.com>
@@ -33,7 +33,7 @@
 %%----------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}[2020/02/02]
 \ProvidesPackage {mathastext}
-  [2024/10/21 v1.4c Use the text font in math mode (JFB)]
+  [2024/10/26 v1.4e Use the text font in math mode (JFB)]
 \def\mst@infoline#1{\immediate\write\m@ne
                     {(\space\space\space mathastext:\space\space\space) #1}}
 \immediate\write\m@ne{}
@@ -353,7 +353,9 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 \def\mst@fork{\ifmmode\mst@magic@v\fi\@thirdofthree}
 \def\mst@safefork{\ifmmode\if@safe@actives\else\mst@magic@vi\fi\fi\@thirdofthree}
 \def\mst@do@activecase#1#2#3{%
-    \ifx\relax #2\relax\mathcode`#1=`#1\relax\else\mathcode`#1=#3\relax\fi
+    \expandafter\if\string-#1\else
+      \ifx\relax #2\relax\mathcode`#1=`#1\relax\else\mathcode`#1=#3\relax\fi
+    \fi
     \ifmst@everymath\else\@ifundefined{mst@hackedshorthand@#1}{\fi
     \expandafter\let\csname mst@orig@user@active#1\expandafter\endcsname
                     \csname user@active#1\endcsname
@@ -396,7 +398,8 @@ defaultbf,defaultit,defaultsf,defaulttt}}
                      {\expandafter\let
                       \csname mst@prioractivemeaning@##1\endcsname ~}
                      {}%
-        \def~{\ifmmode##2##3\else##1\fi}%
+        \def~{\ifmmode\expandafter\@firstoftwo\else\expandafter\@secondoftwo\fi
+              {##2##3}{##1}}%
       }%
     }%
 \fi
@@ -750,23 +753,21 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 \providecommand*\MTgreekitdefault{it}
 \newif\ifmst@greek@lower@up
 \newif\ifmst@greek@upper@up
-\def\mst@update@greeksh{
-    \def\mst@greek@lsh{\mst@ltsh}
-    \def\mst@greek@ush{\mst@opsh}
-      \mst@greek@lower@uptrue
-      \expandafter\in@\expanded{{\mst@ltsh.}}{it.,sl.}%
+\def\mst@update@greeksh#1#2{
+    \def\mst@greek@lsh{#1}
+    \def\mst@greek@ush{#2}
+    \mst@greek@lower@uptrue
+      \expandafter\in@\expanded{{\mst@greek@lsh.}}{it.,sl.}%
       \ifin@\mst@greek@lower@upfalse\fi
-      \mst@greek@upper@uptrue
-      \expandafter\in@\expanded{{\mst@opsh.}}{it.,sl.}%
+    \mst@greek@upper@uptrue
+      \expandafter\in@\expanded{{\mst@greek@ush.}}{it.,sl.}%
       \ifin@\mst@greek@upper@upfalse\fi
     \ifmst@itgreek
-      \def\mst@greek@lsh{\MTgreekitdefault}
       \def\mst@greek@ush{\MTgreekitdefault}
         \mst@greek@lower@upfalse
         \mst@greek@upper@upfalse
     \fi
     \ifmst@upgreek
-      \def\mst@greek@lsh{\MTgreekupdefault}
       \def\mst@greek@ush{\MTgreekupdefault}
         \mst@greek@lower@uptrue
         \mst@greek@upper@uptrue
@@ -774,8 +775,7 @@ defaultbf,defaultit,defaultsf,defaulttt}}
     \ifmst@frenchmath
       \ifmst@itgreek\else
       \ifmst@upgreek\else
-        \def\mst@greek@lsh{\mst@opsh}
-        \def\mst@greek@ush{\mst@opsh}
+        \def\mst@greek@ush{#2}
           \mst@greek@lower@uptrue
           \mst@greek@upper@uptrue
       \fi\fi
@@ -789,7 +789,7 @@ defaultbf,defaultit,defaultsf,defaulttt}}
             \mst@greek@upper@uptrue
     \fi
 }
-\mst@update@greeksh
+\mst@update@greeksh{\mst@ltsh}{\mst@opsh}
 \ifmst@LGRgreek
     \DeclareFontEncoding{LGR}{}{}
     \DeclareSymbolFont{mtgreekup}{LGR}{\mst@fam}{\mst@ser}{\MTgreekupdefault}
@@ -1204,28 +1204,48 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 \fi
 \let\mst@subduedminus\empty
 \let\mst@nonsubduedminus\empty
-\def\mst@dothe@endashstuff#1#2#3{%
+\def\mst@dothe@endashstuff#1#2#3#4{%
   \edef\mst@tmp@enc{#3}%
   \if1\mst@OneifUniEnc
     \mst@Umathchardef#1=2 \symmtoperatorfont "\mst@unicodeminus\relax
     \mst@Umathchardef#2=7 \symmtoperatorfont "\mst@unicodeminus\relax
   \else
-    \DeclareMathSymbol{#1}{\mathbin}{mtoperatorfont}
-                      {\csname\mst@tmp@enc\string\textendash\endcsname}
-    \DeclareMathSymbol{#2}{\mathalpha}{mtoperatorfont}
-                      {\csname\mst@tmp@enc\string\textendash\endcsname}
+    \@ifundefined{\mst@tmp@enc\string\textendash}%
+        {%
+          \PackageWarningNoLine{mathastext}
+          {Impossible to let the \string- use an EN-DASH in a math\MessageBreak
+           version with \mst@tmp@enc\space encoding, as there is none there.\MessageBreak
+           Reverting to default in math version #4}%
+          \let#1\relax\let#2\relax
+        }%
+        {%
+          \DeclareMathSymbol{#1}{\mathbin}{mtoperatorfont}
+                            {\csname\mst@tmp@enc\string\textendash\endcsname}%
+          \DeclareMathSymbol{#2}{\mathalpha}{mtoperatorfont}
+                            {\csname\mst@tmp@enc\string\textendash\endcsname}%
+        }%
   \fi
 }%
-\def\mst@dothe@emdashstuff#1#2#3{%
+\def\mst@dothe@emdashstuff#1#2#3#4{%
   \edef\mst@tmp@enc{#3}%
   \if1\mst@OneifUniEnc
     \mst@Umathchardef#1=2 \symmtoperatorfont "2014\relax
     \mst@Umathchardef#2=7 \symmtoperatorfont "2014\relax
   \else
-    \DeclareMathSymbol{#1}{\mathbin}{mtoperatorfont}
-                      {\csname\mst@tmp@enc\string\textemdash\endcsname}
-    \DeclareMathSymbol{#2}{\mathalpha}{mtoperatorfont}
-                      {\csname\mst@tmp@enc\string\textemdash\endcsname}
+    \@ifundefined{\mst@tmp@enc\string\textendash}%
+        {%
+          \PackageWarningNoLine{mathastext}
+          {Impossible to let the \string- use an EM-DASH in a math\MessageBreak
+           version with \mst@tmp@enc\space encoding, as there is none there.\MessageBreak
+           Reverting to default in math version #4}%
+          \let#1\relax\let#2\relax
+        }%
+        {%
+          \DeclareMathSymbol{#1}{\mathbin}{mtoperatorfont}
+                            {\csname\mst@tmp@enc\string\textemdash\endcsname}%
+          \DeclareMathSymbol{#2}{\mathalpha}{mtoperatorfont}
+                            {\csname\mst@tmp@enc\string\textemdash\endcsname}%
+        }%
   \fi
 }%
 \def\mst@dothe@hyphenstuff#1#2{%
@@ -1240,7 +1260,10 @@ defaultbf,defaultit,defaultsf,defaulttt}}
   \else
     \def\mst@tmp#1{%
       \mst@do@nonletters\expandafter{\the\mst@do@nonletters
-        \mst@mathactivate#1\mathbin\mst@varfam@minus}%
+        \@ifundefined{mst@minus@mv\math@version}
+            {\mst@nonmathmathactiveminus}
+            {\mst@mathactivate#1\mathbin\mst@varfam@minus}%
+        }%
       \mst@undo@nonletters\expandafter{\the\mst@undo@nonletters
          \mst@mathdeactivate#1{}%
          \mst@nonmathactiveminus}%
@@ -1262,7 +1285,9 @@ defaultbf,defaultit,defaultsf,defaulttt}}
                        \csname mst@minus@mv\math@version\endcsname
                        \relax
     \else
-     \mathcode`\-=\mst@minus
+     \@ifundefined{mst@minus@mv\mst@tmp@enc}
+        {\mst@subduedminus}
+        {\mathcode`\-=\mst@minus}%
     \fi
   }%
   \def\mst@ParseUmathchardef{\expandafter\mst@ParseUmathchardef@i\meaning}%
@@ -1276,22 +1301,33 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 \ifmst@nohbar\else
   \def\mst@subduedhbar{\let\hbar\mst@original@hbar}%
   \def\mst@nonsubduedhbar{\expandafter
-       \let\expandafter\hbar\csname mst@hbar@mv\math@version\endcsname}%
+       \let\expandafter\hbar\csname mst@hbar@mv\math@version\endcsname
+       \ifx\hbar\relax\let\hbar\mst@original@hbar\fi}%
 \fi
 \def\mst@mathrlap{\mathpalette\mst@mathrlapinternal}
 \def\mst@mathrlapinternal#1#2{\rlap{$\mathsurround=0pt#1{#2}$}}
-\def\mst@dothe@hbarstuff#1#2#3{%
+\def\mst@dothe@hbarstuff#1#2#3#4{%
   \edef\mst@tmp@enc{#3}%
   \if1\mst@OneifUniEnc
     \mst@Umathchardef#1="7 \symmtletterfont "0127 \relax %% or 210F?
   \else
-    \begingroup
-    \def\@text@composite##1\@text@composite##2{##2}%
-    \let\add@accent\@firstoftwo
-    \mst@DeclareMathAccent{#2}{\mathalpha}{mtletterfont}%
-                      {\csname\mst@tmp@enc\string\=\endcsname{}}%
-    \endgroup
-    \protected\def#1{\mst@mathrlap{#2{\ }}\MTmathcharletterh}%
+    \@ifundefined{\mst@tmp@enc\string\=}%
+        {%
+          \PackageWarningNoLine{mathastext}
+          {Impossible to define the \string\hbar\space using a font with\MessageBreak
+           \mst@tmp@enc\space encoding, as there is no \string\= accent.\MessageBreak
+           Reverting to default \string\hbar\space in math version #4}%
+          \let#1\relax
+        }%
+        {%
+         \begingroup
+         \def\@text@composite##1\@text@composite##2{##2}%
+         \let\add@accent\@firstoftwo
+         \mst@DeclareMathAccent{#2}{\mathalpha}{mtletterfont}%
+                   {\csname\mst@tmp@enc\string\=\endcsname{}}%
+         \endgroup
+         \protected\def#1{\mst@mathrlap{#2{\ }}\MTmathcharletterh}%
+        }%
   \fi
 }%
 \ifmst@noplus\else\mst@infoline{\string+ and \string=}
@@ -2166,6 +2202,10 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 \let\Mathastextstandardgreek\MTstandardgreek
 \let\Mathastextcustomgreek\MTcustomgreek
 \ifmst@subdued\else\MTcustomgreek\fi
+\let\mst@subduedinodot\@empty
+\let\mst@nonsubduedinodot\@empty
+\ifmst@noletters
+\else
 \def\mst@subduedinodot{%
    \let\inodot\mst@original@imath
    \let\jnodot\mst@original@jmath
@@ -2175,18 +2215,42 @@ defaultbf,defaultit,defaultsf,defaulttt}}
                \csname mst@inodot@mv\math@version\endcsname
    \expandafter\let\expandafter\jnodot
                \csname mst@jnodot@mv\math@version\endcsname
+   \ifx\inodot\relax\let\inodot\mst@original@imath\fi
+   \ifx\jnodot\relax\let\jnodot\mst@original@jmath\fi
 }%
-\def\mst@dothe@inodotstuff#1#2#3{%
+\fi
+\def\mst@dothe@inodotstuff#1#2#3#4{%
   \edef\mst@tmp@enc{#3}%
   \if1\mst@OneifUniEnc
     \mst@Umathchardef#1="7 \symmtletterfont "0131 \relax
     \mst@Umathchardef#2="7 \symmtletterfont "0237 \relax
   \else
-   \DeclareMathSymbol{#1}{\mathalpha}{mtletterfont}
-                     {\csname\mst@tmp@enc\string\i\endcsname}
-   \DeclareMathSymbol{#2}{\mathalpha}{mtletterfont}
-                     {\csname\mst@tmp@enc\string\j\endcsname}
-  \fi}%
+    \@ifundefined{\mst@tmp@enc\string\i}%
+        {%
+          \PackageWarningNoLine{mathastext}
+          {Impossible to define the \string\inodot\space using a font with\MessageBreak
+           \mst@tmp@enc\space encoding, as there is no \string\i.\MessageBreak
+           Reverting to default \string\imath\space in math version #4}%
+          \let#1\relax
+        }%
+        {%
+          \DeclareMathSymbol{#1}{\mathalpha}{mtletterfont}
+                            {\csname\mst@tmp@enc\string\i\endcsname}%
+        }%
+    \@ifundefined{\mst@tmp@enc\string\j}%
+        {%
+          \PackageWarningNoLine{mathastext}
+          {Impossible to define the \string\jnodot\space using a font with\MessageBreak
+           \mst@tmp@enc\space encoding, as there is no \string\j.\MessageBreak
+           Reverting to default \string\jmath\space in math version #4}%
+          \let#2\relax
+        }%
+        {%
+          \DeclareMathSymbol{#2}{\mathalpha}{mtletterfont}
+                            {\csname\mst@tmp@enc\string\j\endcsname}%
+        }%
+  \fi
+}%
 \ifmst@defaultimath\else\mst@infoline{\string\imath\space and \string\jmath\space}
     \AtEndOfPackage{\AtBeginDocument{%
         \protected\def\imath{\inodot}%
@@ -2204,9 +2268,12 @@ defaultbf,defaultit,defaultsf,defaulttt}}
                    \csname mst@original@\@tempa\endcsname
    \expandafter\let\csname\@tempa\space\expandafter\endcsname
                    \csname mst@original@\@tempa\space\endcsname
-   }%
+  }%
 }%
 \def\mst@nonsubduedmathaccents{%
+ \@ifundefined{mst@grave@mv\math@version}
+ {\mst@subduedmathaccents}
+ {%
   \@tfor\@tempa:={grave}{acute}{check}{breve}{bar}%
                  {dot}{ddot}{mathring}{hat}{tilde}%
   \do
@@ -2214,7 +2281,8 @@ defaultbf,defaultit,defaultsf,defaulttt}}
                    \csname mst@\@tempa @mv\math@version\endcsname
    \expandafter\let\csname\@tempa\space\expandafter\endcsname
                    \csname mst@\@tempa @mv\math@version\space\endcsname
-}%
+  }%
+ }%
 }%
 \def\mst@dothe@mathaccentsstuff#1#2{%
   \begingroup
@@ -2224,52 +2292,52 @@ defaultbf,defaultit,defaultsf,defaulttt}}
   \let\add@unicode@accent\@firstoftwo
   \if1\mst@OneifUniEnc
     \ifmst@unimathaccents
-      \expandafter\xdef\csname mst@grave@mv#1\mst@robustifyingspace\endcsname
+      \expandafter\xdef\csname mst@grave@mv#1 \endcsname
        {\mst@Umathaccent
         7
         \number\symmtoperatorfont\space
         \csname#2\string\`\endcsname{}\relax}%
-      \expandafter\xdef\csname mst@acute@mv#1\mst@robustifyingspace\endcsname
+      \expandafter\xdef\csname mst@acute@mv#1 \endcsname
        {\mst@Umathaccent
         7
         \number\symmtoperatorfont\space
         \csname#2\string\'\endcsname{}\relax}%
-      \expandafter\xdef\csname mst@check@mv#1\mst@robustifyingspace\endcsname
+      \expandafter\xdef\csname mst@check@mv#1 \endcsname
        {\mst@Umathaccent
         7
         \number\symmtoperatorfont\space
         \csname#2\string\v\endcsname{}\relax}%
-      \expandafter\xdef\csname mst@breve@mv#1\mst@robustifyingspace\endcsname
+      \expandafter\xdef\csname mst@breve@mv#1 \endcsname
        {\mst@Umathaccent
         7
         \number\symmtoperatorfont\space
         \csname#2\string\u\endcsname{}\relax}%
-      \expandafter\xdef\csname mst@bar@mv#1\mst@robustifyingspace\endcsname
+      \expandafter\xdef\csname mst@bar@mv#1 \endcsname
        {\mst@Umathaccent
         7
         \number\symmtoperatorfont\space
         \csname#2\string\=\endcsname{}\relax}%
-      \expandafter\xdef\csname mst@dot@mv#1\mst@robustifyingspace\endcsname
+      \expandafter\xdef\csname mst@dot@mv#1 \endcsname
        {\mst@Umathaccent
         7
         \number\symmtoperatorfont\space
         \csname#2\string\.\endcsname{}\relax}%
-      \expandafter\xdef\csname mst@ddot@mv#1\mst@robustifyingspace\endcsname
+      \expandafter\xdef\csname mst@ddot@mv#1 \endcsname
        {\mst@Umathaccent
         7
         \number\symmtoperatorfont\space
         \csname#2\string\"\endcsname{}\relax}%
-      \expandafter\xdef\csname mst@mathring@mv#1\mst@robustifyingspace\endcsname
+      \expandafter\xdef\csname mst@mathring@mv#1 \endcsname
        {\mst@Umathaccent
         7
         \number\symmtoperatorfont\space
         \csname#2\string\r\endcsname{}\relax}%
-      \expandafter\xdef\csname mst@hat@mv#1\mst@robustifyingspace\endcsname
+      \expandafter\xdef\csname mst@hat@mv#1 \endcsname
        {\mst@Umathaccent
         7
         \number\symmtoperatorfont\space
         \csname#2\string\^\endcsname{}\relax}%
-      \expandafter\xdef\csname mst@tilde@mv#1\mst@robustifyingspace\endcsname
+      \expandafter\xdef\csname mst@tilde@mv#1 \endcsname
        {\mst@Umathaccent
         7
         \number\symmtoperatorfont\space
@@ -2295,6 +2363,14 @@ defaultbf,defaultit,defaultsf,defaulttt}}
           \expandafter\noexpand\csname mst@\@tempa @mv#1 \endcsname}%
       }%
   \else
+   \@ifundefined{#2\string\`}
+      {\PackageWarningNoLine{mathastext}
+         {Impossible to pick up text accents from an #2\MessageBreak
+          encoded font.  The mathaccent option will be\MessageBreak
+          ignored for the math version #1}%
+       \let\mst@tempa0}
+      {\let\mst@tempa1}%
+   \if\mst@tempa1%
     \expandafter\mst@DeclareMathAccent\expandafter
                {\csname mst@grave@mv#1\endcsname}{\mathalpha}{mtoperatorfont}%
                {\csname#2\string\`\endcsname{}}
@@ -2325,6 +2401,9 @@ defaultbf,defaultit,defaultsf,defaulttt}}
     \expandafter\mst@DeclareMathAccent\expandafter
                {\csname mst@tilde@mv#1\endcsname}{\mathalpha}{mtoperatorfont}%
                {\csname#2\string\~\endcsname{}}
+   \else
+    \global\expandafter\let\csname mst@grave@mv#1\endcsname\relax
+   \fi
   \fi
   \endgroup
 }%
@@ -2440,43 +2519,9 @@ defaultbf,defaultit,defaultsf,defaulttt}}
   \ifmst@needeuler
       \SetMathAlphabet{\MathEulerBold}{#2}{U}{zeur}{\mst@bold}{n}%
   \fi
-  \def\mst@greek@lsh@loc{\csname mst@ltshape@\mst@version\endcsname}%
-  \def\mst@greek@ush@loc{\csname mst@shape@\mst@version\endcsname}%
-  \mst@greek@lower@uptrue
-      \expandafter\in@\expanded{{\mst@greek@lsh@loc.}}{it.,sl.}%
-      \ifin@\mst@greek@lower@upfalse\fi
-  \mst@greek@upper@uptrue
-      \expandafter\in@\expanded{{\mst@greek@ush@loc.}}{it.,sl.}%
-      \ifin@\mst@greek@upper@upfalse\fi
-  \ifmst@itgreek
-    \def\mst@greek@lsh@loc{\MTgreekitdefault}%
-    \def\mst@greek@ush@loc{\MTgreekitdefault}%
-      \mst@greek@lower@upfalse
-      \mst@greek@upper@upfalse
-  \fi
-  \ifmst@upgreek
-    \def\mst@greek@lsh@loc{\MTgreekupdefault}%
-    \def\mst@greek@ush@loc{\MTgreekupdefault}%
-      \mst@greek@lower@uptrue
-      \mst@greek@upper@uptrue
-  \fi
-  \ifmst@frenchmath
-      \ifmst@itgreek\else
-      \ifmst@upgreek\else
-        \def\mst@greek@lsh@loc{\csname mst@shape@\mst@version\endcsname}%
-        \def\mst@greek@ush@loc{\csname mst@shape@\mst@version\endcsname}%
-        \mst@greek@lower@uptrue
-        \mst@greek@upper@uptrue
-      \fi\fi
-  \fi
-  \ifcase\mst@greek@select
-        \or
-          \def\mst@greek@ush@loc{\MTgreekitdefault}%
-          \mst@greek@upper@upfalse
-        \or
-          \def\mst@greek@ush@loc{\MTgreekupdefault}%
-          \mst@greek@upper@uptrue
-  \fi
+  \mst@update@greeksh
+     {\csname mst@ltshape@\mst@version\endcsname}%
+     {\csname mst@shape@\mst@version\endcsname}%
     \ifmst@LGRgreeks \def\mst@greekfont{#4}\fi
     \ifmst@selfGreeks\def\mst@greekfont{#4}\fi
     \ifmst@LGRgreek
@@ -2502,31 +2547,35 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 \immediate\write\m@ne{}%
     \else
      \ifmst@selfGreek
-       \SetSymbolFont{mtselfGreekfont}{#2}{OT1}{\mst@greekfont}{#5}{\mst@greek@ush@loc}%
+       \SetSymbolFont{mtselfGreekfont}{#2}{OT1}{\mst@greekfont}{#5}{\mst@greek@ush}%
 \immediate\write\m@ne{}%
-\PackageInfo{mathastext}{Capital Greek letters (shape `\mst@greek@ush@loc\string'
+\PackageInfo{mathastext}{Capital Greek letters (shape `\mst@greek@ush\string'
                            will use the font\MessageBreak
                          family `\mst@greekfont\string' (OT1) in mathastext\MessageBreak
                          math version `\mst@version\string' declared}%
 \immediate\write\m@ne{}%
      \fi
     \fi
-  \edef\mst@tmp{\expandafter\noexpand\csname mst@hbar@mv#2\endcsname
-                \expandafter\noexpand\csname mst@ltbar@mv#2\endcsname}%
-  \expandafter\mst@dothe@hbarstuff\mst@tmp{#3}%
+  \ifmst@nohbar\else
+    \edef\mst@tmp{\expandafter\noexpand\csname mst@hbar@mv#2\endcsname
+                  \expandafter\noexpand\csname mst@ltbar@mv#2\endcsname}%
+    \expandafter\mst@dothe@hbarstuff\mst@tmp{#3}{#3}%
+  \fi
   \edef\mst@tmp{\expandafter\noexpand\csname mst@inodot@mv#2\endcsname
                 \expandafter\noexpand\csname mst@jnodot@mv#2\endcsname}%
-  \expandafter\mst@dothe@inodotstuff\mst@tmp{#3}%
+  \ifmst@noletters\else
+    \expandafter\mst@dothe@inodotstuff\mst@tmp{#3}{#2}%
+  \fi
   \ifmst@mathaccents
     \mst@dothe@mathaccentsstuff{#2}{#3}%
   \fi
   \edef\mst@tmp{\expandafter\noexpand\csname mst@minus@mv#2\endcsname
                 \expandafter\noexpand\csname mst@varfam@minus@mv#2\endcsname}%
   \ifmst@endash
-    \expandafter\mst@dothe@endashstuff\mst@tmp{#3}%
+    \expandafter\mst@dothe@endashstuff\mst@tmp{#3}{#2}%
   \else
     \ifmst@emdash
-      \expandafter\mst@dothe@emdashstuff\mst@tmp{#3}%
+      \expandafter\mst@dothe@emdashstuff\mst@tmp{#3}{#2}%
     \else
       \expandafter\mst@dothe@hyphenstuff\mst@tmp
     \fi
@@ -2647,7 +2696,15 @@ defaultbf,defaultit,defaultsf,defaulttt}}
   {\MTDeclareVersion[\mst@ltsh]{#1}{\mst@enc}{\mst@fam}{\mst@ser}{\mst@opsh}}%
 }%
 \def\Mathastext@ {%
-  \mst@update@greeksh
+  \mst@update@greeksh {\mst@ltsh}{\mst@opsh}%
+      \expandafter\let\csname ifmst@greek@normal@upper@up\expandafter\endcsname
+                      \csname ifmst@greek@upper@up\endcsname
+      \expandafter\let\csname ifmst@greek@normal@lower@up\expandafter\endcsname
+                      \csname ifmst@greek@lower@up\endcsname
+      \expandafter\let\csname ifmst@greek@bold@upper@up\expandafter\endcsname
+                      \csname ifmst@greek@upper@up\endcsname
+      \expandafter\let\csname ifmst@greek@bold@lower@up\expandafter\endcsname
+                      \csname ifmst@greek@lower@up\endcsname
   \edef\mst@encoding@normal{\mst@enc}%
   \edef\mst@family@normal{\mst@fam}%
   \edef\mst@series@normal{\mst@ser}%
@@ -2826,14 +2883,16 @@ defaultbf,defaultit,defaultsf,defaulttt}}
   \ifmst@nohbar\else
      \mst@infoline{\string\hbar}%
      \mst@dothe@hbarstuff
-         \mst@hbar@mvnormal\mst@ltbar@mvnormal\mst@encoding@normal
+         \mst@hbar@mvnormal\mst@ltbar@mvnormal\mst@encoding@normal{normal}%
      \let\mst@hbar@mvbold\mst@hbar@mvnormal
   \fi
-  \mst@dothe@inodotstuff\inodot\jnodot\mst@encoding@normal
-  \let\mst@inodot@mvnormal\inodot
-  \let\mst@inodot@mvbold\inodot
-  \let\mst@jnodot@mvnormal\jnodot
-  \let\mst@jnodot@mvbold\jnodot
+  \ifmst@noletters\else
+    \mst@dothe@inodotstuff\inodot\jnodot\mst@encoding@normal{normal}%
+    \let\mst@inodot@mvnormal\inodot
+    \let\mst@inodot@mvbold\inodot
+    \let\mst@jnodot@mvnormal\jnodot
+    \let\mst@jnodot@mvbold\jnodot
+  \fi
   \ifmst@mathaccents
     \mst@infoline{math accents}%
     \mst@dothe@mathaccentsstuff{normal}\mst@encoding@normal
@@ -2845,15 +2904,15 @@ defaultbf,defaultit,defaultsf,defaulttt}}
    \mst@infoline{minus either as endash, Unicode minus, emdash or hyphen}%
    \ifmst@endash
     \mst@dothe@endashstuff\mst@minus@mvnormal\mst@varfam@minus@mvnormal
-                          \mst@encoding@normal
+                          \mst@encoding@normal {normal}%
     \mst@dothe@endashstuff\mst@minus@mvbold\mst@varfam@minus@mvbold
-                          \mst@encoding@normal
+                          \mst@encoding@normal {bold}%
    \else
     \ifmst@emdash
       \mst@dothe@emdashstuff\mst@minus@mvnormal\mst@varfam@minus@mvnormal
-                            \mst@encoding@normal
+                            \mst@encoding@normal {normal}%
       \mst@dothe@emdashstuff\mst@minus@mvbold\mst@varfam@minus@mvbold
-                            \mst@encoding@normal
+                            \mst@encoding@normal {bold}%
     \else
       \mst@dothe@hyphenstuff\mst@minus@mvnormal\mst@varfam@minus@mvnormal
       \let\mst@minus@mvbold\mst@minus@mvnormal

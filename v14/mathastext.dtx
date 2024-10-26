@@ -2,8 +2,8 @@
 % N.B.: this dtx file does NOT use \DocInput, it only uses docstrip.
 % The LaTeX source of the documentation is NOT prefixed with %'s.
 %<*dtx>
-\def\dtxtimestamp {Time-stamp: <21-10-2024 at 14:03:00 CEST>}
-\def\docdate{2024/10/21}
+\def\dtxtimestamp {Time-stamp: <26-10-2024 at 17:38:46 CEST>}
+\def\docdate{2024/10/26}
 % To extract run etex on this file, then to build documentation run
 % latexmk on mathastext.tex then dvipdfmx on the dvi.
 % For more information see v13/INSTALL.txt
@@ -11,8 +11,8 @@
 % due to usage of § (<A7>) as an active character.
 %</dtx>
 %<*drv>
-\def\MSTpkgdate    {2024/10/21}
-\def\MSTpkgversion {1.4c}
+\def\MSTpkgdate    {2024/10/26}
+\def\MSTpkgversion {1.4e}
 %</drv>
 %<*dtx>
 \iffalse % meta-comment
@@ -34,7 +34,7 @@ The Author of this Work is Jean-Francois B. (`2589111+jfbu@users.noreply.github.
 
 Copyright (C) 2011-2019, 2022-2024 Jean-Francois B.
 
-      Source: mathastext.dtx 1.4c 2024/10/21
+      Source: mathastext.dtx 1.4e 2024/10/26
 
 %</readme>
 %<*dtx>
@@ -44,7 +44,7 @@ Copyright (C) 2011-2019, 2022-2024 Jean-Francois B.
 %%----------------------------------------------------------------
 %% Package: mathastext
 %% Info:    Use the text font in math mode (JFB)
-%% Version: 1.4c 2024/10/21
+%% Version: 1.4e 2024/10/26
 %% License: LPPL 1.3c (http://www.latex-project.org/lppl/lppl-1-3c.txt)
 %% Copyright (C) 2011-2019, 2022-2024 Jean-Francois B.
 %%                                   <2589111+jfbu@users.noreply.github.com>
@@ -193,17 +193,62 @@ MATHASTEXT CHANGE LOG
 
 %</changelog>
 %<*readme|changelog>
+1.4e \[2024/10/26\]
+----
+
+* Fix a bug dating back to `1.3y` which caused under `LGRgreek` or
+  `LGRgreeks` options an `\MTversion{normal}` to raise an `Extra
+  \else` error (not if `subdued`).  The unit test which could have
+  shown this had been left aside at `1.4d` because it was so old
+  that some matters unrelated to the package prevented its
+  immediate use... alas...
+
+* Fix one more `1.4` regression: the (not really recommended)
+  option `unimathaccents` was broken.  Again a test file existed
+  but it had been left apart from those automatically built, for
+  some unknown reason...
+
+1.4d \[2024/10/26\]
+----
+
+* Fix one more `1.4` regression (the worst one by far): `$f''$`
+  caused a crash.  Fortunately, the `everymath` option which
+  re-enacts legacy code could be used as a *temporary emergency
+  work-around*.  Thanks to Enrico Gregorio for report.
+
+* The `1.4b` option `noletters` did not prevent the package from
+  defining math mode symbols `\inodot` and `\jnodot`.  It now does.
+
+* Fix a longstanding legacy bug which would have caused a crash if
+  `\MTnonlettersobeymathxx` had been used with `XeLaTeX` in a
+  document with the character `-` being a Babel shorthand.
+
+* Usage of `\Mathastext` or `\MTDeclareVersion` to declare a
+  math version associated with an exotic non-text font encoding
+  such as `OML` is theoretically possible (although of dubious
+  practical use except for stress tests) but was broken
+  since `1.3u` due to internals 
+  relying on `LaTeX` commands associated with text font encodings
+  (for example to define `\inodot`
+  using `\i`,
+  or the `\hbar` with the help of the accent command `\=`)
+  and which are not available in such context.  This release
+  handles such situation gracefully via warnings, rather than
+  causing low level errors.
+
+* Improve looks in the PDF of this Change log.
+
 1.4c \[2024/10/21\]
 ----
 
-* Fix a regression at `1.4`: under `XeLaTeX`: loading `mathastext`
+* Fix a regression at `1.4`: under `XeLaTeX`, loading `mathastext`
   caused an error if `unicode-math` and its `\setmathfont` had been
-  used prior ("Extended mathchar used as mathchar" in relation to the
+  used prior ("*Extended mathchar used as mathchar*" in relation to the
   minus sign character). Thanks to Michael Roland for report.
 
   Keep in mind though that the documentation (see 1.4.15 Unicode engines) has
-  always said that the package "is expected to be most definitely
-  incompatible with unicode-math".
+  always said that the package "*is expected to be most definitely
+  incompatible with unicode-math*".
 
 * Fix another regression at `1.4`, related to the same code and also avoided
   with `everymath` option, but showing with
@@ -225,8 +270,8 @@ MATHASTEXT CHANGE LOG
 
 * Fix a regression at `1.4` regarding option `nodigits`.
 
-* New option: `noletters`.  I am in old age now so I can provide an option
-  completely antithetical to my life work.
+* New option: `noletters`.  *I am in old age now so I can provide an option
+  completely antithetical to my life work*.
 
 * Option `everymath` which is destined to be removed at next major
   release warns user about it.  As major releases tend to happen once
@@ -244,20 +289,20 @@ MATHASTEXT CHANGE LOG
 1.4 \[2024/07/20\]
 ---
 
-* Since 1.2 of 2012/12/20, mathastext has used mathematically active
+* Since 1.2 of 2012/12/20, mathastext has used *mathematically active*
   characters to propose certain advanced functionalities.  For reasons half
   lost in the mists of time but whose main one was surely to keep the
   meaning of the active shape of characters unchanged outside of math mode,
   this mathematical activation, and (in most cases) the definitions of what
   active characters do, were done again at *each* entrance into math mode.
-  At this 1.4 release, mathastext does not inject *any* code whatsoever into
-  the `\everymath` and `\everydisplay` toks registers anymore (except for
-  one font-related hack needed under LuaLaTeX, see below).  Your documents
+  At this 1.4 release, mathastext does *not inject any code whatsoever* into
+  the `\everymath` and `\everydisplay` toks registers anymore (*except* for
+  one font-related hack needed under `LuaLaTeX`, see below).  Your documents
   will compile a tiny bit faster.
 
-* In (unsual) documents where users play with catcodes and mathcodes it is
-  impossible to keep exact backward compatibility, because documented user
-  commands which acted formerly a toggles with delayed action now will enact
+* In (*unsual*) documents where users play with catcodes and mathcodes it is
+  *impossible* to keep exact backward compatibility, because documented user
+  commands which acted formerly as toggles with delayed action now will enact
   changes immediately if in the document body.  In practice consequences are
   expected to be few, because catcode active characters are (as was already
   the case with earlier releases) hacked only when they are Babel shorthands
@@ -271,9 +316,9 @@ MATHASTEXT CHANGE LOG
 * New option: `everymath`. It instructs mathastext to revert (partially)
   to its legacy code which uses `\everymath/\everydisplay`.  This reversal
   is partial, the handling of ascii letters not being included into it.  The
-  `everymath` option is there only to try as a quick fix in case transition
+  `everymath` option is there *only to try as a quick fix* in case transition
   to this release causes a major problem in a user document and time is
-  lacking to investigate.  Please report to the author such issues.  Option
+  lacking to investigate.  *Please report to the author such issues*.  Option
   `everymath` is destined to be removed at next major release.
 
 * New option: `activedigits`.  Enjoy.
@@ -285,19 +330,19 @@ MATHASTEXT CHANGE LOG
 * Bugfix: do not override special behavior of the math mode dot in
   babel-spanish.
 
-* Bugfix: A desperate hack related to LuaLaTeX font matters and dating
+* Bugfix: A *desperate* hack related to `LuaLaTeX` font matters and dating
   back to 1.3o 2016/05/03 had been for some years in dire need of an update
   regarding fonts using `Renderer=HarfBuzz`.  This is done now.  Thanks to
   tex.sx `user691586` for report.  This is currently the sole remaining
   usage of `\everymath/\everydisplay`.
 
 * Bugfix: `\MTexplicitbracesobeymathxx` (which is related to `\{` and `\}`)
-  was without effect since an upstream LaTeX change at its 2020-02-02 release.
+  was without effect since an upstream `LaTeX` change at its 2020-02-02 release.
 
 * With option symbolmisc, those math symbol macros formerly defined via
   `\DeclareRobustCommand` are now declared via `\protected\def`.
 
-* Removal of legacy branches previously kept to support LaTeX earlier than
+* Removal of legacy branches previously kept to support `LaTeX` earlier than
   2020-02-02.
 
 * Removal of support for EU1 and EU2 font encodings.
@@ -329,7 +374,7 @@ MATHASTEXT CHANGE LOG
 
 * No more messages sent to the console output during loading,
   only info messages going into the log, and using (more or less)
-  the official LaTeX interface: after close to 13 years of development
+  the official `LaTeX` interface: after close to 13 years of development
   of this package it was perhaps finally the time to do it.
 
 * Documentation improvements.  Close to 13 years after the
@@ -406,7 +451,7 @@ been pushed to CTAN, hence the version increase to 1.3y)
 
   - add `\MTgreekupdefault` and `\MTgreekitdefault`.  The former
     replaces `\updefault` which was used in some places and since
-    LaTeX 2020-02-02 caused systematic Font Warnings about the
+    `LaTeX` `2020-02-02` caused systematic Font Warnings about the
     substitution of `up` by `n`.
 
   These new features required an extensive internal refactoring
@@ -428,16 +473,16 @@ been pushed to CTAN, hence the version increase to 1.3y)
 1.3w \[2019/11/16\]
 ----
 
-* LaTeX 2019-10-01 release (up to patch level 3 inclusive)
+* `LaTeX` `2019-10-01` release (up to patch level 3 inclusive)
   together with `amsmath` conspired `:-)` to break `mathastext`,
   in connexion with math accents. This has been fixed upstream,
   but I am releasing nevertheless a hot fix to this
   https://github.com/latex3/latex2e/issues/216 issue
-  (this is compatible with future LaTeX releases).
+  (this is compatible with future `LaTeX` releases).
 
 * Fix: the `\hbar` is originally a robust command but
   becomes a `\mathchardef` token if (e.g.) `amsfonts` is
-  loaded and then with recent LaTeX `\hbar<space>` is
+  loaded and then with recent `LaTeX` `\hbar<space>` is
   made undefined and `mathastext` definition of it
   remained without effect. The `\mathastext` own `\hbar`
   is now defined `\protected`.
@@ -455,15 +500,15 @@ been pushed to CTAN, hence the version increase to 1.3y)
 1.3v \[2019/09/19\]
 ----
 
-* LaTeX 2019-10-01 release has made more math macros robust.
+* `LaTeX` 2019-10-01 release has made more math macros robust.
   This applies in particular to the math accents and to the
   `\hbar`. This required for mathastext to adapt. Also
   `\leftarrowfill` and `\rightarrowfill` are now defined
   robust by the kernel, hence mathastext does the same. These
-  changes are dropped if mathastext detects an older LaTeX
+  changes are dropped if mathastext detects an older `LaTeX`
   format.
 
-* These LaTeX kernel changes motivated an examination of some
+* These `LaTeX` kernel changes motivated an examination of some
   redefinitions done (optionally) by mathastext:
 
   - The user math alphabet macros got redefined as expanding
@@ -474,7 +519,7 @@ been pushed to CTAN, hence the version increase to 1.3y)
   alphabet commands (they redefine themselves and other macros
   on first use) makes is somewhat problematic for mathastext
   to keep them updated across math versions and at the same
-  time strictly LaTeX2e robust. Thus mathastext now requires
+  time strictly `LaTeX2e` robust. Thus mathastext now requires
   the e-TeX primitive `\protected` and uses it for the
   definitions of the user level math alphabet macros.
 
@@ -488,18 +533,18 @@ been pushed to CTAN, hence the version increase to 1.3y)
   `\mid`, `\prod`, `\sum`, `\imath`, `\jmath`.
 
   - The macro `\vert` (which expands to a `\delimiter`) is now
-  defined robust by LaTeX. Its mathastext redefinition is a
+  defined robust by `LaTeX`. Its mathastext redefinition is a
   `\protected` one rather.
 
   - The `\{` and `\}` (which get redefined only under
   `\MTexplicitbracesobeymathxx` regime) are now strictly
-  robust in the LaTeX2e sense (formerly they were `\let` to
+  robust in the `LaTeX2e` sense (formerly they were `\let` to
   some robust macros, and this did not make them strictly
-  LaTeX2e-robust entities).
+  `LaTeX2e`-robust entities).
 
 * The various changes in mathastext described in the previous item
-  apply independently of the LaTeX release version. The
-  LaTeX format itself requires the e-TeX extensions since 2015.
+  apply independently of the `LaTeX` release version. The
+  `LaTeX` format itself requires the e-TeX extensions since 2015.
 
 
 1.3u \[2019/08/20\]
@@ -515,7 +560,7 @@ been pushed to CTAN, hence the version increase to 1.3y)
   using fonts with varying encodings.
 
   This reinforces importance of using `\MTversion` and not the
-  LaTeX `\mathversion` when switching to a new math version (which
+  `LaTeX` `\mathversion` when switching to a new math version (which
   got declared via the package interface). The implementation is
   compatible with Unicode engines and mixed usage of `TU` encoding
   (OpenType fonts) with traditional 8bits TeX font encodings. For
@@ -527,8 +572,8 @@ been pushed to CTAN, hence the version increase to 1.3y)
 * new option `unimathaccents`: this adds to option `mathaccents`
   the demand to use the text font accents for OpenType fonts in math
   mode via the `\Umathaccent` primitive. Indeed, as my testing
-  showed that this gave non-satisfactory results both with XeTeX
-  and LuaTeX regarding the horizontal placement of the accents,
+  showed that this gave non-satisfactory results both with `XeTeX`
+  and `LuaTeX` regarding the horizontal placement of the accents,
   the main option `mathaccents` acts only on 8bits encoded fonts.
   
 * bugfix: the `\Mathastext` without optional argument forgot to
@@ -646,7 +691,7 @@ been pushed to CTAN, hence the version increase to 1.3y)
 * typos fixed in the documentation. In particular, the README link to
   the package homepage had remained broken from day one of the package
   releases: `mathastext.html` therein was misspelled as
-  `mathsastext.html` ! (but the pdf documentation had the correct link;
+  `mathsastext.html`! (but the pdf documentation had the correct link;
   as well as the CTAN catalogue).
  
  
@@ -709,9 +754,9 @@ been pushed to CTAN, hence the version increase to 1.3y)
 1.3g \[2015/10/15\]
 ----
 
-* following `2015/10/01` LaTeX release, removal of the `"luatex"` 
-  prefix from the names of the LuaLaTeX math primitives. Compatibility
-  maintained with older LaTeX formats.
+* following `2015/10/01` `LaTeX` release, removal of the `"luatex"` 
+  prefix from the names of the `LuaLaTeX` math primitives. Compatibility
+  maintained with older `LaTeX` formats.
   
 
 1.3f \[2015/09/12\]
@@ -801,8 +846,8 @@ been pushed to CTAN, hence the version increase to 1.3y)
   `\MTnoicinmath` correspondingly modified).
 
 * the new `\luatexUmathcodenum` as available since TL2013 allows
-  identical treatment by mathastext of = and - under both LuaTeX
-  and XeTeX.
+  identical treatment by mathastext of = and - under both `LuaTeX`
+  and `XeTeX`.
 
 * `\newmcodes@` of amsmath is left untouched in case of option basic.
 
@@ -1046,7 +1091,7 @@ use of mathematically active characters in versions 1.2 and 1.2b.
 
 *  the `\Mathastext` command has been improved to
       facilitate the mechanism of math versions also when
-      using XeTeX or LuaTeX (with package fontspec.)
+      using `XeTeX` or `LuaTeX` (with package fontspec.)
 
 *  the en-dash and dotless i and j now work with all
       encodings, Unicode inclusive.
@@ -4515,10 +4560,13 @@ size in subscripts and exponents.
     information on what happens with §subdued§ option 
     in the ``normal'' (or ``bold'') math version.\par
   \end{footnotesize}
-\item \mstcmd{inodot}, \mstcmd{jnodot}: the corresponding glyphs in the \mst-ified
-  font for use in math mode. By default, |\imath| and |\jmath| are redefined to use
-  them. Since \texttt{1.3t}, these macros obey the \texttt{subdued}
-  regime.
+\item \mstcmd{inodot}, \mstcmd{jnodot}: the corresponding glyphs
+  in the \mst-ified font for use in math mode. By default,
+  |\imath| and |\jmath| are redefined to use them.  The
+  §defaultimath§ option prevents that, but |\inodot| and
+  |\jnodot| are always defined (although they may not render correctly if
+  the used text font is missing the glyphs).  Since \texttt{1.3t},
+  these macros obey the \texttt{subdued} regime.
 \item \mstcmd{MathEuler}, \mstcmd{MathEulerBold}: math alphabets to access
 all the glyphs of the Euler font, if option |eulergreek| (or
 |eulerdigits| was passed to the package.
@@ -5625,7 +5673,7 @@ changing commands.
  \item \mstopt{unimathaccents}:\RightNote{\mstrelease{1.3u}} extends |mathaccents| to
 OpenType fonts. Gave bad results in my brief testing.
  \item \mstopt{defaultimath}: do not overwrite \cs{imath} and
- \cs{jmath} to use \cs{inodot} and \cs{jnodot}.
+ \cs{jmath} to use §\inodot§ and §\jnodot§.
  \item \mstopt{defaultmathsizes}: do not change the \LaTeX{} defaults for the sizes
  of exponents and subscripts.
  \item \mstopt{fouriervec}: provides a \cs{fouriervec} command. The user can then
@@ -5707,9 +5755,19 @@ Numerous examples will be found there:\\
 % Il faut aussi gérer les `.
 
 \catcode`*=\active
+
+% 1.4d utilise \texttt pour les `foo...bar` et s'il y a un * là-dedans il ne
+% faut pas le baisser car il est déjà à hauteur. Et par ailleurs il n'y a pas
+% de raison pour un * en dehors de ce contexte sauf pour faire les
+% mock-itemize.  Cependant je n'ai pas tout vérifié.  Oups, si il
+% y en a quelques un utilisés dans le style *foo*.
 \def*{\ifvmode\smallskip
   \leavevmode\kern.5em\smash{\raisebox{-.3\height}{\char42}}\kern1em
-  \else\smash{\raisebox{-.3\height}{\char42}}\fi }%
+  \else\ifdim\fontcharwd\font`i=\fontcharwd\font`m \char42\relax
+       \else\mstdochackstar\fi
+  \fi }%
+
+\def\mstdochackstar#1#2#3*{#1#2\emph{#3}}
 
 \begingroup
     \lccode`\~`1
@@ -5743,10 +5801,23 @@ Numerous examples will be found there:\\
   \lccode`\-`M % MATHASTEXT CHANGE LOG est la première ligne...
   \lowercase{\endgroup\long\def-}##1\par{\catcode`\M=12 \catcode`\-=12 }%
   \catcode`1=\active
-  \catcode`\` 9 % légèrement ennuyeux mais bon, c'est le plus simple.
+  \catcode`\`\active
+  \begingroup
+  \lccode`\~`\`
+  \lowercase{\endgroup\def~##1~}{\mstdochacklogo##1TeX-\empty\relax}%
+  \catcode`'=\active
+  \begingroup
+  \lccode`\~`'
+  \lowercase{\endgroup\let~}\textquotesingle
   \nonfrenchspacing
   \input ChangeLog.md
 }
+\def\mstdochacklogo#1TeX#2#3#4\relax{\ifx#2-\texttt{\hyphenchar\font45\relax#1}%
+                                     \else\ifx#22\ifx#3e\msthologo{#1TeX2e}\else
+                                                        \@nameuse{#1TeX}\fi
+                                     \else
+                                     \@nameuse{#1TeX}\fi
+                                     \fi}
 
 \makeatother
 
@@ -5828,7 +5899,7 @@ Numerous examples will be found there:\\
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}[2020/02/02]
 \ProvidesPackage {mathastext}
-  [2024/10/21 v1.4c Use the text font in math mode (JFB)]
+  [2024/10/26 v1.4e Use the text font in math mode (JFB)]
 %    \end{macrocode}
 % \mstrelease{1.3zb} avoids writing \mst info messages also to console output, only log file.
 % Make prefix occupy 20 not 25 characters for alignment with \texttt{LaTeX Font Info},
@@ -5885,13 +5956,12 @@ Numerous examples will be found there:\\
 \newif\ifmst@XeOrLua
 \ifmst@LuaTeX\mst@XeOrLuatrue\fi
 \ifmst@XeTeX \mst@XeOrLuatrue\fi
-%    \begin{macrocode}
 %    \end{macrocode}
 % \mstrelease{1.4}.  I only checked this is correct with TL2024.
 % The macro will be used with |#1| a catcode 11 or 12 token or a one character
 % control sequence such as |\#|.
 %
-% \mstrelease{1.4c} add some definitions to avoid separate branches for
+% \mstrelease{1.4c} adds some definitions to avoid separate branches for
 % non-Unicode vs Unicode.
 %    \begin{macrocode}
 \ifmst@XeTeX
@@ -6349,6 +6419,10 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 % The \cs{MTprimedoesskip} is not a |no-op| in |subdued| math version.
 % This is legacy situation, not changed at \mstrelease{1.4}.
 %
+% \mstrelease{1.4d} fixes a (very) bad bug introduced at \mstrelease{1.4}
+% which caused |$f''$| to error.  The fix is to be found in the definition of
+% \cs{mst@@mathactivate} (done later in the package) used for the
+% non-\texttt{everymath} branch.
 %    \begin{macrocode}
 \newmuskip\mst@prime@muskip
 \def\mst@prime@skip{.5mu}
@@ -6387,7 +6461,7 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 }%
 %    \end{macrocode}
 % The ``undo'' is needed at \mstrelease{1.4} (but not if |everymath|).
-% The \mstrelease{1.4c} uses with Unicode \cs{Umathcodenum} in
+% The \mstrelease{1.4c} (with Unicode engines) uses \cs{Umathcodenum} in
 % \cs{mst@mathdeactivate} and not \cs{mathcode} hence no |"8000| here.
 %    \begin{macrocode}
 \def\mst@undo@mathactivateprime{\mst@mathdeactivate#1{\mst@activemathcodenum@space}}%
@@ -6660,18 +6734,25 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 %    \mstrelease{1.4} has significantly refactored the coding, there were
 %    simplication from a changed way to use \cs{mst@mathactivate} for letters
 %    and added branches to accomodate the renouncement to \cs{everymath}.
-% \begin{macro}{\mst@do@activecase}
-% Called by \cs{mst@mathactivate} if |#1| is catcode active.
 %
-% Check if token activation originates apparently into \ctanpkg{babel}:
-% \begin{itemize}[nosep]
-% \item if NO, nothing is done. The active meaning of |#1| is not modified.
-% \item if YES, we hook into \ctanpkg{babel} associated macros so
-%   that in math mode the catcode active token does what \mst expects it to
-%   do. Its \cs{mathcode} is set to the
-%   one of the associated \cs{mathalpha} symbol as declared by \mst, except
-%   for asterisk and right tick which simply use their ascii number as mathcode.
-% \end{itemize}
+%    Some auxiliaries. The last two (which use the first two) are injected
+%    inside the redefinitions of active Babel shorthands done by
+%    \cs{mst@do@activecase}.
+%    \begin{macrocode}
+\def\mst@magic@v #1#2#3#4#5{#1#3#4}
+\def\mst@magic@vi #1#2#3#4#5#6{#1#2#4#5}
+\def\mst@fork{\ifmmode\mst@magic@v\fi\@thirdofthree}
+\def\mst@safefork{\ifmmode\if@safe@actives\else\mst@magic@vi\fi\fi\@thirdofthree}
+%    \end{macrocode}
+% \begin{macro}{\mst@do@activecase}
+% Called by \cs{mst@mathactivate} if |#1| is catcode active. At
+% \mstrelease{1.4} it is also required that the token activation originated
+% from\ctanpkg{babel}.  Else this \cs{mst@do@activecase} is not executed.  If
+% executed, it hooks into \ctanpkg{babel} associated macros so that in math
+% mode the catcode active token does what \mst expects it to do. Its
+% \cs{mathcode} is set to the one of the associated \cs{mathalpha} symbol as
+% declared by \mst, except for asterisk and right tick which simply use their
+% ascii number as mathcode.
 %
 % In the case of \ctanpkg{babel}-spanish which has a catcode active right
 % tick, resetting its mathcode has the advantage to reveal in output the case
@@ -6680,18 +6761,10 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 %
 % And in general it is dangerous to have a character both catcode active and
 % mathcode active. 
-%
-% Some auxiliaries.
-%    \begin{macrocode}
-\def\mst@magic@v #1#2#3#4#5{#1#3#4}
-\def\mst@magic@vi #1#2#3#4#5#6{#1#2#4#5}
-\def\mst@fork{\ifmmode\mst@magic@v\fi\@thirdofthree}
-\def\mst@safefork{\ifmmode\if@safe@actives\else\mst@magic@vi\fi\fi\@thirdofthree}
-%    \end{macrocode}
 % Some refactoring (and streamlining) at \mstrelease{1.4} here.
 % \begin{footnotesize}
 %   There was at some point in the case of a Babel-active token a special
-%   hanlding for |#1| to use \cs{MTmathcharletter}|#1| (and event for
+%   hanlding for |#1| to use \cs{MTmathcharletter}|#1| (and also for
 %   digits!).  But this is almost impossible to arise in practice:
 % \begin{itemize}[nosep]
 % \item Babel commands to set up a shorthand are preamble only (they use
@@ -6729,7 +6802,8 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 %    \end{macrocode}
 % As letters and digits are impossible here, |#2| is either empty (which
 % happens only now for asterisk and right tick) or a single token (\cs{mathclose},
-% \cs{mathopen},... ).  When |#2| is not empty, |#3| is always a mathchar
+% \cs{mathopen},... ).  When |#2| is not empty, |#3| is always (not quite see
+% below) a mathchar
 % token.  For safety we make sure then the mathcode is not active.
 %
 % The rationale is
@@ -6741,11 +6815,26 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 % Arguably I probably mainly wanted to do this if the character was found
 % catcode active but not a Babel shorthand.  But it ended into the Babel
 % branch and the non-Babel branch for active catcode is to do nothing.
+% As it is now to time-intensive to re-check the whole logic I am keeping
+% this.
 %
-% |#2| is empty exactly for the case of the right tick and the asterisk.
-% In all other cases, then |#3| is a mathchar token.
+% |#2| is empty exactly for the case of the right tick and the asterisk.  In
+% all other cases, then |#3| is a mathchar token, except in the exceptional
+% case of |#1| being |-| (necessarily of catcode 12 here), |#3| with Unicode
+% engines is \cs{mst@varfam@minus} which is a macro expanding to a
+% math-version dependent \cs{Umathchardef} token.  Then the \cs{mathcode}
+% assignment breaks under \XeLaTeX.  It appears unlikely for |-| to be a Babel
+% shorthand. But to be extra safe, and at same time avoid undue complications
+% of needed separate branches for non-Unicode and Unicode engines, we simply
+% drop the assignment in that case (done at \mstrelease{1.4c}).
+%
+% The matter with the |\string-| is inherited stupid paranoia from early times
+% regarding catcodes at package loading, as I do it elsewhere in the package
+% code, also here.
 %    \begin{macrocode}
-    \ifx\relax #2\relax\mathcode`#1=`#1\relax\else\mathcode`#1=#3\relax\fi
+    \expandafter\if\string-#1\else
+      \ifx\relax #2\relax\mathcode`#1=`#1\relax\else\mathcode`#1=#3\relax\fi
+    \fi
 %    \end{macrocode}
 % Less \cs{expandafter}'s at \mstrelease{1.4}.  Also, it is now required
 % to make sure:
@@ -6843,7 +6932,13 @@ defaultbf,defaultit,defaultsf,defaulttt}}
                      {\expandafter\let
                       \csname mst@prioractivemeaning@##1\endcsname ~}
                      {}%
-        \def~{\ifmmode##2##3\else##1\fi}%
+%    \end{macrocode}
+% The \mstrelease{1.4} added this \cs{ifmmode} test but overlooked
+% the case of the right tick \texttt{'} which requires to be moved to
+% after the conditional.  Let's do this in a safer way.
+%    \begin{macrocode}
+        \def~{\ifmmode\expandafter\@firstoftwo\else\expandafter\@secondoftwo\fi
+              {##2##3}{##1}}%
       }%
     }%
 \fi
@@ -6853,7 +6948,7 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 %   character which is encountered is currently with active catcode.
 %
 %   At \mstrelease{1.4}  the non-catcode active branch is entered only if the
-%   character isn't mathematically active at time of use..
+%   character isn't mathematically active at time of use.
 %
 %   Careful that |#2| and |#3| may each be empty.  The test for being a Babel
 %   shorthand is done here and not as prior to \mst@release{1.4} inside
@@ -6883,7 +6978,9 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 % of finishing the \mstrelease{1.4c} updates).  The \cs{string} thing with
 % \texttt{-} is due to some old paranoia for which I see no underlying reason
 % (why on earth would \texttt{-} be catcode active here?), but maintaining it.
-% For |#1=-| the |#2| is empty and unused.
+% For |#1=-| the |#2| is empty and unused as the mathcode reassignment is then
+% skipped (because \cs{mst@subduedminus} and \cs{mst@nonsubduedminus} take
+% care of such things in an engine dependent manner; see them).
 %    \begin{macrocode}
 \ifmst@everymath
 \else
@@ -7675,28 +7772,32 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 %   |@lgr@| in macro names in place of |@greek@|) which were not everywhere
 %   followed up, and this broke the |selfGreek| option.  Fixed at \mstrelease{1.3z}.
 %
+%   Prior to \mstrelease{1.4e}, the code of \cs{mst@update@greeksh}, which
+%   starts with a definition
+%   \cs{mst@greek@lsh} also updated it, depending on branches.  But,
+%   contrarily to \cs{mst@greek@ush} it is used nowhere else.  Also the code
+%   now has two parameters |#1#2| for it to be sharable with
+%   \cs{MTDeclareVersion@@} needs.
 %    \begin{macrocode}
 \providecommand*\MTgreekupdefault{n}
 \providecommand*\MTgreekitdefault{it}
 \newif\ifmst@greek@lower@up
 \newif\ifmst@greek@upper@up
-\def\mst@update@greeksh{
-    \def\mst@greek@lsh{\mst@ltsh}
-    \def\mst@greek@ush{\mst@opsh}
-      \mst@greek@lower@uptrue
-      \expandafter\in@\expanded{{\mst@ltsh.}}{it.,sl.}%
+\def\mst@update@greeksh#1#2{
+    \def\mst@greek@lsh{#1}
+    \def\mst@greek@ush{#2}
+    \mst@greek@lower@uptrue
+      \expandafter\in@\expanded{{\mst@greek@lsh.}}{it.,sl.}%
       \ifin@\mst@greek@lower@upfalse\fi
-      \mst@greek@upper@uptrue
-      \expandafter\in@\expanded{{\mst@opsh.}}{it.,sl.}%
+    \mst@greek@upper@uptrue
+      \expandafter\in@\expanded{{\mst@greek@ush.}}{it.,sl.}%
       \ifin@\mst@greek@upper@upfalse\fi
     \ifmst@itgreek
-      \def\mst@greek@lsh{\MTgreekitdefault}
       \def\mst@greek@ush{\MTgreekitdefault}
         \mst@greek@lower@upfalse
         \mst@greek@upper@upfalse
     \fi
     \ifmst@upgreek
-      \def\mst@greek@lsh{\MTgreekupdefault}
       \def\mst@greek@ush{\MTgreekupdefault}
         \mst@greek@lower@uptrue
         \mst@greek@upper@uptrue
@@ -7704,8 +7805,7 @@ defaultbf,defaultit,defaultsf,defaulttt}}
     \ifmst@frenchmath
       \ifmst@itgreek\else
       \ifmst@upgreek\else
-        \def\mst@greek@lsh{\mst@opsh}
-        \def\mst@greek@ush{\mst@opsh}
+        \def\mst@greek@ush{#2}
           \mst@greek@lower@uptrue
           \mst@greek@upper@uptrue
       \fi\fi
@@ -7719,7 +7819,7 @@ defaultbf,defaultit,defaultsf,defaulttt}}
             \mst@greek@upper@uptrue
     \fi
 }
-\mst@update@greeksh
+\mst@update@greeksh{\mst@ltsh}{\mst@opsh}
 %    \end{macrocode}
 % \begin{macro}{mtgreekup}
 % \begin{macro}{mtgreekit}
@@ -8772,31 +8872,58 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 %
 % The \cs{mst@subduedminus} is defined only at begin document and fetches
 % there what will be the subdued mathcode of \texttt{-}.
+%
+% \mstrelease{1.4d} avoids here low-level \TeX\ error when
+% attempting to use the en-dash slot in a \TeX-legacy non-text
+% encoding such as \texttt{OML} (\LaTeX\ has defines no
+% \cs{textendash} in such encodings).  The error was present since
+% changes at \mstrelease{1.3u} which used code adapting to the required
+% font encoding rather than test for it being  \texttt{T1} or \texttt{LY1} etc...
 %    \begin{macrocode}
 \let\mst@subduedminus\empty
 \let\mst@nonsubduedminus\empty
-\def\mst@dothe@endashstuff#1#2#3{%
+\def\mst@dothe@endashstuff#1#2#3#4{%
   \edef\mst@tmp@enc{#3}%
   \if1\mst@OneifUniEnc
     \mst@Umathchardef#1=2 \symmtoperatorfont "\mst@unicodeminus\relax
     \mst@Umathchardef#2=7 \symmtoperatorfont "\mst@unicodeminus\relax
   \else
-    \DeclareMathSymbol{#1}{\mathbin}{mtoperatorfont}
-                      {\csname\mst@tmp@enc\string\textendash\endcsname}
-    \DeclareMathSymbol{#2}{\mathalpha}{mtoperatorfont}
-                      {\csname\mst@tmp@enc\string\textendash\endcsname}
+    \@ifundefined{\mst@tmp@enc\string\textendash}%
+        {%
+          \PackageWarningNoLine{mathastext}
+          {Impossible to let the \string- use an EN-DASH in a math\MessageBreak
+           version with \mst@tmp@enc\space encoding, as there is none there.\MessageBreak
+           Reverting to default in math version #4}%
+          \let#1\relax\let#2\relax
+        }%
+        {%
+          \DeclareMathSymbol{#1}{\mathbin}{mtoperatorfont}
+                            {\csname\mst@tmp@enc\string\textendash\endcsname}%
+          \DeclareMathSymbol{#2}{\mathalpha}{mtoperatorfont}
+                            {\csname\mst@tmp@enc\string\textendash\endcsname}%
+        }%
   \fi
 }%
-\def\mst@dothe@emdashstuff#1#2#3{%
+\def\mst@dothe@emdashstuff#1#2#3#4{%
   \edef\mst@tmp@enc{#3}%
   \if1\mst@OneifUniEnc
     \mst@Umathchardef#1=2 \symmtoperatorfont "2014\relax
     \mst@Umathchardef#2=7 \symmtoperatorfont "2014\relax
   \else
-    \DeclareMathSymbol{#1}{\mathbin}{mtoperatorfont}
-                      {\csname\mst@tmp@enc\string\textemdash\endcsname}
-    \DeclareMathSymbol{#2}{\mathalpha}{mtoperatorfont}
-                      {\csname\mst@tmp@enc\string\textemdash\endcsname}
+    \@ifundefined{\mst@tmp@enc\string\textendash}%
+        {%
+          \PackageWarningNoLine{mathastext}
+          {Impossible to let the \string- use an EM-DASH in a math\MessageBreak
+           version with \mst@tmp@enc\space encoding, as there is none there.\MessageBreak
+           Reverting to default in math version #4}%
+          \let#1\relax\let#2\relax
+        }%
+        {%
+          \DeclareMathSymbol{#1}{\mathbin}{mtoperatorfont}
+                            {\csname\mst@tmp@enc\string\textemdash\endcsname}%
+          \DeclareMathSymbol{#2}{\mathalpha}{mtoperatorfont}
+                            {\csname\mst@tmp@enc\string\textemdash\endcsname}%
+        }%
   \fi
 }%
 \def\mst@dothe@hyphenstuff#1#2{%
@@ -8832,10 +8959,16 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 % I have absolutely no idea why I was paranoid about \texttt{-} catcode (as for
 % other characters) but I feel even at \mstrelease{1.4c} I have to maintain
 % the tradition.
+%
+% \mstrelease{1.4d} takes extra precautions relative to \mst math versions
+% associated with a font encoding not having an EN-DASH slot.
 %    \begin{macrocode}
     \def\mst@tmp#1{%
       \mst@do@nonletters\expandafter{\the\mst@do@nonletters
-        \mst@mathactivate#1\mathbin\mst@varfam@minus}%
+        \@ifundefined{mst@minus@mv\math@version}
+            {\mst@nonmathmathactiveminus}
+            {\mst@mathactivate#1\mathbin\mst@varfam@minus}%
+        }%
 %    \end{macrocode}
 % At \mstrelease{1.4c}, \cs{mst@mathdeactivate} adds a check to whether
 % its first argument is \texttt{-} and then does not do itself the
@@ -8884,7 +9017,9 @@ defaultbf,defaultit,defaultsf,defaulttt}}
                        \csname mst@minus@mv\math@version\endcsname
                        \relax
     \else
-     \mathcode`\-=\mst@minus
+     \@ifundefined{mst@minus@mv\mst@tmp@enc}
+        {\mst@subduedminus}
+        {\mathcode`\-=\mst@minus}%
     \fi
   }%
   \def\mst@ParseUmathchardef{\expandafter\mst@ParseUmathchardef@i\meaning}%
@@ -8940,26 +9075,43 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 \ifmst@nohbar\else
   \def\mst@subduedhbar{\let\hbar\mst@original@hbar}%
   \def\mst@nonsubduedhbar{\expandafter
-       \let\expandafter\hbar\csname mst@hbar@mv\math@version\endcsname}%
+       \let\expandafter\hbar\csname mst@hbar@mv\math@version\endcsname
+       \ifx\hbar\relax\let\hbar\mst@original@hbar\fi}%
 \fi
 \def\mst@mathrlap{\mathpalette\mst@mathrlapinternal}
 \def\mst@mathrlapinternal#1#2{\rlap{$\mathsurround=0pt#1{#2}$}}
 %    \end{macrocode}
 % ATTENTION! The definition of \cs{mst@tmp@enc} is mandatory for
 % \cs{mst@OneifUniEnc} to work correctly...
+%
+% The \mstrelease{1.3u} method which was backported from the one for math
+% accents causes a build crash when attempting to create a \mst math
+% version with \texttt{OML} encoding, as there is no |\OML\=| control
+% sequence. Fixed at \mstrelease{1.4d}, see also tne definition of
+% \cs{mst@nonsubduedhbar}.
 %    \begin{macrocode}
-\def\mst@dothe@hbarstuff#1#2#3{%
+\def\mst@dothe@hbarstuff#1#2#3#4{%
   \edef\mst@tmp@enc{#3}%
   \if1\mst@OneifUniEnc
     \mst@Umathchardef#1="7 \symmtletterfont "0127 \relax %% or 210F?
   \else
-    \begingroup
-    \def\@text@composite##1\@text@composite##2{##2}%
-    \let\add@accent\@firstoftwo
-    \mst@DeclareMathAccent{#2}{\mathalpha}{mtletterfont}%
-                      {\csname\mst@tmp@enc\string\=\endcsname{}}%
-    \endgroup
-    \protected\def#1{\mst@mathrlap{#2{\ }}\MTmathcharletterh}%
+    \@ifundefined{\mst@tmp@enc\string\=}%
+        {%
+          \PackageWarningNoLine{mathastext}
+          {Impossible to define the \string\hbar\space using a font with\MessageBreak
+           \mst@tmp@enc\space encoding, as there is no \string\= accent.\MessageBreak
+           Reverting to default \string\hbar\space in math version #4}%
+          \let#1\relax
+        }%
+        {%
+         \begingroup
+         \def\@text@composite##1\@text@composite##2{##2}%
+         \let\add@accent\@firstoftwo
+         \mst@DeclareMathAccent{#2}{\mathalpha}{mtletterfont}%
+                   {\csname\mst@tmp@enc\string\=\endcsname{}}%
+         \endgroup
+         \protected\def#1{\mst@mathrlap{#2{\ }}\MTmathcharletterh}%
+        }%
   \fi
 }%
 %    \end{macrocode}
@@ -10254,7 +10406,18 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 % math version.
 %
 % \mstrelease{1.3v} lets the redefined \cs{imath} and \cs{jmath} be \cs{protected}.
+%
+% The \mstrelease{1.3u} change is the cause a crash when attempting to define
+% math version in some encodings such as \texttt{OML}.  This is same problem
+% as with \cs{hbar} and minus as endash.  Fixed at \mstrelease{1.4d}.
+%
+% \mstrelease{1.4d} lets the option \texttt{noletters} prevent definition of
+% \cs{inodot} and \cs{jnodot}.
 %    \begin{macrocode}
+\let\mst@subduedinodot\@empty
+\let\mst@nonsubduedinodot\@empty
+\ifmst@noletters
+\else
 \def\mst@subduedinodot{%
    \let\inodot\mst@original@imath
    \let\jnodot\mst@original@jmath
@@ -10264,18 +10427,42 @@ defaultbf,defaultit,defaultsf,defaulttt}}
                \csname mst@inodot@mv\math@version\endcsname
    \expandafter\let\expandafter\jnodot
                \csname mst@jnodot@mv\math@version\endcsname
+   \ifx\inodot\relax\let\inodot\mst@original@imath\fi
+   \ifx\jnodot\relax\let\jnodot\mst@original@jmath\fi
 }%
-\def\mst@dothe@inodotstuff#1#2#3{%
+\fi
+\def\mst@dothe@inodotstuff#1#2#3#4{%
   \edef\mst@tmp@enc{#3}%
   \if1\mst@OneifUniEnc
     \mst@Umathchardef#1="7 \symmtletterfont "0131 \relax
     \mst@Umathchardef#2="7 \symmtletterfont "0237 \relax
   \else 
-   \DeclareMathSymbol{#1}{\mathalpha}{mtletterfont}
-                     {\csname\mst@tmp@enc\string\i\endcsname}
-   \DeclareMathSymbol{#2}{\mathalpha}{mtletterfont}
-                     {\csname\mst@tmp@enc\string\j\endcsname}
-  \fi}%
+    \@ifundefined{\mst@tmp@enc\string\i}%
+        {%
+          \PackageWarningNoLine{mathastext}
+          {Impossible to define the \string\inodot\space using a font with\MessageBreak
+           \mst@tmp@enc\space encoding, as there is no \string\i.\MessageBreak
+           Reverting to default \string\imath\space in math version #4}%
+          \let#1\relax
+        }%
+        {%
+          \DeclareMathSymbol{#1}{\mathalpha}{mtletterfont}
+                            {\csname\mst@tmp@enc\string\i\endcsname}%
+        }%
+    \@ifundefined{\mst@tmp@enc\string\j}%
+        {%
+          \PackageWarningNoLine{mathastext}
+          {Impossible to define the \string\jnodot\space using a font with\MessageBreak
+           \mst@tmp@enc\space encoding, as there is no \string\j.\MessageBreak
+           Reverting to default \string\jmath\space in math version #4}%
+          \let#2\relax
+        }%
+        {%
+          \DeclareMathSymbol{#2}{\mathalpha}{mtletterfont}
+                            {\csname\mst@tmp@enc\string\j\endcsname}%
+        }%
+  \fi
+}%
 \ifmst@defaultimath\else\mst@infoline{\string\imath\space and \string\jmath\space}
     \AtEndOfPackage{\AtBeginDocument{%
         \protected\def\imath{\inodot}%
@@ -10306,6 +10493,18 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 %   definition file. If not, some breakage on package loading could occur, but
 %   this whole thing is conditional on the |mathaccents| option anyway, which
 %   per default is not executed.
+%
+%   Added note at \mstrelease{1.4d} |2024/10/26|: the above
+%   mentioned breakage definitely occurs with non-text encoding
+%   such as \texttt{OML}, if an attempt is made via
+%   \cs{Mathastext} or \cs{MTDeclareVersion} to set it up for use
+%   in a \mst math version.  This happens only with
+%   \texttt{mathaccents} option, and was shadowed by a
+%   similar breakage occurring without any option due to similar
+%   code added at \mstrelease{1.3u} for the \cs{hbar}, \cs{imath},
+%   \cs{jmath} and even the \texttt{-} which tries to use the
+%   EN-DASH slot in an 8bit \TeX\ font encoding. Fixed at \mstrelease{1.4}
+%   which emits warnings in such exotic contexts.
 %
 %   The |\vec| accent is not considered here because it has no suitable
 %   available glyph in a standard 8bits text font encodings.
@@ -10352,9 +10551,16 @@ defaultbf,defaultit,defaultsf,defaulttt}}
                    \csname mst@original@\@tempa\endcsname
    \expandafter\let\csname\@tempa\space\expandafter\endcsname
                    \csname mst@original@\@tempa\space\endcsname
-   }%
+  }%
 }%
+%    \end{macrocode}
+%   Modified at \mstrelease{1.4d} to catch math versions trying to use a
+%   non-text encoding such as \texttt{OML}.
+%    \begin{macrocode}
 \def\mst@nonsubduedmathaccents{%
+ \@ifundefined{mst@grave@mv\math@version}
+ {\mst@subduedmathaccents}
+ {%
   \@tfor\@tempa:={grave}{acute}{check}{breve}{bar}%
                  {dot}{ddot}{mathring}{hat}{tilde}%
   \do
@@ -10362,7 +10568,8 @@ defaultbf,defaultit,defaultsf,defaulttt}}
                    \csname mst@\@tempa @mv\math@version\endcsname
    \expandafter\let\csname\@tempa\space\expandafter\endcsname
                    \csname mst@\@tempa @mv\math@version\space\endcsname
-}%
+  }%
+ }%
 }%
 \def\mst@dothe@mathaccentsstuff#1#2{%
   \begingroup
@@ -10371,53 +10578,60 @@ defaultbf,defaultit,defaultsf,defaulttt}}
   \let\add@accent\@firstoftwo
   \let\add@unicode@accent\@firstoftwo
   \if1\mst@OneifUniEnc
+%    \end{macrocode}
+% Incredibly \mstrelease{1.4} removed the definition of a certain
+% \cs{mst@robustifyingspace} but kept on using it here.  The author
+% add probably searched for a related conditional, but not for the
+% macro itself... and there was a test file which would have shown
+% the regression but it was not compiled.
+%    \begin{macrocode}
     \ifmst@unimathaccents
-      \expandafter\xdef\csname mst@grave@mv#1\mst@robustifyingspace\endcsname
+      \expandafter\xdef\csname mst@grave@mv#1 \endcsname
        {\mst@Umathaccent
         7
         \number\symmtoperatorfont\space
         \csname#2\string\`\endcsname{}\relax}%
-      \expandafter\xdef\csname mst@acute@mv#1\mst@robustifyingspace\endcsname
+      \expandafter\xdef\csname mst@acute@mv#1 \endcsname
        {\mst@Umathaccent
         7
         \number\symmtoperatorfont\space
         \csname#2\string\'\endcsname{}\relax}%
-      \expandafter\xdef\csname mst@check@mv#1\mst@robustifyingspace\endcsname
+      \expandafter\xdef\csname mst@check@mv#1 \endcsname
        {\mst@Umathaccent
         7
         \number\symmtoperatorfont\space
         \csname#2\string\v\endcsname{}\relax}%
-      \expandafter\xdef\csname mst@breve@mv#1\mst@robustifyingspace\endcsname
+      \expandafter\xdef\csname mst@breve@mv#1 \endcsname
        {\mst@Umathaccent
         7
         \number\symmtoperatorfont\space
         \csname#2\string\u\endcsname{}\relax}%
-      \expandafter\xdef\csname mst@bar@mv#1\mst@robustifyingspace\endcsname
+      \expandafter\xdef\csname mst@bar@mv#1 \endcsname
        {\mst@Umathaccent
         7
         \number\symmtoperatorfont\space
         \csname#2\string\=\endcsname{}\relax}%
-      \expandafter\xdef\csname mst@dot@mv#1\mst@robustifyingspace\endcsname
+      \expandafter\xdef\csname mst@dot@mv#1 \endcsname
        {\mst@Umathaccent
         7
         \number\symmtoperatorfont\space
         \csname#2\string\.\endcsname{}\relax}%
-      \expandafter\xdef\csname mst@ddot@mv#1\mst@robustifyingspace\endcsname
+      \expandafter\xdef\csname mst@ddot@mv#1 \endcsname
        {\mst@Umathaccent
         7
         \number\symmtoperatorfont\space
         \csname#2\string\"\endcsname{}\relax}%
-      \expandafter\xdef\csname mst@mathring@mv#1\mst@robustifyingspace\endcsname
+      \expandafter\xdef\csname mst@mathring@mv#1 \endcsname
        {\mst@Umathaccent
         7
         \number\symmtoperatorfont\space
         \csname#2\string\r\endcsname{}\relax}%
-      \expandafter\xdef\csname mst@hat@mv#1\mst@robustifyingspace\endcsname
+      \expandafter\xdef\csname mst@hat@mv#1 \endcsname
        {\mst@Umathaccent
         7
         \number\symmtoperatorfont\space
         \csname#2\string\^\endcsname{}\relax}%
-      \expandafter\xdef\csname mst@tilde@mv#1\mst@robustifyingspace\endcsname
+      \expandafter\xdef\csname mst@tilde@mv#1 \endcsname
        {\mst@Umathaccent
         7
         \number\symmtoperatorfont\space
@@ -10480,7 +10694,19 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 % or later it creates robust macros.
 %
 % \cs{mst@DeclareMathAccent} to work around \url{https://github.com/latex3/latex2e/issues/216}
+%
+% \mstrelease{1.4d} adds steps to avoid a crash if user is trying
+% to set up a \mst math version with an encoding such as
+% \texttt{OML}.
 %    \begin{macrocode}
+   \@ifundefined{#2\string\`}
+      {\PackageWarningNoLine{mathastext}
+         {Impossible to pick up text accents from an #2\MessageBreak
+          encoded font.  The mathaccent option will be\MessageBreak
+          ignored for the math version #1}%
+       \let\mst@tempa0}
+      {\let\mst@tempa1}%
+   \if\mst@tempa1%
     \expandafter\mst@DeclareMathAccent\expandafter
                {\csname mst@grave@mv#1\endcsname}{\mathalpha}{mtoperatorfont}%
                {\csname#2\string\`\endcsname{}}
@@ -10511,6 +10737,13 @@ defaultbf,defaultit,defaultsf,defaulttt}}
     \expandafter\mst@DeclareMathAccent\expandafter
                {\csname mst@tilde@mv#1\endcsname}{\mathalpha}{mtoperatorfont}%
                {\csname#2\string\~\endcsname{}}
+   \else
+%    \end{macrocode}
+% The math version can be declared multiple times we can not simply
+% do some \cs{@nameuse} here.
+%    \begin{macrocode}
+    \global\expandafter\let\csname mst@grave@mv#1\endcsname\relax
+   \fi
   \fi
   \endgroup
 }%
@@ -10691,44 +10924,17 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 %   thus things are done here under |selfGreek| or other Greek options
 %   which ultimately serve nothing and conversely things are done here
 %   for |LGRgreek| which are superfluous.
+%
+%   At \mstrelease{1.4e}, the code previously used here was replaced with a
+%   call to a slightly modified \cs{mst@update@greeksh} to share code.
+%   Formerly some \cs{mst@greek@ush@loc} and \cs{mst@greek@lsh@loc} were
+%   defined here but this appears to have been due only to extra cautious
+%   coding to avoid overwriting something else.  On closer
+%   examination (after a great many years) this swas not needed at all.
 %    \begin{macrocode}
-  \def\mst@greek@lsh@loc{\csname mst@ltshape@\mst@version\endcsname}%
-  \def\mst@greek@ush@loc{\csname mst@shape@\mst@version\endcsname}%
-  \mst@greek@lower@uptrue
-      \expandafter\in@\expanded{{\mst@greek@lsh@loc.}}{it.,sl.}%
-      \ifin@\mst@greek@lower@upfalse\fi
-  \mst@greek@upper@uptrue
-      \expandafter\in@\expanded{{\mst@greek@ush@loc.}}{it.,sl.}%
-      \ifin@\mst@greek@upper@upfalse\fi
-  \ifmst@itgreek
-    \def\mst@greek@lsh@loc{\MTgreekitdefault}%
-    \def\mst@greek@ush@loc{\MTgreekitdefault}%
-      \mst@greek@lower@upfalse
-      \mst@greek@upper@upfalse
-  \fi
-  \ifmst@upgreek
-    \def\mst@greek@lsh@loc{\MTgreekupdefault}%
-    \def\mst@greek@ush@loc{\MTgreekupdefault}%
-      \mst@greek@lower@uptrue
-      \mst@greek@upper@uptrue
-  \fi
-  \ifmst@frenchmath
-      \ifmst@itgreek\else
-      \ifmst@upgreek\else
-        \def\mst@greek@lsh@loc{\csname mst@shape@\mst@version\endcsname}%
-        \def\mst@greek@ush@loc{\csname mst@shape@\mst@version\endcsname}%
-        \mst@greek@lower@uptrue
-        \mst@greek@upper@uptrue
-      \fi\fi
-  \fi
-  \ifcase\mst@greek@select
-        \or
-          \def\mst@greek@ush@loc{\MTgreekitdefault}%
-          \mst@greek@upper@upfalse
-        \or
-          \def\mst@greek@ush@loc{\MTgreekupdefault}%
-          \mst@greek@upper@uptrue
-  \fi
+  \mst@update@greeksh
+     {\csname mst@ltshape@\mst@version\endcsname}%
+     {\csname mst@shape@\mst@version\endcsname}%
 %    \end{macrocode}
 % \mstrelease{1.3za} refactoring to reduce code duplication; I briefly considered
 % trying to enhance \cs{MTgreekfont} to work also with |LGRgreeks| and
@@ -10763,31 +10969,46 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 \immediate\write\m@ne{}%
     \else
      \ifmst@selfGreek
-       \SetSymbolFont{mtselfGreekfont}{#2}{OT1}{\mst@greekfont}{#5}{\mst@greek@ush@loc}%
+       \SetSymbolFont{mtselfGreekfont}{#2}{OT1}{\mst@greekfont}{#5}{\mst@greek@ush}%
 \immediate\write\m@ne{}%
-\PackageInfo{mathastext}{Capital Greek letters (shape `\mst@greek@ush@loc\string'
+\PackageInfo{mathastext}{Capital Greek letters (shape `\mst@greek@ush\string'
                            will use the font\MessageBreak
                          family `\mst@greekfont\string' (OT1) in mathastext\MessageBreak
                          math version `\mst@version\string' declared}%
 \immediate\write\m@ne{}%
      \fi
     \fi
-  \edef\mst@tmp{\expandafter\noexpand\csname mst@hbar@mv#2\endcsname
-                \expandafter\noexpand\csname mst@ltbar@mv#2\endcsname}%
-  \expandafter\mst@dothe@hbarstuff\mst@tmp{#3}%
+%    \end{macrocode}
+% \mstrelease{1.4d} adds here a check for the \texttt{nohbar} option.
+% Presumably this was not done before because anyhow the package does
+% \centeredline{|\let\mst@subduedhbar\@empty\let\mst@nonsubduedhbar\@empty|}
+% But it is done in \cs{Mathastext@}. And besides,
+% for the \texttt{-} the code does check the \texttt{endash} et al.\@ options.
+%    \begin{macrocode}
+  \ifmst@nohbar\else
+    \edef\mst@tmp{\expandafter\noexpand\csname mst@hbar@mv#2\endcsname
+                  \expandafter\noexpand\csname mst@ltbar@mv#2\endcsname}%
+    \expandafter\mst@dothe@hbarstuff\mst@tmp{#3}{#3}%
+  \fi
   \edef\mst@tmp{\expandafter\noexpand\csname mst@inodot@mv#2\endcsname
                 \expandafter\noexpand\csname mst@jnodot@mv#2\endcsname}%
-  \expandafter\mst@dothe@inodotstuff\mst@tmp{#3}%
+%    \end{macrocode}
+% \mstrelease{1.4d} lets the option \texttt{noletters} prevent definition of
+% \cs{inodot} and \cs{jnodot}.
+%    \begin{macrocode}
+  \ifmst@noletters\else
+    \expandafter\mst@dothe@inodotstuff\mst@tmp{#3}{#2}%
+  \fi
   \ifmst@mathaccents
     \mst@dothe@mathaccentsstuff{#2}{#3}%
   \fi
   \edef\mst@tmp{\expandafter\noexpand\csname mst@minus@mv#2\endcsname
                 \expandafter\noexpand\csname mst@varfam@minus@mv#2\endcsname}%
   \ifmst@endash
-    \expandafter\mst@dothe@endashstuff\mst@tmp{#3}%
+    \expandafter\mst@dothe@endashstuff\mst@tmp{#3}{#2}%
   \else
     \ifmst@emdash
-      \expandafter\mst@dothe@emdashstuff\mst@tmp{#3}%
+      \expandafter\mst@dothe@emdashstuff\mst@tmp{#3}{#2}%
     \else
       \expandafter\mst@dothe@hyphenstuff\mst@tmp
     \fi
@@ -11018,6 +11239,12 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 %
 % MEMO: the mathematical activation of letters happened above from
 % \cs{MTeverymathdefault}.  Idem if |activedigits| for digits.
+%
+% Sadly the \mstrelease{1.3y} addition broke usage of (non-\texttt{subdued}
+% |\MTversion{normal}| under option |LGRgreek|, as the
+% \cs{ifmst@greek@normal@upper@up} used here never got any definition, hence
+% \cs{ifmst@greek@upper@up} got set to \cs{relax} which caused down the road
+% an |Extra \else| error in \cs{MTcustomgreek}.
 %    \begin{macrocode}
     \expandafter\let\csname ifmst@greek@upper@up\expandafter\endcsname
                     \csname ifmst@greek@\math@version @upper@up\endcsname
@@ -11103,8 +11330,31 @@ defaultbf,defaultit,defaultsf,defaulttt}}
   \Mathastext@
   {\MTDeclareVersion[\mst@ltsh]{#1}{\mst@enc}{\mst@fam}{\mst@ser}{\mst@opsh}}%
 }%
+%    \end{macrocode}
+% This is thus the macro which is triggered by usage of \cs{Mathastext} in the
+% preamble without optional argument.  The package will execute it once after
+% its definition.
+%    \begin{macrocode}
 \def\Mathastext@ {%
-  \mst@update@greeksh 
+%    \end{macrocode}
+% This \cs{mst@update@greeksh} redefines \cs{mst@greek@ush} (used below in a
+% \cs{SetSymbolFont} executed if option \texttt{selfGreek}) and sets the
+% \cs{ifmst@greek@upper@up} and \cs{ifmst@greek@lower@up} conditionals.
+%    \begin{macrocode}
+  \mst@update@greeksh {\mst@ltsh}{\mst@opsh}%
+%    \end{macrocode}
+% \mstrelease{1.4e} fixes belatedly a bug introduced at \mstrelease{1.3y},
+% which had broken usage of |\MTversion{normal}| in documents using
+% \texttt{LGRgreek} or \texttt{LGRgreeks} (but not if \texttt{subdued}).
+%    \begin{macrocode}
+      \expandafter\let\csname ifmst@greek@normal@upper@up\expandafter\endcsname
+                      \csname ifmst@greek@upper@up\endcsname
+      \expandafter\let\csname ifmst@greek@normal@lower@up\expandafter\endcsname
+                      \csname ifmst@greek@lower@up\endcsname
+      \expandafter\let\csname ifmst@greek@bold@upper@up\expandafter\endcsname
+                      \csname ifmst@greek@upper@up\endcsname
+      \expandafter\let\csname ifmst@greek@bold@lower@up\expandafter\endcsname
+                      \csname ifmst@greek@lower@up\endcsname
   \edef\mst@encoding@normal{\mst@enc}%
   \edef\mst@family@normal{\mst@fam}%
   \edef\mst@series@normal{\mst@ser}%
@@ -11330,14 +11580,20 @@ defaultbf,defaultit,defaultsf,defaulttt}}
   \ifmst@nohbar\else
      \mst@infoline{\string\hbar}%
      \mst@dothe@hbarstuff
-         \mst@hbar@mvnormal\mst@ltbar@mvnormal\mst@encoding@normal
+         \mst@hbar@mvnormal\mst@ltbar@mvnormal\mst@encoding@normal{normal}%
      \let\mst@hbar@mvbold\mst@hbar@mvnormal
   \fi
-  \mst@dothe@inodotstuff\inodot\jnodot\mst@encoding@normal
-  \let\mst@inodot@mvnormal\inodot
-  \let\mst@inodot@mvbold\inodot
-  \let\mst@jnodot@mvnormal\jnodot
-  \let\mst@jnodot@mvbold\jnodot
+%    \end{macrocode}
+% \mstrelease{1.4d} lets the option \texttt{noletters} prevent definition of
+% \cs{inodot} and \cs{jnodot}.
+%    \begin{macrocode}
+  \ifmst@noletters\else
+    \mst@dothe@inodotstuff\inodot\jnodot\mst@encoding@normal{normal}%
+    \let\mst@inodot@mvnormal\inodot
+    \let\mst@inodot@mvbold\inodot
+    \let\mst@jnodot@mvnormal\jnodot
+    \let\mst@jnodot@mvbold\jnodot
+  \fi
   \ifmst@mathaccents
     \mst@infoline{math accents}%
     \mst@dothe@mathaccentsstuff{normal}\mst@encoding@normal
@@ -11369,15 +11625,15 @@ defaultbf,defaultit,defaultsf,defaulttt}}
 %    \begin{macrocode}
    \ifmst@endash
     \mst@dothe@endashstuff\mst@minus@mvnormal\mst@varfam@minus@mvnormal
-                          \mst@encoding@normal
+                          \mst@encoding@normal {normal}%
     \mst@dothe@endashstuff\mst@minus@mvbold\mst@varfam@minus@mvbold
-                          \mst@encoding@normal
+                          \mst@encoding@normal {bold}%
    \else
     \ifmst@emdash
       \mst@dothe@emdashstuff\mst@minus@mvnormal\mst@varfam@minus@mvnormal
-                            \mst@encoding@normal
+                            \mst@encoding@normal {normal}%
       \mst@dothe@emdashstuff\mst@minus@mvbold\mst@varfam@minus@mvbold
-                            \mst@encoding@normal
+                            \mst@encoding@normal {bold}%
     \else
       \mst@dothe@hyphenstuff\mst@minus@mvnormal\mst@varfam@minus@mvnormal
       \let\mst@minus@mvbold\mst@minus@mvnormal
