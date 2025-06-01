@@ -35,8 +35,7 @@ but at least not subjected to obvious visual incompatibilities
 between your text font and the math fonts, try out mathastext:
 it will simply use the text font also for the math!
 
-- mathastext.html
-- showcase.html
+https://jfbu.github.io/mathastext
 
 USAGE
 =====
