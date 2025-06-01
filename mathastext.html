@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<!-- Time-stamp: <2025-06-01 15:03:09 CEST> -->
+<!-- Time-stamp: <2025-06-01 15:05:43 CEST> -->
 <!-- (1.4e) -->
 <head>
   <meta charset="utf-8" >
@@ -341,57 +341,6 @@ you presumably don't need <code>mathastext</code>!</p></li>
 upright/italic shape for the Greek letters from the PX fonts)</li>
 <li><a href="https://ctan.org/pkg/txgreeks">txgreeks</a> (select
 upright/italic shape for the Greek letters from the TX fonts).</li>
-</ul>
-<h2 id="tips">Tips</h2>
-<ul>
-<li><p>The sans-serif member of the document font family gives often
-good results when used in math-mode, in parallel with the text in
-serif.</p>
-<pre><code>\renewcommand{\familydefault}{\sfdefault}
-\usepackage{mathastext}
-\renewcommand{\familydefault}{\rmdefault}</code></pre>
-<p>It is then even less recommended to use the <em>italic</em> option
-(matter of taste!).</p></li>
-<li><p>How get in math mode the <em>upright</em> Greek letters from
-Computer Modern? Include in your preamble:</p>
-<pre><code>\usepackage{my_nice_font}
-\renewcommand{\familydefault}{cmr} % or cmss or cmtt for sans resp. mono
-\usepackage[LGRgreek, further options]{mathastext}
-\renewcommand{\familydefault}{\rmdefault}
-\Mathastext
-\begin{document}</code></pre>
-<p>The Greek letters will be from the LGR encoded CM font (and will be
-in upright shape, except if <em>italic</em> was among the <span
-class="mono">mathastext</span> options).<br>
-</p></li>
-<li>The previous trick works for (pdf)LaTeX as well as for XeLaTeX or
-LuaLaTeX. For XeLaTeX the <span class="mono">mathspec</span> package is
-a (far) better choice, but if you wish you can still use <span
-class="mono">mathastext</span> for its other aspects (math
-versions...).</li>
-<li>The LGRgreek option (<span
-class="mono">\usepackage[LGRgreek]{mathastext}</span>) picks up the
-Greek letters in LGR encoding from the default font family at the time
-of loading <span class="mono">mathastext</span>. Starting with version
-1.15c it is possible to have distinct Greek fonts in each <em>math
-version</em>. I mentioned already above that the CM/LM fonts are
-available (in Type 1 version for inclusion in pdf files) in LGR encoding
-for serif, sans-serif, and typewriter families (they actually belong to
-the "<span class="mono">cbfonts</span>".) Other available fonts in
-standard TeX distributions: the Greek Font Society fonts (such as
-<em>GFS Didot</em>), the <em>epigrafica</em> and <em>kerkis</em>
-packages, the <em>txfontsb</em> package which extends the
-<em>txfonts</em> package with LGR-encoded Greek letters, the
-<em>droid</em>, <em>comfortaa</em>, <em>dejavu</em>, and
-<em>opensans</em> package.</li>
-<li>Note that <span class="mono">mathastext</span> makes proviso only
-for monotonic Greek letters (in math mode; many of these packages are
-designed for polytonic Greek in text mode). After loading <span
-class="mono">mathastext</span> with option LGRgreek one should take note
-that <span class="mono">\varphi</span> and other `var' letters (except
-<span class="mono">\varsigma</span>) are not provided by this encoding,
-so the package does not make any specific assignments to such `var'
-macros.</li>
 </ul>
 
 </section>
