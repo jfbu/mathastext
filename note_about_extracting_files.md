@@ -1,20 +1,28 @@
 # Extracting `mathastext.sty` and other files from `mathastext.dtx`
 
-- prior to `1.2` release, use `etex mathastext.ins`.
+You don't need any extraction process if checking out this repository
+at tag `1.13` or later, as `mathastext.sty` has been committed since
+then here.  Initially at top level, then inside `v13` and now inside
+`v14` sub-directory, alongside source `mathastext.dtx`.
 
-- starting with `1.2`, you can also use `latex mathastext.dtx`.
+If you want to extract test files, or build yourself the PDF documentation (as
+this repository does not include it), with or without the commented source
+code, follow these instructions first:
 
-- starting with `1.3c`, you can also use `etex mathastext.dtx`,
-  and this is the recommended way from then on.
+- prior to `1.2` tag, issue `etex mathastext.ins`.
 
-In this repository, the `mathastext.ins` file was deleted after
-the commit corresponding to mathastext `1.3e 2015-09-10`, at the
-same time this informational note was added.  CTAN uploads ceased
-containing `mathastext.ins` at `1.3u 2019-08-20`.
+- starting with `1.2` tag, you can also use `latex mathastext.dtx`.
 
-Regarding `mathastext.sty` it is anyhow added to the commits here
-since `1.13 2011-03-12`.  And since `1.3m` it will be located inside
-`v13` or `v14` sub-directory.
+- starting with `1.3c` tag, you can also use `etex mathastext.dtx`, and this
+  is the recommended way from then on.
 
-This text was written on May 30, 2025, during the archival process creating
+- starting with `1.3e` tag, the `mathastext.ins` is no more committed to this
+  repository, you must use `etex` (or `latex`) on `mathastext.dtx` to extract
+  the files.  Regarding [CTAN](https://ctan.org) uploads they ceased
+  containing `mathastext.ins` at `1.3u 2019-08-20`.
+
+To produce `mathastext.pdf` follow the instructions printed during the
+extraction process (or check inside extracted `mathastext.tex` for them).
+
+This text was written on June 1st, 2025, during the archival process creating
 this repository.
