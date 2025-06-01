@@ -1,7 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html lang="en">
-<!-- Time-stamp: <2025-06-01 15:01:17 CEST> -->
-<!-- s/V13/v14 -->
+<!-- Time-stamp: <2025-06-01 15:27:39 CEST> -->
 
 <head>
 <link rel="shortcut icon" type="image/png" href="zeta32.png">
@@ -26,9 +25,15 @@ BLOCKQUOTE{margin-left:2ex;margin-right:4ex;text-align:left;}
 <body>
 
 <DIV style="font-size:90%" id="top">
+<p>
 Last revision of the examples provided on this page: October 20, 2012.<br>
-Last revision of the accompanying text: April 9, 2018. (only the introduction)<br>
+On June 1st 2025, broken links to some PDFs on the author's main web site,
+which had gone off-line in September 2021 as a result of exasperation
+with societal turn of events of years 2020-2021 (and not only!), have finally
+been removed.<br>
+Only links to those PDFs which had been produced especially for this site are kept.<br>
 Dated remark: be patient, the page with all its embedded png images weighs about 5 megabytes... (wow!)
+</p>
 </DIV>
 
 <br>
@@ -42,9 +47,6 @@ Copyright &copy; 2011-2019, 2022-2025 Jean-Fran&ccedil;ois B..</DIV>
 mathematics mode, thus giving a very unified look to the produced document.
 As a side-effect it alleviates somewhat the problem of the scarcity of free
 math fonts for TeX typesetting . . . (back to <a href="mathastext.html">mathastext.html</a>).</p>
-<p>Download from <a href="https://ctan.org/pkg/mathastext">CTAN</a> or from the links available on <a href="mathastext.html">mathastext.html</a> (which provides in particular
-<a href="v14/mathastext.tds.zip">mathastext.tds.zip</a> and a nice <a href="v14/README.html">README.html</a>).
-</p>
 </DIV>
 
 
@@ -192,9 +194,6 @@ PDF files with some pages as PNG images in this page:
 </ol>
 PDF only examples:
 <ol start="59">
-<li><a href="#lmvttlp">Latin Modern Typewriter Proportional</a></li> 
-<li><a href="#lmvttpol">Latin Modern Typewriter Proportional</a></li> 
-<li><a href="#ncgalois">New Century Schoolbook</a></li>
 <li><a href="showcase/chancery-1.pdf">Zapf Chancery</a></li> 
 <li><a href="showcase/frcursive-1.pdf">French Cursive</a> (see
 the <a href="#fc"><b>warning</b></a>)</li>
@@ -1636,7 +1635,7 @@ Typeset with mathastext 1.15d
 <li>
 Various:
 <ul>
-<li id="frclog"><a href="agreglogexp.pdf">Logarithme et exponentielle</a>
+<li id="frclog">
   (French Cursive)<br> This needed quite a bit of preparation work on the source
   as it made extensive use of the letter r in mathematical mode, see
   the <a href="#fc"><b>warning</b></a> above. <br> Note to the experts: the
@@ -1647,16 +1646,17 @@ Various:
   right.<br><img src="showcase/logexp-frcursive1.png"
   alt="logexp-frcursive1.png"><br><img src="showcase/logexp-frcursive2.png"
   alt="logexp-frcursive2.png"><br><br></li>
-<li id="lmvttlag"><a href="agreglagrange.pdf">Formule d'inversion de Lagrange</a> (Latin
+<li id="lmvttlag">
+(Latin
 Modern Typewriter Proportional)<br>
 <img src="showcase/lagrange-mt1.png" alt="lagrange-mt1.png"><br>
 <img src="showcase/lagrange-mt2.png" alt="lagrange-mt2.png"><br><br>
 </li>
-<li id="elecexp"><a href="agregexpcomplexenombrepi.pdf">Exponentielle complexe et nombre
-Pi</a> (Electrum)<br>
+<li id="elecexp">
+(Electrum)<br>
 <img src="showcase/expcomplexenombrepi-mt1.png" alt="expcomplexenombrepi-mt1.png"><br><img src="showcase/expcomplexenombrepi-mt2.png" alt="expcomplexenombrepi-mt2.png"><br><br></li>
-<li id="grineg"><a href="agreggraminegalite.pdf">Gramiens et Inégalités</a>. Uses Droid Serif
-for text and Droid Sans for math, 
+<li id="grineg">
+Uses Droid Serif for text and Droid Sans for math, 
 with PX fonts for large mathematical symbols;
 this is done with the following in the preamble:
 <pre>
@@ -1674,8 +1674,7 @@ this is done with the following in the preamble:
 <img src="showcase/graminegalite2.png" alt="graminegalite2.png"><br><br></li>
 <li id="grlib"><a href="showcase/gram-libertine.pdf">Gramiens et Inégalités</a>. Same
 document as <a href="#grineg">above</a>, but with Libertine for text and Biolinum for Latin and Greek letters
-in math (large math symbols are from the TX fonts). The same set-up is used
-  for <a href="agregeuclide_fibo.pdf">this</a> document. 
+in math (large math symbols are from the TX fonts). 
 <pre>
 \usepackage{txfonts}
 \usepackage{libertine}
@@ -1717,15 +1716,6 @@ Then, the LaTeX source of the document contains:
 </pre>
 <img src="showcase/gram-txvtt1.png" alt="gram-txvtt1.png"><br>
 <img src="showcase/gram-txvtt2.png" alt="gram-txvtt2.png"><br><br>
-Another <a href="agregcycliques.pdf">document</a> uses also this,
-and, additionally, a further math version based on the TX
-Times roman font, thus illustrating the capability of the
-package to manage multiple math versions.</li>
-<li id="lmvttlp"><a href="agregnormeslp.pdf">Un exposé assez complet sur les normes lp</a> (Latin Modern Typewriter Proportional)</li> 
-<li id="lmvttpol"><a href="agregpolend.pdf">Polynômes d'endomorphismes et applications</a>
-(Latin Modern Typewriter Proportional)</li> 
-<li id="ncgalois"><a href="agregcorpsgalois.pdf">Corps de Galois. Polynômes
-cyclotomiques</a> (New Century Schoolbook)</li>
 </ul><br>
 </li>
 <li>
@@ -1870,19 +1860,16 @@ above figures and text.</p>
 <br><br>
 <!-- 4 september 2013, v12 remplacé par v13 -->
 <!-- 1er juin 2025, v13 remplacé par v14 (avec plusieurs années de retard) -->
+<!-- 1er juin 2025, suppression de liens vers PDFs non servis -->
 <ul>
 <li> <a href="v14/README" >README</a></li>
 <li> Download
   from the <a href="https://ctan.org/pkg/mathastext">CTAN portal</a>.</li>
-<li> <a href="v14/mathastext.pdf">PDF Documentation</a></li>
 <li> <a href="v14/mathastext.sty">mathastext.sty</a></li>
 <li> Documented <a href="v14/mathastext.dtx">source</a> (dtx file)</li>
 <li> <a href="v14/INSTALL.txt">installation instructions</a> (from source)</li>
 </ul>
 
-
-<p><a href="v10/mathastext-doc.pdf">PDF Documentation of the initial version.</a>
-</p>
 
 <p><a href="#top">top</a>
 </p>
